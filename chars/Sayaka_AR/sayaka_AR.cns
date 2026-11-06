@@ -262,22 +262,6 @@ trigger1 = Time = 0
 value = 9, 10
 channel = 0
 
-[State 7750, Effect]
-type = Explod
-trigger1 = Time = 0
-anim = 9600
-ID = 9600
-pos = 0, -55
-postype = p1
-bindtime = -1
-removetime = -2
-supermovetime = 9999
-pausemovetime = 9999
-sprpriority = 6
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
 [State 7750, Flash]
 type = PalFX
 trigger1 = Time = 0
@@ -299,6 +283,40 @@ movetype = A
 type = StateTypeSet
 trigger1 = Time = 10
 movetype = I
+
+[State 7750, Burst cloud ground]
+type = Explod
+trigger1 = Time = 4
+trigger1 = StateType != A
+anim = 9670
+ID = 9670
+pos = 0, 50
+postype = p1
+bindtime = -1
+supermovetime = 9999
+pausemovetime = 9999
+scale = 1, 1
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 7750, Burst cloud air]
+type = Explod
+trigger1 = Time = 4
+trigger1 = StateType = A
+anim = 9671
+ID = 9671
+pos = 0, -50
+postype = p1
+bindtime = -1
+supermovetime = 9999
+pausemovetime = 9999
+scale = 1, 1
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
 
 [State 7750, Blow away]
 type = HitDef
@@ -376,22 +394,6 @@ trigger1 = Time = 0
 value = 9, 10
 channel = 0
 
-[State 7751, Effect]
-type = Explod
-trigger1 = Time = 0
-anim = 9600
-ID = 9600
-pos = 0, -55
-postype = p1
-bindtime = -1
-removetime = -2
-supermovetime = 9999
-pausemovetime = 9999
-sprpriority = 6
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
 [State 7751, Flash]
 type = PalFX
 trigger1 = Time = 0
@@ -413,6 +415,40 @@ movetype = A
 type = StateTypeSet
 trigger1 = Time = 10
 movetype = I
+
+[State 7751, Burst cloud ground]
+type = Explod
+trigger1 = Time = 4
+trigger1 = StateType != A
+anim = 9670
+ID = 9670
+pos = 0, 50
+postype = p1
+bindtime = -1
+supermovetime = 9999
+pausemovetime = 9999
+scale = 1, 1
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 7751, Burst cloud air]
+type = Explod
+trigger1 = Time = 4
+trigger1 = StateType = A
+anim = 9671
+ID = 9671
+pos = 0, -50
+postype = p1
+bindtime = -1
+supermovetime = 9999
+pausemovetime = 9999
+scale = 1, 1
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
 
 [State 7751, Blow away]
 type = HitDef
@@ -658,3 +694,89 @@ var(7) = 2
 type = ChangeState
 trigger1 = Time >= 13
 value = 3200
+
+;---------------------------------------------------------------------------
+; Affettuoso during the Despair install (214214 + two attacks, 1 bar): instead of waiting as a counter,
+; she rushes forward; on contact the original stab sequence starts (3410 / opponent 3490, same as the counter).
+; Invincible during the rush, unblockable, ground opponents only. A whiff leaves her open.
+[Statedef 7805]
+type     = S
+movetype = A
+physics  = N
+ctrl     = 0
+velset   = 0, 0
+anim     = 3400
+sprpriority = 2
+poweradd = -1000
+
+[State 7805, Safe]
+type = NotHitBy
+trigger1 = Time < 32
+value = SCA
+
+[State 7805, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = 3, 0
+
+[State 7805, Dark flash]
+type = PalFX
+trigger1 = Time = 0
+time = 40
+sinadd = -200, -200, -200, 140
+
+[State 7805, Pause]
+type = SuperPause
+trigger1 = Time = 0
+time = 25
+anim = -1
+sound = -1
+darken = 1
+unhittable = 1
+
+[State 7805, Run]
+type = ChangeAnim
+trigger1 = Time = 6
+value = 7805
+
+[State 7805, Rush]
+type = VelSet
+trigger1 = Time = [6, 28]
+trigger1 = !MoveContact
+x = 10
+
+[State 7805, Stab]
+type = HitDef
+trigger1 = Time = [6, 28]
+trigger1 = !MoveContact
+id = 3400
+attr = S, SA
+damage = 0
+animtype = Light
+guardflag =
+hitflag = M
+priority = 7, Hit
+pausetime = 10, 10
+sparkno = -1
+hitsound = -1
+ground.type = High
+p1stateno = 3410
+p2stateno = 3490
+getpower = 0
+givepower = 0
+
+[State 7805, Stop]
+type = VelMul
+trigger1 = Time > 28
+x = 0.75
+
+[State 7805, Whiff pose]
+type = ChangeAnim
+trigger1 = Time = 29
+value = 3400
+
+[State 7805, End]
+type = ChangeState
+trigger1 = Time >= 52
+value = 0
+ctrl = 1

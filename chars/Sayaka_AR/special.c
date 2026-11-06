@@ -111,10 +111,10 @@ pausetime = 1,1
 fall = 1
 fall.recover = 0
 ;---------
-ground.velocity = -7,-5.5
-air.velocity = -7,-5.5
+ground.velocity = -7,-6.5   ;Abstract Reordered: floatier, pulled to her
+air.velocity = -7,-6.5
 ground.cornerpush.veloff = 0
-yaccel = 0.35
+yaccel = 0.25
 ;---------
 sparkno = -1
 guard.sparkno = s25030
@@ -483,9 +483,9 @@ pausetime = 1,1
 fall = 1
 fall.recover = 0
 ;---------
-ground.velocity = -10,-4.5
-air.velocity = -10,-4.5
-yaccel = 0.35
+ground.velocity = -7,-6.5   ;Abstract Reordered: floatier, pulled to her
+air.velocity = -7,-6.5
+yaccel = 0.25
 ;---------
 sparkno = -1
 guard.sparkno = s25030

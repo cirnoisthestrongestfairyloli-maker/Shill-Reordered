@@ -262,22 +262,6 @@ trigger1 = Time = 0
 value = 3, 2
 channel = 0
 
-[State 7720, Effect]
-type = Explod
-trigger1 = Time = 0
-anim = 9600
-ID = 9600
-pos = 0, -55
-postype = p1
-bindtime = -1
-removetime = -2
-supermovetime = 9999
-pausemovetime = 9999
-sprpriority = 6
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
 [State 7720, Flash]
 type = PalFX
 trigger1 = Time = 0
@@ -299,6 +283,40 @@ movetype = A
 type = StateTypeSet
 trigger1 = Time = 10
 movetype = I
+
+[State 7720, Burst cloud ground]
+type = Explod
+trigger1 = Time = 4
+trigger1 = StateType != A
+anim = 9670
+ID = 9670
+pos = 0, 50
+postype = p1
+bindtime = -1
+supermovetime = 9999
+pausemovetime = 9999
+scale = 1, 1
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 7720, Burst cloud air]
+type = Explod
+trigger1 = Time = 4
+trigger1 = StateType = A
+anim = 9671
+ID = 9671
+pos = 0, -50
+postype = p1
+bindtime = -1
+supermovetime = 9999
+pausemovetime = 9999
+scale = 1, 1
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
 
 [State 7720, Blow away]
 type = HitDef
@@ -376,22 +394,6 @@ trigger1 = Time = 0
 value = 3, 2
 channel = 0
 
-[State 7721, Effect]
-type = Explod
-trigger1 = Time = 0
-anim = 9600
-ID = 9600
-pos = 0, -55
-postype = p1
-bindtime = -1
-removetime = -2
-supermovetime = 9999
-pausemovetime = 9999
-sprpriority = 6
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
 [State 7721, Flash]
 type = PalFX
 trigger1 = Time = 0
@@ -413,6 +415,40 @@ movetype = A
 type = StateTypeSet
 trigger1 = Time = 10
 movetype = I
+
+[State 7721, Burst cloud ground]
+type = Explod
+trigger1 = Time = 4
+trigger1 = StateType != A
+anim = 9670
+ID = 9670
+pos = 0, 50
+postype = p1
+bindtime = -1
+supermovetime = 9999
+pausemovetime = 9999
+scale = 1, 1
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 7721, Burst cloud air]
+type = Explod
+trigger1 = Time = 4
+trigger1 = StateType = A
+anim = 9671
+ID = 9671
+pos = 0, -50
+postype = p1
+bindtime = -1
+supermovetime = 9999
+pausemovetime = 9999
+scale = 1, 1
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
 
 [State 7721, Blow away]
 type = HitDef

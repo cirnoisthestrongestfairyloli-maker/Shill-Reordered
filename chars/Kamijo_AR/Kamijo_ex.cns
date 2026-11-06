@@ -1374,13 +1374,13 @@ value = 53
 	[State 6500, エフェクト消し]
 		Type=RemoveExplod
 		Trigger1 = command != "hold_a" && command !="hold_c"
-		Trigger2 = Power >= 6000
+		Trigger2 = Power >= PowerMax
 		ID = 13370
 
 	[State 6500, エフェクト]
 		Type=Explod
 		Trigger1 = command != "hold_a" && command !="hold_c"
-		Trigger2 = Power >= 6000
+		Trigger2 = Power >= PowerMax
 		anim = 13371
 		postype = p1
 		pos = 0,10
@@ -1394,13 +1394,13 @@ value = 53
 	[State 6500, 音消し]
 		type = StopSnd
 		Trigger1 = command != "hold_a" && command !="hold_c"
-		Trigger2 = Power >= 6000
+		Trigger2 = Power >= PowerMax
 		channel = 0
 	
 	[State 6500, ステート変更]
 		type = ChangeState
 		trigger1 = command != "hold_a" && command !="hold_c"
-		trigger2 = Power >= 6000
+		trigger2 = Power >= PowerMax
 		value = 0
 		ctrl = 1
 
@@ -2227,12 +2227,12 @@ value = 53
 	[State -2, 時間設定]
 		type = VarSet
 		trigger1 = time = 0
-		var(21) = ifelse(Power>6000,1500,Floor(Power*0.25) )
+		var(21) = ifelse(Power>=PowerMax,1500,Floor(Power*0.25) )
 
 	[State -2, パワー初期化]
 		type = PowerAdd
 		trigger1 = time = 0
-		value = -6000
+		value = -PowerMax
 
 	[State 6661,ボイス]
 		Type=PlaySnd

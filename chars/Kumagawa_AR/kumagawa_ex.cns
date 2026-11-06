@@ -265,6 +265,11 @@ ctrl = 1
 	physics = S
 	ctrl     = 0
 	anim     = 1500
+	[State 1500, AR guard cost]   ;Abstract Reordered: from guard costs 30% durability
+		type = VarAdd
+		trigger1 = Time = 0
+		trigger1 = PrevStateNo = [150,155]
+		var(3) = -ceil(fvar(17) * 0.3)
 
 	[State -2]
 		type = varset
@@ -339,7 +344,7 @@ ctrl = 1
 	var(4) = 2
 
 [State -2]
-type = PowerSet
+type = null;PowerSet   ;Abstract Reordered: no meter loss
 trigger1 = time = 0
 value = 0
 
@@ -1058,7 +1063,7 @@ type    = U
 movetype= H
 physics = U
 velset = 0,0
-poweradd = -1000
+poweradd = -2000
 
 	[State 6010, ]
 		type = NotHitBy

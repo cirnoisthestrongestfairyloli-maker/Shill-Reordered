@@ -2449,7 +2449,7 @@ Trigger1=Time<45
 trigger2 = NumTarget(3520)
 trigger2 = target(3520), Alive
 trigger2 = MoveHit
-trigger2 = Var(53) >= 700
+trigger2 = Life <= LifeMax * 0.5   ;Abstract Reordered
 Flag=NoBG
 Flag2=NoFG
 Flag3=TimerFreeze
@@ -2939,27 +2939,26 @@ trigger1 = !Time
 [State Change To Finishers 0]
 Type=ChangeState
 trigger1 = !Time
-Trigger1= Var(53)<700
+Trigger1= Life > LifeMax * 0.5   ;Abstract Reordered: ender by his own life
 Value=3521
 
 [State Change To Finisher 1]
 Type=ChangeState
 trigger1 = !Time
-Trigger1= Var(53) >= 700
-Trigger1= Var(53) < 1400 
+Trigger1= Life <= LifeMax * 0.5
+Trigger1= Life > LifeMax * 0.25
 Value=3530
 
 [State Change To Finishers]
 Type=ChangeState
 trigger1 = !Time
-Trigger1= Var(53) >= 1400 
-Trigger1= Var(53) < 2100 
+Trigger1= Life <= LifeMax * 0.25
 Value=3540
 
 [State Change To Finishers]
 Type=ChangeState
 trigger1 = !Time
-Trigger1= Var(53) >= 2100 
+Trigger1= 0   ;Abstract Reordered: no state 3600
 Value=3600
 
 ;Finisher Start

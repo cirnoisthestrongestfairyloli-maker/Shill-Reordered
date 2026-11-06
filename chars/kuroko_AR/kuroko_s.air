@@ -6000,15 +6000,82 @@ Loopstart
 ; burst poses: guard poses + a big attack box so the burst connects
 [Begin Action 9604]
 Clsn1Default: 1
-  Clsn1[0] = -75, -150, 75, 10
+  Clsn1[0] = -70, -119, 68, 0
 Clsn2Default: 1
   Clsn2[0] = -20, -80, 20, 0
 120, 3, 0, 0, -1
 
 [Begin Action 9605]
 Clsn1Default: 1
-  Clsn1[0] = -75, -150, 75, 10
+  Clsn1[0] = -70, -111, 79, 1
 Clsn2Default: 1
   Clsn2[0] = -20, -80, 20, 0
 122, 3, 0, 0, -1
+
+; ==== Abstract Reordered: BURST gauge (Touma's, recoloured) - HUD under the lifebar ====
+[Begin Action 9660] ; burst gauge empty frame
+9660,0, 0,0, -1
+
+[Begin Action 9661] ; burst ready (full)
+9660,1, 0,0, -1
+
+[Begin Action 9662] ; recharging 1/5
+9660,2, 0,0, -1
+
+[Begin Action 9663] ; recharging 2/5
+9660,3, 0,0, -1
+
+[Begin Action 9664] ; recharging 3/5
+9660,4, 0,0, -1
+
+[Begin Action 9665] ; recharging 4/5
+9660,5, 0,0, -1
+
+[Begin Action 9666] ; recharging 5/5
+9660,6, 0,0, -1
+
+[Begin Action 9667] ; burst spent X
+9660,7, 4,2, -1
+
+[Begin Action 9668] ; ready glow (blinks)
+9660,8, -4,-4, 5, , AS256D256
+9660,8, -4,-4, 5
+
+; ==== Abstract Reordered: Touma's burst cloud (from kamijo 13380 / 13390) ====
+[Begin Action 9670]
+9670, 0, 0, 0, 1, , A
+9670, 1, 0, 0, 1, , A
+9670, 2, 0, 0, 2, , A
+9670, 3, 0, 0, 2, , A
+9670, 4, 0, 0, 2, , A
+9670, 5, 0, 0, 2, , A
+9670, 6, 0, 0, 1, , A
+9670, 7, 0, 0, 1, , A
+9670, 8, 0, 0, 1, , A
+9670, 9, 0, 0, 1, , A
+9670, 10, 0, 0, 1, , A
+9670, 11, 0, 0, 1, , A
+9670, 12, 0, 0, 1, , A
+9670, 13, 0, 0, 1, , A
+9670, 14, 0, 0, 1, , A
+9670, 15, 0, 0, 1, , A
+9670, 16, 0, 0, 1, , A
+
+[Begin Action 9671]
+9671, 0, 0, 0, 1, , AS256D256
+9671, 1, 0, 0, 2, , AS256D256
+9671, 2, 0, 0, 2, , AS256D256
+9671, 3, 0, 0, 2, , AS256D256
+9671, 4, 0, 0, 2, , AS256D256
+9671, 5, 0, 0, 1, , AS256D256
+9671, 6, 0, 0, 1, , AS256D256
+9671, 7, 0, 0, 1, , AS256D256
+9671, 8, 0, 0, 1, , AS256D256
+9671, 9, 0, 0, 1, , AS256D256
+9671, 10, 0, 0, 1, , AS256D256
+9671, 11, 0, 0, 1, , AS256D256
+9671, 12, 0, 0, 1, , AS256D256
+9671, 13, 0, 0, 1, , AS256D256
+9671, 14, 0, 0, 1, , AS256D256
+9671, 15, 0, 0, 1, , AS256D256
 

@@ -1,0 +1,2228 @@
+[Info]
+name = "UMVC3 Bonne Wonderland"
+displayname = "UMVC3 Bonne Wonderland"
+;versiondate = 09,30,2009
+;mugenversion = 1.1
+author = "jafar"
+
+;--------------------------------------------------------
+[Camera]
+startx = 0
+starty = 0
+boundleft = -156
+boundright = 156
+boundhigh = -525
+boundlow = 0
+verticalfollow = 1.1
+floortension = 99
+tension = 80
+overdrawhigh = 0
+overdrawlow = 0
+cuthigh = 0
+cutlow = 0
+zoomout = 0.75
+zoomin = 1.00
+
+;--------------------------------------------------------
+[PlayerInfo]
+;--- Player 1 ---
+p1startx = -70          ;Starting x coordinates
+p1starty = 0            ;Starting y coordinates
+p1facing = 1            ;Direction player faces: 1=right, -1=left
+
+;--- Player 2 ---
+p2startx = 70
+p2starty = 0
+p2facing = -1
+
+;--- Common ---
+ ;Don't change these values.
+leftbound  = -1000 ;Left bound (x-movement)
+rightbound =  1000 ;Right bound
+
+;--------------------------------------------------------
+[Bound]
+screenleft = 15    ;Dist from left of screen that player can move to
+screenright = 15   ;Right edge
+
+;--------------------------------------------------------
+[StageInfo]
+zoffset = 220
+autoturn = 1
+resetBG = 0    ;1e.
+localcoord = 320, 240
+hires = 1
+xscale = 0.35
+yscale = 0.35
+
+;--------------------------------------------------------
+[Shadow]
+intensity = 56
+color = 0,0,0
+yscale = .1
+fade.range = 0,0
+
+;--------------------------------------------------------
+[Reflection]
+intensity = 0
+
+;--------------------------------------------------------
+[Music]
+bgmusic = sound/[UMVC3]Bonne_Wonderland.mp3
+bgmloopstart = 7970738
+bgmloopend = 11553544
+bgmvolume = 100
+
+;========================================================
+;--------------------------------------------------------
+; Background definition
+
+;-------------------------------------
+; Main background definition
+[BGdef]
+spr = [UMVC3]Bonne_Wonderland_V3.sff
+debugbg = 0
+
+[BG SKY]
+type  = normal
+spriteno = 1, 34
+layerno = 0
+start = 0, 0
+delta = 0, 0
+mask  = 1
+zoomdelta = 0
+
+[BG TOWER]
+type  = normal
+spriteno = 1, 33
+layerno = 0
+start = 0, 0
+delta = 0.90, 0.35
+mask  = 1
+zoomdelta = 0.10
+
+[BG BACK LIGHT B]
+type  = anim
+actionno = 3
+layerno = 0
+start = -50, 30
+delta = 0.90, 0.35
+mask  = 1
+trans = addalpha
+alpha = 72,256
+zoomdelta = 0.10
+
+[BG BACK LIGHT A]
+type  = anim
+actionno = 4
+layerno = 0
+start = 30, 15
+delta = 0.90, 0.35
+mask  = 1
+trans = addalpha
+alpha = 72,256
+zoomdelta = 0.10
+
+[BG SNOW A1]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = -300, 100
+delta = 1.00, 0.45
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 46,256
+zoomdelta = 0.20
+
+[BG SNOW  A2]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = -550, 250
+delta = 1.00, 0.45
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 46,256
+zoomdelta = 0.20
+
+[BG SNOW  A3]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = 550, 350
+delta = 1.00, 0.45
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 46,256
+zoomdelta = 0.20
+
+[BG SNOW  A4]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = 250, 1250
+delta = 1.00, 0.45
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 46,256
+zoomdelta = 0.20
+
+[BG SNOW  A5]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = 1550, -950
+delta = 1.00, 0.45
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 46,256
+zoomdelta = 0.20
+
+[BG SNOW A1]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = 300, 450
+delta = 1.00, 0.45
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 46,256
+zoomdelta = 0.20
+
+[BG SNOW  A2]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = 250, -950
+delta = 1.00, 0.45
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 46,256
+zoomdelta = 0.20
+
+[BG SNOW  A3]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = -550, -750
+delta = 1.00, 0.45
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 46,256
+zoomdelta = 0.20
+
+[BG SNOW  A4]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = -850, -1650
+delta = 1.00, 0.45
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 46,256
+zoomdelta = 0.20
+
+[BG SNOW  A5]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = -1050, 650
+delta = 1.00, 0.45
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 46,256
+zoomdelta = 0.20
+
+[BG BACK FLOOR]
+type  = normal
+spriteno = 1, 8
+layerno = 0
+start = -30, 0
+delta = 1.20, 0.50
+mask  = 1
+zoomdelta = 0.10
+
+[BG back houses]
+type  = normal
+spriteno = 1, 31
+layerno = 0
+start = -55, 0
+delta = 1.05, 0.35
+mask  = 1
+zoomdelta = 0.10
+
+[BG LEFT HOUSE 2]
+type  = normal
+spriteno = 1, 30
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.53
+mask  = 1
+zoomdelta = 0.50
+
+[BG LEFT HOUSE 1 R]
+type  = normal
+spriteno = 80, 0
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.53
+mask  = 1
+zoomdelta = 0.50
+
+[BG LEFT HOUSE 1 G]
+type  = normal
+spriteno = 80, 1
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.53
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG LEFT HOUSE 1 B]
+type  = normal
+spriteno = 80, 2
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.53
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG Lamp briget - right]
+type  = normal
+spriteno = 1, 44
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+zoomdelta = 0.50
+
+[BG Lamp briget - right]
+type  = normal
+spriteno = 1, 44
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+zoomdelta = 0.50
+
+[BG Lamp briget - right (light)]
+type  = normal
+spriteno = 1, 45
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+trans = addalpha
+alpha = 94,256
+zoomdelta = 0.50
+
+[BG Lamp briget - left]
+type  = normal
+spriteno = 1, 42
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+zoomdelta = 0.50
+
+[BG Lamp briget - left (light)]
+type  = normal
+spriteno = 1, 43
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+trans = addalpha
+alpha = 74,256
+zoomdelta = 0.50
+
+[BG CENTRAL SEVORT SNOW - LEFT ARM (IN BRIGED)]
+type  = normal
+spriteno = 7, 3
+layerno = 0
+start = 0, 0
+delta = 1.24, 0.56
+mask  = 1
+zoomdelta = 0.50
+
+[BG CENTRAL SEVORT SNOW - RIGHT ARM (IN BRIGED)]
+type  = normal
+spriteno = 7, 2
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.56
+mask  = 1
+zoomdelta = 0.50
+
+[BG CENTRAL SEVORT SNOW - HEAD (IN BRIGED)]
+type  = normal
+spriteno = 7, 1
+layerno = 0
+start = 0, 0
+delta = 1.26, 0.56
+mask  = 1
+zoomdelta = 0.50
+
+[BG CENTRAL SEVORT SNOW - BODY (IN BRIGED)]
+type  = normal
+spriteno = 7, 0
+layerno = 0
+start = 0, 0
+delta = 1.28, 0.56
+mask  = 1
+zoomdelta = 0.50
+
+[BG SEVORT IN THE RED CAR - SNOW]
+type  = anim
+actionno = 5
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+trans = addalpha
+alpha = 52,256
+zoomdelta = 0.50
+
+[BG SEVORT IN THE RED CAR]
+type  = anim
+actionno = 1
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG END THE ROAD LEFT]
+type  = normal
+spriteno = 1, 27
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG END THE ROAD RIGHT]
+type  = normal
+spriteno = 1, 26
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG right wall RAILS]
+type  = normal
+spriteno = 1, 25
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+zoomdelta = 0.50
+
+[BG left lamp 1]
+type  = normal
+spriteno = 1, 24
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+zoomdelta = 0.50
+
+[BG left lamp 1 - LIGHT]
+type  = normal
+spriteno = 2, 2
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+trans = addalpha
+alpha = 94,256
+zoomdelta = 0.50
+
+[BG left lamp 2]
+type  = normal
+spriteno = 1, 23
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+zoomdelta = 0.50
+
+[BG left lamp 2 - LIGHT]
+type  = normal
+spriteno = 2, 3
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+trans = addalpha
+alpha = 94,256
+zoomdelta = 0.50
+
+[BG BACK TREE]
+type  = normal
+spriteno = 1, 17
+layerno = 0
+start = 0, 0
+delta = 1.20, 0.54
+mask  = 1
+zoomdelta = 0.50
+
+[BG BIG TREE]
+type  = normal
+spriteno = 1, 22
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.55
+mask  = 1
+ID = 1
+zoomdelta = 0.50
+
+[BG SEVORT 1]
+type  = normal
+spriteno = 22, 7
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.55
+mask  = 1
+ID = 3
+zoomdelta = 0.50
+
+[BG SEVORT 2]
+type  = normal
+spriteno = 22, 8
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.55
+mask  = 1
+ID = 2
+zoomdelta = 0.50
+
+[BG SEVORT 3]
+type  = normal
+spriteno = 22, 9
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.55
+mask  = 1
+ID = 2
+zoomdelta = 0.50
+
+[BG BIG TREE SNOW]
+type  = anim
+actionno = 8
+layerno = 0
+start = 5, 15
+delta = 1.25, 0.55
+mask  = 1
+zoomdelta = 0.50
+
+[BG LEFT BACK FLOOR]
+type  = normal
+spriteno = 1, 50
+layerno = 0
+start = 0, -1
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG ENTRACE R]
+type  = normal
+spriteno = 30, 0
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG ENTRACE G]
+type  = normal
+spriteno = 30, 1
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG ENTRACE B]
+type  = normal
+spriteno = 30, 2
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG STAIRS A]
+type  = normal
+spriteno = 1, 20
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG STAIRS B]
+type  = normal
+spriteno = 1, 19
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG SEVORT IN STAIRS]
+type  = anim
+actionno = 31
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG STAIRS C]
+type  = normal
+spriteno = 1, 18
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG STAIRS LAMP]
+type  = normal
+spriteno = 1, 7
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG STAIRS LAMP - LIGHT]
+type  = normal
+spriteno = 2, 1
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+trans = addalpha
+alpha = 54,256
+zoomdelta = 0.50
+
+[BG STAIRS RAILS]
+type  = normal
+spriteno = 1, 6
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG RIGHT HOUSES R]
+type  = normal
+spriteno = 70, 0
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.53
+mask  = 1
+zoomdelta = 0.50
+
+[BG RIGHT HOUSES G]
+type  = normal
+spriteno = 70, 1
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.53
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG RIGHT HOUSES B]
+type  = normal
+spriteno = 70, 2
+layerno = 0
+start = 0, 0
+delta = 1.25, 0.53
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG right lamp 2]
+type  = normal
+spriteno = 1, 15
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+zoomdelta = 0.50
+
+[BG right lamp - LIGHT]
+type  = normal
+spriteno = 2, 5
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+trans = addalpha
+alpha = 94,256
+zoomdelta = 0.50
+
+[BG right lamp 1]
+type  = normal
+spriteno = 1, 14
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+zoomdelta = 0.50
+
+[BG right lamp 1 - LIGHT]
+type  = normal
+spriteno = 2, 4
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+trans = addalpha
+alpha = 94,256
+zoomdelta = 0.50
+
+[BG Lamp - right 1]
+type  = normal
+spriteno = 1, 46
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+zoomdelta = 0.50
+
+[BG Lamp - right 1(light)]
+type  = normal
+spriteno = 1, 47
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+trans = addalpha
+alpha = 94,256
+zoomdelta = 0.50
+
+[BG Lamp - right 2]
+type  = normal
+spriteno = 1, 48
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+zoomdelta = 0.50
+
+[BG Lamp - right 2(light)]
+type  = normal
+spriteno = 1, 49
+layerno = 0
+start = 0, 0
+delta = 1.27, 0.58
+mask  = 1
+trans = addalpha
+alpha = 114,256
+zoomdelta = 0.50
+
+[BG BACK SEVORT PLAYING BACK RIGHT]
+type  = anim
+actionno = 2
+layerno = 0
+start = 0, 3
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG RIGHT WALL A (MVC3 FLIYER) R]
+type  = normal
+spriteno = 60, 0
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG RIGHT WALL A (MVC3 FLIYER) G]
+type  = normal
+spriteno = 60, 1
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG RIGHT WALL A (MVC3 FLIYER) B]
+type  = normal
+spriteno = 60, 2
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG RIGHT WALL B R]
+type  = normal
+spriteno = 50, 0
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG RIGHT WALL B R]
+type  = normal
+spriteno = 50, 1
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG RIGHT WALL B R]
+type  = normal
+spriteno = 50, 2
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG RIGHT SNOW GROUND]
+type  = normal
+spriteno = 1, 11
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+
+[BG SNOW A1]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = -300, 0
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -4,920
+zoomdelta = 0.55
+
+[BG SNOW  A2]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = -550, 350
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = 4,820
+zoomdelta = 0.55
+
+[BG SNOW  A3]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = 750, 350
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -4,720
+zoomdelta = 0.55
+
+[BG SNOW  A4]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = 250, 1650
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = 4,620
+zoomdelta = 0.55
+
+[BG SNOW  A5]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = 1550, -650
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -4,520
+zoomdelta = 0.55
+
+[BG SNOW A1]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = 300, 0
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = 5,420
+zoomdelta = 0.55
+
+[BG SNOW  A2]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = 550, -350
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -6,320
+zoomdelta = 0.55
+
+[BG SNOW  A3]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = -750, -350
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = 6,420
+zoomdelta = 0.55
+
+[BG SNOW  A4]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = -250, -1650
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -6,520
+zoomdelta = 0.55
+
+[BG SNOW  A5]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = -1550, 650
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = 6,620
+zoomdelta = 0.55
+
+[BG SNOW A1]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = -300, 560
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -5,720
+zoomdelta = 0.55
+
+[BG SNOW  A2]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = -750, 150
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = 5,820
+zoomdelta = 0.55
+
+[BG SNOW  A3]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = 950, 450
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -4,920
+zoomdelta = 0.55
+
+[BG SNOW  A4]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = 950, 1050
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = 3,820
+zoomdelta = 0.55
+
+[BG SNOW  A5]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = 1950, -250
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -3,720
+zoomdelta = 0.55
+
+[BG SNOW A1]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = 390, 890
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = 4,620
+zoomdelta = 0.55
+
+[BG SNOW  A2]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = 1550, -550
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -5,520
+zoomdelta = 0.55
+
+[BG SNOW  A3]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = -650, -450
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = 7,420
+zoomdelta = 0.55
+
+[BG SNOW  A4]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = -850, -1250
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -5,320
+zoomdelta = 0.55
+
+[BG SNOW  A5]
+type  = normal
+spriteno = 3, 3
+layerno = 0
+start = -1350, 750
+delta = 1.40, 0.65
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.3
+trans = addalpha
+alpha = 66,256
+sin.x = -6,420
+zoomdelta = 0.55
+
+[BG BRIGED R]
+type  = normal
+spriteno = 40, 0
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.50
+
+[BG BRIGED G]
+type  = normal
+spriteno = 40, 1
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG BRIGED B]
+type  = normal
+spriteno = 40, 2
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+trans = add
+zoomdelta = 0.50
+
+[BG RIGHT BACK FLOOR]
+type  = normal
+spriteno = 1, 5
+layerno = 0
+start = 0, 0
+delta = 1.30, 0.60
+mask  = 1
+zoomdelta = 0.55
+
+[BG BACK GREEN MECHA]
+type  = normal
+spriteno = 1, 4
+layerno = 0
+start = 25, 5
+delta = 1.30, 0.65
+mask  = 1
+zoomdelta = 0.50
+
+[BG ORANGE MECHA R]
+type  = normal
+spriteno = 10, 0
+layerno = 0
+start = 0, 0
+delta = 1.40, 0.70
+mask  = 1
+zoomdelta = 0.65
+
+[BG ORANGE MECHA G]
+type  = normal
+spriteno = 10, 1
+layerno = 0
+start = 0, 0
+delta = 1.40, 0.70
+mask  = 1
+trans = add
+zoomdelta = 0.65
+
+[BG ORANGE MECHA B]
+type  = normal
+spriteno = 10, 2
+layerno = 0
+start = 0, 0
+delta = 1.40, 0.70
+mask  = 1
+trans = add
+zoomdelta = 0.65
+
+[BG SEVORT JUMP]
+type  = anim
+actionno = 6
+layerno = 0
+start = 374, 495
+delta = 1.40, 0.70
+mask  = 1
+zoomdelta = 0.65
+
+[BG SEVORT JUMP - SHADOW]
+type  = anim
+actionno = 7
+layerno = 0
+start = 374, 495
+delta = 1.40, 0.70
+mask  = 1
+zoomdelta = 0.65
+
+[BG SEVORT SPIN]
+type  = anim
+actionno = 28
+layerno = 0
+start = 334, 580
+delta = 1.30, 0.65
+mask  = 1
+zoomdelta = 0.55
+tile 	= 1,1
+tilespacing = 2000, 1500
+velocity = 2.50,0
+
+[BG GREEN MECHA BACK]
+type  = normal
+spriteno = 1, 35
+layerno = 0
+start = 10, 0
+delta = 1.67, 0.90
+mask  = 1
+zoomdelta = 0.50
+
+[BG GREEN MECHA RIGHT ARM]
+type  = normal
+spriteno = 1, 36
+layerno = 0
+start = 0, 0
+delta = 1.67, 0.90
+mask  = 1
+zoomdelta = 0.65
+
+[BG GREEN MECHA R]
+type  = normal
+spriteno = 20, 0
+layerno = 0
+start = 0, 0
+delta = 1.73, 0.90
+mask  = 1
+zoomdelta = 0.65
+
+[BG GREEN MECHA G]
+type  = normal
+spriteno = 20, 1
+layerno = 0
+start = 0, 0
+delta = 1.73, 0.90
+mask  = 1
+trans = add
+zoomdelta = 0.65
+
+[BG GREEN MECHA B]
+type  = normal
+spriteno = 20, 2
+layerno = 0
+start = 0, 0
+delta = 1.73, 0.90
+mask  = 1
+trans = add
+zoomdelta = 0.65
+
+[BG GREEN MECHA LEFT ARM]
+type  = normal
+spriteno = 1, 38
+layerno = 0
+start = 0, 0
+delta = 1.70, 0.90
+mask  = 1
+zoomdelta = 0.65
+
+[BG SNOW A1]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = 300, 0
+delta = 1.73, 0.90
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.7
+trans = addalpha
+alpha = 96,256
+sin.x = -9,320
+zoomdelta = 0.70
+
+[BG SNOW  A2]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = 550, -350
+delta = 1.73, 0.90
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.7
+trans = addalpha
+alpha = 96,256
+sin.x = 10,920
+zoomdelta = 0.70
+
+[BG SNOW  A3]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = -750, -350
+delta = 1.73, 0.90
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.7
+trans = addalpha
+alpha = 96,256
+sin.x = -10,320
+zoomdelta = 0.70
+
+[BG SNOW  A4]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = -250, -1650
+delta = 1.73, 0.90
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.7
+trans = addalpha
+alpha = 96,256
+sin.x = 11,920
+zoomdelta = 0.70
+
+[BG SNOW  A5]
+type  = normal
+spriteno = 3, 0
+layerno = 0
+start = -1550, 650
+delta = 1.73, 0.90
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.7
+trans = addalpha
+alpha = 96,256
+sin.x = -11,320
+zoomdelta = 0.70
+
+[BG FLOOR LIGHT]
+type  = normal
+spriteno = 11, 0
+layerno = 0
+start = 0, 0
+delta = 2, 2
+mask  = 1
+trans = addalpha
+alpha = 96,256
+
+[BG FLOOR]
+type  = normal
+spriteno = 1, 0
+layerno = 0
+start = 0, 0
+delta = 2, 2
+mask  = 1
+
+[BG FRONT RAIL 1]
+type  = normal
+spriteno = 1, 39
+layerno = 0
+start = 0, -4
+delta = 2, 2
+mask  = 1
+
+[BG FRONT RAIL 2]
+type  = normal
+spriteno = 1, 2
+layerno = 0
+start = 0, 0
+delta = 2, 2
+mask  = 1
+
+[BG FRONT RAIL 3]
+type  = normal
+spriteno = 1, 40
+layerno = 0
+start = 0, 0
+delta = 2, 2
+mask  = 1
+
+[BG FRONT RAIL 4]
+type  = normal
+spriteno = 1, 41
+layerno = 0
+start = 150, 1
+delta = 2, 2
+mask  = 1
+
+[BG BIG LAMP]
+type  = normal
+spriteno = 1, 1
+layerno = 0
+start = 50, 0
+delta = 2, 2
+mask  = 1
+
+[BG BIG LAMP - LIGHT] 
+type  = normal
+spriteno = 2, 0
+layerno = 0
+start = 50, 0
+delta = 2, 2
+mask  = 1
+trans = addalpha
+alpha = 94,256
+
+[BG SNOW B1]
+type  = normal
+spriteno = 3, 1
+layerno = 0
+start = 0, 0
+delta = 2, 2
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.8
+trans = addalpha
+alpha = 96,256
+sin.x = 12,820
+
+[BG SNOW  B2]
+type  = normal
+spriteno = 3, 1
+layerno = 0
+start = 150, -350
+delta = 2, 2
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.8
+trans = addalpha
+alpha = 96,256
+sin.x = -13,820
+
+[BG SNOW  B3]
+type  = normal
+spriteno = 3, 1
+layerno = 0
+start = -150, -650
+delta = 2, 2
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.8
+trans = addalpha
+alpha = 96,256
+sin.x = 14,820
+
+[BG SNOW  B4]
+type  = normal
+spriteno = 3, 1
+layerno = 0
+start = -750, -1350
+delta = 2, 2
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.8
+trans = addalpha
+alpha = 96,256
+sin.x = -15,220
+
+[BG SNOW  B5]
+type  = normal
+spriteno = 3, 1
+layerno = 0
+start = -550, 950
+delta = 2, 2
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.8
+trans = addalpha
+alpha = 96,256
+sin.x = 16,820
+
+[BG SNOW C1]
+type  = normal
+spriteno = 3, 2
+layerno = 0
+start = 580, 480
+delta = 2.5, 2.5
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.9
+trans = addalpha
+alpha = 96,256
+sin.x = -12,320
+
+[BG SNOW  C2]
+type  = normal
+spriteno = 3, 2
+layerno = 0
+start = -150, 350
+delta = 2.5, 2.5
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.9
+trans = addalpha
+alpha = 96,256
+sin.x = 13,320
+
+[BG SNOW  C3]
+type  = normal
+spriteno = 3, 2
+layerno = 0
+start = 1550, 650
+delta = 2.5, 2.5
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.9
+trans = addalpha
+alpha = 96,256
+sin.x = -14,320
+
+[BG SNOW  C4]
+type  = normal
+spriteno = 3, 2
+layerno = 0
+start = -750, 1350
+delta = 2.5, 2.5
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.9
+trans = addalpha
+alpha = 96,256
+sin.x = 15,320
+
+[BG SNOW  C5]
+type  = normal
+spriteno = 3, 2
+layerno = 0
+start = -1550, 950
+delta = 2.5, 2.5
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.9
+trans = addalpha
+alpha = 96,256
+sin.x = -16,320
+
+[BG SNOW B1]
+type  = normal
+spriteno = 3, 1
+layerno = 0
+start = 0, 0
+delta = 2, 2
+mask  = 1
+tile 	= 1,1
+tilespacing = 231,403
+velocity = 0,1.8
+trans = addalpha
+alpha = 96,256
+sin.x = 12,820
+
+[BG SNOW  B2]
+type  = normal
+spriteno = 3, 1
+layerno = 0
+start = 250, -550
+delta = 2, 2
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.8
+trans = addalpha
+alpha = 96,256
+sin.x = -13,820
+
+[BG SNOW  B3]
+type  = normal
+spriteno = 3, 1
+layerno = 0
+start = -650, -450
+delta = 2, 2
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.8
+trans = addalpha
+alpha = 96,256
+sin.x = 14,820
+
+[BG SNOW  B4]
+type  = normal
+spriteno = 3, 1
+layerno = 0
+start = -550, -1750
+delta = 2, 2
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.8
+trans = addalpha
+alpha = 96,256
+sin.x = -15,220
+
+[BG SNOW  B5]
+type  = normal
+spriteno = 3, 1
+layerno = 0
+start = -1550, 50
+delta = 2, 2
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.8
+trans = addalpha
+alpha = 96,256
+sin.x = 16,820
+
+[BG SNOW C1]
+type  = normal
+spriteno = 3, 2
+layerno = 0
+start = 680, 880
+delta = 2.5, 2.5
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.9
+trans = addalpha
+alpha = 96,256
+sin.x = -12,320
+
+[BG SNOW  C2]
+type  = normal
+spriteno = 3, 2
+layerno = 0
+start = -650, 750
+delta = 2.5, 2.5
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.9
+trans = addalpha
+alpha = 96,256
+sin.x = 13,320
+
+[BG SNOW  C3]
+type  = normal
+spriteno = 3, 2
+layerno = 0
+start = 450, 1650
+delta = 2.5, 2.5
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.9
+trans = addalpha
+alpha = 96,256
+sin.x = -14,320
+
+[BG SNOW  C4]
+type  = normal
+spriteno = 3, 2
+layerno = 0
+start = -250, 1650
+delta = 2.5, 2.5
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.9
+trans = addalpha
+alpha = 96,256
+sin.x = 15,320
+
+[BG SNOW  C5]
+type  = normal
+spriteno = 3, 2
+layerno = 0
+start = -150, 750
+delta = 2.5, 2.5
+mask  = 1
+tile 	= 1,1
+tilespacing = 931,903
+velocity = 0,1.9
+trans = addalpha
+alpha = 96,256
+sin.x = -16,320
+
+[BGCtrlDef BIG TREE]
+ctrlID = 1
+looptime = 10440
+
+[BGCtrl BIG TREE]
+type = SinY
+value = 2,60,10
+time = 0
+
+[BGCtrl BIG TREE]
+type = SinX
+value = 1,60,10
+time = 0
+
+[BGCtrlDef BIG TREE - SEVORT 2&3]
+ctrlID = 2
+looptime = 10440
+
+[BGCtrl BIG TREE - SEVORTs 2&3]
+type = SinY
+value = 1,60,10
+time = 0
+
+[BGCtrl BIG TREE - SEVORTs 2&3]
+type = SinX
+value = 1,60,10
+time = 0
+
+[BGCtrlDef BIG TREE - SEVORT 1]
+ctrlID = 3
+looptime = 10440
+
+[BGCtrl BIG TREE - SEVORT 1]
+type = SinY
+value = 3,60,10
+time = 0
+
+[BGCtrl BIG TREE - SEVORT 1]
+type = SinX
+value = 1,60,10
+time = 0
+
+[Begin Action 1]
+-1,0, 0,0, 200
+4,0, 357,56, 3
+4,0, 336,48, 3
+4,0, 317,41, 3
+4,0, 292,32, 3
+4,1, 270,20, 3
+4,3, 243,13, 3
+4,5, 213,4, 3
+4,6, 179,-3, 3
+4,12, 150,-10, 3
+4,13, 129,-10, 3
+4,14, 98,-15, 3
+4,24, 70,-13, 3
+4,25, 48,-6, 3
+4,26, 21,-4, 3
+4,27, -4,1, 3
+4,36, -36,6, 3
+4,36, -57,17, 3
+4,36, -74,25, 3
+4,36, -91,32, 3
+4,36, -113,41, 3
+4,36, -131,51, 3
+4,36, -153,61, 3
+4,36, -169,72, 3
+4,36, -183,78, 3
+-1,0, 0,0, 300
+4,0, -28,62, 3, H
+4,0, -17,56, 3, H
+4,0, 12,45, 3, H
+4,0, 40,34, 3, H
+4,0, 62,23, 3, H
+4,0, 95,9, 3, H
+4,8, 124,0, 3, H
+4,8, 152,-4, 3, H
+4,8, 180,-9, 3, H
+4,16, 206,-12, 3, H
+4,21, 231,-13, 3, H
+4,23, 258,-12, 3, H
+4,29, 287,-9, 3, H
+4,32, 313,-3, 3, H
+4,31, 336,3, 3, H
+4,32, 364,9, 3, H
+4,36, 382,13, 3, H
+4,36, 404,21, 3, H
+4,36, 430,33, 3, H
+4,36, 443,37, 3, H
+4,36, 460,46, 3, H
+4,36, 477,57, 3, H
+4,36, 492,71, 3, H
+4,36, 510,87, 3, H
+
+[Begin Action 2]
+5,0, 0,0, 2
+5,1, 0,0, 2
+5,2, 0,0, 2
+5,3, 0,0, 2
+5,4, 0,0, 2
+5,5, 0,0, 2
+5,6, 0,0, 2
+5,8, 0,0, 2
+5,9, 0,0, 2
+5,10, 0,0, 2
+5,11, 0,0, 2
+5,12, 0,0, 2
+5,12, 0,0, 2
+5,11, 0,0, 2
+5,10, 0,0, 2
+5,9, 0,0, 2
+5,8, 0,0, 2
+5,7, 0,0, 2
+5,6, 0,0, 2
+5,5, 0,0, 2
+5,4, 0,0, 2
+5,3, 0,0, 2
+5,2, 0,0, 2
+5,1, 0,0, 2
+5,0, 0,0, 2
+
+[Begin Action 3]
+6,7, 0,0, 30, , AS52D256
+6,8, 0,0, 20, , AS52D256
+6,9, 0,0, 15, , AS52D256
+6,10, 0,0, 10, , AS52D256
+6,11, 0,0, 9, , AS52D256
+6,12, 0,0, 9, , AS52D256
+6,13, 0,0, 8, , AS52D256
+6,14, 0,0, 8, , AS52D256
+6,15, 0,0, 7, , AS52D256
+6,16, 0,0, 7, , AS52D256
+6,17, 0,0, 6, , AS52D256
+6,18, 0,0, 6, , AS52D256
+6,19, 0,0, 5, , AS52D256
+6,20, 0,0, 5, , AS52D256
+6,21, 0,0, 6, , AS52D256
+6,22, 0,0, 6, , AS52D256
+6,23, 0,0, 7, , AS52D256
+6,24, 0,0, 7, , AS52D256
+6,25, 0,0, 8, , AS52D256
+6,26, 0,0, 8, , AS52D256
+6,27, 0,0, 8, , AS52D256
+6,28, 0,0, 8, , AS52D256
+6,29, 0,0, 8, , AS52D256
+6,30, 0,0, 9, , AS52D256
+6,31, 0,0, 9, , AS52D256
+6,32, 0,0, 9, , AS52D256
+6,33, 0,0, 9, , AS52D256
+6,34, 0,0, 9, , AS52D256
+6,35, 0,0, 10, , AS52D256
+6,36, 0,0, 10, , AS52D256
+6,37, 0,0, 10, , AS52D256
+6,38, 0,0, 10, , AS52D256
+6,39, 0,0, 80, , AS52D256
+6,39, 0,0, 10, , AS52D256
+6,38, 0,0, 10, , AS52D256
+6,37, 0,0, 10, , AS52D256
+6,36, 0,0, 10, , AS52D256
+6,35, 0,0, 10, , AS52D256
+6,34, 0,0, 9, , AS52D256
+6,33, 0,0, 9, , AS52D256
+6,32, 0,0, 9, , AS52D256
+6,31, 0,0, 9, , AS52D256
+6,30, 0,0, 9, , AS52D256
+6,29, 0,0, 8, , AS52D256
+6,28, 0,0, 8, , AS52D256
+6,27, 0,0, 8, , AS52D256
+6,26, 0,0, 8, , AS52D256
+6,25, 0,0, 8, , AS52D256
+6,24, 0,0, 7, , AS52D256
+6,23, 0,0, 7, , AS52D256
+6,22, 0,0, 6, , AS52D256
+6,21, 0,0, 6, , AS52D256
+6,20, 0,0, 5, , AS52D256
+6,19, 0,0, 5, , AS52D256
+6,18, 0,0, 6, , AS52D256
+6,17, 0,0, 6, , AS52D256
+6,16, 0,0, 7, , AS52D256
+6,15, 0,0, 7, , AS52D256
+6,14, 0,0, 8, , AS52D256
+6,13, 0,0, 8, , AS52D256
+6,12, 0,0, 9, , AS52D256
+6,11, 0,0, 9, , AS52D256
+6,10, 0,0, 10, , AS52D256
+6,9, 0,0, 15, , AS52D256
+6,8, 0,0, 20, , AS52D256
+6,7, 0,0, 30, , AS52D256
+6,7, 0,0, 70, , AS52D256
+
+[Begin Action 4]
+6,6, 0,0, 30, H, AS72D256
+6,7, 0,0, 20, H, AS72D256
+6,8, 0,0, 15, H, AS72D256
+6,9, 0,0, 10, H, AS72D256
+6,10, 0,0, 9, H, AS72D256
+6,11, 0,0, 9, H, AS72D256
+6,12, 0,0, 9, H, AS72D256
+6,13, 0,0, 8, H, AS72D256
+6,14, 0,0, 8, H, AS72D256
+6,15, 0,0, 7, H, AS72D256
+6,16, 0,0, 7, H, AS72D256
+6,17, 0,0, 6, H, AS72D256
+6,18, 0,0, 6, H, AS72D256
+6,19, 0,0, 5, H, AS72D256
+6,20, 0,0, 5, H, AS72D256
+6,21, 0,0, 6, H, AS72D256
+6,22, 0,0, 6, H, AS72D256
+6,23, 0,0, 7, H, AS72D256
+6,24, 0,0, 7, H, AS72D256
+6,25, 0,0, 8, H, AS72D256
+6,26, 0,0, 8, H, AS72D256
+6,27, 0,0, 8, H, AS72D256
+6,28, 0,0, 8, H, AS72D256
+6,29, 0,0, 8, H, AS72D256
+6,30, 0,0, 9, H, AS72D256
+6,31, 0,0, 9, H, AS72D256
+6,32, 0,0, 9, H, AS72D256
+6,33, 0,0, 9, H, AS72D256
+6,34, 0,0, 9, H, AS72D256
+6,35, 0,0, 10, H, AS72D256
+6,36, 0,0, 10, H, AS72D256
+6,37, 0,0, 10, H, AS72D256
+6,38, 0,0, 10, H, AS72D256
+6,39, 0,0, 80, H, AS72D256
+6,39, 0,0, 10, H, AS72D256
+6,38, 0,0, 10, H, AS72D256
+6,37, 0,0, 10, H, AS72D256
+6,36, 0,0, 10, H, AS72D256
+6,35, 0,0, 10, H, AS72D256
+6,34, 0,0, 9, H, AS72D256
+6,33, 0,0, 9, H, AS72D256
+6,32, 0,0, 9, H, AS72D256
+6,31, 0,0, 9, H, AS72D256
+6,30, 0,0, 9, H, AS72D256
+6,29, 0,0, 8, H, AS72D256
+6,28, 0,0, 8, H, AS72D256
+6,27, 0,0, 8, H, AS72D256
+6,26, 0,0, 8, H, AS72D256
+6,25, 0,0, 8, H, AS72D256
+6,24, 0,0, 7, H, AS72D256
+6,23, 0,0, 7, H, AS72D256
+6,22, 0,0, 6, H, AS72D256
+6,21, 0,0, 6, H, AS72D256
+6,20, 0,0, 5, H, AS72D256
+6,19, 0,0, 5, H, AS72D256
+6,18, 0,0, 6, H, AS72D256
+6,17, 0,0, 6, H, AS72D256
+6,16, 0,0, 7, H, AS72D256
+6,15, 0,0, 7, H, AS72D256
+6,14, 0,0, 8, H, AS72D256
+6,13, 0,0, 8, H, AS72D256
+6,12, 0,0, 9, H, AS72D256
+6,11, 0,0, 9, H, AS72D256
+6,10, 0,0, 9, H, AS72D256
+6,9, 0,0, 10, H, AS72D256
+6,8, 0,0, 15, H, AS72D256
+6,7, 0,0, 20, H, AS72D256
+6,6, 0,0, 30, H, AS72D256
+6,6, 0,0, 90, H, AS72D256
+
+[Begin Action 5]
+-1,0, 0,0, 212, ,
+8,0, 296,34, 1, , AS52D256
+8,1, 294,30, 1, , AS52D256
+8,2, 286,27, 1, , AS52D256
+8,3, 281,24, 1, , AS52D256
+8,4, 275,22, 1, , AS52D256
+8,5, 269,17, 1, , AS52D256
+8,6, 260,15, 1, , AS52D256
+8,6, 249,11, 1, , AS52D256
+8,7, 236,6, 1, , AS52D256
+8,0, 216,4, 1, , AS52D256
+8,1, 210,2, 1, , AS52D256
+8,2, 198,-1, 1, , AS52D256
+8,3, 190,-3, 1, , AS52D256
+8,4, 180,-6, 1, , AS52D256
+8,5, 169,-9, 1, , AS52D256
+8,6, 165,-10, 1, , AS52D256
+8,6, 156,-11, 1, , AS52D256
+8,7, 154,-12, 1, , AS52D256
+8,0, 122,-19, 1, , AS52D256
+8,1, 120,-21, 1, , AS52D256
+8,2, 115,-20, 1, , AS52D256
+8,3, 111,-20, 1, , AS52D256
+8,4, 105,-20, 1, , AS52D256
+8,5, 95,-19, 1, , AS52D256
+8,6, 88,-18, 1, , AS52D256
+8,6, 81,-18, 1, , AS52D256
+8,7, 72,-15, 1, , AS52D256
+8,0, 50,-19, 1, , AS52D256
+8,1, 49,-21, 1, , AS52D256
+8,2, 39,-17, 1, , AS52D256
+8,3, 31,-15, 1, , AS52D256
+8,4, 23,-14, 1, , AS52D256
+8,5, 18,-11, 1, , AS52D256
+8,6, 11,-8, 1, , AS52D256
+8,6, 2,-6, 1, , AS52D256
+8,7, -8,-4, 1, , AS52D256
+8,0, -27,-4, 1, , AS52D256
+8,1, -29,-4, 1, , AS52D256
+8,2, -33,-3, 1, , AS52D256
+8,3, -36,-2, 1, , AS52D256
+8,4, -41,0, 1, , AS52D256
+8,5, -47,3, 1, , AS52D256
+8,6, -54,7, 1, , AS52D256
+8,6, -64,11, 1, , AS52D256
+8,7, -65,13, 1, , AS52D256
+8,0, -82,14, 1, , AS52D256
+8,1, -83,16, 1, , AS52D256
+8,2, -89,21, 1, , AS52D256
+8,3, -95,24, 1, , AS52D256
+8,4, -101,26, 1, , AS52D256
+8,5, -113,33, 1, , AS52D256
+8,6, -122,40, 1, , AS52D256
+8,6, -131,44, 1, , AS52D256
+8,7, -137,44, 1, , AS52D256
+-1,0, 0,0, 312, ,
+8,0, 12,45, 1, H, AS52D256
+8,1, 15,41, 1, H, AS52D256
+8,2, 22,38, 1, H, AS52D256
+8,3, 29,36, 1, H, AS52D256
+8,4, 35,34, 1, H, AS52D256
+8,5, 39,34, 1, H, AS52D256
+8,6, 43,33, 1, H, AS52D256
+8,6, 48,31, 1, H, AS52D256
+8,7, 62,23, 1, H, AS52D256
+8,0, 85,13, 1, H, AS52D256
+8,1, 86,9, 1, H, AS52D256
+8,2, 89,8, 1, H, AS52D256
+8,3, 96,6, 1, H, AS52D256
+8,4, 102,3, 1, H, AS52D256
+8,5, 106,3, 1, H, AS52D256
+8,6, 110,3, 1, H, AS52D256
+8,6, 117,0, 1, H, AS52D256
+8,7, 121,-2, 1, H, AS52D256
+8,0, 149,-8, 1, H, AS52D256
+8,1, 153,-11, 1, H, AS52D256
+8,2, 158,-11, 1, H, AS52D256
+8,3, 168,-12, 1, H, AS52D256
+8,4, 175,-12, 1, H, AS52D256
+8,5, 182,-12, 1, H, AS52D256
+8,6, 190,-14, 1, H, AS52D256
+8,6, 201,-16, 1, H, AS52D256
+8,7, 206,-16, 1, H, AS52D256
+8,0, 231,-22, 1, H, AS52D256
+8,1, 232,-23, 1, H, AS52D256
+8,2, 243,-22, 1, H, AS52D256
+8,3, 254,-21, 1, H, AS52D256
+8,4, 261,-20, 1, H, AS52D256
+8,5, 270,-17, 1, H, AS52D256
+8,6, 273,-15, 1, H, AS52D256
+8,6, 285,-13, 1, H, AS52D256
+8,7, 286,-13, 1, H, AS52D256
+8,0, 310,-11, 1, H, AS52D256
+8,1, 314,-11, 1, H, AS52D256
+8,2, 319,-9, 1, H, AS52D256
+8,3, 324,-8, 1, H, AS52D256
+8,4, 330,-7, 1, H, AS52D256
+8,5, 337,-3, 1, H, AS52D256
+8,6, 347,0, 1, H, AS52D256
+8,6, 351,1, 1, H, AS52D256
+8,7, 353,3, 1, H, AS52D256
+8,0, 371,1, 1, H, AS52D256
+8,1, 373,1, 1, H, AS52D256
+8,2, 379,3, 1, H, AS52D256
+8,3, 388,6, 1, H, AS52D256
+8,4, 395,8, 1, H, AS52D256
+8,5, 405,11, 1, H, AS52D256
+8,6, 414,16, 1, H, AS52D256
+8,6, 424,22, 1, H, AS52D256
+8,7, 428,23, 1, H, AS52D256
+-1,0, 0,0, 12, ,
+
+[Begin Action 6]
+9,0, 0,0, 3, H
+9,1, 0,0, 3, H
+9,2, 0,0, 3, H
+9,3, 0,0, 3, H
+9,4, 0,0, 3, H
+9,5, 0,0, 3, H
+9,6, 0,0, 3, H
+9,7, 0,0, 5, H
+
+[Begin Action 7]
+9,0, 0,0, 3, V, AS0D241
+9,1, 0,0, 3, V, AS0D241
+9,2, 0,0, 3, V, AS0D241
+9,3, 0,0, 3, V, AS0D241
+9,4, 0,0, 3, V, AS0D241
+9,5, 0,0, 3, V, AS0D241
+9,6, 0,0, 3, V, AS0D241
+9,7, 0,0, 3, V, AS0D241
+
+[Begin Action 8]
+-1,0, 0,0, 20
+22,1, 0,-28, 1, , AS10D256
+22,2, 0,-23, 1, , AS15D256
+22,3, 0,-20, 1, , AS20D256
+22,4, 0,-13, 1, , AS27D256
+22,5, 0,-7, 1, , AS37D256
+22,6, 0,0, 1, , AS40D256
+22,6, 0,0, 4, , AS40D256
+22,5, 0,4, 2, , AS37D256
+22,4, 0,7, 2, , AS27D256
+22,4, 0,10, 2, , AS20D256
+22,3, 0,13, 2, , AS15D256
+22,2, 0,22, 2, , AS10D256
+-1,0, 0,0, 40
+22,1, 10,-28, 1, , AS10D256
+22,2, 10,-23, 1, , AS15D256
+22,3, 10,-20, 1, , AS20D256
+22,4, 10,-13, 1, , AS27D256
+22,5, 10,-7, 1, , AS37D256
+22,6, 10,0, 1, , AS40D256
+22,6, 10,0, 4, , AS40D256
+22,5, 10,4, 2, , AS37D256
+22,4, 10,7, 2, , AS27D256
+22,4, 10,10, 2, , AS20D256
+22,3, 10,13, 2, , AS15D256
+22,2, 10,22, 2, , AS10D256
+-1,0, 0,0, 40
+22,1, 20,-28, 1, , AS10D256
+22,2, 20,-23, 1, , AS15D256
+22,3, 20,-20, 1, , AS20D256
+22,4, 20,-13, 1, , AS27D256
+22,5, 20,-7, 1, , AS37D256
+22,6, 20,0, 1, , AS40D256
+22,6, 20,0, 4, , AS40D256
+22,5, 20,4, 2, , AS37D256
+22,4, 20,7, 2, , AS27D256
+22,4, 20,10, 2, , AS20D256
+22,3, 20,13, 2, , AS15D256
+22,2, 20,22, 2, , AS10D256
+-1,0, 0,0, 20
+
+[Begin Action 28]
+28,0, 0,0, 1
+28,1, 0,0, 1
+28,2, 0,0, 1
+28,3, 0,0, 1
+28,4, 0,0, 1
+28,5, 0,0, 1
+28,6, 0,0, 1
+28,7, 0,0, 1
+28,8, 0,0, 1
+28,9, 0,0, 1
+28,10, 0,0, 1
+28,11, 0,0, 1
+28,12, 0,0, 1
+28,13, 0,0, 1
+28,14, 0,0, 1
+28,15, 0,0, 1
+28,16, 0,0, 1
+28,17, 0,0, 1
+28,18, 0,0, 1
+28,19, 0,0, 1
+28,20, 0,0, 1
+28,21, 0,0, 1
+28,22, 0,0, 1
+28,23, 0,0, 1
+28,24, 0,0, 1
+28,25, 0,0, 1
+28,26, 0,0, 1
+28,27, 0,0, 1
+28,28, 0,0, 1
+28,29, 0,0, 1
+28,30, 0,0, 1
+28,31, 0,0, 1
+28,32, 0,0, 1
+
+[Begin Action 31]
+31,0, 0,0, 1
+31,1, 0,0, 1
+31,2, 0,0, 1
+31,3, 0,0, 1
+31,4, 0,0, 1
+31,5, 0,0, 1
+31,6, 0,0, 1
+31,7, 0,0, 1
+31,8, 0,0, 1
+31,9, 0,0, 1
+31,10, 0,0, 1
+31,11, 0,0, 1
+31,12, 0,0, 1
+31,13, 0,0, 1
+31,14, 0,0, 1
+31,15, 0,0, 1
+31,16, 0,0, 1
+31,17, 0,0, 1
+31,18, 0,0, 1
+31,19, 0,0, 1
+31,20, 0,0, 1
+31,21, 0,0, 1
+31,22, 0,0, 1
+31,23, 0,0, 1
+31,24, 0,0, 1
+31,25, 0,0, 1
+31,26, 0,0, 1
+31,27, 0,0, 1
+31,28, 0,0, 1
+31,29, 0,0, 1
+31,30, 0,0, 1
+31,31, 0,0, 1
+31,32, 0,0, 1

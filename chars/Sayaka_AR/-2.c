@@ -366,481 +366,499 @@ trigger1 = NumExplod(7770)
 ID = 7770
 ignorehitpause = 1
 
-[state -2, AR gauge 9610 P1 on]
+;Abstract Reordered: mechanic meter HUD - Kuroko's MAGIC CIRCUIT bar, fill in the parry colour,
+;bottom of the screen (P1 left, P2 right). Only the look changed; the meter logic is untouched.
+[state -2, AR meter HUD frame P1]
 type = Explod
 triggerall = !ishelper
 triggerall = TeamSide = 1
-trigger1 = NumExplod(9610) = 0
+trigger1 = NumExplod(7790) = 0
+trigger1 = 1
+anim = 7790
+ID = 7790
+pos = 32, GameHeight - (33)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD back P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7792) = 0
+trigger1 = 1
+anim = 7792
+ID = 7792
+pos = 40, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD fill 7791 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7791) = 0
+trigger1 = var(39) = 0 || (var(39) = 1 && var(38) = 0 && fvar(5) < 1000)
+anim = 7791
+ID = 7791
+pos = 40, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD fill 7795 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7795) = 0
+trigger1 = var(39) = 1 && var(38) = 0 && fvar(5) >= 1000
+anim = 7795
+ID = 7795
+pos = 40, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD fill 7796 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7796) = 0
+trigger1 = var(39) = 1 && var(38) > 0
+anim = 7796
+ID = 7796
+pos = 40, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD icon 7797 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7797) = 0
 trigger1 = var(39) = 0
 anim = 9610
-ID = 9610
-pos = 44, GameHeight - (28)
+ID = 7797
+pos = 19, GameHeight - (20)
 postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 14
 ontop = 1
 ownpal = 1
+scale = 1,1
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR gauge 9610 P1 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9610)
-trigger1 = !(var(39) = 0)
-ID = 9610
-ignorehitpause = 1
-
-[state -2, AR gauge 9611 P1 on]
+[state -2, AR meter HUD icon 7798 P1]
 type = Explod
 triggerall = !ishelper
 triggerall = TeamSide = 1
-trigger1 = NumExplod(9611) = 0
+trigger1 = NumExplod(7798) = 0
 trigger1 = var(39) = 1
 anim = 9611
-ID = 9611
-pos = 44, GameHeight - (28)
+ID = 7798
+pos = 19, GameHeight - (20)
 postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 14
 ontop = 1
 ownpal = 1
+scale = 1,1
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR gauge 9611 P1 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9611)
-trigger1 = !(var(39) = 1)
-ID = 9611
-ignorehitpause = 1
-
-[state -2, AR gauge 9612 P1 on]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9612) = 0
-trigger1 = 1
-anim = 9612
-ID = 9612
-pos = 56, GameHeight - (33)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 10
-ontop = 1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR gauge 9612 P1 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9612)
-trigger1 = !(1)
-ID = 9612
-ignorehitpause = 1
-
-[state -2, AR gauge 9613 P1 on]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9613) = 0
-trigger1 = var(39) = 0
-anim = 9613
-ID = 9613
-pos = 58, GameHeight - (31)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 10
-ontop = 1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR gauge 9613 P1 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9613)
-trigger1 = !(var(39) = 0)
-ID = 9613
-ignorehitpause = 1
-
-[state -2, AR gauge 9613 P1 fill]
-type = ModifyExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9613)
-ID = 9613
-scale = ifelse(ifelse(RedLife - Life > LifeMax * 0.25, 1, (RedLife - Life) / (LifeMax * 0.25)) < 0, 0, ifelse(RedLife - Life > LifeMax * 0.25, 1, (RedLife - Life) / (LifeMax * 0.25))), 1
-ignorehitpause = 1
-
-[state -2, AR gauge 9615 P1 on]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9615) = 0
-trigger1 = var(39) = 1 && var(38) = 0 && fvar(5) < 1000
-anim = 9615
-ID = 9615
-pos = 58, GameHeight - (31)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 10
-ontop = 1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR gauge 9615 P1 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9615)
-trigger1 = !(var(39) = 1 && var(38) = 0 && fvar(5) < 1000)
-ID = 9615
-ignorehitpause = 1
-
-[state -2, AR gauge 9615 P1 fill]
-type = ModifyExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9615)
-ID = 9615
-scale = ifelse(ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0) < 0, 0, ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0)), 1
-ignorehitpause = 1
-
-[state -2, AR gauge 9617 P1 on]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9617) = 0
-trigger1 = var(39) = 1 && var(38) = 0 && fvar(5) >= 1000
-anim = 9617
-ID = 9617
-pos = 58, GameHeight - (31)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 10
-ontop = 1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR gauge 9617 P1 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9617)
-trigger1 = !(var(39) = 1 && var(38) = 0 && fvar(5) >= 1000)
-ID = 9617
-ignorehitpause = 1
-
-[state -2, AR gauge 9617 P1 fill]
-type = ModifyExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9617)
-ID = 9617
-scale = ifelse(ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0) < 0, 0, ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0)), 1
-ignorehitpause = 1
-
-[state -2, AR gauge 9619 P1 on]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9619) = 0
-trigger1 = var(39) = 1 && var(38) > 0
-anim = 9619
-ID = 9619
-pos = 58, GameHeight - (31)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 10
-ontop = 1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR gauge 9619 P1 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9619)
-trigger1 = !(var(39) = 1 && var(38) > 0)
-ID = 9619
-ignorehitpause = 1
-
-[state -2, AR gauge 9619 P1 fill]
-type = ModifyExplod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(9619)
-ID = 9619
-scale = ifelse(ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0) < 0, 0, ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0)), 1
-ignorehitpause = 1
-
-[state -2, AR gauge 9610 P2 on]
+[state -2, AR meter HUD frame P2]
 type = Explod
 triggerall = !ishelper
 triggerall = TeamSide = 2
-trigger1 = NumExplod(9610) = 0
+trigger1 = NumExplod(7790) = 0
+trigger1 = 1
+anim = 7790
+ID = 7790
+pos = GameWidth - (140), GameHeight - (33)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD back P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7792) = 0
+trigger1 = 1
+anim = 7792
+ID = 7792
+pos = GameWidth - (132), GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD fill 7791 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7791) = 0
+trigger1 = var(39) = 0 || (var(39) = 1 && var(38) = 0 && fvar(5) < 1000)
+anim = 7791
+ID = 7791
+pos = GameWidth - (40), GameHeight - (22)
+postype = left
+facing = -1
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD fill 7795 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7795) = 0
+trigger1 = var(39) = 1 && var(38) = 0 && fvar(5) >= 1000
+anim = 7795
+ID = 7795
+pos = GameWidth - (40), GameHeight - (22)
+postype = left
+facing = -1
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD fill 7796 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7796) = 0
+trigger1 = var(39) = 1 && var(38) > 0
+anim = 7796
+ID = 7796
+pos = GameWidth - (40), GameHeight - (22)
+postype = left
+facing = -1
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD icon 7797 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7797) = 0
 trigger1 = var(39) = 0
 anim = 9610
-ID = 9610
-pos = -44, GameHeight - (28)
-postype = right
+ID = 7797
+pos = GameWidth - (19), GameHeight - (20)
+postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 14
 ontop = 1
 ownpal = 1
+scale = 1,1
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR gauge 9610 P2 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9610)
-trigger1 = !(var(39) = 0)
-ID = 9610
-ignorehitpause = 1
-
-[state -2, AR gauge 9611 P2 on]
+[state -2, AR meter HUD icon 7798 P2]
 type = Explod
 triggerall = !ishelper
 triggerall = TeamSide = 2
-trigger1 = NumExplod(9611) = 0
+trigger1 = NumExplod(7798) = 0
 trigger1 = var(39) = 1
 anim = 9611
-ID = 9611
-pos = -44, GameHeight - (28)
-postype = right
+ID = 7798
+pos = GameWidth - (19), GameHeight - (20)
+postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 14
 ontop = 1
 ownpal = 1
+scale = 1,1
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR gauge 9611 P2 off]
+[state -2, AR meter HUD off 7791]
 type = RemoveExplod
 triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9611)
-trigger1 = !(var(39) = 1)
-ID = 9611
+trigger1 = NumExplod(7791)
+trigger1 = !(var(39) = 0 || (var(39) = 1 && var(38) = 0 && fvar(5) < 1000))
+ID = 7791
 ignorehitpause = 1
 
-[state -2, AR gauge 9612 P2 on]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9612) = 0
-trigger1 = 1
-anim = 9612
-ID = 9612
-pos = -148, GameHeight - (33)
-postype = right
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 10
-ontop = 1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR gauge 9612 P2 off]
+[state -2, AR meter HUD off 7795]
 type = RemoveExplod
 triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9612)
-trigger1 = !(1)
-ID = 9612
-ignorehitpause = 1
-
-[state -2, AR gauge 9614 P2 on]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9614) = 0
-trigger1 = var(39) = 0
-anim = 9614
-ID = 9614
-pos = -58, GameHeight - (31)
-postype = right
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 10
-ontop = 1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR gauge 9614 P2 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9614)
-trigger1 = !(var(39) = 0)
-ID = 9614
-ignorehitpause = 1
-
-[state -2, AR gauge 9614 P2 fill]
-type = ModifyExplod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9614)
-ID = 9614
-scale = ifelse(ifelse(RedLife - Life > LifeMax * 0.25, 1, (RedLife - Life) / (LifeMax * 0.25)) < 0, 0, ifelse(RedLife - Life > LifeMax * 0.25, 1, (RedLife - Life) / (LifeMax * 0.25))), 1
-ignorehitpause = 1
-
-[state -2, AR gauge 9616 P2 on]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9616) = 0
-trigger1 = var(39) = 1 && var(38) = 0 && fvar(5) < 1000
-anim = 9616
-ID = 9616
-pos = -58, GameHeight - (31)
-postype = right
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 10
-ontop = 1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR gauge 9616 P2 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9616)
-trigger1 = !(var(39) = 1 && var(38) = 0 && fvar(5) < 1000)
-ID = 9616
-ignorehitpause = 1
-
-[state -2, AR gauge 9616 P2 fill]
-type = ModifyExplod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9616)
-ID = 9616
-scale = ifelse(ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0) < 0, 0, ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0)), 1
-ignorehitpause = 1
-
-[state -2, AR gauge 9618 P2 on]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9618) = 0
-trigger1 = var(39) = 1 && var(38) = 0 && fvar(5) >= 1000
-anim = 9618
-ID = 9618
-pos = -58, GameHeight - (31)
-postype = right
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 10
-ontop = 1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR gauge 9618 P2 off]
-type = RemoveExplod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9618)
+trigger1 = NumExplod(7795)
 trigger1 = !(var(39) = 1 && var(38) = 0 && fvar(5) >= 1000)
-ID = 9618
+ID = 7795
 ignorehitpause = 1
 
-[state -2, AR gauge 9618 P2 fill]
-type = ModifyExplod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9618)
-ID = 9618
-scale = ifelse(ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0) < 0, 0, ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0)), 1
-ignorehitpause = 1
-
-[state -2, AR gauge 9620 P2 on]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9620) = 0
-trigger1 = var(39) = 1 && var(38) > 0
-anim = 9620
-ID = 9620
-pos = -58, GameHeight - (31)
-postype = right
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 10
-ontop = 1
-ownpal = 1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR gauge 9620 P2 off]
+[state -2, AR meter HUD off 7796]
 type = RemoveExplod
 triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9620)
+trigger1 = NumExplod(7796)
 trigger1 = !(var(39) = 1 && var(38) > 0)
-ID = 9620
+ID = 7796
 ignorehitpause = 1
 
-[state -2, AR gauge 9620 P2 fill]
+[state -2, AR meter HUD off 7797]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(7797)
+trigger1 = !(var(39) = 0)
+ID = 7797
+ignorehitpause = 1
+
+[state -2, AR meter HUD off 7798]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(7798)
+trigger1 = !(var(39) = 1)
+ID = 7798
+ignorehitpause = 1
+
+[state -2, AR meter HUD scale 7791]
 type = ModifyExplod
 triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(9620)
-ID = 9620
-scale = ifelse(ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0) < 0, 0, ifelse(fvar(5) > 1000, 1, fvar(5) / 1000.0)), 1
+trigger1 = NumExplod(7791)
+ID = 7791
+scale = 0.5 * (ifelse((ifelse(var(39) = 0, (RedLife - Life) / (LifeMax * 0.25), fvar(5) / 1000.0)) < 0, 0, ifelse((ifelse(var(39) = 0, (RedLife - Life) / (LifeMax * 0.25), fvar(5) / 1000.0)) > 1, 1, (ifelse(var(39) = 0, (RedLife - Life) / (LifeMax * 0.25), fvar(5) / 1000.0))))) + 0.00005, .5
+ignorehitpause = 1
+
+[state -2, AR meter HUD scale 7795]
+type = ModifyExplod
+triggerall = !ishelper
+trigger1 = NumExplod(7795)
+ID = 7795
+scale = 0.5 * (1) + 0.00005, .5
+ignorehitpause = 1
+
+[state -2, AR meter HUD scale 7796]
+type = ModifyExplod
+triggerall = !ishelper
+trigger1 = NumExplod(7796)
+ID = 7796
+scale = 0.5 * (ifelse((fvar(5) / 1000.0) < 0, 0, ifelse((fvar(5) / 1000.0) > 1, 1, (fvar(5) / 1000.0)))) + 0.00005, .5
+ignorehitpause = 1
+
+;Abstract Reordered: the background stays inverted for the whole Despair install
+;(not during Affettuoso, which has its own background effects)
+[state -2, AR install background inverted]
+type = BGPalFX
+triggerall = !ishelper
+trigger1 = var(38) > 0
+trigger1 = RoundState = 2
+trigger1 = stateno != [3400,3499]
+time = var(38)
+invertall = 1
+ignorehitpause = 1
+
+[state -2, AR install background reset]
+type = BGPalFX
+triggerall = !ishelper
+trigger1 = RoundState = 0
+time = 1
+
+;Abstract Reordered: ground 236A / 236C pull the opponent all the way back to her (she dashes through them)
+[state -2, AR oratorio pull 1010 target x]
+type = VarSet
+triggerall = !ishelper
+triggerall = stateno = 1010 || stateno = 1070 || stateno = 1090 || stateno = 1095
+triggerall = NumTarget(1010)
+triggerall = target(1010), MoveType = H
+triggerall = target(1010), StateType = A
+trigger1 = 1
+var(9) = target(1010), Pos X
+ignorehitpause = 1
+
+[state -2, AR oratorio pull 1010 distance]
+type = VarSet
+triggerall = !ishelper
+triggerall = stateno = 1010 || stateno = 1070 || stateno = 1090 || stateno = 1095
+triggerall = NumTarget(1010)
+triggerall = target(1010), MoveType = H
+triggerall = target(1010), StateType = A
+trigger1 = 1
+var(9) = ceil(Pos X) - var(9)
+ignorehitpause = 1
+
+[state -2, AR oratorio pull 1010 their facing]
+type = VarSet
+triggerall = !ishelper
+triggerall = stateno = 1010 || stateno = 1070 || stateno = 1090 || stateno = 1095
+triggerall = NumTarget(1010)
+triggerall = target(1010), MoveType = H
+triggerall = target(1010), StateType = A
+trigger1 = 1
+var(54) = target(1010), facing
+ignorehitpause = 1
+
+[state -2, AR oratorio pull 1010]
+type = TargetVelSet
+triggerall = !ishelper
+triggerall = stateno = 1010 || stateno = 1070 || stateno = 1090 || stateno = 1095
+triggerall = NumTarget(1010)
+triggerall = target(1010), MoveType = H
+triggerall = target(1010), StateType = A
+trigger1 = abs(var(9)) > 24
+x = ifelse(var(9) > 400, 400, ifelse(var(9) < -400, -400, var(9))) * 0.16 * var(54)
+id = 1010
+ignorehitpause = 1
+
+[state -2, AR oratorio pull 1010 arrived]
+type = TargetVelSet
+triggerall = !ishelper
+triggerall = stateno = 1010 || stateno = 1070 || stateno = 1090 || stateno = 1095
+triggerall = NumTarget(1010)
+triggerall = target(1010), MoveType = H
+triggerall = target(1010), StateType = A
+trigger1 = abs(var(9)) <= 24
+x = 0
+id = 1010
+ignorehitpause = 1
+
+[state -2, AR oratorio pull 1070 target x]
+type = VarSet
+triggerall = !ishelper
+triggerall = stateno = 1010 || stateno = 1070 || stateno = 1090 || stateno = 1095
+triggerall = NumTarget(1070)
+triggerall = target(1070), MoveType = H
+triggerall = target(1070), StateType = A
+trigger1 = 1
+var(9) = target(1070), Pos X
+ignorehitpause = 1
+
+[state -2, AR oratorio pull 1070 distance]
+type = VarSet
+triggerall = !ishelper
+triggerall = stateno = 1010 || stateno = 1070 || stateno = 1090 || stateno = 1095
+triggerall = NumTarget(1070)
+triggerall = target(1070), MoveType = H
+triggerall = target(1070), StateType = A
+trigger1 = 1
+var(9) = ceil(Pos X) - var(9)
+ignorehitpause = 1
+
+[state -2, AR oratorio pull 1070 their facing]
+type = VarSet
+triggerall = !ishelper
+triggerall = stateno = 1010 || stateno = 1070 || stateno = 1090 || stateno = 1095
+triggerall = NumTarget(1070)
+triggerall = target(1070), MoveType = H
+triggerall = target(1070), StateType = A
+trigger1 = 1
+var(54) = target(1070), facing
+ignorehitpause = 1
+
+[state -2, AR oratorio pull 1070]
+type = TargetVelSet
+triggerall = !ishelper
+triggerall = stateno = 1010 || stateno = 1070 || stateno = 1090 || stateno = 1095
+triggerall = NumTarget(1070)
+triggerall = target(1070), MoveType = H
+triggerall = target(1070), StateType = A
+trigger1 = abs(var(9)) > 24
+x = ifelse(var(9) > 400, 400, ifelse(var(9) < -400, -400, var(9))) * 0.16 * var(54)
+id = 1070
+ignorehitpause = 1
+
+[state -2, AR oratorio pull 1070 arrived]
+type = TargetVelSet
+triggerall = !ishelper
+triggerall = stateno = 1010 || stateno = 1070 || stateno = 1090 || stateno = 1095
+triggerall = NumTarget(1070)
+triggerall = target(1070), MoveType = H
+triggerall = target(1070), StateType = A
+trigger1 = abs(var(9)) <= 24
+x = 0
+id = 1070
 ignorehitpause = 1
 

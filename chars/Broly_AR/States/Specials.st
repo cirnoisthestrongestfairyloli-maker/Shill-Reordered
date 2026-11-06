@@ -1417,7 +1417,7 @@ ctrl = 0
 [State 1100, Strength]
 type = varset
 trigger1 = !time && !AIlevel
-var(10) = ifelse(prevstateno=1450,2,ifelse(command = "qcfc", 3, ifelse(command = "qcfb", 2, 1)))
+var(10) = ifelse(prevstateno=1450,2,ifelse(command = "ar_22H", 3, ifelse(command = "ar_22M", 2, 1)))
 [State 1100, Strength AI]
 type = varset
 trigger1 = !time && AIlevel
@@ -1554,8 +1554,9 @@ ID = 1402
 ground.slidetime = 16
 ground.hittime = 16
 air.type = Low
-air.velocity = -7, 7
-down.velocity = 0, 0
+;AR: the shockwave pops falling / grounded (OTG) opponents up so a super can follow
+air.velocity = -1.5, -6.5
+down.velocity = -1.5, -6.5
 down.bounce = 0
 ground.cornerpush.veloff = 0
 guard.velocity = -10.52

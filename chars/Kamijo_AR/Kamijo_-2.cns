@@ -154,7 +154,7 @@ ignorehitpause = 1
 [State -2];ハードラックゲージy軸
 	type = Varset
 	trigger1 = Numhelper(30000) = 0
-	var(31) = -26   ;Abstract Reordered: above the burst icon
+	var(31) = 0   ;Abstract Reordered: bottom of the screen (burst gauge is at the top now)
 ;デフォルトは0 -方向で中央に
 
 [State -2];ハードラックゲージx軸
@@ -818,6 +818,15 @@ ignorehitpause = 1
 	type = VarAdd
 	trigger1 = Anim = 6661 && AnimElemtime(2) = 60
 	var(3) = 1
+
+[State -2, AR Hard Luck starts at 25%]
+	type = VarSet
+	trigger1 = Anim = 6661 && AnimElemtime(2) = 60
+	trigger1 = var(3) = 2
+	trigger2 = var(7) = 1 && var(3) < 2
+	trigger2 = StateNo != 6662 && StateNo != 6666
+	var(5) = 50	;25% of the Hard Luck gauge (200)
+	ignorehitpause = 1
 
 [State -2];HardLuck(赤)
 	type = Varset

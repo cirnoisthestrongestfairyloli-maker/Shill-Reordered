@@ -63,7 +63,7 @@ triggerall = stateno = 3101
 trigger1 = AnimElemTime(2) = 75
 
 [State -3,『It's』『All Fiction!!』]
-Type = ChangeState
+Type = null
 Value = 2600
 TriggerAll=var(59)
 TriggerAll=!Var(21)
@@ -197,7 +197,7 @@ Trigger3 = (PrevStateNo = [120,159])
 Trigger4 = EnemyNear,Ctrl
 
 [State -3,ATフィールド装備挑発]
-Type     = ChangeState
+Type     = null
 Value    = 700
 TriggerAll=var(59)
 TriggerAll=!Var(21)
@@ -443,7 +443,7 @@ Trigger1 = EnemyNear,StateNo != 5120
 Trigger1 = Ctrl
 
 [State -3,]
-Type = ChangeState
+Type = null
 value = 700
 TriggerAll = var(59) || fvar(39)
 triggerall = !var(21)
@@ -478,7 +478,7 @@ triggerall = var(13)
 triggerall = var(14) = var(17) || var(23)
 triggerall = !var(52) || Enemy,TeamMode = turns
 TriggerAll = Power>5999
-TriggerAll = Life < 0.3*LifeMax || PalNo >= 9
+TriggerAll = Life < 0.3*LifeMax || PalNo >= 99
 trigger1 = stateno = 1360
 trigger1 = AnimElemTime(20) >= 5
 trigger2 = stateno = 2401
@@ -802,7 +802,7 @@ trigger3 = var(1)
 ;Movecontact MoveHit MoveGuarded AnimElem = ,>0
 ;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [State -1, 『It's』『All Fiction!!』]
-Type     = ChangeState
+Type     = null
 TriggerAll=var(59)||fvar(39)
 triggerall = !var(21)
 triggerall = !var(4)
@@ -944,7 +944,7 @@ trigger1 = stateno = [200,599]
 value = 1300
 
 [State -3,挑発]
-type = ChangeState
+type = null
 triggerall = Power != PowerMax
 triggerall = var(59)||fvar(39)
 triggerall = !var(21)
@@ -1169,7 +1169,7 @@ triggerall = var(13)
 triggerall = var(14) = var(17) || var(23)
 triggerall = !var(52) || Enemy,TeamMode = turns
 TriggerAll = Power>5999
-TriggerAll = Life < 0.3*LifeMax || PalNo >= 9
+TriggerAll = Life < 0.3*LifeMax || PalNo >= 99
 trigger1 = stateno = 1360
 trigger1 = AnimElemTime(20) >= 5
 trigger2 = stateno = 2401
@@ -1177,7 +1177,7 @@ trigger2 = var(1)
 value = 2900
 
 [State -3,『格好』付けずに]
-type = ChangeState
+type = null
 triggerall = var(59)||fvar(39)
 triggerall = !var(21)
 triggerall = !var(4)
@@ -1192,11 +1192,11 @@ TriggerAll = Power>2999
 triggerall = var(12)
 triggerall = var(13)
 triggerAll = fvar(11) >= 9 || (StateNo = [1000,1099]) || stateno = 3000
-triggerAll = 55<=((100-((life)*100/(lifemax)))+(100-((EnemyNear,life)*100/(EnemyNear,lifemax))))/2 || PalNo >= 10
+triggerAll = 55<=((100-((life)*100/(lifemax)))+(100-((EnemyNear,life)*100/(EnemyNear,lifemax))))/2 || PalNo >= 99
 ;triggerAll = 60<=100-((EnemyNear,life)*100/(EnemyNear,lifemax)) || var(23) || stateno != 2600
 ;triggerAll = !(var(23) && stateno = 2600)
 triggerAll = !(EnemyNear,StateNo = 2410 && var(2))
-triggerAll = PalNo >= 10 || !var(23) || (var(23) && ((Life < 0.3*LifeMax && Power>4999)))
+triggerAll = PalNo >= 99 || !var(23) || (var(23) && ((Life < 0.3*LifeMax && Power>4999)))
 Triggerall = Random <= var(58)*(var(24)*10+(100-((life)*100/(lifemax))))
 Trigger1 = stateno != 200
 Trigger1 = stateno != 2600
@@ -1204,7 +1204,7 @@ trigger1 = var(1)
 value = 2800
 
 [State -3,僕は負けてなんかいない]
-type = ChangeState
+type = null
 triggerall = var(59)||fvar(39)
 triggerall = !var(21)
 triggerall = !var(4)
@@ -1216,7 +1216,7 @@ Triggerall = !inguarddist
 triggerall = P2bodydist Y = [-250,0]
 triggerAll = (EnemyNear,MoveType = H && (EnemyNear,StateNo != [120,159])) 
 TriggerAll = Power>1999
-TriggerAll = Life < 0.3*LifeMax || PalNo >= 9
+TriggerAll = Life < 0.3*LifeMax || PalNo >= 99
 Triggerall = Random <= var(58)*100
 trigger1 = stateno = 2800
 trigger1 = anim = 2802
@@ -1226,7 +1226,7 @@ trigger1 = animelemtime(5)<0
 value = 2810
 
 [State -3,『却本作り』]
-type = ChangeState
+type = null
 triggerall = var(59)||fvar(39)
 triggerall = !var(21)
 triggerall = !var(4)
@@ -1378,7 +1378,7 @@ Trigger3 = animelemtime(7) >= 0
 value = 105
 
 [State -3,挑発]
-type = ChangeState
+type = null
 triggerall = Power != PowerMax
 triggerall = var(59)||fvar(39)
 triggerall = !var(21)
@@ -1397,7 +1397,7 @@ trigger1 = var(1)
 value = 700
 
 [State -3,勝ち挑発]
-type = ChangeState
+type = null
 triggerall = var(59)||fvar(39)
 triggerall = !var(21)
 triggerall = !var(4)
@@ -1560,7 +1560,7 @@ Trigger2 = !EnemyNear,Ctrl
 value = 600
 
 [State -3,]
-type = ChangeState
+type = null
 triggerall = var(59)
 triggerall = !var(21)
 triggerall = !var(4)
@@ -1826,12 +1826,12 @@ triggerall = var(13)
 triggerall = var(14) = var(17) || var(23)
 triggerall = !var(52) || Enemy,TeamMode = turns
 TriggerAll = Power>5999
-TriggerAll = Life < 0.3*LifeMax || PalNo >= 9
+TriggerAll = Life < 0.3*LifeMax || PalNo >= 99
 TriggerAll=ctrl && (P2bodydist X = [200,350])
 Trigger1 = Random <= (12-var(58))*10
 
 [State -3,ぶっぱ]
-Type = ChangeState
+Type = null
 value = 2700
 TriggerAll=var(59)
 triggerall = !var(21)

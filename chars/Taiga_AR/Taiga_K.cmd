@@ -118,249 +118,137 @@ command.buffer.time = 1
 
 [Command]
 name = "Curbstomp"
-command =~D,DF,F,D,DF,F,x
-time = 20
-
-[Command]
-name = "Curbstomp"
-command =~D,DF,F,D,DF,F,~x
-time = 20
-
-[Command]
-name = "Curbstomp"
-command =~D,DF,F,D,DF,F,y
-time = 20
-
-[Command]
-name = "Curbstomp"
-command =~D,DF,F,D,DF,F,~y
-time = 20
-
-[Command]
-name = "Curbstomp"
-command =~D,DF,F,D,DF,F,z
-time = 20
-
-[Command]
-name = "Curbstomp"
-command =~D,DF,F,D,DF,F,~z
-time = 20
+command = ~F, B, DB, D, DF, F, c
+time = 30
 
 [Command]
 name = "TD Combo"
-command =~D,DB,B,D,DB,B,x
-time = 20
+command = ~D, DB, B, D, DB, B, a+b
+time = 30
 
 [Command]
 name = "TD Combo"
-command =~D,DB,B,D,DB,B,~x
-time = 20
+command = ~D, DB, B, D, DB, B, b+c
+time = 30
 
 [Command]
 name = "TD Combo"
-command =~D,DB,B,D,DB,B,y
-time = 20
-
-[Command]
-name = "TD Combo"
-command =~D,DB,B,D,DB,B,~y
-time = 20
-
-[Command]
-name = "TD Combo"
-command =~D,DB,B,D,DB,B,z
-time = 20
-
-[Command]
-name = "TD Combo"
-command =~D,DB,B,D,DB,B,~z
-time = 20
+command = ~D, DB, B, D, DB, B, a+c
+time = 30
 
 [Command]
 name = "Demon Thrust EX"
-command =~D,DF,F,x+y
+command = ~D, DF, F, a+b
 time = 18
 
 [Command]
 name = "Demon Thrust EX"
-command =~D,DF,F,x+z
+command = ~D, DF, F, b+c
 time = 18
 
 [Command]
 name = "Demon Thrust EX"
-command =~D,DF,F,y+z
+command = ~D, DF, F, a+c
 time = 18
 
 [Command]
 name = "Tiger Upper EX"
-command =~F,D,DF,x+y
-Time = 18
+command = ~F, D, DF, a+b
+time = 18
 
 [Command]
 name = "Tiger Upper EX"
-command =~F,D,DF,x+z
-Time = 18
+command = ~F, D, DF, b+c
+time = 18
 
 [Command]
 name = "Tiger Upper EX"
-command =~F,D,DF,y+z
-Time = 18
-
-[Command]
-name = "Sled EX"
-command =~D,DB,B,x+y
+command = ~F, D, DF, a+c
 time = 18
 
 [Command]
 name = "Sled EX"
-command =~D,DB,B,x+z
+command = ~D, DB, B, a+b
 time = 18
 
 [Command]
 name = "Sled EX"
-command =~D,DB,B,y+z
+command = ~D, DB, B, b+c
+time = 18
+
+[Command]
+name = "Sled EX"
+command = ~D, DB, B, a+c
 time = 18
 
 [Command]
 name = "Tiger Eye"
-command = x+y+z
+command = U, D, U, D, U, D, U, D
 time = 15
 
-;-| Special Motions |------------------------------------------------------
-
 [Command]
 name = "Demon Thrust X"
-command =~D,DF,F,x
-time = 16
-
-[Command]
-name = "Demon Thrust X"
-command =~D,DF,F,~x
+command = ~D, DF, F, a
 time = 16
 
 [Command]
 name = "Demon Thrust Y"
-command =~D,DF,F,y
-time = 16
-
-[Command]
-name = "Demon Thrust Y"
-command =~D,DF,F,~y
+command = ~D, DF, F, b
 time = 16
 
 [Command]
 name = "Demon Thrust Z"
-command =~D,DF,F,z
-time = 16
-
-[Command]
-name = "Demon Thrust Z"
-command =~D,DF,F,~z
+command = ~D, DF, F, c
 time = 16
 
 [Command]
 name = "Tiger Upper"
-command =~F,D,DF,x
-Time = 16
+command = ~F, D, DF, a
+time = 16
 
 [Command]
 name = "Tiger Upper"
-command =~F,D,DF,~x
-Time = 16
+command = ~F, D, DF, b
+time = 16
 
 [Command]
 name = "Tiger Upper"
-command =~F,D,DF,y
-Time = 16
-
-[Command]
-name = "Tiger Upper"
-command =~F,D,DF,~y
-Time = 16
-
-[Command]
-name = "Tiger Upper"
-command =~F,D,DF,z
-Time = 16
-
-[Command]
-name = "Tiger Upper"
-command =~F,D,DF,~z
-Time = 16
-
-[Command]
-name = "Sled Ram X"
-command =~D,DB,B,x
+command = ~F, D, DF, c
 time = 16
 
 [Command]
 name = "Sled Ram X"
-command =~D,DB,B,~x
+command = ~D, DB, B, a
 time = 16
 
 [Command]
 name = "Sled Ram Y"
-command =~D,DB,B,y
-time = 16
-
-[Command]
-name = "Sled Ram Y"
-command =~D,DB,B,~y
+command = ~D, DB, B, b
 time = 16
 
 [Command]
 name = "Sled Ram Z"
-command =~D,DB,B,z
-time = 16
-
-[Command]
-name = "Sled Ram Z"
-command =~D,DB,B,~z
+command = ~D, DB, B, c
 time = 16
 
 [Command]
 name = "Ryuji"
-command =~D,D,x
-Time = 16
-
-[Command]
-name = "Ryuji"
-command =~D,D,~x
-Time = 16
-
-[Command]
-name = "Ryuji"
-command =~D,D,y
-Time = 16
-
-[Command]
-name = "Ryuji"
-command =~D,D,~y
-Time = 16
-
-[Command]
-name = "Ryuji"
-command =~D,D,z
-Time = 16
-
-[Command]
-name = "Ryuji"
-command =~D,D,~z
-Time = 16
-
-[Command]
-name = "Guard_Counter"
-command = x+y
+command = x
 time = 1
 
 [Command]
 name = "Guard_Counter"
-command = x+z
+command = a+b
 time = 1
 
 [Command]
 name = "Guard_Counter"
-command = y+z
+command = b+c
+time = 1
+
+[Command]
+name = "Guard_Counter"
+command = a+c
 time = 1
 
 ;-| Double Tap |-----------------------------------------------------------
@@ -671,17 +559,17 @@ time = 1
 ;-| Hold Button |--------------------------------------------------------------
 [Command]
 name = "hold_x"
-command = /x
+command = /a
 time = 1
 
 [Command]
 name = "hold_y"
-command = /y
+command = /b
 time = 1
 
 [Command]
 name = "hold_z"
-command = /z
+command = /c
 time = 1
 
 [Command]
@@ -787,7 +675,581 @@ time = 1
 
 
 ; Don't remove the following line. It's required by the CMD standard.
+
+;Abstract Reordered: A/B/C = light/medium/heavy, X = Ryuji, Y = grab, Z = parry, A+B+C = burst
+[Command]
+name = "Curbstomp Lv1"
+command = ~D, DF, F, D, DF, F, a+b
+time = 30
+
+[Command]
+name = "Curbstomp Lv1"
+command = ~D, DF, F, D, DF, F, b+c
+time = 30
+
+[Command]
+name = "Curbstomp Lv1"
+command = ~D, DF, F, D, DF, F, a+c
+time = 30
+
+[Command]
+name = "ar_grab"
+command = y
+time = 1
+
+[Command]
+name = "ar_parry"
+command = z
+time = 1
+
+[Command]
+name = "ar_burst"
+command = a+b+c
+time = 1
+
 [Statedef -1]
+;---------------------------------------------------------------------------
+;=== AR BURST HUD + LOGIC (gauge = Touma style from apply_burst_hud.py, anims/sprites 9660-9668) ===
+;Abstract Reordered: burst (Kamijo's) - A+B+C while being hit, recharges in 75 s (fvar(30))
+[State -1, AR burst round reset]
+type = VarSet
+triggerall = !ishelper
+trigger1 = RoundState < 2
+fvar(30) = 0
+
+[State -1, AR burst recharge]
+type = VarAdd
+triggerall = !ishelper
+trigger1 = RoundState = 2
+trigger1 = fvar(30) > 0
+fvar(30) = -1
+ignorehitpause = 1
+
+;Abstract Reordered: comeback - once a combo has done more than 15% of max life, every further hit
+;knocks half a second (30 ticks) off the burst cooldown. fvar(31) = life when the combo started, fvar(33) = life last tick
+[State -1, AR burst comeback]
+type = VarAdd
+triggerall = !ishelper
+triggerall = fvar(30) > 0
+trigger1 = movetype = H
+trigger1 = Life < fvar(33)
+trigger1 = fvar(31) - Life > LifeMax * 0.15
+fvar(30) = -30
+ignorehitpause = 1
+
+[State -1, AR burst comeback clamp]
+type = VarSet
+triggerall = !ishelper
+trigger1 = fvar(30) < 0
+fvar(30) = 0
+ignorehitpause = 1
+
+[State -1, AR burst combo start]
+type = VarSet
+triggerall = !ishelper
+trigger1 = movetype != H
+fvar(31) = Life
+ignorehitpause = 1
+
+[State -1, AR burst last life]
+type = VarSet
+triggerall = !ishelper
+trigger1 = 1
+fvar(33) = Life
+ignorehitpause = 1
+
+;Abstract Reordered: burst HUD - Touma's BURST gauge, recoloured, just under the lifebar.
+;fvar(30) = cooldown ticks (4500 = just used, 0 = ready). Anims 9660-9668, explod IDs = anims.
+[State -1, AR burst gauge 9668 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9668) = 0
+trigger1 = fvar(30) = 0
+anim = 9668
+ID = 9668
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9661) = 0
+trigger1 = fvar(30) = 0
+anim = 9661
+ID = 9661
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9660) = 0
+trigger1 = fvar(30) > 3750
+anim = 9660
+ID = 9660
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9662) = 0
+trigger1 = fvar(30) <= 3750 && fvar(30) > 3000
+anim = 9662
+ID = 9662
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9663) = 0
+trigger1 = fvar(30) <= 3000 && fvar(30) > 2250
+anim = 9663
+ID = 9663
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9664) = 0
+trigger1 = fvar(30) <= 2250 && fvar(30) > 1500
+anim = 9664
+ID = 9664
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9665) = 0
+trigger1 = fvar(30) <= 1500 && fvar(30) > 750
+anim = 9665
+ID = 9665
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9666) = 0
+trigger1 = fvar(30) <= 750 && fvar(30) > 0
+anim = 9666
+ID = 9666
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9667) = 0
+trigger1 = fvar(30) > 3750
+anim = 9667
+ID = 9667
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9668 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9668) = 0
+trigger1 = fvar(30) = 0
+anim = 9668
+ID = 9668
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9661) = 0
+trigger1 = fvar(30) = 0
+anim = 9661
+ID = 9661
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9660) = 0
+trigger1 = fvar(30) > 3750
+anim = 9660
+ID = 9660
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9662) = 0
+trigger1 = fvar(30) <= 3750 && fvar(30) > 3000
+anim = 9662
+ID = 9662
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9663) = 0
+trigger1 = fvar(30) <= 3000 && fvar(30) > 2250
+anim = 9663
+ID = 9663
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9664) = 0
+trigger1 = fvar(30) <= 2250 && fvar(30) > 1500
+anim = 9664
+ID = 9664
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9665) = 0
+trigger1 = fvar(30) <= 1500 && fvar(30) > 750
+anim = 9665
+ID = 9665
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9666) = 0
+trigger1 = fvar(30) <= 750 && fvar(30) > 0
+anim = 9666
+ID = 9666
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9667) = 0
+trigger1 = fvar(30) > 3750
+anim = 9667
+ID = 9667
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9668 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9668)
+trigger1 = !(fvar(30) = 0)
+ID = 9668
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9661)
+trigger1 = !(fvar(30) = 0)
+ID = 9661
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9660)
+trigger1 = !(fvar(30) > 3750)
+ID = 9660
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9662)
+trigger1 = !(fvar(30) <= 3750 && fvar(30) > 3000)
+ID = 9662
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9663)
+trigger1 = !(fvar(30) <= 3000 && fvar(30) > 2250)
+ID = 9663
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9664)
+trigger1 = !(fvar(30) <= 2250 && fvar(30) > 1500)
+ID = 9664
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9665)
+trigger1 = !(fvar(30) <= 1500 && fvar(30) > 750)
+ID = 9665
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9666)
+trigger1 = !(fvar(30) <= 750 && fvar(30) > 0)
+ID = 9666
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9667)
+trigger1 = !(fvar(30) > 3750)
+ID = 9667
+ignorehitpause = 1
+
+
+[State -1, AR burst]
+type = ChangeState
+value = ifelse(StateType = A, 7751, 7750)
+triggerall = !ishelper
+triggerall = command = "ar_burst"
+triggerall = fvar(30) = 0
+triggerall = RoundState = 2
+triggerall = Alive
+trigger1 = (stateno = 5000 || stateno = 5010 || stateno = 5020 || stateno = 5070) && Time > 0
+trigger2 = stateno = [5001, 5099]
+trigger2 = stateno != 5000 && stateno != 5010 && stateno != 5020 && stateno != 5070
+
+;=== END AR BURST ===
+
+;Abstract Reordered: parry on Z
+[State -1, AR Parry]
+type = ChangeState
+value = 7740
+triggerall = command = "ar_parry"
+trigger1 = ctrl
+
 
 [State -1, Curbstomp]
 type = Changestate
@@ -817,12 +1279,25 @@ trigger4 = StateNo = 810 && MoveContact
 trigger5 = StateNo = 1232
 trigger5 = AnimElemTime(3) > 0
 
+[State -1, AR Curbstomp Lv1]
+;Abstract Reordered: 236236 + two attacks, short Curbstomp (1 bar)
+type = Changestate
+value = 4020
+triggerall = command = "Curbstomp Lv1"
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(20)
+trigger3 = var(21)
+trigger4 = StateNo = 810 && MoveContact
+trigger5 = StateNo = 1232
+trigger5 = AnimElemTime(3) > 0
 [State -1, TD Combo]
 type = Changestate
 value = 4100
 triggerall = command = "TD Combo"
 triggerall = statetype != A
-triggerall = power >= 3000
+triggerall = power >= 1000   ;Abstract Reordered: Lv1
 trigger1 = ctrl || (StateNo = [100,101])
 trigger2 = var(20)
 trigger3 = var(21)
@@ -834,7 +1309,7 @@ trigger6 = AnimElemTime(3) > 0
 [State -1, Tiger Eye]
 type = ChangeState
 value = 3000
-triggerall = Var(47) >= 3
+triggerall = 0   ;Abstract Reordered: Eye of the Tiger removed
 triggerall = Var(49) <= 0
 triggerall = StateType != A
 triggerall = command = "Tiger Eye"
@@ -987,7 +1462,7 @@ value = 6000
 triggerall = var(45) >= 100
 triggerall = Var(46) != 1
 triggerall = StateType != A
-triggerall = command = "a"
+triggerall = 0   ;Abstract Reordered: Awakening removed
 triggerall = MoveType != H
 triggerall = !Numhelper(6003)
 trigger1 = ctrl || (StateNo = [100,101])
@@ -997,7 +1472,7 @@ type = ChangeState
 value = 6005
 triggerall = Var(46) = 1
 triggerall = StateType != A
-triggerall = command = "a"
+triggerall = 0   ;Abstract Reordered: Awakening removed
 triggerall = MoveType != H
 trigger1 = ctrl || (StateNo = [100,101])
 
@@ -1147,16 +1622,14 @@ trigger1 = ctrl
 [State -1, Throw]
 type = ChangeState
 value = 800
-triggerall = command = "z"
+triggerall = command = "ar_grab"   ;Abstract Reordered: grab on Y
 triggerall = statetype = S
 triggerall = ctrl
 triggerall = stateno != 100
-trigger1 = command = "holdfwd"
-trigger1 = p2bodydist X < 10
+trigger1 = p2bodydist X < 15
 trigger1 = (p2statetype = S) || (p2statetype = C)
 trigger1 = p2movetype != H
-trigger2 = command = "holdback"
-trigger2 = p2bodydist X < 10
+trigger2 = p2bodydist X < 15
 trigger2 = (p2statetype = S) || (p2statetype = C)
 trigger2 = p2movetype != H
 
@@ -1170,110 +1643,97 @@ triggerall = command = "s"
 trigger1 = statetype != A
 trigger1 = ctrl
 
-;---------------------------------------------------------------------------
-; Stand Light Punch
+;Abstract Reordered: normals on A/B/C, chain light -> heavy, standing -> crouching
 [State -1, Stand Light Punch]
 type = ChangeState
 value = 200
-triggerall = command = "x"
+triggerall = command = "a"
 triggerall = command != "holddown"
 triggerall = statetype != A
 trigger1 = ctrl || (StateNo = [100,101])
 trigger2 = stateno = 200
 trigger2 = movecontact
 
-;---------------------------------------------------------------------------
-; Stand Medium Punch
 [State -1, Stand Medium Punch]
 type = ChangeState
 value = 210
-triggerall = command = "y"
+triggerall = command = "b"
 triggerall = command != "holddown"
 triggerall = statetype != A
 trigger1 = ctrl || (StateNo = [100,101])
-trigger2 = (stateno = 200) && movecontact
-trigger3 = (stateno = 400) && movecontact
+trigger2 = stateno = 200 || stateno = 400
+trigger2 = movecontact
 
-;---------------------------------------------------------------------------
-; Stand Strong Punch
 [State -1, Stand Strong Punch]
 type = ChangeState
 value = 220
-triggerall = command = "z"
+triggerall = command = "c"
 triggerall = command != "holddown"
 triggerall = statetype != A
 trigger1 = ctrl || (StateNo = [100,101])
-trigger2 = (stateno = 210) && movecontact
-trigger3 = (stateno = 410) && movecontact
+trigger2 = stateno = 200 || stateno = 210 || stateno = 400 || stateno = 410
+trigger2 = movecontact
 
-;---------------------------------------------------------------------------
-; Crouching Light Punch
 [State -1, Crouching Light Punch]
 type = ChangeState
 value = 400
-triggerall = command = "x"
+triggerall = command = "a"
 triggerall = command = "holddown"
 triggerall = statetype != A
 trigger1 = ctrl || (StateNo = [100,101])
-trigger2 = (stateno = 400) && movecontact
+trigger2 = stateno = 200
+trigger2 = movecontact
+trigger3 = stateno = 400
+trigger3 = movecontact
 
-;---------------------------------------------------------------------------
-; Crouching Medium Punch
 [State -1, Crouching Medium Punch]
 type = ChangeState
 value = 410
-triggerall = command = "y"
+triggerall = command = "b"
 triggerall = command = "holddown"
 triggerall = statetype != A
 trigger1 = ctrl || (StateNo = [100,101])
-trigger2 = (stateno = 200) && movecontact
-trigger3 = (stateno = 400) && movecontact
+trigger2 = stateno = 200 || stateno = 210 || stateno = 400
+trigger2 = movecontact
 
-;---------------------------------------------------------------------------
-; Crouching Strong Punch
 [State -1, Crouching Strong Punch]
 type = ChangeState
 value = 420
-triggerall = command = "z"
+triggerall = command = "c"
 triggerall = command = "holddown"
 triggerall = statetype != A
 trigger1 = ctrl || (StateNo = [100,101])
-trigger2 = (stateno = [210,220]) && movecontact
-trigger3 = (stateno = 410) && movecontact
+trigger2 = stateno = 200 || stateno = 210 || stateno = 220 || stateno = 400 || stateno = 410
+trigger2 = movecontact
 
-;---------------------------------------------------------------------------
-; Jump Light Punch
 [State -1, Jump Light Punch]
 type = ChangeState
 value = 600
-triggerall = command = "x"
+triggerall = command = "a"
 triggerall = statetype = A
 trigger1 = ctrl
 trigger2 = stateno = 600
 trigger2 = movecontact
 
-;---------------------------------------------------------------------------
-; Jump Medium Punch
 [State -1, Jump Medium Punch]
 type = ChangeState
 value = 610
-triggerall = command = "y"
+triggerall = command = "b"
 triggerall = statetype = A
 trigger1 = ctrl
-trigger2 = Stateno = 600 && movecontact
+trigger2 = stateno = 600
+trigger2 = movecontact
 
-;---------------------------------------------------------------------------
-; Jump Strong Punch
 [State -1, Jump Strong Punch]
 type = ChangeState
 value = 620
-triggerall = command = "z"
+triggerall = command = "c"
 triggerall = statetype = A
 trigger1 = ctrl
-trigger2 = Stateno = 610 && movecontact
+trigger2 = stateno = 600 || stateno = 610
+trigger2 = movecontact
 
 ;---------------------------------------------------------------------------
-
 [state jump cancel]
 type=changestate
 value=40

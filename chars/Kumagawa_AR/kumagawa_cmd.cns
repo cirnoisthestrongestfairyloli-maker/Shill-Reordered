@@ -254,157 +254,134 @@ time=1
 ;-| 超必殺技 |-----------------------------------------------------------------
 [Command]
 name = "『パニッシュメント』"
-command = ~B, DB, D, DF, F,  x
+command = ~D, DF, F, c
 time = 20
 
 [Command]
 name = "『楔』"
-command = ~B, DB, D, DF, F,  y
+command = ~D, DF, F, c
 time = 20
 
 [Command]
 name = "『却本作り』"
-command = ~F, DF, D, DB, B, F, a
-time = 20
+command = U, D, U, D, U, D, U, D
+time = 1
 
 [Command]
 name = "『格好』付けずに"
-command = ~F, DF, D, DB, B, F, b
-time = 20
+command = U, D, U, D, U, D, U, D
+time = 1
 
 [Command]
 name = "『却本作り＋大嘘憑き』"
-command = ~F, DF, D, DB, B, F, c
-time = 20
+command = ~F, B, DB, D, DF, F, c
+time = 30
 
 [Command]
 name = "『It's』『All Fiction!!』"
-command = ~B, DB, D, DF, F,  a
-time = 20
+command = U, D, U, D, U, D, U, D
+time = 1
 
 [Command]
 name = "『魔獣をも殺す刀』"
-command = ~B, DB, D, DF, F,  b
+command = ~D, D, c
 time = 20
 
 [Command]
 name = "『勇者の剣』過負荷ver"
-command = ~B, DB, D, DF, F,  c
+command = ~B, D, DB, c
 time = 20
 
 [Command]
 name = "『グングニルの螺子』"
-command = F, D, DF, c
+command = ~F, D, DF, c
 time = 20
 
 [Command]
 name = "『グンニグルの螺子』"
-command = F, D, F, c
-time = 20
+command = U, D, U, D, U, D, U, D
+time = 1
 
 [Command]
 name = "『裸エプロン』"
-command = B, D, DB, c
-time = 20
-
+command = ~D, DB, B, D, DB, B, a+b
+time = 30
 [Command]
 name = "『裸エプロン』"
-command = B, D, B, c
-time = 20
+command = ~D, DB, B, D, DB, B, b+c
+time = 30
+[Command]
+name = "『裸エプロン』"
+command = ~D, DB, B, D, DB, B, a+c
+time = 30
 
 [Command]
 name = "『弱点を突く』"
-command =  D, DB, B, c
-time = 15
+command = ~D, DB, B, c
+time = 20
 
 [Command]
 name = "『ゲートオブネジロン』"
-command = D, DF, F ,  c
-time = 15
-
-;------------------------------------------------------------------------------
-;-| 必殺技 |-------------------------------------------------------------------
+command = ~D, DF, F, D, DF, F, a+b
+time = 30
+[Command]
+name = "『ゲートオブネジロン』"
+command = ~D, DF, F, D, DF, F, b+c
+time = 30
+[Command]
+name = "『ゲートオブネジロン』"
+command = ~D, DF, F, D, DF, F, a+c
+time = 30
 
 [Command]
 name = "『螺子上げる』A"
-command = F, D, DF, a
+command = ~F, D, DF, a
 time = 20
 
 [Command]
 name = "『螺子上げる』B"
-command = F, D, DF, b
-time = 20
-
-[Command]
-name = "『螺子上げる』A"
-command = F, D, F, a
-time = 20
-
-[Command]
-name = "『螺子上げる』B"
-command = F, D, F, b
-time = 20
-
-;---------------------------
-
-[Command]
-name = "『螺子蹴る』A"
-command = B, D, DB, a
-time = 20
-
-[Command]
-name = "『螺子蹴る』B"
-command = B, D, DB, b
+command = ~F, D, DF, b
 time = 20
 
 [Command]
 name = "『螺子蹴る』A"
-command = B, D, B, a
+command = ~B, D, DB, a
 time = 20
 
 [Command]
 name = "『螺子蹴る』B"
-command = B, D, B, b
+command = ~B, D, DB, b
 time = 20
 
-;---------------------------
 [Command]
 name = "『螺子伏せる』A"
-command = D, B, a
-;command =  D, DB, B, a
-time = 15
+command = ~D, DB, B, a
+time = 20
 
 [Command]
 name = "『螺子伏せる』B"
-command = D, B,  b
-;command = D, DB, B, b
-time = 15
+command = ~D, DB, B, b
+time = 20
 
-
-;---------------------------
 [Command]
 name = "『螺子り込む』A"
-command = D, DF, F , a
-time = 15
+command = ~D, DF, F, a
+time = 20
 
 [Command]
 name = "『螺子り込む』B"
-command = D, DF, F , b
-time = 15
+command = ~D, DF, F, b
+time = 20
 
-;---------------------------
 [Command]
 name = "『過冷却』A"
-command = D, D, a
-time = 15
+command = ~D, D, a
+time = 20
 
 [Command]
 name = "『過冷却』B"
-command = D, D, b
-time = 15
-
-;------------------------------------------------------------------------------
-;-| キー２回連続入力 |---------------------------------------------------------
+command = ~D, D, b
+time = 20
 
 [Command]
 name = "FF"       ;必須コマンド名
@@ -503,6 +480,32 @@ time = 1
 ; ステートエントリーパート（技などを出せるようにするための条件を設定）
 ;==============================================================================
 
+;Abstract Reordered: X = AT Field, Y = grab (2+Y in the air = fast fall), Z = parry, A+B+C = burst
+[Command]
+name = "ar_atfield"
+command = x
+time = 1
+
+[Command]
+name = "ar_grab"
+command = y
+time = 1
+
+[Command]
+name = "ar_parry"
+command = z
+time = 1
+
+[Command]
+name = "ar_burst"
+command = a+b+c
+time = 1
+
+[Command]
+name = "ar_up"
+command = $U
+time = 1
+
 [Statedef -1] ;←この行は絶対に消さないでね。必須項目です。
 
 ;===========================================================================
@@ -600,34 +603,555 @@ ignorehitpause = 1
 ;------------------------------------------------------------------------------
 ;------------------------------------------------------------------------------
 ;『パニッシュメント』
-[State -1, 『パニッシュメント』]
-	type = ChangeState
-	value = 3100
-	TriggerAll = !var(59)
-	triggerall = var(13)
-	triggerall = command = "『パニッシュメント』"
-	triggerAll = statetype != A
-	TriggerAll = Power>999
-	trigger1 = ctrl
+;---------------------------------------------------------------------------
+;Abstract Reordered: burst (Kamijo's) - A+B+C while being hit, recharges in 75 s (var(44))
+[State -1, AR burst round reset]
+type = VarSet
+triggerall = !ishelper
+trigger1 = RoundState < 2
+var(44) = 0
+
+[State -1, AR burst recharge]
+type = VarAdd
+triggerall = !ishelper
+trigger1 = RoundState = 2
+trigger1 = var(44) > 0
+var(44) = -1
+ignorehitpause = 1
+
+;Abstract Reordered: comeback - once a combo has done more than 15% of max life, every further hit
+;knocks half a second (30 ticks) off the burst cooldown. var(45) = life when the combo started, var(46) = life last tick
+[State -1, AR burst comeback]
+type = VarAdd
+triggerall = !ishelper
+triggerall = var(44) > 0
+trigger1 = movetype = H
+trigger1 = Life < var(46)
+trigger1 = var(45) - Life > LifeMax * 0.15
+var(44) = -30
+ignorehitpause = 1
+
+[State -1, AR burst comeback clamp]
+type = VarSet
+triggerall = !ishelper
+trigger1 = var(44) < 0
+var(44) = 0
+ignorehitpause = 1
+
+[State -1, AR burst combo start]
+type = VarSet
+triggerall = !ishelper
+trigger1 = movetype != H
+var(45) = Life
+ignorehitpause = 1
+
+[State -1, AR burst last life]
+type = VarSet
+triggerall = !ishelper
+trigger1 = 1
+var(46) = Life
+ignorehitpause = 1
+
+;Abstract Reordered: burst HUD - Touma's BURST gauge, recoloured, just under the lifebar.
+;var(44) = cooldown ticks (4500 = just used, 0 = ready). Anims 9660-9668, explod IDs = anims.
+[State -1, AR burst gauge 9668 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9668) = 0
+trigger1 = var(44) = 0
+anim = 9668
+ID = 9668
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9661) = 0
+trigger1 = var(44) = 0
+anim = 9661
+ID = 9661
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9660) = 0
+trigger1 = var(44) > 3750
+anim = 9660
+ID = 9660
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9662) = 0
+trigger1 = var(44) <= 3750 && var(44) > 3000
+anim = 9662
+ID = 9662
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9663) = 0
+trigger1 = var(44) <= 3000 && var(44) > 2250
+anim = 9663
+ID = 9663
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9664) = 0
+trigger1 = var(44) <= 2250 && var(44) > 1500
+anim = 9664
+ID = 9664
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9665) = 0
+trigger1 = var(44) <= 1500 && var(44) > 750
+anim = 9665
+ID = 9665
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9666) = 0
+trigger1 = var(44) <= 750 && var(44) > 0
+anim = 9666
+ID = 9666
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9667) = 0
+trigger1 = var(44) > 3750
+anim = 9667
+ID = 9667
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9668 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9668) = 0
+trigger1 = var(44) = 0
+anim = 9668
+ID = 9668
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9661) = 0
+trigger1 = var(44) = 0
+anim = 9661
+ID = 9661
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9660) = 0
+trigger1 = var(44) > 3750
+anim = 9660
+ID = 9660
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9662) = 0
+trigger1 = var(44) <= 3750 && var(44) > 3000
+anim = 9662
+ID = 9662
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9663) = 0
+trigger1 = var(44) <= 3000 && var(44) > 2250
+anim = 9663
+ID = 9663
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9664) = 0
+trigger1 = var(44) <= 2250 && var(44) > 1500
+anim = 9664
+ID = 9664
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9665) = 0
+trigger1 = var(44) <= 1500 && var(44) > 750
+anim = 9665
+ID = 9665
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9666) = 0
+trigger1 = var(44) <= 750 && var(44) > 0
+anim = 9666
+ID = 9666
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9667) = 0
+trigger1 = var(44) > 3750
+anim = 9667
+ID = 9667
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9668 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9668)
+trigger1 = !(var(44) = 0)
+ID = 9668
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9661)
+trigger1 = !(var(44) = 0)
+ID = 9661
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9660)
+trigger1 = !(var(44) > 3750)
+ID = 9660
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9662)
+trigger1 = !(var(44) <= 3750 && var(44) > 3000)
+ID = 9662
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9663)
+trigger1 = !(var(44) <= 3000 && var(44) > 2250)
+ID = 9663
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9664)
+trigger1 = !(var(44) <= 2250 && var(44) > 1500)
+ID = 9664
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9665)
+trigger1 = !(var(44) <= 1500 && var(44) > 750)
+ID = 9665
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9666)
+trigger1 = !(var(44) <= 750 && var(44) > 0)
+ID = 9666
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9667)
+trigger1 = !(var(44) > 3750)
+ID = 9667
+ignorehitpause = 1
 
 
-;------------------------------------------------------------------------------
-;『楔』
-[State -1, 『楔』]
-	type = ChangeState
-	value = 3000
-	TriggerAll = !var(59)
-	triggerall = command = "『楔』"
-	triggerall = var(12)
-	TriggerAll = Power>1999
-	trigger1 = ctrl
-	trigger2 = statetype = A
-	trigger2 = var(1)
-	trigger3 = stateno = 3101
-	trigger3 = AnimElemTime(2) >= 75
+[State -1, AR burst]
+type = ChangeState
+value = ifelse(StateType = A, 7751, 7750)
+triggerall = !ishelper
+triggerall = !var(59)
+triggerall = command = "ar_burst"
+triggerall = var(44) = 0
+triggerall = RoundState = 2
+triggerall = Alive
+trigger1 = (stateno = 5000 || stateno = 5010 || stateno = 5020 || stateno = 5070) && Time > 0
+trigger2 = stateno = [5001, 5099]
+trigger2 = stateno != 5000 && stateno != 5010 && stateno != 5020 && stateno != 5070
 
-;------------------------------------------------------------------------------
-;『却本作り＋大嘘憑き』
+;Abstract Reordered: parry on Z
+[State -1, AR Parry]
+type = ChangeState
+value = 7740
+triggerall = !var(59)
+triggerall = command = "ar_parry"
+trigger1 = ctrl
+
+;Abstract Reordered: grab on Y (on the ground)
+[State -1, AR Grab]
+type = ChangeState
+value = 7770
+triggerall = !var(59)
+triggerall = command = "ar_grab"
+triggerall = statetype != A
+trigger1 = ctrl
 [State -1, 『却本作り＋大嘘憑き』]
 	type = ChangeState
 	value = 2900
@@ -635,11 +1159,8 @@ ignorehitpause = 1
 	triggerall = command = "『却本作り＋大嘘憑き』"
 	triggerall = var(12)
 	triggerall = var(13)
-	triggerall = var(14) = var(17) || var(23)
-	triggerall = !var(52) || Enemy,TeamMode = turns
 	triggerAll = statetype != A
-	TriggerAll = Power>5999
-	TriggerAll = Life < 0.3*LifeMax || PalNo >= 9
+	TriggerAll = Power>2999   ;Abstract Reordered: Lv3, 3 bars
 	trigger1 = ctrl
 	trigger2 = stateno = 1360
 	trigger2 = AnimElemTime(20) >= 5
@@ -648,111 +1169,6 @@ ignorehitpause = 1
 
 ;------------------------------------------------------------------------------
 ;『却本作り』
-[State -1, 『却本作り』]
-	type = null;ChangeState
-	value = 2700
-	TriggerAll = !var(59)
-	triggerall = command = "『却本作り』"
-	triggerall = var(12)
-	triggerAll = !var(16)
-	triggerAll = statetype != A
-	TriggerAll = Power>2999
-	trigger1 = ctrl
-	trigger2 = stateno = 2000 && var(1)
-	trigger3 = (stateno = [1000,1099]) && var(1) && var(23)
-	
-;『格好』付けずに
-[State -1, 『格好』付けずに]
-	type = ChangeState
-	value = 2800
-	TriggerAll = !var(59)
-	triggerall = command = "『格好』付けずに"
-	triggerall = var(12)
-	triggerall = var(13)
-	triggerAll = statetype != A
-	TriggerAll = Power>2999
-	trigger1 = ctrl
-	trigger2 = var(1)
-
-;僕は負けてなんかいない
-[State -1, 僕は負けてなんかいない]
-	type = ChangeState
-	value = 2810
-	TriggerAll = !var(59)
-	triggerall = command = "x"
-	triggerall = command = "y"
-	triggerAll = statetype != A
-	TriggerAll = Power>1999
-	TriggerAll = Life < 0.3*LifeMax || PalNo >= 9
-	trigger1 = stateno = 2800
-	trigger1 = anim = 2802
-	trigger1 = movehit
-	trigger1 = animelemtime(1)>=1
-	trigger1 = animelemtime(5)<0
-
-;------------------------------------------------------------------------------
-;『魔獣をも殺す刀』
-[State -1, 『魔獣をも殺す刀』]
-	type = ChangeState
-	value = 2400
-	TriggerAll = !var(59)
-	triggerall = command = "『魔獣をも殺す刀』"
-	triggerAll = statetype != A
-	TriggerAll = Power>1999
-	TriggerAll = stateno != 2401
-	TriggerAll = stateno != 3000
-	TriggerAll = !var(11)
-	trigger1 = ctrl
-	trigger2 = var(1)
-
-;蛮勇の刀
-[State -1, 蛮勇の刀]
-	type = ChangeState
-	value = 2550
-	TriggerAll = !var(59)
-	triggerAll = stateno = 2500 && anim = 2503
-	triggerall = var(13)
-	triggerAll = statetype != A
-	TriggerAll = Power>1999
-	trigger1 = command = "c"
-
-;勇者の剣
-[State -1, 勇者の剣]
-	type = ChangeState
-	value = 2500
-	TriggerAll = !var(59)
-	triggerall = command = "『勇者の剣』過負荷ver"
-	triggerAll = statetype != A
-	TriggerAll = Power>1999
-	trigger1 = ctrl
-	trigger2 = stateno = 3000 || stateno = 2401 || stateno = 2000 ||stateno = 1000 || stateno = 53
-	trigger2 = var(1)
-
-;『It's』『All Fiction!!』
-[State -1, 『It's』『All Fiction!!』]
-	type = ChangeState
-	value = 2600
-	TriggerAll = !var(59)
-	triggerall = command = "『It's』『All Fiction!!』"
-	triggerAll = statetype != A
-	TriggerAll = Power>1999
-	trigger1 = ctrl
-	trigger2 = stateno = [200,599]
-	trigger2 = var(1)
-
-;------------------------------------------------------------------------------
-;『グンニグルの螺子』
-[State -1, 『グンニグルの螺子』]
-	type = ChangeState
-	value = 2100
-	TriggerAll = !var(59)
-	triggerall = command = "『グングニルの螺子』"
-	triggerAll = statetype != A
-	TriggerAll = Power>999
-	trigger1 = ctrl
-	trigger2 = stateno = 150 ||stateno = 152
-
-;『ゲートオブネジロン』
 [State -1, 『ゲートオブネジロン』]
 	type = ChangeState
 	value = 2000
@@ -785,7 +1201,6 @@ ignorehitpause = 1
 	value = 2200
 	TriggerAll = !var(59)
 	triggerall = command = "『裸エプロン』"
-	triggerAll = !var(15)
 	triggerAll = statetype != A
 	TriggerAll = Power>999
 	trigger1 = ctrl
@@ -795,6 +1210,35 @@ ignorehitpause = 1
 	trigger3 = var(1)
 
 ;『弱点を突く』
+[State -1, 『パニッシュメント』]
+	type = ChangeState
+	value = 3100
+	TriggerAll = !var(59)
+	triggerall = var(13)
+	triggerall = command = "『パニッシュメント』"
+	triggerAll = statetype != A   ;Abstract Reordered: 236C
+	TriggerAll = Power>999
+	trigger1 = ctrl
+
+
+;------------------------------------------------------------------------------
+;『楔』
+[State -1, 『楔』]
+	type = ChangeState
+	value = 3000
+	TriggerAll = !var(59)
+	triggerall = command = "『楔』"
+	triggerall = var(12)
+	TriggerAll = Power>999
+	triggerall = statetype = A || stateno = 3101   ;Abstract Reordered: j.236C
+	trigger1 = ctrl
+	trigger2 = statetype = A
+	trigger2 = var(1)
+	trigger3 = stateno = 3101
+	trigger3 = AnimElemTime(2) >= 75
+
+;------------------------------------------------------------------------------
+;『却本作り＋大嘘憑き』
 [State -1, 『弱点を突く』]
 	type = ChangeState
 	value = 2300
@@ -810,6 +1254,110 @@ ignorehitpause = 1
 ; 必殺技
 ;==============================================================================
 ;『螺子上げる』
+[State -1, 勇者の剣]
+	type = ChangeState
+	value = 2500
+	TriggerAll = !var(59)
+	triggerall = command = "『勇者の剣』過負荷ver"
+	triggerAll = statetype != A
+	TriggerAll = Power>999   ;Abstract Reordered: EX, 1 bar
+	trigger1 = ctrl
+	trigger2 = stateno = 3000 || stateno = 2401 || stateno = 2000 ||stateno = 1000 || stateno = 53
+	trigger2 = var(1)
+
+;『It's』『All Fiction!!』
+[State -1, 蛮勇の刀]
+	type = ChangeState
+	value = 2550
+	TriggerAll = !var(59)
+	triggerAll = stateno = 2500 && anim = 2503
+	triggerall = var(13)
+	triggerAll = statetype != A
+	TriggerAll = Power>999   ;Abstract Reordered: EX, 1 bar
+	trigger1 = command = "c"
+
+;勇者の剣
+[State -1, 『グンニグルの螺子』]
+	type = ChangeState
+	value = 2100
+	TriggerAll = !var(59)
+	triggerall = command = "『グングニルの螺子』"
+	triggerAll = statetype != A
+	TriggerAll = Power>999
+	trigger1 = ctrl
+
+;『ゲートオブネジロン』
+[State -1, 『魔獣をも殺す刀』]
+	type = ChangeState
+	value = 2400
+	TriggerAll = !var(59)
+	triggerall = command = "『魔獣をも殺す刀』"
+	triggerAll = statetype != A
+	TriggerAll = Power>999   ;Abstract Reordered: EX, 1 bar
+	TriggerAll = stateno != 2401
+	TriggerAll = stateno != 3000
+	TriggerAll = !var(11)
+	trigger1 = ctrl
+	trigger2 = var(1)
+
+;蛮勇の刀
+[State -1, 『却本作り』]
+	type = null;ChangeState
+	value = 2700
+	TriggerAll = !var(59)
+	triggerall = command = "『却本作り』"
+	triggerall = var(12)
+	triggerAll = !var(16)
+	triggerAll = statetype != A
+	TriggerAll = Power>2999
+	trigger1 = ctrl
+	trigger2 = stateno = 2000 && var(1)
+	trigger3 = (stateno = [1000,1099]) && var(1) && var(23)
+	
+;『格好』付けずに
+[State -1, 『格好』付けずに]
+	type = null   ;Abstract Reordered: removed
+	value = 2800
+	TriggerAll = !var(59)
+	triggerall = command = "『格好』付けずに"
+	triggerall = var(12)
+	triggerall = var(13)
+	triggerAll = statetype != A
+	TriggerAll = Power>2999
+	trigger1 = ctrl
+	trigger2 = var(1)
+
+;僕は負けてなんかいない
+[State -1, 僕は負けてなんかいない]
+	type = null   ;Abstract Reordered: removed
+	value = 2810
+	TriggerAll = !var(59)
+	triggerall = command = "x"
+	triggerall = command = "y"
+	triggerAll = statetype != A
+	TriggerAll = Power>1999
+	TriggerAll = Life < 0.3*LifeMax || PalNo >= 99
+	trigger1 = stateno = 2800
+	trigger1 = anim = 2802
+	trigger1 = movehit
+	trigger1 = animelemtime(1)>=1
+	trigger1 = animelemtime(5)<0
+
+;------------------------------------------------------------------------------
+;『魔獣をも殺す刀』
+[State -1, 『It's』『All Fiction!!』]
+	type = null   ;Abstract Reordered: removed
+	value = 2600
+	TriggerAll = !var(59)
+	triggerall = command = "『It's』『All Fiction!!』"
+	triggerAll = statetype != A
+	TriggerAll = Power>1999
+	trigger1 = ctrl
+	trigger2 = stateno = [200,599]
+	trigger2 = var(1)
+
+;------------------------------------------------------------------------------
+;『グンニグルの螺子』
 [State -1, 『螺子上げる』A]
 	type = ChangeState
 	value = 1100
@@ -834,32 +1382,6 @@ ignorehitpause = 1
 
 ;------------------------------------------------------------------------------
 ;『螺子蹴る』
-[State -1, 『螺子蹴る』A]
-	type = ChangeState
-	value = 1300
-	TriggerAll = !var(59)
-	triggerall = command = "『螺子蹴る』A"
-	triggerAll = statetype != A
-	trigger1 = ctrl
-	trigger2 = var(1) && fvar(11)>=6 && target,StateNo!=[120,155]
-	trigger2 = stateno = [200,599]
-
-[State -1, 『螺子蹴る』B]
-	type = ChangeState
-	value = 1350
-	TriggerAll = !var(59)
-	triggerall = command = "『螺子蹴る』B"
-	triggerAll = statetype != A
-	TriggerAll = Power>499
-	TriggerAll = !var(11)
-	trigger1 = ctrl
-	trigger2 = var(1) && fvar(11)>=13 && target,StateNo!=[120,155]
-	trigger2 = stateno = 53
-	trigger3 = var(1) && fvar(11)>=13 && target,StateNo!=[120,155]
-	trigger3 = stateno = [200,599]
-
-;------------------------------------------------------------------------------
-;『螺子伏せる』
 [State -1, 『螺子伏せる』A]
 	type = ChangeState
 	value = 1200
@@ -881,6 +1403,31 @@ ignorehitpause = 1
 	trigger2 = var(1)
 ;------------------------------------------------------------------------------
 ;『螺子り込む』
+[State -1, 『螺子蹴る』A]
+	type = ChangeState
+	value = 1300
+	TriggerAll = !var(59)
+	triggerall = command = "『螺子蹴る』A"
+	triggerAll = statetype != A
+	trigger1 = ctrl
+	trigger2 = var(1) && fvar(11)>=6 && target,StateNo!=[120,155]
+	trigger2 = stateno = [200,599]
+
+[State -1, 『螺子蹴る』B]
+	type = ChangeState
+	value = 1350
+	TriggerAll = !var(59)
+	triggerall = command = "『螺子蹴る』B"
+	triggerAll = statetype != A
+	TriggerAll = !var(11)
+	trigger1 = ctrl
+	trigger2 = var(1) && fvar(11)>=13 && target,StateNo!=[120,155]
+	trigger2 = stateno = 53
+	trigger3 = var(1) && fvar(11)>=13 && target,StateNo!=[120,155]
+	trigger3 = stateno = [200,599]
+
+;------------------------------------------------------------------------------
+;『螺子伏せる』
 [State -1,『螺子り込むA]
 	type = ChangeState
 	value = 1000
@@ -1007,11 +1554,10 @@ Trigger6 = animelemtime(7) >= 0
 	TriggerAll = !var(59)
 	TriggerAll = Alive
 	TriggerAll = var(19) < 2
-	TriggerAll = command="holdup"
+	TriggerAll = command = "ar_up"   ;Abstract Reordered: up in the air
 	TriggerAll = StateType=A
 	TriggerAll = pos Y<=-35
 	TriggerAll = stateno!=45
-	TriggerAll=command="y"
 	Trigger1 = Ctrl
 	Trigger2 = var(1)
 
@@ -1021,11 +1567,10 @@ Trigger6 = animelemtime(7) >= 0
 	TriggerAll = !var(59)
 	TriggerAll = Alive
 	TriggerAll = StateNo != 110
-	TriggerAll = command="holdfwd"
+	TriggerAll = command = "FF"   ;Abstract Reordered: 66 in the air
 	TriggerAll = StateType=A
 	TriggerAll = pos Y<=-36
 	TriggerAll = anim != 110
-	TriggerAll=command="y"
 	Trigger1 = Ctrl
 	Trigger2 = var(1)
 
@@ -1052,16 +1597,18 @@ Trigger6 = animelemtime(7) >= 0
 	triggerAll = !NumHelper(10040)
 	triggerAll = !NumHelper(10030)
 	TriggerAll = StateType != A
-	TriggerAll=command="y"
+	TriggerAll = command = "ar_atfield"   ;Abstract Reordered: X
+	TriggerAll = !var(4)
 	Trigger1=Ctrl
 	Trigger2=stateNo=700
 	Trigger2=time >= 13
 	trigger3 = stateno = 150 ||stateno = 152
+	trigger3 = var(3) > ceil(fvar(17) * 0.3)
 	trigger4 = StateNo=53
 	trigger4 = !var(1)
 
 [State -1,S_k];挑発
-	Type=ChangeState
+	Type=null   ;Abstract Reordered: removed
 	value=700
 	TriggerAll = !var(59)
 	TriggerAll = command != "holddown"
@@ -1109,6 +1656,7 @@ Trigger6 = animelemtime(7) >= 0
 	Trigger1 = Ctrl
 	Trigger2 = StateNo = 210 && var(1)
 	Trigger3 = StateNo =  100 && animelemtime(2)>=0 && animelemtime(4)<0
+	Trigger4 = StateNo = 200 && var(1)   ;Abstract Reordered
 
 
 ;------------------------------------------------------------------------------
@@ -1132,6 +1680,7 @@ Trigger6 = animelemtime(7) >= 0
 	triggerAll = statetype != A
 	trigger1 = ctrl
 	Trigger2 = StateNo = 53 && var(1)
+	trigger3 = stateno = 200 && var(1)   ;Abstract Reordered
 
 [State -1, 屈み中]
 	type = ChangeState
@@ -1144,6 +1693,7 @@ Trigger6 = animelemtime(7) >= 0
 	trigger2 = stateno = [400,405]
 	trigger2 = var(1)
 	Trigger3 = StateNo = 53 && var(1)
+	trigger4 = (stateno = [200,210]) && var(1)   ;Abstract Reordered
 
 [State -1, 屈み強]
 	type = ChangeState
@@ -1155,6 +1705,7 @@ Trigger6 = animelemtime(7) >= 0
 	trigger1 = ctrl
 	trigger2 = stateno = [400,410]
 	trigger2 = var(1)
+	trigger3 = (stateno = [200,230]) && var(1)   ;Abstract Reordered
 
 
 ;------------------------------------------------------------------------------

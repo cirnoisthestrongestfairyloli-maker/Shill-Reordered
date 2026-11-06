@@ -37,7 +37,7 @@
 [State -2, 却本作り初期設定]
 	type = VarSet
 	trigger1 = roundsexisted = 0 && roundstate = 0 && roundno = 1
-	var(12) = 0 	;ここの数字を変えることで設定可能
+	var(12) = 2 	;ここの数字を変えることで設定可能
 					;2にすることで却本作り等特定の技初期から解禁
 					;1は駄目
 					;デフォルトは0
@@ -45,7 +45,7 @@
 [State -2, 大嘘憑き初期設定]
 	type = VarSet
 	trigger1 = roundsexisted = 0 && roundstate = 0 && roundno = 1
-	var(13) = 0 	;ここの数字を変えることで設定可能
+	var(13) = 2 	;ここの数字を変えることで設定可能
 					;2にすることでリザレクション等特定の技初期から解禁
 					;1は駄目
 					;デフォルトは0
@@ -61,7 +61,7 @@
 [State -2, リザレクション回復値設定]
 	type = VarSet
 	trigger1 = RoundsExisted = 0
-	fvar(2) =0.3	;ここの数字を変えることで設定可能
+	fvar(2) =0.15	;ここの数字を変えることで設定可能
 					;0.1～1の範囲で設定するとリザレクション時に回復 0.3で30％、1で100%回復
 					;デフォルトは0.3
 
@@ -215,7 +215,7 @@ value=10000
 ;===========================================================================
 [State -2, コンボ補正強化];7P
 	type = VarSet
-	triggerAll = PalNo >= 7
+	triggerAll = PalNo >= 99
  	trigger1 = fvar(0) < 0.30
  	fv = 0
  	value = 0.30
@@ -223,14 +223,14 @@ value=10000
 
 [State -2, ノックバック上限追加];8P
 	type = VarSet
-	triggerAll = PalNo >= 8
+	triggerAll = PalNo >= 99
  	trigger1 = fvar(11) > 25
  	fvar(11) = 25
 	ignorehitpause = 1
 
 [State -2, ゲジマユ];10P
 	type = PowerSet
-	trigger1 = PalNo >= 10
+	trigger1 = PalNo >= 99
 	trigger1 = power != powermax
 	value = PowerMax
 	ignorehitpause = 1
@@ -538,7 +538,7 @@ Ignorehitpause = 1
 	Type= Varadd
 	triggerAll = !var(18)
 	Trigger1= var(4) = 2
-	Trigger1= GameTime%6 = 0
+	Trigger1= GameTime%2 = 0
 	var(6) = 1
 
 ;[State -2];時間測定
@@ -675,7 +675,7 @@ var(42) = 0
 	trigger2 = var(2) = 3
 	anim = ifelse(var(2)=2,14000,14002)
 	ID = 14000
-	pos = ifelse(teamside=1,60,260),  60
+	pos = ifelse(teamside = 1, 60, GameWidth - (60)),  60
 	postype = left
 	bindtime = -1
 	removetime = -1
@@ -709,7 +709,7 @@ var(42) = 0
 	trigger2 = target,stateno =[5110,5120]
 	trigger3 = RoundState = 3
 	anim = 14001
-	pos = ifelse(teamside=1,60,260),  60
+	pos = ifelse(teamside = 1, 60, GameWidth - (60)),  60
 	postype = left
 	bindtime = -1
 	supermovetime = 9999
@@ -1255,7 +1255,7 @@ triggerAll = RoundState = 2
 triggerall = alive=1&&life>0	;生存
 triggerall = var(14)>var(17)	;リザレクション使用上限を使用回数が上回ってない
 triggerall = var(13)			;+螺子点灯
-TriggerAll = Power>999			;ゲージ
+TriggerAll = Power>1999			;ゲージ
 triggerall = stateno != 2214	;
 
 ;‐P3　○P2　‐P4
@@ -1306,7 +1306,7 @@ triggerAll = var(42) != 2	;勇者の剣自滅してない
 triggerall = var(13)		;+螺子点灯
 trigger1 = var(14)>var(17)
 trigger1 = Life = 0
-Trigger1 = Power>999
+Trigger1 = Power>1999
 trigger1 = var(21):=1
 value = 1
 IgnoreHitPause = 1
@@ -1400,7 +1400,7 @@ type = Explod
 TriggerAll = var(49) != -1;
 triggerall = var(12)
 triggerall = var(13)
-TriggerAll = Life < 0.3*LifeMax || PalNo >= 9
+TriggerAll = Life < 0.3*LifeMax || PalNo >= 99
 TriggerAll = stateno != [2800,2810]
 triggerAll = NumExplod(6513)<5
 triggerAll = gametime % 30 = 0
@@ -1423,7 +1423,7 @@ type = Explod
 TriggerAll = var(49) != -1;
 triggerall = var(12)
 triggerall = var(13)
-TriggerAll = Life < 0.3*LifeMax || PalNo >= 9
+TriggerAll = Life < 0.3*LifeMax || PalNo >= 99
 TriggerAll = stateno != [2800,2810]
 triggerAll = NumExplod(6513)<5
 triggerAll = gametime % 30 = 0
@@ -1446,7 +1446,7 @@ Type = AfterImage
 TriggerAll = var(49) != -1;
 triggerall = var(12)
 triggerall = var(13)
-TriggerAll = Life < 0.3*LifeMax || PalNo >= 9
+TriggerAll = Life < 0.3*LifeMax || PalNo >= 99
 trigger1 = Alive
 trigger1 = !Time
 Time = 1
@@ -1979,7 +1979,7 @@ trigger2=enemy(1),var(56)=19861004&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),st
 anim=19863+random%2
 ID=19864
 postype=left
-pos=0,240
+pos=0, GameHeight - (0)
 ;scale=1.25,1.25
 ownpal=1
 bindtime=-1
@@ -1998,7 +1998,7 @@ trigger2=enemy(1),var(56)=19861004&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),st
 anim=19863+random%2
 ID=19864
 postype=right
-pos=0,240
+pos=0, GameHeight - (0)
 facing=-1
 ;scale=1.25,1.25
 ownpal=1
@@ -2029,7 +2029,7 @@ trigger2=enemy(1),var(56)=19861004&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),st
 anim=19865
 ID=19865
 postype=left
-pos=0,240
+pos=0, GameHeight - (0)
 ;scale=0.5,0.5
 ownpal=1
 bindtime=-1
@@ -2048,7 +2048,7 @@ trigger2=enemy(1),var(56)=19861004&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),st
 anim=19865
 ID=19865
 postype=right
-pos=0,240
+pos=0, GameHeight - (0)
 facing=-1
 ;scale=0.5,0.5
 ownpal=1

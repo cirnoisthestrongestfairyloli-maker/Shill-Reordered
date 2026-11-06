@@ -8589,8 +8589,8 @@ channel = 0
 type = changestate
 trigger1 = animtime = 0
 trigger1 = p2stateno = 4051
-trigger1 = var(52) < 1000
-trigger2 = var(51) = 2
+trigger1 = 0   ;Abstract Reordered: plain slam ender unused
+trigger2 = 0
 trigger2 = animtime = 0
 trigger2 = p2stateno = 4051
 value = 4002
@@ -8600,7 +8600,7 @@ type = changestate
 triggerall = var(51) != 2
 trigger1 = animtime = 0
 trigger1 = p2stateno = 4051
-trigger1 = var(52) >= 1000 && var(52) < 2000
+trigger1 = fvar(25) = 1   ;Abstract Reordered: above 50% life
 value = 4100
 
 [state 4000, Finisher 2]
@@ -8608,7 +8608,7 @@ type = changestate
 triggerall = var(51) != 2
 trigger1 = animtime = 0
 trigger1 = p2stateno = 4051
-trigger1 = var(52) >= 2000 && var(52) < 3000
+trigger1 = fvar(25) = 2   ;Abstract Reordered: 50% life or less
 value = 4200
 
 [state 4000, Finisher 3]
@@ -8616,7 +8616,7 @@ type = changestate
 triggerall = var(51) != 2
 trigger1 = animtime = 0
 trigger1 = p2stateno = 4051
-trigger1 = var(52) >= 3000
+trigger1 = fvar(25) = 3   ;Abstract Reordered: 25% life or less
 value = 4320
 ;--------------------------------------------
 ;Finisher 0 - Jump and Slam
@@ -9719,9 +9719,9 @@ ampl = 8
 
 [state 4000, changestate]
 type = changestate
-trigger1 = enemy, var(52) < 1000
+trigger1 = 0   ;Abstract Reordered
 trigger1 = pos Y < -300
-trigger2 = enemy,var(51) = 2
+trigger2 = 0
 trigger2 = pos Y < -300
 value = 4052
 
@@ -9729,21 +9729,21 @@ value = 4052
 [state 4000, changestate]
 type = changestate
 triggerall = enemy,var(51) != 2
-triggerall = enemy, var(52) >= 1000 && enemy,var(52) < 2000
+triggerall = enemy, fvar(25) = 1   ;Abstract Reordered
 trigger1 = pos Y < -300
 value = 4150
 
 [state 4000, changestate]
 type = changestate
 triggerall = enemy,var(51) != 2
-triggerall = enemy, var(52) >= 2000  && enemy, var(52) < 3000
+triggerall = enemy, fvar(25) = 2   ;Abstract Reordered
 trigger1 = pos Y < -300
 value = 4250
 
 [state 4000, changestate]
 type = changestate
 triggerall = enemy,var(51) != 2
-triggerall = enemy, var(52) >= 3000 
+triggerall = enemy, fvar(25) = 3   ;Abstract Reordered
 trigger1 = pos Y < -300
 value = 4350
 ;-------------------------------------------------

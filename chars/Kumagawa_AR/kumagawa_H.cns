@@ -3442,7 +3442,7 @@ velset = 0,0
 anim = 2400
 ctrl = 0
 sprpriority = 2
-poweradd = -2000
+poweradd = -1000
 
 	[State 2900, –hŒä‹——£]
 		type = AttackDist
@@ -3938,7 +3938,7 @@ velset = 0,0
 anim = 2500
 ctrl = 0
 sprpriority = 2
-poweradd = -2000
+poweradd = -1000
 
 	[State -1,’´•KEUŒ‚•â³]
 		type = Varset
@@ -4720,7 +4720,7 @@ velset = 0,0
 anim = 2505
 ctrl = 0
 sprpriority = 2
-poweradd = -2000
+poweradd = -1000
 
 [State -2, ”­“®ƒXƒ[ˆ—]
 type = Pause
@@ -4879,6 +4879,7 @@ x = 35
 Type=Explod
 trigger1 = animelemTime(14) = 0
 Anim=6270
+scale = GameWidth/320, 1   ;Abstract Reordered: widescreen
 ID=6000
 PosType=back
 Pos=0,0
@@ -7048,7 +7049,7 @@ movetype= A
 physics = N
 anim = 2900
 velset = 0,0
-poweradd = -6000
+poweradd = -3000
 ;juggle  = 1
 ctrl = 0
 sprpriority = 4
@@ -7232,7 +7233,7 @@ facep2 = 1
 		attr = S, HP
 		damage = 0, 0
 		animtype = Hard
-		guardflag = -1
+		guardflag = MA
 		hitflag = MAF
 		priority = 3, Hit
 		pausetime = 0, 0
@@ -7760,9 +7761,11 @@ velset = 0,0
 		flag3 = nokoslow
 	
 	[State 2953, Anim•ÏX]		
-		type = lifeset
+		type = LifeAdd
 		trigger1 = time = 90
-		value = 0
+		value = -350   ;Abstract Reordered: 350 damage, not a kill
+		absolute = 1
+		kill = 1
 
 	[State 2953, Anim•ÏX]
 		type = StopSnd
@@ -7807,7 +7810,7 @@ velset = 0,0
 anim = 3000
 ctrl = 0
 sprpriority = 2
-poweradd = -2000
+poweradd = -1000
 
 	[State 3000,’´•KEUŒ‚•â³]
 		type = Varset

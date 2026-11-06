@@ -347,9 +347,15 @@ end)
 -- cadenza_build.py, so rebuild after adding songs). Up/Down switches between the stage row and the music row,
 -- Left/Right changes the highlighted one; the chosen track replaces the stage's music for the match.
 AR.music = {
+	{path = '*', w = 149, wh = 183},
 	{path = '', w = 183, wh = 217},
 	{path = 'Music/Aozaki Aoko.mp3', w = 173, wh = 206},
+	{path = 'Music/Bleach - Instant War Cry.mp3', w = 267, wh = 299},
+	{path = 'Music/Bleach - Stinger.mp3', w = 200, wh = 233},
+	{path = 'Music/Blue Exorcist -Wired Life.mp3', w = 270, wh = 303},
 	{path = 'Music/Broly - Day After Day.mp3', w = 246, wh = 278},
+	{path = 'Music/Butter Building - Super Smash Bros. Brawl.mp3', w = 412, wh = 446},
+	{path = 'Music/Children of the City (E-102 Gamma Mix).mp3', w = 394, wh = 428},
 	{path = 'Music/Futari wa Pretty Cure.mp3', w = 243, wh = 276},
 	{path = 'Music/Goku Black\'s Theme - FighterZ.mp3', w = 318, wh = 351},
 	{path = 'Music/Haruhi - Parallel Days.mp3', w = 246, wh = 278},
@@ -357,21 +363,28 @@ AR.music = {
 	{path = 'Music/Ichigo - Glimmering Getsuga.mp3', w = 304, wh = 337},
 	{path = 'Music/Ippo - inner light.mp3', w = 210, wh = 243},
 	{path = 'Music/Jotaro Kujo Theme.mp3', w = 223, wh = 256},
+	{path = 'Music/Kouchou Kouchou.mp3', w = 215, wh = 248},
 	{path = 'Music/Kuroko - Judgement desu no!.mp3', w = 310, wh = 344},
 	{path = 'Music/La Soldier.mp3', w = 152, wh = 185},
+	{path = 'Music/Looping the rooms.mp3', w = 225, wh = 257},
 	{path = 'Music/Madoka - Connect.mp3', w = 219, wh = 252},
+	{path = 'Music/Megaman X4 - Makenai Ai Ga Kitto Aru Opening.mp3', w = 463, wh = 497},
 	{path = 'Music/Meiling - Chinese Maiden! ~ Shanghai Teahouse.mp3', w = 457, wh = 490},
-	{path = 'Music/New Fly Away (Official Audio).mp3', w = 313, wh = 347},
+	{path = 'Music/Onslaught.mp3', w = 154, wh = 187},
+	{path = 'Music/Panty&Stocking - New Fly Away.mp3', w = 333, wh = 365},
 	{path = 'Music/Reimu - Sealing Charm, Blessed Light.mp3', w = 373, wh = 406},
 	{path = 'Music/Saber - The Sword Of Promised Victory.mp3', w = 389, wh = 421},
 	{path = 'Music/Sakuya - The Elegant Flower which Blooms at Night.mp3', w = 487, wh = 520},
 	{path = 'Music/Sayaka - Decretum & Conturbatio.mp3', w = 345, wh = 378},
+	{path = 'Music/Shadow the Hedgehog - Space Gadget.mp3', w = 384, wh = 417},
 	{path = 'Music/Sol Badguy - Keep Yourself Alive 2.mp3', w = 349, wh = 383},
+	{path = 'Music/Sonic Adventure - Welcome to Station Square (Lo-Fi Remix).mp3', w = 552, wh = 586},
 	{path = 'Music/Taiga -Tiger VS Dragon.mp3', w = 261, wh = 294},
 	{path = 'Music/Touma - Saijaku VS Saikyou.mp3', w = 296, wh = 329},
 	{path = 'Music/Vegeta\'s Theme - FighterZ.mp3', w = 284, wh = 317},
 }
-AR.musicSel = 1          -- index into AR.music, 1 = the stage's own music
+AR.musicSel = 1          -- index into AR.music: 1 = random Music track (default), 2 = the stage's own music
+AR.randomPick = nil      -- the track RANDOM resolved to for this match
 AR.musicFocus = false    -- true while Left/Right changes the music instead of the stage
 AR.musicY = 241
 
@@ -384,12 +397,59 @@ local function moveSnd()
 	pcall(sndPlay, motif.Snd, motif.select_info.stage.move.snd[1], motif.select_info.stage.move.snd[2])
 end
 
-function AR.musicPreview()
+-- the path to use for the match: RANDOM picks one Music track once per character select
+function AR.musicPath()
 	local m = AR.music[AR.musicSel]
 	if m == nil or m.path == '' then
+		return ''
+	end
+	if m.path ~= '*' then
+		return m.path
+	end
+	if AR.randomPick == nil then
+		local n = #AR.music - 2
+		AR.randomPick = n > 0 and AR.music[math.random(n) + 2].path or ''
+	end
+	return AR.randomPick
+end
+
+function AR.musicPreview()
+	local m = AR.music[AR.musicSel]
+	if m == nil or m.path == '' or m.path == '*' then
 		pcall(playBgm, {source = 'motif.select', interrupt = true})
 	else
 		pcall(playBgm, {bgm = m.path, loop = 1, interrupt = true})
+	end
+end
+
+-- characters whose SFF keeps effect palettes in group 1 (Broly: 1,13+ are transformation/flash palettes):
+-- with Config.PaletteMax = 100 the select screen offered all of them, so only keep the real colours
+AR.palLimit = {['broly_ar'] = 12}
+
+local function trimPals(ch)
+	if ch == nil or ch.pal == nil or ch.char == nil then
+		return
+	end
+	local lim = AR.palLimit[tostring(ch.char):lower():gsub('[/\\].*$', '')]
+	if lim == nil or #ch.pal <= lim then
+		return
+	end
+	local keep = {}
+	for _, p in ipairs(ch.pal) do
+		if p <= lim then
+			keep[#keep + 1] = p
+		end
+	end
+	ch.pal = keep
+end
+
+if start ~= nil and start.f_getCharData ~= nil and not AR.charDataWrapped then
+	AR.charDataWrapped = true
+	local getOrig = start.f_getCharData
+	start.f_getCharData = function(...)
+		local ch = getOrig(...)
+		pcall(trimPals, ch)
+		return ch
 	end
 end
 
@@ -428,9 +488,9 @@ if start ~= nil and start.f_buildLoadStartParams ~= nil and not AR.loadParamsWra
 	local buildOrig = start.f_buildLoadStartParams
 	start.f_buildLoadStartParams = function(...)
 		local s = buildOrig(...)
-		local m = AR.music[AR.musicSel]
-		if m ~= nil and m.path ~= '' and type(s) == 'string' then
-			local parts = {'music=' .. m.path}
+		local path = AR.musicPath()
+		if path ~= '' and type(s) == 'string' then
+			local parts = {'music=' .. path}
 			for p in (s .. ','):gmatch('%s*(.-)%s*,') do
 				if p ~= '' and not p:match('^music') then
 					parts[#parts + 1] = p
@@ -444,6 +504,7 @@ end
 
 hook.add('start.f_selectReset', 'abstractReorderedMusicReset', function()
 	AR.musicSel = 1
+	AR.randomPick = nil
 	AR.musicFocus = false
 end)
 
@@ -847,7 +908,7 @@ end)
 AR.movelistChars = {['saber_ar'] = true, ['reimu_ar'] = true, ['haruhi_ar'] = true, ['ichigo_ar'] = true, ['homura_ar'] = true, ['broly_ar'] = true, ['kuroko_ar'] = true,
 	['meisaku_ar'] = true, ['stocking_ar'] = true, ['sailor_mercury_ar'] = true, ['cureblack_ar'] = true, ['aoko_ar'] = true,
 	['jotaro_ar'] = true, ['ippo_ar'] = true, ['kamijo_ar'] = true, ['gokublack_ar'] = true, ['vegeta_ar'] = true,
-	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true}
+	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true}
 AR.movelistArtX = 260
 AR.movelistArtY = 712
 AR.movelistArtScale = 1.0

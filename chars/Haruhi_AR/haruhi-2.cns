@@ -1,6 +1,118 @@
 ;-----------------------------------------------------------------------------
 [Statedef -2]
 
+;Assist off-screen arrows: while Nagato(2000) / Mikuru(2100) / Konata(2201) is outside the camera,
+;point at them from that screen edge, at their height (clamped to the screen)
+
+[State -2, Nagato off-screen arrow R]
+type = Explod
+trigger1 = NumHelper(2000)
+trigger1 = helper(2000),ScreenPos X > GameWidth
+anim = 9690
+ID = 9690
+postype = left
+pos = GameWidth - 2, ifelse(helper(2000),ScreenPos Y - 30 < 22, 22, ifelse(helper(2000),ScreenPos Y - 30 > GameHeight - 22, GameHeight - 22, helper(2000),ScreenPos Y - 30))
+facing = 1
+scale = .5, .5
+bindtime = 1
+removetime = 1
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, Nagato off-screen arrow L]
+type = Explod
+trigger1 = NumHelper(2000)
+trigger1 = helper(2000),ScreenPos X < 0
+anim = 9693
+ID = 9693
+postype = left
+pos = 2, ifelse(helper(2000),ScreenPos Y - 30 < 22, 22, ifelse(helper(2000),ScreenPos Y - 30 > GameHeight - 22, GameHeight - 22, helper(2000),ScreenPos Y - 30))
+facing = 1
+scale = .5, .5
+bindtime = 1
+removetime = 1
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, Mikuru off-screen arrow R]
+type = Explod
+trigger1 = NumHelper(2100)
+trigger1 = helper(2100),ScreenPos X > GameWidth
+anim = 9691
+ID = 9691
+postype = left
+pos = GameWidth - 2, ifelse(helper(2100),ScreenPos Y - 30 < 22, 22, ifelse(helper(2100),ScreenPos Y - 30 > GameHeight - 22, GameHeight - 22, helper(2100),ScreenPos Y - 30))
+facing = 1
+scale = .5, .5
+bindtime = 1
+removetime = 1
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, Mikuru off-screen arrow L]
+type = Explod
+trigger1 = NumHelper(2100)
+trigger1 = helper(2100),ScreenPos X < 0
+anim = 9694
+ID = 9694
+postype = left
+pos = 2, ifelse(helper(2100),ScreenPos Y - 30 < 22, 22, ifelse(helper(2100),ScreenPos Y - 30 > GameHeight - 22, GameHeight - 22, helper(2100),ScreenPos Y - 30))
+facing = 1
+scale = .5, .5
+bindtime = 1
+removetime = 1
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, Konata off-screen arrow R]
+type = Explod
+trigger1 = NumHelper(2201)
+trigger1 = helper(2201),ScreenPos X > GameWidth
+anim = 9692
+ID = 9692
+postype = left
+pos = GameWidth - 2, ifelse(helper(2201),ScreenPos Y - 30 < 22, 22, ifelse(helper(2201),ScreenPos Y - 30 > GameHeight - 22, GameHeight - 22, helper(2201),ScreenPos Y - 30))
+facing = 1
+scale = .5, .5
+bindtime = 1
+removetime = 1
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, Konata off-screen arrow L]
+type = Explod
+trigger1 = NumHelper(2201)
+trigger1 = helper(2201),ScreenPos X < 0
+anim = 9695
+ID = 9695
+postype = left
+pos = 2, ifelse(helper(2201),ScreenPos Y - 30 < 22, 22, ifelse(helper(2201),ScreenPos Y - 30 > GameHeight - 22, GameHeight - 22, helper(2201),ScreenPos Y - 30))
+facing = 1
+scale = .5, .5
+bindtime = 1
+removetime = 1
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+
 [state -2]
 type = varset
 trigger1 = 1

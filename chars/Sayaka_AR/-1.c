@@ -649,36 +649,42 @@ trigger1 = 1
 var(34) = Life
 ignorehitpause = 1
 
-[State -1, AR burst HUD 9601 P1]
+;Abstract Reordered: burst HUD - Touma's BURST gauge, recoloured, just under the lifebar.
+;var(32) = cooldown ticks (4500 = just used, 0 = ready). Anims 9660-9668, explod IDs = anims.
+[State -1, AR burst gauge 9668 P1]
 type = Explod
 triggerall = !ishelper
 triggerall = TeamSide = 1
-trigger1 = NumExplod(9601) = 0
+trigger1 = NumExplod(9668) = 0
 trigger1 = var(32) = 0
-anim = 9601
-ID = 9601
-pos = 18, GameHeight - (28)
+anim = 9668
+ID = 9668
+pos = (GameWidth - 320) / 2 + 52, 43
 postype = left
+facing = 1
+scale = .5, .5
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 9
 ontop = 1
 ownpal = 1
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR burst HUD 9602 P1]
+[State -1, AR burst gauge 9661 P1]
 type = Explod
 triggerall = !ishelper
 triggerall = TeamSide = 1
-trigger1 = NumExplod(9602) = 0
-trigger1 = var(32) > 0
-anim = 9602
-ID = 9602
-pos = 18, GameHeight - (28)
+trigger1 = NumExplod(9661) = 0
+trigger1 = var(32) = 0
+anim = 9661
+ID = 9661
+pos = (GameWidth - 320) / 2 + 52, 43
 postype = left
+facing = 1
+scale = .5, .5
 bindtime = -1
 removetime = -1
 supermovetime = 99999
@@ -689,16 +695,18 @@ ownpal = 1
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR burst HUD 9603 P1]
+[State -1, AR burst gauge 9660 P1]
 type = Explod
 triggerall = !ishelper
 triggerall = TeamSide = 1
-trigger1 = NumExplod(9603) = 0
-trigger1 = var(32) > 0
-anim = 9603
-ID = 9603
-pos = 5, GameHeight - (12)
+trigger1 = NumExplod(9660) = 0
+trigger1 = var(32) > 3750
+anim = 9660
+ID = 9660
+pos = (GameWidth - 320) / 2 + 52, 43
 postype = left
+facing = 1
+scale = .5, .5
 bindtime = -1
 removetime = -1
 supermovetime = 99999
@@ -709,36 +717,172 @@ ownpal = 1
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR burst HUD 9601 P2]
+[State -1, AR burst gauge 9662 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9662) = 0
+trigger1 = var(32) <= 3750 && var(32) > 3000
+anim = 9662
+ID = 9662
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9663) = 0
+trigger1 = var(32) <= 3000 && var(32) > 2250
+anim = 9663
+ID = 9663
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9664) = 0
+trigger1 = var(32) <= 2250 && var(32) > 1500
+anim = 9664
+ID = 9664
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9665) = 0
+trigger1 = var(32) <= 1500 && var(32) > 750
+anim = 9665
+ID = 9665
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9666) = 0
+trigger1 = var(32) <= 750 && var(32) > 0
+anim = 9666
+ID = 9666
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9667) = 0
+trigger1 = var(32) > 3750
+anim = 9667
+ID = 9667
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9668 P2]
 type = Explod
 triggerall = !ishelper
 triggerall = TeamSide = 2
-trigger1 = NumExplod(9601) = 0
+trigger1 = NumExplod(9668) = 0
 trigger1 = var(32) = 0
-anim = 9601
-ID = 9601
-pos = -18, GameHeight - (28)
-postype = right
+anim = 9668
+ID = 9668
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 9
 ontop = 1
 ownpal = 1
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR burst HUD 9602 P2]
+[State -1, AR burst gauge 9661 P2]
 type = Explod
 triggerall = !ishelper
 triggerall = TeamSide = 2
-trigger1 = NumExplod(9602) = 0
-trigger1 = var(32) > 0
-anim = 9602
-ID = 9602
-pos = -18, GameHeight - (28)
-postype = right
+trigger1 = NumExplod(9661) = 0
+trigger1 = var(32) = 0
+anim = 9661
+ID = 9661
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
 bindtime = -1
 removetime = -1
 supermovetime = 99999
@@ -749,16 +893,18 @@ ownpal = 1
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR burst HUD 9603 P2]
+[State -1, AR burst gauge 9660 P2]
 type = Explod
 triggerall = !ishelper
 triggerall = TeamSide = 2
-trigger1 = NumExplod(9603) = 0
-trigger1 = var(32) > 0
-anim = 9603
-ID = 9603
-pos = -31, GameHeight - (12)
-postype = right
+trigger1 = NumExplod(9660) = 0
+trigger1 = var(32) > 3750
+anim = 9660
+ID = 9660
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
 bindtime = -1
 removetime = -1
 supermovetime = 99999
@@ -769,37 +915,210 @@ ownpal = 1
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR burst HUD ready off]
-type = RemoveExplod
+[State -1, AR burst gauge 9662 P2]
+type = Explod
 triggerall = !ishelper
-trigger1 = var(32) > 0
-trigger1 = NumExplod(9601)
-ID = 9601
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9662) = 0
+trigger1 = var(32) <= 3750 && var(32) > 3000
+anim = 9662
+ID = 9662
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR burst HUD dim off]
-type = RemoveExplod
+[State -1, AR burst gauge 9663 P2]
+type = Explod
 triggerall = !ishelper
-trigger1 = var(32) = 0
-trigger1 = NumExplod(9602) || NumExplod(9603)
-ID = 9602
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9663) = 0
+trigger1 = var(32) <= 3000 && var(32) > 2250
+anim = 9663
+ID = 9663
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR burst HUD bar off]
-type = RemoveExplod
+[State -1, AR burst gauge 9664 P2]
+type = Explod
 triggerall = !ishelper
-trigger1 = var(32) = 0
-trigger1 = NumExplod(9603)
-ID = 9603
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9664) = 0
+trigger1 = var(32) <= 2250 && var(32) > 1500
+anim = 9664
+ID = 9664
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR burst HUD bar]
-type = ModifyExplod
+[State -1, AR burst gauge 9665 P2]
+type = Explod
 triggerall = !ishelper
-trigger1 = NumExplod(9603)
-ID = 9603
-scale = (4500 - var(32)) / 4500.0, 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9665) = 0
+trigger1 = var(32) <= 1500 && var(32) > 750
+anim = 9665
+ID = 9665
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
 ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9666) = 0
+trigger1 = var(32) <= 750 && var(32) > 0
+anim = 9666
+ID = 9666
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9667) = 0
+trigger1 = var(32) > 3750
+anim = 9667
+ID = 9667
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9668 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9668)
+trigger1 = !(var(32) = 0)
+ID = 9668
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9661)
+trigger1 = !(var(32) = 0)
+ID = 9661
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9660)
+trigger1 = !(var(32) > 3750)
+ID = 9660
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9662)
+trigger1 = !(var(32) <= 3750 && var(32) > 3000)
+ID = 9662
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9663)
+trigger1 = !(var(32) <= 3000 && var(32) > 2250)
+ID = 9663
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9664)
+trigger1 = !(var(32) <= 2250 && var(32) > 1500)
+ID = 9664
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9665)
+trigger1 = !(var(32) <= 1500 && var(32) > 750)
+ID = 9665
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9666)
+trigger1 = !(var(32) <= 750 && var(32) > 0)
+ID = 9666
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9667)
+trigger1 = !(var(32) > 3750)
+ID = 9667
+ignorehitpause = 1
+
 
 [State -1, AR burst]
 type = ChangeState
@@ -902,7 +1221,7 @@ trigger4 = movecontact
 
 [state -1, affettuoso (despair install only)]
 type = changestate
-value = 3400
+value = 7805   ;rush into the stab sequence
 triggerall = var(50) = 0
 triggerall = command = "affettuoso1" || command = "affettuoso2" || command = "affettuoso3"
 triggerall = var(40) = 2
@@ -1179,6 +1498,24 @@ trigger1 = ctrl
 trigger2 = stateno = 400 || stateno = 410
 trigger2 = movecontact
 
+;Abstract Reordered: after a landed ground 236A / 236C, jump cancel to start an air combo
+[state -1, oratorio jump cancel (ground)]
+type = changestate
+value = 40
+triggerall = var(50) = 0
+triggerall = command = "up" || command = "holdup"
+triggerall = (NumTarget(1010) || NumTarget(1070))
+trigger1 = stateno = 1095
+
+[state -1, oratorio jump cancel (air)]
+type = changestate
+value = 45
+triggerall = var(50) = 0
+triggerall = command = "up"
+triggerall = sysvar(3) > 0
+triggerall = (NumTarget(1010) || NumTarget(1070))
+trigger1 = stateno = 1090
+
 [state -1, 5A]
 type = changestate
 value = 200
@@ -1247,6 +1584,10 @@ triggerall = statetype != a
 trigger1 = ctrl
 trigger2 = stateno = 200 || stateno = 330 || stateno = 210 || stateno = 340 || stateno = 341 || stateno = 342 || stateno = 240
 trigger2 = movecontact
+;2C into 5C (not if this 2C came from 5C, so it cannot loop)
+trigger3 = stateno = 350
+trigger3 = prevstateno != 220
+trigger3 = movecontact
 
 [state -1, 6C]
 type = changestate
@@ -1280,8 +1621,14 @@ triggerall = command = "holddown"
 triggerall = command != "sdownfwd"
 triggerall = statetype != a
 trigger1 = ctrl
-trigger2 = stateno = 200 || stateno = 330 || stateno = 210 || stateno = 340 || stateno = 341 || stateno = 342 || stateno = 240 || stateno = 220
+trigger2 = stateno = 200 || stateno = 330 || stateno = 210 || stateno = 340 || stateno = 341 || stateno = 342 || stateno = 240
 trigger2 = movecontact
+;5C into 2C (not if this 5C came from 2C)
+trigger3 = stateno = 220
+trigger3 = prevstateno != 350
+trigger3 = movecontact
+trigger4 = stateno = 1095   ;after a landed 236A / 236C
+trigger4 = (NumTarget(1010) || NumTarget(1070))
 
 [state -1, j.A]
 type = changestate
@@ -1290,6 +1637,8 @@ triggerall = var(50) = 0
 triggerall = command = "a"
 triggerall = statetype = a
 trigger1 = ctrl
+trigger2 = stateno = 1090   ;air combo after a landed 236A / 236C
+trigger2 = (NumTarget(1010) || NumTarget(1070))
 
 [state -1, j.B]
 type = changestate
@@ -1300,6 +1649,8 @@ triggerall = statetype = a
 trigger1 = ctrl
 trigger2 = stateno = 400
 trigger2 = movecontact
+trigger3 = stateno = 1090   ;air combo after a landed 236A / 236C
+trigger3 = (NumTarget(1010) || NumTarget(1070))
 
 [state -1, j.C]
 type = changestate
@@ -1310,6 +1661,8 @@ triggerall = statetype = a
 trigger1 = ctrl
 trigger2 = stateno = 400 || stateno = 410
 trigger2 = movecontact
+trigger3 = stateno = 1090   ;air combo after a landed 236A / 236C
+trigger3 = (NumTarget(1010) || NumTarget(1070))
 
 
 ;Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°Å°

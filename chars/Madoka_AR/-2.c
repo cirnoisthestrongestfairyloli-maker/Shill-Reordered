@@ -188,14 +188,17 @@ add = 50,0,40
 sinadd = 50,15,45,40
 ignorehitpause = 1
 
-[state -2, AR hope HUD frame P1]
-type = explod
+;Abstract Reordered: mechanic meter HUD - Kuroko's MAGIC CIRCUIT bar, fill in the parry colour,
+;bottom of the screen (P1 left, P2 right). Only the look changed; the meter logic is untouched.
+[state -2, AR meter HUD frame P1]
+type = Explod
 triggerall = !ishelper
-triggerall = teamside = 1
-trigger1 = numexplod(9611) = 0
-anim = 9611
-id = 9611
-pos = 52, GameHeight - (32)
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7790) = 0
+trigger1 = 1
+anim = 7790
+ID = 7790
+pos = 32, GameHeight - (33)
 postype = left
 bindtime = -1
 removetime = -1
@@ -204,76 +207,124 @@ pausemovetime = 99999
 sprpriority = 10
 ontop = 1
 ownpal = 1
+scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR hope HUD fill P1]
-type = explod
+[state -2, AR meter HUD back P1]
+type = Explod
 triggerall = !ishelper
-triggerall = teamside = 1
-trigger1 = numexplod(9613) = 0
-anim = 9613
-id = 9613
-pos = 53, GameHeight - (31)
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7792) = 0
+trigger1 = 1
+anim = 7792
+ID = 7792
+pos = 40, GameHeight - (22)
 postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 11
 ontop = 1
 ownpal = 1
+scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR hope HUD tick P1]
-type = explod
+[state -2, AR meter HUD fill 7791 P1]
+type = Explod
 triggerall = !ishelper
-triggerall = teamside = 1
-trigger1 = numexplod(9615) = 0
-anim = 9615
-id = 9615
-pos = 92, GameHeight - (31)
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7791) = 0
+trigger1 = 1
+anim = 7791
+ID = 7791
+pos = 40, GameHeight - (22)
 postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 12
 ontop = 1
 ownpal = 1
+scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR hope HUD icon P1]
-type = explod
+[state -2, AR meter HUD tick 0 P1]
+type = Explod
 triggerall = !ishelper
-triggerall = teamside = 1
-trigger1 = numexplod(9616) = 0
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7803) = 0
+trigger1 = 1
+anim = 7793
+ID = 7803
+pos = 86.0, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 13
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD icon 7797 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7797) = 0
 trigger1 = var(25) = 0
 anim = 9616
-id = 9616
-pos = 42, GameHeight - (28)
+ID = 7797
+pos = 19, GameHeight - (20)
 postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 14
 ontop = 1
 ownpal = 1
+scale = 1,1
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR hope HUD armed P1]
-type = explod
+[state -2, AR meter HUD icon 7798 P1]
+type = Explod
 triggerall = !ishelper
-triggerall = teamside = 1
-trigger1 = numexplod(9617) = 0
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7798) = 0
 trigger1 = var(25) = 1
 anim = 9617
-id = 9617
-pos = 42, GameHeight - (28)
+ID = 7798
+pos = 19, GameHeight - (20)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 14
+ontop = 1
+ownpal = 1
+scale = 1,1
+removeongethit = 0
+ignorehitpause = 1
+
+[state -2, AR meter HUD frame P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7790) = 0
+trigger1 = 1
+anim = 7790
+ID = 7790
+pos = GameWidth - (140), GameHeight - (33)
 postype = left
 bindtime = -1
 removetime = -1
@@ -282,129 +333,140 @@ pausemovetime = 99999
 sprpriority = 10
 ontop = 1
 ownpal = 1
+scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR hope HUD frame P2]
-type = explod
+[state -2, AR meter HUD back P2]
+type = Explod
 triggerall = !ishelper
-triggerall = teamside = 2
-trigger1 = numexplod(9611) = 0
-anim = 9612
-id = 9611
-pos = -52, GameHeight - (32)
-postype = right
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7792) = 0
+trigger1 = 1
+anim = 7792
+ID = 7792
+pos = GameWidth - (132), GameHeight - (22)
+postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 11
 ontop = 1
 ownpal = 1
+scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR hope HUD fill P2]
-type = explod
+[state -2, AR meter HUD fill 7791 P2]
+type = Explod
 triggerall = !ishelper
-triggerall = teamside = 2
-trigger1 = numexplod(9613) = 0
-anim = 9614
-id = 9613
-pos = -53, GameHeight - (31)
-postype = right
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7791) = 0
+trigger1 = 1
+anim = 7791
+ID = 7791
+pos = GameWidth - (40), GameHeight - (22)
+postype = left
+facing = -1
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 12
 ontop = 1
 ownpal = 1
+scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR hope HUD tick P2]
-type = explod
+[state -2, AR meter HUD tick 0 P2]
+type = Explod
 triggerall = !ishelper
-triggerall = teamside = 2
-trigger1 = numexplod(9615) = 0
-anim = 9615
-id = 9615
-pos = -93, GameHeight - (31)
-postype = right
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7803) = 0
+trigger1 = 1
+anim = 7793
+ID = 7803
+pos = GameWidth - (86.0), GameHeight - (22)
+postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 13
 ontop = 1
 ownpal = 1
+scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR hope HUD icon P2]
-type = explod
+[state -2, AR meter HUD icon 7797 P2]
+type = Explod
 triggerall = !ishelper
-triggerall = teamside = 2
-trigger1 = numexplod(9616) = 0
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7797) = 0
 trigger1 = var(25) = 0
 anim = 9616
-id = 9616
-pos = -42, GameHeight - (28)
-postype = right
+ID = 7797
+pos = GameWidth - (19), GameHeight - (20)
+postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 14
 ontop = 1
 ownpal = 1
+scale = 1,1
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR hope HUD armed P2]
-type = explod
+[state -2, AR meter HUD icon 7798 P2]
+type = Explod
 triggerall = !ishelper
-triggerall = teamside = 2
-trigger1 = numexplod(9617) = 0
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7798) = 0
 trigger1 = var(25) = 1
 anim = 9617
-id = 9617
-pos = -42, GameHeight - (28)
-postype = right
+ID = 7798
+pos = GameWidth - (19), GameHeight - (20)
+postype = left
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 10
+sprpriority = 14
 ontop = 1
 ownpal = 1
+scale = 1,1
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR hope HUD fill]
-type = modifyexplod
-trigger1 = !ishelper
-trigger1 = numexplod(9613)
-id = 9613
-scale = (var(24) + 0.0001) / 100.0, 1
+[state -2, AR meter HUD off 7797]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(7797)
+trigger1 = !(var(25) = 0)
+ID = 7797
 ignorehitpause = 1
 
-[state -2, AR hope HUD icon off]
-type = removeexplod
-trigger1 = !ishelper
-trigger1 = var(25) = 1
-trigger1 = numexplod(9616)
-id = 9616
+[state -2, AR meter HUD off 7798]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(7798)
+trigger1 = !(var(25) = 1)
+ID = 7798
 ignorehitpause = 1
 
-[state -2, AR hope HUD armed off]
-type = removeexplod
-trigger1 = !ishelper
-trigger1 = var(25) = 0
-trigger1 = numexplod(9617)
-id = 9617
+[state -2, AR meter HUD scale 7791]
+type = ModifyExplod
+triggerall = !ishelper
+trigger1 = NumExplod(7791)
+ID = 7791
+scale = 0.5 * (ifelse((var(24) / 100.0) < 0, 0, ifelse((var(24) / 100.0) > 1, 1, (var(24) / 100.0)))) + 0.00005, .5
 ignorehitpause = 1
+
 ;===========================================================================
 ;■デバッグ表示
 [state -2, displaytoclipboard];■default

@@ -1,0 +1,125 @@
+#===============================================================================
+# Abstract Reordered: shared combo rules for every character
+#
+# 1. Damage scaling by how much life the current combo has already taken:
+#      combo damage so far   further damage
+#      under 20%             100%
+#      20% - 35%              75%
+#      35% - 50%              55%
+#      50% and up             40%
+#    Level 3s: if the attacker spent 3 bars or more, the combo never drops below 80%.
+#    Applied on the player being hit (DefenceMulSet), only while it scales.
+# 2. Air combos: after about a second, the juggled player falls a little faster,
+#    more the longer the combo goes.
+# 3. Ground combos: after about 3/4 of a second, the player being hit slides further away.
+# 4. Minus: a whiffed normal leaves the attacker without control for 5 frames,
+#    a blocked super (a move that spent a bar or more) for 18.
+#===============================================================================
+[StateDef -4]
+
+ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) {
+	# ---------------------------------------------------------- being comboed
+	# the attacker just spent 3 bars or more: a Level 3
+	if numenemy {
+		if map(_ar_enemyPower) - (enemyNear, power) >= 2500 {
+			map(_ar_lv3) := 1;
+		}
+	}
+	if moveType != H || roundstate != 2 {
+		# not being comboed: remember life for the next combo
+		map(_ar_comboStartLife) := life;
+		map(_ar_comboTime) := 0;
+		if numenemy {
+			if enemyNear, moveType != A {
+				map(_ar_lv3) := 0;
+			}
+		} else {
+			map(_ar_lv3) := 0;
+		}
+		if map(_ar_dms) = 1 {
+			defenceMulSet{value: 1}
+			map(_ar_dms) := 0;
+		}
+	} else {
+		map(_ar_scale) := cond((map(_ar_comboStartLife) - life) < lifeMax * 0.20, 1, cond((map(_ar_comboStartLife) - life) < lifeMax * 0.35, 0.75, cond((map(_ar_comboStartLife) - life) < lifeMax * 0.50, 0.55, 0.4)));
+		if map(_ar_lv3) = 1 && map(_ar_scale) < 0.8 {
+			map(_ar_scale) := 0.8;
+		}
+		if map(_ar_scale) < 1 {
+			defenceMulSet{value: 1.0 / map(_ar_scale)}
+			map(_ar_dms) := 1;
+		} else if map(_ar_dms) = 1 {
+			defenceMulSet{value: 1}
+			map(_ar_dms) := 0;
+		}
+	}
+	if numenemy {
+		map(_ar_enemyPower) := (enemyNear, power);
+	}
+
+	# ---------------------------------------------------------- whiffed normals / blocked supers are minus
+	if map(_ar_myPower) - power >= 900 && moveType = A {
+		map(_ar_super) := 1;
+	}
+	map(_ar_myPower) := power;
+	if moveType = A && roundstate = 2 {
+		if stateno != map(_ar_atkState) {
+			map(_ar_atkState) := stateno;
+			map(_ar_touched) := 0;
+		}
+		if moveContact {
+			map(_ar_touched) := 1;
+		}
+		if moveGuarded {
+			map(_ar_guarded) := 1;
+		}
+		map(_ar_wasA) := 1;
+	} else {
+		if map(_ar_wasA) = 1 && moveType != H && roundstate = 2 {
+			if map(_ar_super) = 1 && map(_ar_guarded) = 1 {
+				map(_ar_lock) := 18;
+			} else if map(_ar_touched) = 0 && map(_ar_atkState) = [200, 699] {
+				map(_ar_lock) := 5;
+			}
+		}
+		map(_ar_wasA) := 0;
+		map(_ar_super) := 0;
+		map(_ar_guarded) := 0;
+		map(_ar_atkState) := -1;
+	}
+	if moveType = H || roundstate != 2 {
+		map(_ar_lock) := 0;
+	}
+	if map(_ar_lock) > 0 {
+		if ctrl {
+			ctrlSet{value: 0}
+			map(_ar_locked) := 1;
+		}
+		map(_ar_lock) := map(_ar_lock) - 1;
+	} else if map(_ar_locked) = 1 {
+		# give control back once the player is idle again; keep waiting while it's mid stand/crouch
+		# transition (10/12), landing, etc., so it can never be left without control
+		if ctrl || moveType != I {
+			map(_ar_locked) := 0;
+		} else if stateno = [0, 20] || stateno = [40, 52] {
+			ctrlSet{value: 1}
+			map(_ar_locked) := 0;
+		}
+	}
+}
+
+# ---------------------------------------------------------- air and ground combo physics
+# (not during hit pause, so the pushes don't pile up while frozen)
+if !ishelper && (teamside = 1 || teamside = 2) && roundstate = 2 {
+	if moveType = H && !inCustomState {
+		map(_ar_comboTime) := map(_ar_comboTime) + 1;
+		if getHitVar(hitshaketime) <= 0 {
+			if stateType = A && map(_ar_comboTime) > 60 {
+				velAdd{y: cond((map(_ar_comboTime) - 60) * 0.0012 > 0.18, 0.18, (map(_ar_comboTime) - 60) * 0.0012)}
+			}
+			if stateType != A && stateno = [5000, 5039] && map(_ar_comboTime) > 45 {
+				posAdd{x: 0 - cond((map(_ar_comboTime) - 45) * 0.012 > 1.2, 1.2, (map(_ar_comboTime) - 45) * 0.012)}
+			}
+		}
+	}
+}

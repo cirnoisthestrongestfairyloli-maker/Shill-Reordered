@@ -1,0 +1,110 @@
+;Onslaught's stage, by Phantom.of.the.Server
+
+[Info]
+name = "Onslaught"
+author = "Phantom.of.the.Server"
+versiondate = 2023
+mugenversion = 1.0
+
+[Music]
+bgmusic = sound/Onslaught.mp3
+bgmvolume = 100
+
+[Camera]
+startx = 0
+starty = 0
+boundleft = -224
+boundright = 224
+boundhigh = -224
+boundlow = 0
+verticalfollow = 1
+floortension = 88
+tension = 60
+overdrawhigh = 0
+overdrawlow = 0
+cuthigh = 54
+cutlow = 6
+startzoom = 1
+zoomout = 1
+zoomin = 1
+
+[PlayerInfo]
+p1startx = -70
+p1starty = 0
+p1facing = 1
+
+p2startx = 70
+p2starty = 0
+p2facing = -1
+
+leftbound = -1000
+rightbound = 1000
+
+[Bound]
+screenleft = 15
+screenright = 15
+
+[StageInfo]
+zoffset = 216
+autoturn = 1
+resetBG = 1
+localcoord = 320, 240
+xscale = 1
+yscale = 1
+
+[Shadow]
+intensity = 160
+color = 0, 0, 0
+yscale = 0.5
+fade.range = -240, 0
+
+
+;=====<MAIN BG DEFINITION>=====
+[BGdef]
+spr = Onslaught.sff
+debugbg = 0
+
+[BG safety]
+type = normal
+spriteno = 0, 99
+layerno = 0
+start = 0, 0
+delta = 0, 0
+mask = 0
+tile = 1, 1
+tilespacing = 0, 0
+
+[BG space]
+type = normal
+spriteno = 0, 2
+layerno = 0
+start = 0, 0
+delta = 0.45, 0.725
+
+[BG city]
+type = normal
+spriteno = 0, 1
+layerno = 0
+start = 0, 0
+delta = 0.4, 0.87
+mask = 1
+
+[BG antenna]
+type = normal
+spriteno = 0, 3
+layerno = 0
+start = 0, 0
+delta = 1, 1
+mask = 1
+
+[BG floor]
+type = normal
+spriteno = 0, 0
+layerno = 0
+start = 0, 0
+delta = 1, 1
+mask = 1
+
+;=====<ACTIONS>=====
+[Begin Action 9000]
+9000,1, 0,0, 1

@@ -1,0 +1,29 @@
+;-----------------------------------------------------------------------------;
+;                                  Options                                    ;
+;-----------------------------------------------------------------------------;
+[Statedef 5901]
+type = S
+
+;--------------------------------;
+; Dialogue intro quotes language ;
+;--------------------------------;
+; This is to change the language of the dialogues on Stocking's dialogue intro
+; against Twilight Sparkle and Panty.
+; English for default.
+[State -3, Dialogue intro quotes language]
+type = varset
+trigger1 = 1
+v = 20
+value = 0
+;value = 0 ; English
+;value = 1 ; Spanish (latinamerican)
+
+;------------------------------;
+; DO NOT MODIFY ANYTHING BELOW ;
+;------------------------------;
+
+[State 5900, 3] ;Intro for round 1
+type = ChangeState
+trigger1 = roundno = 1
+value = 190
+

@@ -1,0 +1,2889 @@
+;シャイニールミナス（ヘルパー）通常イントロ2
+[Statedef 4537]
+type=S
+ctrl=0
+anim=3105
+velset=0,0
+sprpriority=-4
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State ]
+type=PlaySnd
+trigger1=anim=3105&&animelem=3
+value=s31,0
+
+[State ] 
+type=ChangeAnim
+trigger1=anim=3105&&animtime=0
+value=3100
+
+[State ]
+type=Varadd
+trigger1=(anim=3100&&roundstate>=2)||var(0)>=1
+var(0)=1
+
+[State ] 
+type=ChangeAnim
+trigger1=var(0)=11
+value=3104
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=anim=3104&&animelem=2
+value=s100,0
+
+[State ]
+type=PlaySnd
+trigger1=anim=3104&&animelem=2
+value=s31,1
+
+[State ]
+type=Explod
+trigger1=anim=3104&&animelem=2
+anim=6004
+postype=p1
+pos=floor(40*root,fvar(32)),floor(20*root,fvar(33))
+scale=.5*root,fvar(32),.5*root,fvar(33)
+sprpriority=-3
+facing=-1
+
+[State ]
+type=Helper
+trigger1=anim=3104&&animelem=2
+helpertype=normal
+name="jump ushiro"
+ID=7006
+pos=floor(30*root,fvar(32)),0
+postype=p1
+stateno=7000
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Velset
+trigger1=anim=3104&&animelemtime(2)>=0
+x=-16
+y=-4
+
+[State ]
+type=DestroySelf
+trigger1=anim=3104&&animelemtime(2)>=0&&BackEdgeBodyDist<-80
+
+;登場
+[Statedef 4500]
+type=A
+movetype=I
+physics=N
+anim=3106
+ctrl=0
+sprpriority=-4
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=NotHitBy
+trigger1=time<=5||roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=posadd
+trigger1=time=0&&(root,FrontEdgeDist=[116,120])
+x=-60
+
+[State ]
+type=posadd
+trigger1=time=0&&(root,FrontEdgeDist=[111,115])
+x=-70
+
+[State ]
+type=posadd
+trigger1=time=0&&(root,FrontEdgeDist=[106,110])
+x=-80
+
+[State ]
+type=posadd
+trigger1=time=0&&(root,FrontEdgeDist=[101,105])
+x=-90
+
+[State ]
+type=posadd
+trigger1=time=0&&root,FrontEdgeDist<=100
+x=-100
+
+[State ]
+type=posadd
+trigger1=time=0
+x=-160
+
+[State ]
+type=posadd
+trigger1=time=0&&root,backEdgeDist<=40
+x=40
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s31,12
+abspan=floor(root,pos x)
+channel=0
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=Velset
+trigger1=1
+x=16
+y=4
+
+[State ]
+type=ChangeState
+trigger1=Pos Y>=0
+value=4501
+
+;着地
+[Statedef 4501]
+type=S
+movetype=I
+physics=N
+anim=3103+ifelse(prevstateno=4527,14,0)
+ctrl=0
+sprpriority=-4
+velset=0,0
+
+[State ]
+type=NotHitBy
+trigger1=roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=RemoveExplod
+trigger1=prevstateno=4527&&time=0
+ID=6144
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=PosSet
+trigger1=time=0
+y=0
+
+[State ]
+type=PlaySnd
+trigger1=Time=0
+value=s100,2
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6001
+postype=p1
+pos=floor(-5*root,fvar(33)),0
+scale=.5*root,fvar(32),.5*root,fvar(33)
+sprpriority=-3
+vel=-2.2*root,fvar(32),0
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6001
+postype=p1
+pos=floor(5*root,fvar(33)),0
+scale=.5*root,fvar(32),.5*root,fvar(33)
+sprpriority=-2
+vel=2.2*root,fvar(32),0
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=ChangeState
+trigger1=animtime=0
+value=4502
+
+;待機
+[Statedef 4502]
+type=S
+movetype=I
+physics=N
+anim=3100
+ctrl=0
+sprpriority=-4
+velset=0,0
+
+[State ]
+type=NotHitBy
+trigger1=roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=RemoveExplod
+trigger1=prevstateno=4506&&time=0
+ID=6144
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=parentvaradd
+trigger1=time%2=0&&roundstate=2&&root,var(32)=0
+var(40)=-1
+
+[state ]
+type=Turn
+trigger1=numhelper(3000)
+trigger1=helper(3000),var(33)=0&&P2Dist X<0&&roundstate<=3
+
+[State ]
+type=Turn
+trigger1=numhelper(3000)
+trigger1=helper(3000),var(33)=1&&facing!=root,facing
+
+[State ]
+type=Varset
+trigger1=time=0
+fvar(12)=0
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=ChangeState
+triggerall=matchover=1
+trigger1=enemy,name="NachtSieger"&&enemy,authorname="Hanyu-maru"
+trigger2=numenemy>=2
+trigger2=enemy(1),name="NachtSieger"&&enemy(1),authorname="Hanyu-maru"
+value=4515
+
+[State ]
+type=Varset
+trigger1=(parentdist x=[-30,50])&&(root,stateno=5110||root,stateno=1608)&&root,var(40)>=150&&var(8)=0
+var(8)=1
+
+[State ]
+type=ChangeState
+trigger1=((root,command="x"&&root,stateno=5110)||root,stateno=1608)&&root,alive=1&&var(8)=1
+value=4529
+
+[State ]
+type=Varset
+trigger1=((parentdist x!=[-31,51])||root,var(40)<=149)&&var(8)=1
+var(8)=0
+
+[State ]
+type=ChangeState
+trigger1=((root,stateno=170||root,stateno=175)&&roundstate=4)||(root,teammode=simul &&root,alive=0)||(root,stateno=5150&&(root,anim=[1200,1201]))
+value=4540
+
+[State ]
+type=ChangeState
+trigger1=((root,stateno=[1109,1110])||root,stateno=1111)&&roundstate=4
+value=4534+ifelse(root,stateno=1111,2,0)
+
+[State ]
+type=ChangeState
+trigger1=root,stateno=1104&&roundstate=4
+value=4531
+
+[State ]
+type=ChangeState
+trigger1=root,var(40)<=0&&roundstate=2
+value=4515
+
+[State ]
+type=ChangeState
+trigger1=root,stateno=2500&&roundstate<=3
+value=4526
+
+[State ]
+type=ChangeState
+trigger1=root,command="lha"&&roundstate=2&&root,var(40)>=ifelse(root,var(6)=13||root,var(7)=13||root,var(8)=13||root,palno=12,200,400)&&!numhelper(4542)
+value=4541
+
+[State ]
+type=ChangeState
+trigger1=root,command="x"&&root,stateno!=2500&&var(8)=0&&roundstate=2
+value=4506+ifelse(root,command="holdback",9,0)
+
+[State ]
+type=ChangeState
+trigger1=parentdist x>=160&&time>=5&&roundstate<=3
+value=4518
+
+[State ]
+type=ChangeState
+trigger1=((parentdist x>=200&&root,stateno!=100)||(parent,facing!=facing&&(parentdist x!=[-50,50])))&&time>=5&&roundstate<=3
+value=4520
+
+[State ]
+type=ChangeState
+trigger1=((parentdist x<=-200&&time>=5)||(root,stateno=20&&root,time>=10&&((parentdist x>=110&&root,anim=20)||(parentdist x<=-110&&root,anim=21)))||(root,stateno=110&&parentdist x>=120&&root,time>=10))&&roundstate<=3
+value=4516+ifelse(root,stateno=20,1,ifelse(root,stateno=100,2,0))
+
+;立ち去る
+[Statedef 4515]
+type=A
+movetype=I
+physics=N
+anim=3104
+ctrl=0
+sprpriority=-4
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s31,1
+channel=0
+
+[State ]
+type=Explod
+trigger1=animelem=2
+anim=6004
+postype=p1
+pos=floor(40*root,fvar(32)),floor(20*root,fvar(33))
+scale=.5*root,fvar(32),.5*root,fvar(33)
+sprpriority=-3
+facing=-1
+
+[State ]
+type=Helper
+trigger1=animelem=2
+helpertype=normal
+name="jump ushiro"
+ID=17006
+pos=floor(30*root,fvar(32)),0
+postype=p1
+stateno=7000
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Velset
+trigger1=animelemtime(2)>=0
+x=-16
+y=-4
+
+[State ]
+type=PlayerPush
+trigger1=animelemtime(2)>=0
+value=0
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=DestroySelf
+trigger1=animelemtime(2)>=0&&BackEdgeBodyDist<-80
+
+;ジャンプ（後ろ）
+[Statedef 4516]
+type=A
+movetype=I
+physics=N
+anim=3119
+ctrl=0
+sprpriority=-4
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=NotHitBy
+trigger1=roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=parentvaradd
+trigger1=time%2=0&&roundstate=2&&root,var(32)=0
+var(40)=-1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,0
+
+[State ]
+type=Explod
+trigger1=animelem=2
+anim=6004
+postype=p1
+pos=floor(40*root,fvar(32)),floor(20*root,fvar(33))
+scale=.5*root,fvar(32),.5*root,fvar(33)
+sprpriority=-3
+facing=-1
+
+[State ]
+type=Helper
+trigger1=animelem=2
+helpertype=normal
+name="jump ushiro"
+ID=27006
+pos=floor(30*root,fvar(32)),0
+postype=p1
+stateno=7000
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Varset
+trigger1=animelemtime(1)=3
+fvar(23)=parentDist X*.04
+
+[State ]
+type=Velset
+trigger1=animelemtime(2)>=0
+x=fvar(23)
+
+[State ]
+type=Velset
+trigger1=animelemtime(2)=0
+y=-11
+
+[State ]
+type=Veladd
+trigger1=animelemtime(2)>=0
+y=.6
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=ChangeState
+trigger1=Pos Y>=0&&time>=5
+value=4501
+
+;前進
+[Statedef 4517]
+type=S
+movetype=I
+physics=S
+anim=3101+ifelse(root,anim=21,21,0)
+ctrl=0
+sprpriority=-4
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=NotHitBy
+trigger1=roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=parentvaradd
+trigger1=time%2=0&&roundstate=2&&root,var(32)=0
+var(40)=-1
+
+[State ]
+type=Velset
+trigger1=1
+x=ifelse(root,anim=21,const(velocity.walk.back.x),const(velocity.walk.fwd.x))*ifelse((root,p2bodydist x=[-8,8])&&root,p2bodydist y=0,.5,1)
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=ChangeState
+trigger1=root,var(40)<=0&&roundstate=2
+value=4515
+
+[State ]
+type=ChangeState
+trigger1=root,stateno=2500
+value=4526
+
+[State ]
+type=ChangeState
+trigger1=root,command="lha"&&roundstate=2&&root,var(40)>=ifelse(root,var(6)=13||root,var(7)=13||root,var(8)=13||root,palno=12,200,400)&&!numhelper(4542)
+value=4541
+
+[State ]
+type=ChangeState
+trigger1=root,command="x"&&roundstate=2
+value=4506+ifelse(root,command="holdback",9,0)
+
+[State ]
+type=ChangeState
+trigger1=(parentdist x<=90&&root,anim=20)||(parentdist x>=-90&&root,anim=21)||root,stateno!=20
+value=4502
+
+;ダッシュ
+[Statedef 4518]
+type=S
+movetype=I
+physics=S
+anim=3102
+ctrl=0
+sprpriority=-4
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=NotHitBy
+trigger1=roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=parentvaradd
+trigger1=time%2=0&&roundstate=2&&root,var(32)=0
+var(40)=-1
+
+[State ]
+type=Velset
+trigger1=1
+x=const(velocity.run.fwd.x)*ifelse((root,p2bodydist x=[-8,8])&&root,p2bodydist y=0&&(root,stateno=[100,101]),.5,1)
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=PlaySnd
+trigger1=time%13=0
+value=s100,4
+channel=10
+
+[State ]
+type=Explod
+trigger1=time%15=0
+anim=6000
+postype=p1
+pos=floor(10*root,fvar(32)),0
+scale=.5*root,fvar(32),.5*root,fvar(33)
+ID=6000
+sprpriority=-3
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=ChangeState
+trigger1=root,var(40)<=0
+value=4519
+
+[State ]
+type=ChangeState
+trigger1=root,stateno=2500
+value=4526
+
+[State ]
+type=ChangeState
+trigger1=root,command="x"&&roundstate=2
+value=4506
+
+[State ]
+type=ChangeState
+trigger1=parent,facing!=facing||(p2bodydist x=[-50,50])
+value=4520
+
+[State ]
+type=ChangeState
+trigger1=parentdist x<=110||root,stateno=101
+value=4519
+
+;ダッシュストップ
+[Statedef 4519]
+type=S
+movetype=I
+physics=S
+anim=3120
+ctrl=0
+sprpriority=-4
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=NotHitBy
+trigger1=roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=parentvaradd
+trigger1=time%2=0&&roundstate=2&&root,var(32)=0
+var(40)=-1
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,5
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6002
+postype=p1
+pos=floor(30*root,fvar(32)),floor(5*root,fvar(33))
+scale=.4*root,fvar(32),.4*root,fvar(33)
+ID=6002
+sprpriority=-3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01
+x=const(velocity.run.fwd.x)-(time*.3)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009
+x=0
+
+[State ]
+type=ChangeState
+trigger1=root,command="lha"&&roundstate=2&&root,var(40)>=ifelse(root,var(6)=13||root,var(7)=13||root,var(8)=13||root,palno=12,200,400)&&!numhelper(4542)
+value=4541
+
+[State ]
+type=ChangeState
+trigger1=root,command="x"&&roundstate=2
+value=4506
+
+[State ]
+type=ChangeState
+trigger1=animtime=0
+value=4502
+
+;ジャンプ（前）
+[Statedef 4520]
+type=A
+movetype=I
+physics=N
+anim=3121
+ctrl=0
+sprpriority=-4
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=NotHitBy
+trigger1=roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=parentvaradd
+trigger1=time%2=0&&roundstate=2&&root,var(32)=0
+var(40)=-1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,0
+
+[State ]
+type=Explod
+trigger1=animelem=2
+anim=6004
+postype=p1
+pos=floor(-20*root,fvar(32)),floor(20*root,fvar(33))
+scale=.5*root,fvar(32),.5*root,fvar(33)
+sprpriority=-3
+
+[State ]
+type=Helper
+trigger1=animelem=2
+helpertype=normal
+name="jump ushiro"
+ID=27006
+pos=floor(-40*root,fvar(32)),0
+postype=p1
+stateno=7000
+supermovetime=100
+pausemovetime=100
+facing=-1
+
+[State ]
+type=Varset
+trigger1=animelemtime(1)=3
+fvar(23)=parentDist X*.04
+
+[State ]
+type=Velset
+trigger1=animelemtime(2)>=0
+x=fvar(23)
+
+[State ]
+type=Velset
+trigger1=animelemtime(2)=0
+y=-11
+
+[State ]
+type=Veladd
+trigger1=animelemtime(2)>=0
+y=.6
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=ChangeState
+trigger1=Pos Y>=0&&time>=5
+value=4501
+
+;くらい
+[Statedef 4505]
+type=A
+movetype=H
+physics=N
+anim=3111
+ctrl=0
+sprpriority=-4
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=RemoveExplod
+trigger1=(prevstateno=4527||prevstateno=4506)&&time=0
+ID=6144
+
+[state ]
+type=Turn
+trigger1=P2Dist X<0&&time=0
+
+[State ]
+type=parentvaradd
+trigger1=time=0&&root,var(32)=0
+var(40)=-300*ifelse(root,var(6)=13||root,var(7)=13||root,var(8)=13||root,palno=12,.5,1)
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s31,ifelse(root,var(40)<=0,8,ifelse(var(0)=0,6,7))
+channel=0
+
+[State ]
+type=Varset
+trigger1=time=0
+fvar(12)=0
+
+[State ]
+type=VelSet
+trigger1=backedgebodydist>=20
+x=(-2+fvar(12))*ifelse(FrontEdgeBodyDist<=20,0,1)
+
+[State ]
+type=Varadd
+trigger1=FrontEdgeBodyDist<=40&&fvar(12)<=2.7
+fvar(12)=.3
+
+[State ]
+type=VelSet
+trigger1=animelem=1
+y=-4
+
+[State ]
+type=Veladd
+trigger1=1
+y=.38
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=ChangeState
+trigger1=Pos Y>=0&&time>=1
+value=4522
+
+;倒れる
+[Statedef 4522]
+type=L
+movetype=H
+physics=S
+anim=3112
+ctrl=0
+sprpriority=-6
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=parentvaradd
+trigger1=time%2=0&&roundstate=2&&root,var(40)>=2&&root,var(32)=0
+var(40)=-1
+
+[State ] 
+type=ChangeAnim
+trigger1=time=0&&(prevstateno=4528||prevstateno=4530)
+value=3112
+elem=2
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&(prevstateno=4528||prevstateno=4530)
+value=s31,7
+
+[State ]
+type=Varset
+trigger1=time=0
+var(6)=0
+
+[State ]
+type=Varset
+trigger1=time=0
+trigger2=numhelper(4000)
+trigger2=helper(4000),var(13)!=0
+var(13)=0
+
+[State ]
+type=Varadd
+triggerall=root,var(40)<=0
+trigger1=!numhelper(4000)
+trigger2=numhelper(4000)
+trigger2=helper(4000),var(13)=0
+var(13)=1
+
+[State ]
+type=Varset
+trigger1=var(13)=501
+var(13)=1
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=PosSet
+trigger1=time=0
+y=0
+
+[State ]
+type=VelSet
+trigger1=Time=0
+y=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,3
+
+[State ]
+type=Explod
+trigger1=animelem=2
+anim=6007
+postype=p1
+ownpal=1
+scale=.5*root,fvar(32),.5*root,fvar(33)
+sprpriority=-6
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=root,var(40)<=0&&!numexplod(6103)&&animelemtime(2)>=0
+anim=6103+ifelse(teamside=2,6,0)
+ID=6103
+postype=p1
+ownpal=1
+scale=1,1
+sprpriority=-11
+facing=ifelse(facing=1,1,-1)
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=root,var(40)<=0&&!numexplod(6102)&&animelemtime(2)>=0
+anim=6102+ifelse(teamside=2,6,0)
+ID=6102
+postype=p1
+ownpal=1
+scale=1,1
+sprpriority=-11
+facing=ifelse(facing=1,1,-1)
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=root,var(40)<=0&&!numexplod(6104)&&animelemtime(2)>=0
+anim=6104+ifelse(teamside=2&&root,var(48)=0,1,ifelse(teamside=1&&root,var(48)=1,2,ifelse(teamside=2&&root,var(48)=1,3,0)))
+ID=6104
+postype=p1
+ownpal=1
+scale=1,1
+sprpriority=-11
+facing=ifelse(facing=1,1,-1)
+removetime=-1
+
+[State ]
+type=Varset
+trigger1=(parentdist x=[-30,50])&&animelemtime(2)>=0&&root,var(40)>=1&&var(9)=0
+var(9)=1
+
+[State ]
+type=Varset
+trigger1=(parentdist x=[-30,50])&&animelemtime(2)>=0&&root,var(40)<=0&&var(4)=0
+var(4)=1
+
+[State ]
+type=Varset
+trigger1=var(4)=1||var(9)=1
+var(5)=ceil(parentdist x-50)
+
+[State ]
+type=Varset
+trigger1=roundstate>=3
+var(11)=ceil(parentdist x-50)
+
+[State ]
+type=Varset
+trigger1=BackEdgeBodyDist<=20||frontEdgeBodyDist<=20
+var(12)=1
+
+[State ]
+type=Varset
+trigger1=(parentdist x!=[-31,51])&&animelemtime(2)>=0&&root,var(40)<=0&&var(4)=1
+var(4)=0
+
+[State ]
+type=Varset
+trigger1=(((parentdist x!=[-31,51])&&animelemtime(2)>=0&&root,var(40)>=1)||(time>=60&&root,var(40)>=1))&&var(9)=1
+var(9)=0
+
+[State ]
+type=ChangeState
+trigger1=(root,stateno=1108||(root,stateno=1111&&root,time=60)||(root,stateno=1112&&root,time=50)||lose)&&roundstate=4
+value=4533+ifelse((root,stateno=[1111,1112])||lose,2,0)
+
+[State ]
+type=ChangeState
+trigger1=root,stateno=1607&&animelemtime(2)>=0&&root,var(40)>=1
+value=4530
+
+[State ]
+type=ChangeState
+trigger1=root,stateno=1606&&animelemtime(2)>=0&&root,var(40)<=0
+value=4528
+
+[State ]
+type=ChangeState
+trigger1=time>=60&&root,var(40)>=1
+value=4523
+
+;引き上げられる
+[Statedef 4528]
+type=L
+movetype=H
+physics=N
+anim=3142
+ctrl=0
+sprpriority=0
+velset=0,0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ] 
+type=ChangeAnim
+trigger1=anim!=3142&&anim!=3131&&root,var(21)<=32
+value=3142
+
+[State ] 
+type=ChangeAnim
+trigger1=anim!=3143&&anim!=3131&&root,var(21)=[33,66]
+value=3143
+
+[State ] 
+type=ChangeAnim
+trigger1=anim!=3129&&anim!=3131&&root,var(21)=[67,99]
+value=3129
+
+[State ] 
+type=ChangeAnim
+trigger1=anim!=3130&&anim!=3131&&root,var(21)>=100
+value=3130
+
+[State ] 
+type=ChangeAnim
+trigger1=(anim!=[3130,3131])&&root,stateno!=1606&&(root,var(21)=[33,99])
+value=3131
+elem=ifelse((root,var(21)=[33,66]),2,1)
+
+[State ]
+type=Varrandom
+trigger1=anim=3130
+v=3
+range=0,3
+
+[State ]
+type=Explod
+trigger1=anim=3130
+anim=6110+var(3)
+postype=p1
+pos=10,-60
+ownpal=1
+scale=1,1
+sprpriority=1
+random=20,30
+
+[State ]
+type=Varadd
+trigger1=var(6)<=339
+var(6)=1
+
+[State ]
+type=parentVarset
+trigger1=anim=3130&&root,var(13)=0
+var(13)=32
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=anim=3130&&root,var(32)=0
+var(40)=500-var(6)
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=anim=3130
+var(38)=ceil((1400-(var(6)*2))*ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,1.5,1))
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=anim=3130
+var(41)=600-var(6)
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=anim=3130
+value=s31,13
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=anim=3130
+value=s100,41
+persistent=0
+
+[State ]
+type=RemoveExplod
+trigger1=anim=3130
+ID=6102
+persistent=0
+
+[State ]
+type=RemoveExplod
+trigger1=anim=3130
+ID=6103
+persistent=0
+
+[State ]
+type=RemoveExplod
+trigger1=anim=3130
+ID=6104
+persistent=0
+
+[State ]
+type=ChangeState
+trigger1=animtime=0||(anim=3142&&root,stateno!=1606)
+value=4502+ifelse(anim=3130,0,20)
+
+;引き上げる
+[Statedef 4529]
+type=S
+movetype=I
+physics=N
+anim=3132
+ctrl=0
+sprpriority=2
+velset=0,0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=parentVaradd
+trigger1=time=0&&roundstate=2&&root,var(32)=0
+var(40)=-150
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s31,10
+
+[State ]
+type=turn
+trigger1=time=0&&facing=root,facing
+
+[State ]
+type=BindToParent
+trigger1=1
+time=1
+pos=floor(40*root,fvar(32)),0
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=NotHitBy
+trigger1=animelemtime(4)>=0||roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=ChangeState
+trigger1=animtime=0
+value=4502
+
+;引き上げられる（ゲージ残）
+[Statedef 4530]
+type=L
+movetype=H
+physics=N
+anim=3133
+ctrl=0
+sprpriority=0
+velset=0,0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=parentVarset
+trigger1=animelemtime(4)>=0&&root,var(13)=0
+var(13)=31
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=animelemtime(4)=0&&root,var(32)=0
+var(40)=150
+
+[State ]
+type=parentVaradd
+trigger1=animelemtime(4)=0
+var(38)=ceil(1200*ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,1.5,1))
+
+[State ]
+type=parentVaradd
+trigger1=animelemtime(4)=0
+var(41)=500
+
+[State ]
+type=PlaySnd
+trigger1=animelemtime(4)=0
+value=s31,13
+channel=0
+
+[State ]
+type=PlaySnd
+trigger1=animelemtime(4)=0
+value=s100,41
+
+[State ]
+type=Varrandom
+trigger1=animelemtime(4)>=0
+v=3
+range=0,3
+
+[State ]
+type=Explod
+trigger1=animelemtime(4)>=0
+anim=6110+var(3)
+postype=p1
+pos=10,-60
+ownpal=1
+scale=1,1
+sprpriority=1
+random=20,30
+
+[State ]
+type=ChangeState
+trigger1=animtime=0||(animelemtime(3)<=5&&root,stateno!=1607)
+value=4502+ifelse(animelemtime(4)>=0,0,20)
+
+;起き上がり
+[Statedef 4523]
+type=L
+movetype=H
+physics=N
+anim=3113
+ctrl=0
+sprpriority=-4
+velset=0,0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=parentvaradd
+trigger1=time%2=0&&roundstate=2&&root,var(32)=0
+var(40)=-1
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s31,9
+channel=0
+
+[State ]
+type=ChangeState
+trigger1=animtime=0
+value=4502
+
+;技待機
+[Statedef 4526]
+type=S
+movetype=H
+physics=N
+anim=3116
+ctrl=0
+sprpriority=-4
+velset=0,0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=ChangeState
+trigger1=root,stateno!=2500
+value=4502
+
+;ルミナスバリアー
+[Statedef 4506]
+type=S
+movetype=A
+physics=S
+anim=3107
+ctrl=0
+poweradd=5
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=NotHitBy
+trigger1=roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+ignorehitpause=1
+
+[State ]
+type=parentvaradd
+trigger1=time=0&&roundstate=2&&root,var(32)=0
+var(40)=-200*ifelse(root,var(6)=13||root,var(7)=13||root,var(8)=13||root,palno=12,.5,1)
+
+[State ]
+type=SprPriority
+trigger1=1
+value=7
+ignorehitpause=1
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=parentVaradd
+trigger1=time=0&&root,var(36)=0
+var(41)=25
+
+[State ]
+type=parentVaradd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&root,fvar(1)=0&&time=0
+var(38)=ceil(25*ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,1.5,1))
+
+[State ]
+type=Varrandom
+trigger1=(time=0||animelem=5||animelem=7||animelem=9||animelem=11||animelem=13||animelem=15||animelem=17||animelem=19||animelem=21)&&root,var(6)!=24&&root,var(7)!=24&&root,var(8)!=24&&root,palno!=12
+v=18
+range=1,12
+
+[State ]
+type=Varrandom
+trigger1=(time=0||animelem=5||animelem=7||animelem=9||animelem=11||animelem=13||animelem=15||animelem=17||animelem=19||animelem=21)&&(root,var(6)=24||root,var(7)=24||root,var(8)=24||root,palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(root,var(30)=0&&(root,var(6)=9||root,var(7)=9||root,var(8)=9||root,palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=animelem=3||animelem=5||animelem=7||animelem=9||animelem=11||animelem=13||animelem=15||animelem=17||animelem=19||animelem=21
+attr=S,SP
+damage=ceil(20*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12),.35,0))*root,fvar(29)),0
+guardflag=M
+hitflag=MAF
+pausetime=0,0
+priority=5,Hit
+sparkno=-1
+hitsound=s100,43
+guardsound=s100,67
+ground.slidetime=8
+ground.hittime=8
+ground.velocity=-5
+air.velocity=-2.8,-5
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=28
+ground.cornerpush.veloff=-7
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=4506
+kill=0
+
+[State ]
+type=Helper
+trigger1=movehit
+helpertype=normal
+name="hitSP"
+ID=7107
+pos=0,-65
+postype=p2
+stateno=7107
+supermovetime=100
+pausemovetime=100
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=moveguarded
+helpertype=normal
+name="guardM"
+ID=17300
+pos=0,-65
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+ignorehitpause=1
+
+[State ]
+type=parentVarset
+trigger1=root,var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+
+[State ]
+type=parentVarset
+trigger1=var(15)=1&&root,var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+
+[State ]
+type=parentVarset
+trigger1=var(18)=1&&root,var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&root,var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&root,var(6)!=9&&root,var(7)!=9&&root,var(8)!=9&&root,palno!=12)||(root,var(30)!=0&&(root,var(6)=9||root,var(7)=9||root,var(8)=9||root,palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=parentVaradd
+trigger1=movehit
+var(30)=1
+ignorehitpause=1
+
+[State ]
+type=powerAdd
+trigger1=movehit
+value=ceil(20*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=powerAdd
+trigger1=MoveGuarded
+value=ceil(10*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=parentVaradd
+trigger1=movehit&&root,var(36)=0
+var(41)=ceil(12*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=parentVaradd
+trigger1=MoveGuarded&&root,var(36)=0
+var(41)=ceil(6*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=parentVaradd
+trigger1=numhelper(3001)
+trigger1=helper(3001),fvar(0)>=120&&movehit
+var(38)=ceil(16*(1+ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,.5,0)+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=parentVaradd
+trigger1=numhelper(3001)
+trigger1=helper(3001),fvar(0)>=120&&MoveGuarded
+var(38)=ceil(8*(1+ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,.5,0)+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=parentvarset
+trigger1=movehit
+var(26)=1
+ignorehitpause=1
+
+[State ]
+type=MoveHitReset
+trigger1=movecontact
+ignorehitpause=1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2&&anim=3107
+value=s100,90
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2&&anim=3107
+value=s31,5
+channel=0
+
+[State ]
+type=Explod
+trigger1=animelemtime(3)=0
+anim=6144
+ID=6144
+postype=p1
+pos=37,-48
+scale=1.25*root,fvar(32),1.25*root,fvar(33)
+sprpriority=8
+bindtime=-1
+removeongethit=1
+removetime=-1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=animelemtime(3)=0
+anim=6147
+ID=6144
+postype=p1
+pos=37,-48
+scale=1.25*root,fvar(32),1.25*root,fvar(33)
+sprpriority=9
+bindtime=-1
+removeongethit=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=animelemtime(3)=0
+helpertype=normal
+name="hikari"
+ID=7701
+postype=p1
+stateno=7701
+
+[State ]
+type=Explod
+trigger1=animelemtime(2)=0
+anim=6145
+ID=6145
+postype=p1
+pos=floor(70*root,fvar(32)),floor(-54*root,fvar(33))
+sprpriority=10
+removeongethit=1
+bindtime=-1
+removetime=-1
+
+[State ]
+type=varset
+trigger1=time=0
+fvar(25)=0
+
+[State ]
+type=varset
+trigger1=time=0||(fvar(26)=1&&root,command!="holdy")||root,var(40)<=0||roundstate>=3
+fvar(26)=0
+
+[State ]
+type=varset
+trigger1=root,command="holdy"&&root,var(40)>=1&&roundstate=2
+fvar(26)=1
+
+[State ]
+type=parentvaradd
+trigger1=animelemtime(19)>=0&&fvar(26)=1&&root,var(32)=0
+var(40)=ceil(-2*ifelse(root,var(6)=13||root,var(7)=13||root,var(8)=13||root,palno=12,.5,1))
+
+[State ]
+type=ChangeAnim
+trigger1=animelemtime(19)>=0&&(fvar(26)=0||root,var(40)<=0)&&anim=3107
+value=3118
+
+[State ]
+type=Varadd
+trigger1=(animelemtime(2)=[1,5])||(animelemtime(19)>=0&&(fvar(26)=0||root,var(40)<=0))||anim=3118
+fvar(25)=ifelse(animelemtime(19)>=0||anim=3118,-.25,.25)*root,fvar(32)
+
+[State ]
+type=modifyexplod
+trigger1=animelemtime(2)>=0||anim=3118
+ID=6145
+scale=fvar(25)*root,fvar(32),fvar(25)*root,fvar(33)
+
+[State ]
+type=RemoveExplod
+trigger1=(animelemtime(19)>=0||anim=3118)&&fvar(25)<=0
+ID=6145
+
+[State ]
+type=RemoveExplod
+trigger1=(animelemtime(19)>=0||anim=3118)&&fvar(25)<=0
+ID=6144
+
+[State ]
+type=parentVaradd
+trigger1=fvar(27)=1&&roundstate=2&&root,var(32)=0
+var(40)=ceil(-50*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+
+[State ]
+type=Varset
+trigger1=fvar(27)=1
+fvar(27)=0
+
+[State ]
+type=ChangeState
+Trigger1=animtime=0&&anim=3118
+value=4502
+
+;プリキュアアタック＆プリキュアプロテクション
+[Statedef 4527]
+type=A
+movetype=A
+physics=N
+anim=3126
+ctrl=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+ignorehitpause=1
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6144
+ID=6144
+postype=p1
+pos=26,-20
+scale=1.25*root,fvar(32),1.25*root,fvar(33)
+sprpriority=-3
+bindtime=-1
+removeongethit=1
+removetime=-1
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="hikari"
+ID=7700
+postype=p1
+stateno=7700
+
+[State ]
+type=SprPriority
+trigger1=1
+value=-4
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=time=0&&(root,stateno=[120,155])
+var(2)=1
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s31,ifelse((root,stateno=[120,155]),2,4)
+abspan=floor(root,pos x)
+channel=0
+
+[State ]
+type=parentVarset
+trigger1=time=0
+var(10)=0
+
+[State ]
+type=parentVarset
+trigger1=root,var(13)=0
+var(13)=ifelse(var(2),19,18)
+persistent=0
+
+[State ]
+type=parentvaradd
+trigger1=time=0&&roundstate=2&&root,var(32)=0
+var(40)=-ifelse(var(2),350,250)*ifelse(root,var(6)=13||root,var(7)=13||root,var(8)=13||root,palno=12,.5,1)
+
+[State ]
+type=NotHitBy
+trigger1=time<=5||roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=posadd
+trigger1=time=0&&root,FrontEdgeDist<=55
+x=-55
+
+[State ]
+type=posadd
+trigger1=time=0
+x=-110
+
+[State ]
+type=posadd
+trigger1=time=0
+y=-40
+
+[State ]
+type=Velset
+trigger1=1
+x=16
+y=5
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=Varrandom
+trigger1=time=0&&root,var(6)!=24&&root,var(7)!=24&&root,var(8)!=24&&root,palno!=12
+v=18
+range=1,12
+
+[State ]
+type=Varrandom
+trigger1=time=0&&(root,var(6)=24||root,var(7)=24||root,var(8)=24||root,palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(root,var(30)=0&&(root,var(6)=9||root,var(7)=9||root,var(8)=9||root,palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed
+attr=S,NA
+damage=ceil(37*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12),.35,0))*root,fvar(29)),0
+guardflag=M
+hitflag=MAFD
+pausetime=11,11
+priority=4,Hit
+sparkno=-1
+hitsound=s100,43
+guardsound=s100,67
+ground.slidetime=20
+ground.hittime=20
+ground.velocity=-5
+air.velocity=-2.8,-5
+guard.sparkno=-1
+yaccel=.48
+air.fall=1
+fall.recovertime=10
+ground.cornerpush.veloff=-7
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=4027
+kill=0
+
+[State ]
+type=Helper
+trigger1=movehit
+helpertype=normal
+name="hitSP"
+ID=7107
+pos=0,-65
+postype=p2
+stateno=7107
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=moveguarded
+helpertype=normal
+name="guardM"
+ID=17300
+pos=0,-65
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=parentVarset
+trigger1=root,var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVarset
+trigger1=var(15)=1&&root,var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVarset
+trigger1=var(18)=1&&root,var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&root,var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&root,var(6)!=9&&root,var(7)!=9&&root,var(8)!=9&&root,palno!=12)||(root,var(30)!=0&&(root,var(6)=9||root,var(7)=9||root,var(8)=9||root,palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=parentVaradd
+trigger1=movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=movehit
+value=ceil(70*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=MoveGuarded
+value=ceil(35*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=movehit&&root,var(36)=0
+var(41)=ceil(70*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=MoveGuarded&&root,var(36)=0
+var(41)=ceil(35*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=numhelper(3001)
+trigger1=helper(3001),fvar(0)>=120&&movehit
+var(38)=ceil(70*(1+ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,.5,0)+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=numhelper(3001)
+trigger1=helper(3001),fvar(0)>=120&&MoveGuarded
+var(38)=ceil(35*(1+ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,.5,0)+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentvarset
+trigger1=movehit
+var(26)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=ChangeState
+trigger1=Pos Y>=-10
+value=4501
+
+;勝利～2人ルミナスゲージ残2
+[Statedef 4531]
+type=S
+ctrl=0
+velset=0,0
+sprpriority=-4
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=PlaySnd
+trigger1=time=30||time=165
+value=s31,ifelse(time=30,21,19)
+
+[State ]
+type=changeanim
+trigger1=time=30||time=165
+value=3134+ifelse(time=30,0,1)
+
+[State ]
+type=turn
+trigger1=root,facing!=facing&&time=30
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+;勝利～2人ルミナスゲージ無
+[Statedef 4533]
+type=L
+movetype=H
+physics=N
+anim=3136
+ctrl=0
+sprpriority=0
+velset=0,0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=BindToParent
+trigger1=var(12)=1
+time=1
+pos=floor(50*root,fvar(32)),0
+
+[State ]
+type=parentVarset
+trigger1=animelemtime(4)>=0&&root,var(13)=0&&anim=3136
+var(13)=31
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=animelemtime(4)=0&&anim=3136
+var(39)=150
+
+[State ]
+type=parentVaradd
+trigger1=animelemtime(4)=0&&anim=3136
+var(38)=ceil(1200*ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,1.5,1))
+
+[State ]
+type=parentVaradd
+trigger1=animelemtime(4)=0&&anim=3136
+var(41)=500
+
+[State ]
+type=PlaySnd
+trigger1=(animelemtime(4)=20||animelemtime(4)=130)&&anim=3136
+value=s31,ifelse(animelemtime(4)=20,13,20)
+
+[State ]
+type=PlaySnd
+trigger1=animelemtime(4)=0&&anim=3136
+value=s100,41
+
+[State ]
+type=Varrandom
+trigger1=animelemtime(4)>=0&&anim=3136
+v=3
+range=0,3
+
+[State ]
+type=changeanim
+trigger1=animelemtime(4)=130&&anim=3136
+value=3137
+
+[State ]
+type=Explod
+trigger1=(animelemtime(4)=[0,5])&&anim=3136
+anim=6110+var(3)
+postype=p1
+pos=10,-60
+ownpal=1
+scale=1,1
+sprpriority=1
+random=20,30
+
+[State ]
+type=RemoveExplod
+trigger1=time=1
+ID=6102
+
+[State ]
+type=RemoveExplod
+trigger1=time=1
+ID=6103
+
+[State ]
+type=RemoveExplod
+trigger1=time=1
+ID=6104
+
+;勝利～3人ゲージ残
+[Statedef 4534]
+type=S
+ctrl=0
+velset=0,0
+sprpriority=-4
+anim=3138
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=PlaySnd
+trigger1=root,stateno=1110
+value=s31,23
+persistent=0
+
+[State ]
+type=turn
+trigger1=root,facing!=facing&&time=0&&root,stateno!=1110
+
+[State ]
+type=turn
+trigger1=parentdist x<=0&&root,facing!=facing&&root,stateno=1110
+persistent=0
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+;勝利～3人ルミナスゲージ無
+[Statedef 4535]
+type=L
+movetype=H
+physics=N
+anim=3139
+ctrl=0
+sprpriority=0
+velset=0,0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=PlaySnd
+trigger1=(((root,stateno=[1111,1112])||root,anim=1200)&&time=1)||((root,stateno!=[1111,1112])&&root,anim!=1200&&animelem=3)
+value=s31,ifelse((root,stateno!=[1111,1112])&&root,anim!=1201,24,ifelse(lose,27,26))
+
+[State ]
+type=RemoveExplod
+trigger1=time=1
+ID=6102
+
+[State ]
+type=RemoveExplod
+trigger1=time=1
+ID=6103
+
+[State ]
+type=RemoveExplod
+trigger1=time=1
+ID=6104
+
+;勝利～3人ホワイトゲージ無
+[Statedef 4536]
+type=S
+ctrl=0
+velset=0,0
+sprpriority=-4
+anim=3140
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=PlaySnd
+trigger1=time=1
+value=s31,21
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+;勝利～時間切れ敗北
+[Statedef 4540]
+type=L
+movetype=H
+physics=N
+anim=3141
+ctrl=0
+sprpriority=0
+velset=0,0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1
+value=s31,ifelse(root,stateno=170||root,stateno=175||(roundstate<=3&&root,alive=0)||root,anim=1201,27,24)
+
+;ルミナス・ハーティエル・アンクション
+[Statedef 4541]
+type=S
+movetype=I
+physics=S
+anim=3144
+ctrl=0
+poweradd=50
+
+[State ]
+type=Varset
+trigger1=time=0
+var(8)=0
+
+[State ]
+type=NotHitBy
+trigger1=roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=Helper
+trigger1=!numhelper(23030)&&!numhelper(1023030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon luminous"
+ID=ifelse(screenpos Y<=-1,1023030,23030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+ignorehitpause=1
+
+[State ]
+type=parentvaradd
+trigger1=time=0&&roundstate=2&&root,var(32)=0
+var(40)=floor(-400*ifelse(root,var(6)=13||root,var(7)=13||root,var(8)=13||root,palno=12,.5,1))
+
+[State ]
+type=parentvaradd
+trigger1=time%2=0&&roundstate=2&&root,var(32)=0
+var(40)=-1
+
+[State ]
+type=SprPriority
+trigger1=1
+value=7
+ignorehitpause=1
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4505
+time=-1
+
+[State ]
+type=parentVaradd
+trigger1=time=0&&root,var(36)=0
+var(41)=50
+
+[State ]
+type=parentVaradd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&root,fvar(1)=0&&time=0
+var(38)=ceil(80*ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,1.5,1))
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6143
+ID=6143
+postype=p1
+pos=floor(55*root,fvar(32)),floor(-54*root,fvar(33))
+scale=1*root,fvar(32),1*root,fvar(33)
+sprpriority=8
+bindtime=-1
+removeongethit=1
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="HEARTIEL ACTION"
+ID=4542
+pos=floor(55*root,fvar(32)),floor(-54*root,fvar(33))
+postype=p1
+stateno=4542
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="hitSP"
+ID=7107
+pos=floor(55*root,fvar(32)),floor(-54*root,fvar(33))
+postype=p1
+stateno=7107
+
+[State ]
+type=Explod
+trigger1=time=120
+anim=6137
+ID=6137
+postype=p1
+pos=0,5
+scale=1920,.5
+sprpriority=-9000
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=120
+anim=6138
+postype=left
+scale=.5,.5
+sprpriority=-9001
+vel=0,-5
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=120
+anim=6138
+postype=right
+scale=.5,.5
+sprpriority=-9001
+vel=0,-5
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=120
+anim=6086
+postype=p1
+pos=0,floor(-45*root,fvar(33))
+scale=1*root,fvar(32),1*root,fvar(33)
+sprpriority=15
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+removeongethit=1
+
+[State ]
+type=Helper
+trigger1=time=120&&facing=1
+helpertype=normal
+name="catin"
+ID=27600
+pos=-260,0
+postype=left
+stateno=7600
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Helper
+trigger1=time=120&&facing=-1
+helpertype=normal
+name="catin"
+ID=27600
+pos=260,0
+postype=right
+stateno=7600
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=Varset
+trigger1=time=0
+var(10)=0
+
+[State ]
+type=Varadd
+trigger1=time=[146,155]
+var(10)=25
+
+[State ]
+type=BGPalFX
+trigger1=time=[120,155]
+time=1
+mul=0+var(10),0+var(10),0+var(10)
+invertall=0
+
+[State ]
+type=NotHitBy
+trigger1=time=[120,155]
+value=SCA
+time=1
+
+[State ]
+type=Pause
+trigger1=time=120
+time=35
+movetime=35
+
+[State ]
+type=AssertSpecial
+triggerall=time=[120,155]
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)!=3&&helper(3003),var(5)!=2
+trigger2=!numhelper(3003)
+flag=nofg
+
+[State ]
+type=AssertSpecial
+triggerall=time=[120,155]
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)=3||helper(3003),var(5)=2
+flag=nomusic
+flag2=nofg
+
+[State ]
+type=changeanim
+trigger1=time=120
+value=3145
+
+[State ]
+type=PlaySnd
+trigger1=time=0||(animelem=4&&anim=3145)||time=120
+value=s100,ifelse(time=0,90,ifelse(time=120,20,91))
+
+[State ]
+type=PlaySnd
+trigger1=time=0||time=60||(animelem=4&&anim=3145)
+value=s31,ifelse(time=0,16,ifelse(time=60,17,18))
+channel=0
+
+[State ]
+type=ChangeState
+Trigger1=animtime=0&&anim=3145
+value=4502
+
+;ルミナス・ハーティエル・アンクション（ヘルパー）
+[Statedef 4542]
+type=S
+movetype=A
+physics=N
+anim=1860
+ctrl=0
+velset=7,0
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=anim=3146&&var(1)<=20&&(((rootdist x=[-20,20])&&(rootdist y=[-90,90]))||var(1)>=1)
+var(1)=1
+
+[State ]
+type=Varadd
+trigger1=numpartner
+trigger1=anim=3146&&var(2)<=20&&((partner,pos x>=pos x-20&&partner,pos x<=pos x+20&&partner,pos y>=pos y-105&&partner,pos y<=pos y+105)||var(2)>=1)
+var(2)=1
+
+[State ]
+type=Helper
+trigger1=var(1)=1
+helpertype=normal
+name="lha effect"
+ID=4545
+postype=left
+stateno=4545
+pausemovetime=100
+supermovetime=100
+facing=ifelse(root,facing=1,1,-1)
+
+[State ]
+type=Helper
+trigger1=var(2)=1
+helpertype=normal
+name="lha effect"
+ID=14545
+postype=left
+stateno=4545
+pausemovetime=100
+supermovetime=100
+facing=ifelse(partner,facing=1,1,-1)
+
+[State ]
+type=PlaySnd
+trigger1=anim=3146&&(var(1)=1||var(2)=1)
+value=s100,41
+
+[State ]
+type=BindToParent
+trigger1=parent,anim=3144||(parent,anim=3145&&parent,animelemtime(3)<=3)
+time=1
+pos=floor(70*root,fvar(32)),floor(-54*root,fvar(33))
+
+[State ]
+type=changeanim
+trigger1=parent,anim=3145&&parent,animelem=4&&anim=1860
+value=3146
+
+[State ]
+type=Varadd
+trigger1=(parent,anim=3145&&parent,animelem=4)||var(0)>=1
+var(0)=1
+
+[State ]
+type=attackdist
+trigger1=1
+value=0
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=unguardable
+
+[State ]
+type=HitDef
+trigger1=time=0
+attr=S,SP
+damage=0,0
+guardflag=L
+hitflag=MAFD
+pausetime=0,0
+priority=7,Hit
+sparkno=-1
+hitsound=-1
+guardsound=-1
+ground.slidetime=30
+ground.hittime=30
+guard.sparkno=-1
+yaccel=.48
+ground.cornerpush.veloff=0
+ID=4542
+kill=0
+P2stateno=ifelse(root,var(6)=3||root,var(7)=3||root,var(8)=3||root,palno=12,4544,4543)
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6150
+ID=6150
+postype=p1
+sprpriority=-3
+bindtime=-1
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6151
+ID=6150
+postype=p1
+sprpriority=10
+bindtime=-1
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6142
+ID=6142
+postype=p1
+sprpriority=11
+bindtime=-1
+removetime=-1
+
+[State ]
+type=Varadd
+trigger1=time<=59
+fvar(25)=.025*root,fvar(32)
+
+[State ]
+type=Varset
+trigger1=time=60
+fvar(25)=1.5*root,fvar(32)
+
+[State ]
+type=Varadd
+trigger1=time<=59
+fvar(26)=.025*root,fvar(33)
+
+[State ]
+type=Varset
+trigger1=time=60
+fvar(26)=1.5*root,fvar(33)
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=6142
+scale=fvar(25)*root,fvar(32),fvar(26)*root,fvar(33)
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=6150
+scale=fvar(25)*root,fvar(32),fvar(26)*root,fvar(33)
+
+[State ]
+type=RemoveExplod
+trigger1=(var(0)=0&&parent,stateno!=4541)||!numhelper(4500)||(var(0)>=60&&frontEdgeBodyDist<-80)||(parent,anim=3145&&parent,animelem=4)
+ID=6142
+
+[State ]
+type=RemoveExplod
+trigger1=(var(1)!=[1,20])&&(var(2)!=[1,20])&&((var(0)=0&&parent,stateno!=4541)||!numhelper(4500)||(var(0)>=60&&frontEdgeBodyDist<-80))
+ID=6150
+
+[State ]
+type=DestroySelf
+trigger1=(var(1)!=[1,20])&&(var(2)!=[1,20])&&((var(0)=0&&parent,stateno!=4541)||!numhelper(4500)||(var(0)>=60&&frontEdgeBodyDist<-80))
+

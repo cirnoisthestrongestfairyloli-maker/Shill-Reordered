@@ -1,0 +1,55 @@
+;-----------------------------------------------------------------------------;
+;                                  Options                                    ;
+;-----------------------------------------------------------------------------;
+[Statedef 5901]
+type = S
+
+;-----------------------;
+; Lewd hyper regulation ;
+;----------------------;
+; Wanna see Panty bang her opponents? This is for you.
+; Litteral bang by default.
+[State -3, Lewd hyper regulation]
+type = varset
+trigger1 = 1
+v = 15
+value = 0   ;Abstract Reordered: non-explicit version
+;value = 0 ; Bang
+;value = 1 ; Litterally bang
+
+;--------------------------------;
+; Dialogue intro quotes language ;
+;--------------------------------;
+; This is to change the language of the dialogues on Panty's dialogue intro
+; against Applejack.
+; English for default.
+[State -3, Dialogue intro quotes language]
+type = varset
+trigger1 = 1
+v = 20
+value = 0
+;value = 0 ; English
+;value = 1 ; Spanish (latinamerican)
+
+;---------------------------------------;
+; Intro against certain male characters ;
+;---------------------------------------;
+; A switch to enable Panty's suggestive intro against certain male characters.
+; Enabled by default.
+[State -3, Intro against certain male characters]
+type = varset
+trigger1 = 1
+v = 21
+value = 0   ;Abstract Reordered: off
+;value = 0 ; Disabled
+;value = 1 ; Enabled
+
+;------------------------------;
+; DO NOT MODIFY ANYTHING BELOW ;
+;------------------------------;
+
+[State 5900, 3] ;Intro for round 1
+type = ChangeState
+trigger1 = roundno = 1
+value = 190
+

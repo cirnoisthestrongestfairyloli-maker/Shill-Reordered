@@ -1,0 +1,780 @@
+;===========================================================================
+; Misaka Mikoto - Railgun summon (random pick from the Flame Haze super, 2424+b)
+; Assets copied from misakaNEW (Bagilu, DidiGetsRekt): personal use only.
+;   sprites: group 30000 + original   anims: 50000 + original   sounds: group 30000 + original
+; Haruhi side: haruhi-H.cns states 3300/3301 spawn helper 3860 when var(15) = 1
+;===========================================================================
+
+;---------------------------------------------------------------------------
+; Misaka - jump in from behind Haruhi
+[Statedef 3860]
+type     = A
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = 50042
+velset   = 4.5,-4
+sprpriority = 3
+
+[State 3860, Theme]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3860, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3860, Offscreen ok]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3860, Gravity]
+type = VelAdd
+trigger1 = 1
+y = 0.45
+
+[State 3860, Falling anim]
+type = ChangeAnim
+trigger1 = Vel Y > 0
+trigger1 = Anim != 50043
+value = 50043
+
+[State 3860, Land]
+type = ChangeState
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y > 0
+value = 3861
+
+[State 3860, Round over]
+type = DestroySelf
+trigger1 = RoundState >= 4
+
+;---------------------------------------------------------------------------
+; Misaka - landing
+[Statedef 3861]
+type     = S
+movetype = I
+physics  = S
+ctrl     = 0
+anim     = 50047
+velset   = 0,0
+sprpriority = 3
+
+[State 3861, Ground]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 3861, Theme]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3861, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3861, Land snd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 40, 0
+
+[State 3861, Face opponent]
+type = Turn
+trigger1 = Time = 0
+trigger1 = P2Dist X < 0
+
+[State 3861, Railgun]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 3862
+
+[State 3861, Round over]
+type = DestroySelf
+trigger1 = RoundState >= 4
+
+;---------------------------------------------------------------------------
+; Misaka - Railgun (adapted from misakaNEW Statedef 3000)
+[Statedef 3862]
+type     = S
+movetype = A
+physics  = S
+ctrl     = 0
+anim     = 53050
+velset   = 0,0
+sprpriority = 3
+
+; Charge: no super pause, Misaka can be hit. Hit -> 3868 (runs away, theme fades early).
+; Uninterrupted for 85 frames -> 3867 (super pause into the railgun).
+
+[State 3862, Theme]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3862, Interrupted]
+type = HitOverride
+trigger1 = 1
+attr = SCA, AA, AP, AT
+stateno = 3868
+slot = 0
+time = 1
+ignorehitpause = 1
+
+[State 3862, Start snd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 30100, 2
+
+[State 3862, Voice 1]
+type = PlaySnd
+trigger1 = Time = 0
+value = 30010, 16
+
+[State 3862, Coin]
+type = PlaySnd
+trigger1 = AnimElem = 2
+value = 30100, 1
+
+[State 3862, Spark]
+type = PlaySnd
+trigger1 = AnimElem = 4
+value = 30001, 2
+
+[State 3862, Charge 1]
+type = Explod
+trigger1 = Time = 4
+anim = 54110
+ID = 3862
+postype = p1
+pos = 0,-55
+sprpriority = -3
+ownpal = 1
+supermovetime = 9**8
+ignorehitpause = 1
+
+[State 3862, Charge 2]
+type = Explod
+trigger1 = Time = 4
+anim = 54120
+ID = 3862
+postype = p1
+pos = 0,-55
+sprpriority = -4
+ownpal = 1
+supermovetime = 9**8
+ignorehitpause = 1
+
+[State 3862, Coin spark]
+type = Explod
+trigger1 = AnimElem = 4
+anim = 57450
+ID = 7450
+supermovetime = 9**8
+postype = p1
+pos = 5,-58
+ownpal = 1
+sprpriority = 1
+bindtime = -1
+ignorehitpause = 1
+
+;hold the charge pose (loop element 12) until frame 85; the fire state continues from element 13
+[State 3862, Hold charge]
+type = ChangeAnim
+trigger1 = AnimElem = 13
+trigger1 = Time < 85
+value = 53050
+elem = 12
+
+[State 3862, Fire]
+type = ChangeState
+trigger1 = Time >= 85
+value = 3867
+
+[State 3862, Round over]
+type = DestroySelf
+trigger1 = RoundState >= 4
+
+;---------------------------------------------------------------------------
+; Misaka - Railgun fire: super pause for the rest of the windup, beam as it ends
+[Statedef 3867]
+type     = S
+movetype = A
+physics  = S
+ctrl     = 0
+anim     = 53050
+velset   = 0,0
+sprpriority = 3
+
+[State 3867, Theme]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3867, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3867, Continue windup]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 53050
+elem = 13
+
+[State 3867, Pause]
+type = SuperPause
+trigger1 = Time = 0
+time = 40
+movetime = 40
+darken = 0
+p2defmul = 1
+anim = -1
+sound = -1
+
+[State 3867, Cut-in]
+type = Explod
+trigger1 = Time = 0
+anim = 60000
+ID = 60000
+postype = Back
+pos = -70,35
+ownpal = 0
+scale = 0.3,0.3
+sprpriority = -3
+removetime = 41
+ignorehitpause = 1
+supermovetime = 9**8
+pausemovetime = 9**8
+
+[State 3867, Darken]
+type = EnvColor
+trigger1 = Time = 0
+value = 0,0,0
+time = 45
+under = 1
+
+[State 3867, BG dim]
+type = BGPalFX
+trigger1 = Time = 0
+time = 100
+mul = 140,140,140
+
+[State 3867, Afterimage]
+type = AfterImage
+trigger1 = Time = 0
+time = 100
+length = 7
+framegap = 4
+palbright = 100,100,170
+palcontrast = 128,128,250
+paladd = 0,0,0
+trans = add1
+
+; --- sounds
+[State 3867, Voice 2]
+type = PlaySnd
+trigger1 = AnimElem = 23
+value = 30010, 15
+
+[State 3867, Fire]
+type = PlaySnd
+trigger1 = AnimElem = 23
+value = 30005, 2
+
+[State 3867, Spark 2]
+type = PlaySnd
+trigger1 = AnimElem = 32
+value = 30001, 2
+
+; --- effects
+[State 3867, Muzzle]
+type = Explod
+trigger1 = AnimElem = 23
+anim = 60300
+postype = p1
+pos = 20,-95
+ownpal = 1
+sprpriority = 1
+bindtime = -1
+ignorehitpause = 1
+
+[State 3867, Floor blast]
+type = Explod
+trigger1 = AnimElem = 23
+anim = 56180
+postype = p1
+pos = 8,5
+scale = 2,3
+ownpal = 1
+sprpriority = 3
+bindtime = 0
+ignorehitpause = 1
+
+[State 3867, Shockwave 1]
+type = Explod
+trigger1 = AnimElem = 23
+anim = 56250
+postype = p1
+pos = 0,0
+ownpal = 1
+sprpriority = 3
+bindtime = 0
+ignorehitpause = 1
+
+[State 3867, Shockwave 2]
+type = Explod
+trigger1 = AnimElem = 24
+anim = 56250
+postype = p1
+pos = 100,0
+ownpal = 1
+sprpriority = 3
+bindtime = 0
+ignorehitpause = 1
+
+[State 3867, Shockwave 3]
+type = Explod
+trigger1 = AnimElem = 25
+anim = 56250
+postype = p1
+pos = 200,0
+ownpal = 1
+sprpriority = 3
+bindtime = 0
+ignorehitpause = 1
+
+[State 3867, Aura 1]
+type = Explod
+trigger1 = AnimElem = 24
+anim = 57700
+postype = p1
+pos = 0,0
+ownpal = 1
+sprpriority = 2
+bindtime = -1
+ignorehitpause = 1
+
+[State 3867, Aura 2]
+type = Explod
+trigger1 = AnimElem = 25
+anim = 57750
+postype = p1
+pos = 0,0
+ownpal = 1
+sprpriority = 2
+bindtime = 0
+ignorehitpause = 1
+
+[State 3867, Ground spark]
+type = Explod
+trigger1 = AnimElem = 26
+anim = 56100
+postype = p1
+pos = 0,0
+ownpal = 1
+sprpriority = 1
+bindtime = -1
+ignorehitpause = 1
+
+[State 3867, Afterglow]
+type = Explod
+trigger1 = AnimElem = 31
+anim = 57650
+postype = p1
+pos = 5,-80
+ownpal = 1
+sprpriority = 4
+bindtime = -1
+ignorehitpause = 1
+
+[State 3867, Smoke]
+type = Explod
+trigger1 = AnimElem = 31
+anim = 56140
+postype = p1
+pos = 5,10
+scale = 1,1.5
+ownpal = 1
+sprpriority = 4
+bindtime = -1
+ignorehitpause = 1
+
+[State 3867, Shake]
+type = EnvShake
+trigger1 = AnimElem = 23
+time = 44
+freq = 100
+ampl = -3
+
+[State 3867, Beam]
+type = Helper
+trigger1 = AnimElem = 23
+ID = 3865
+name = "railgun"
+pos = 20,-80
+postype = p1
+stateno = 3865
+helpertype = normal
+keyctrl = 0
+ownpal = 1
+sprpriority = 4
+size.xscale = 1
+size.yscale = 1
+
+;railgun got the KO: run next to Haruhi for the win pose
+[State 3867, Victory]
+type = ChangeState
+trigger1 = AnimTime = 0
+trigger1 = var(2) = 1
+trigger1 = NumEnemy
+trigger1 = Enemy, Alive = 0
+value = 3869
+
+[State 3867, Leave]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 3863
+
+[State 3867, Round over]
+type = DestroySelf
+trigger1 = RoundState >= 4
+
+;---------------------------------------------------------------------------
+; Misaka - hit during the charge: flinch, then run off; Haruhi fades the theme out early
+[Statedef 3868]
+type     = S
+movetype = I
+physics  = S
+ctrl     = 0
+velset   = 0,0
+sprpriority = 3
+
+[State 3868, Theme]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3868, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3868, Interrupted flag]
+type = VarSet
+trigger1 = Time = 0
+var(1) = 1
+ignorehitpause = 1
+
+[State 3868, Fade theme]
+;Haruhi's state -1 fades channel 5 out while var(16) counts up
+type = RootVarSet
+trigger1 = Time = 0
+trigger1 = root,var(16) = 0
+var(16) = 1
+ignorehitpause = 1
+
+[State 3868, Drop charge fx]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 3862
+ignorehitpause = 1
+
+[State 3868, Drop coin fx]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 7450
+ignorehitpause = 1
+
+[State 3868, Flinch flash]
+type = PalFX
+trigger1 = Time = 0
+time = 12
+add = 120,0,0
+mul = 256,180,180
+
+[State 3868, Run]
+type = ChangeState
+trigger1 = Time >= 12
+value = 3863
+
+[State 3868, Round over]
+type = DestroySelf
+trigger1 = RoundState >= 4
+
+;---------------------------------------------------------------------------
+; Misaka - turn around (away from the opponent)
+[Statedef 3863]
+type     = S
+movetype = I
+physics  = S
+ctrl     = 0
+anim     = 50005
+velset   = 0,0
+sprpriority = 3
+
+[State 3863, Theme]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3863, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3863, Turn]
+type = Turn
+trigger1 = Time = 0
+trigger1 = P2Dist X >= 0
+
+[State 3863, Run]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 3864
+
+[State 3863, Round over]
+type = DestroySelf
+trigger1 = RoundState >= 4
+
+;---------------------------------------------------------------------------
+; Misaka - run off screen
+[Statedef 3864]
+type     = S
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = 50100
+sprpriority = 3
+
+[State 3864, Theme]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3864, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3864, Offscreen ok]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3864, Run speed]
+type = VelSet
+trigger1 = 1
+x = 6.5
+y = 0
+
+[State 3864, Off screen]
+type = ChangeState
+trigger1 = ScreenPos X < -60
+trigger2 = ScreenPos X > GameWidth + 60
+trigger3 = Time >= 120
+value = 3866
+
+[State 3864, Round over]
+type = DestroySelf
+trigger1 = RoundState >= 4
+
+;---------------------------------------------------------------------------
+; Misaka - gone (invisible) until her theme (sound 30500,0, 9.9 s) has faded out,
+; so the stage music does not come back over the end of the song
+[Statedef 3866]
+type     = S
+movetype = I
+physics  = N
+ctrl     = 0
+velset   = 0,0
+sprpriority = 3
+
+[State 3866, Theme]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3866, Hidden]
+type = AssertSpecial
+trigger1 = 1
+flag = invisible
+ignorehitpause = 1
+
+[State 3866, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3866, Offscreen ok]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3866, Done]
+type = DestroySelf
+trigger1 = Time >= 205
+trigger2 = RoundState >= 4
+trigger3 = var(1) = 1
+trigger3 = root,var(16) = 0
+
+;---------------------------------------------------------------------------
+; Railgun beam (adapted from misakaNEW Statedef 3005)
+[Statedef 3865]
+type     = S
+movetype = A
+physics  = N
+ctrl     = 0
+anim     = 56000
+velset   = 0,0
+juggle   = 0
+sprpriority = 4
+
+[State 3865, Invincible]
+type = NotHitBy
+trigger1 = Time = 0
+value = SCA
+time = -1
+
+[State 3865, HitDef]
+type = HitDef
+trigger1 = AnimElem = 2
+attr = S, HP
+damage = 350, 40
+animtype = Up
+getpower = 0, 0
+givepower = 0, 0
+guardflag = MA
+hitflag = MAF
+priority = 1
+pausetime = 8, 25
+numhits = 1
+sparkno = -1
+sparkxy = 0, -55
+ground.type = High
+ground.slidetime = 3
+ground.hittime = 20
+ground.velocity = -22, -7
+guard.hittime = 15
+airguard.velocity = -2
+air.hittime = 20
+air.velocity = -22, -7
+yaccel = 0.55
+fall = 1
+fall.recover = 0
+
+[State 3865, Report hit]
+type = ParentVarSet
+trigger1 = MoveHit = 1
+var(2) = 1
+ignorehitpause = 1
+
+[State 3865, Done]
+type = DestroySelf
+trigger1 = AnimTime = 0
+trigger2 = RoundState >= 4
+
+;---------------------------------------------------------------------------
+; Misaka - the railgun got the KO: run next to Haruhi, win pose when Haruhi wins
+[Statedef 3869]
+type     = S
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = 50100
+velset   = 0,0
+sprpriority = 1
+
+[State 3869, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3869, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3869, Target]
+;spot beside Haruhi, behind her
+type = VarSet
+trigger1 = 1
+fvar(0) = root,Pos X - 45 * root,Facing
+
+[State 3869, Face the spot]
+type = Turn
+trigger1 = var(3) = 0
+trigger1 = (fvar(0) - Pos X) * Facing < 0
+
+[State 3869, Run]
+type = VelSet
+trigger1 = var(3) = 0
+x = 6.5
+y = 0
+
+[State 3869, Arrived]
+type = VarSet
+trigger1 = var(3) = 0
+trigger1 = abs(fvar(0) - Pos X) <= 7
+var(3) = 1
+
+[State 3869, Stop]
+type = VelSet
+trigger1 = var(3) = 1
+x = 0
+y = 0
+
+[State 3869, Line up]
+type = PosSet
+trigger1 = var(3) = 1
+trigger1 = Anim = 50100
+x = fvar(0)
+y = 0
+
+[State 3869, Same way as Haruhi]
+type = Turn
+trigger1 = var(3) = 1
+trigger1 = Facing != root,Facing
+
+[State 3869, Stand]
+type = ChangeAnim
+trigger1 = var(3) = 1
+trigger1 = Anim = 50100
+value = 50000
+
+[State 3869, Win pose]
+type = ChangeAnim
+trigger1 = Anim = 50000
+trigger1 = (root,StateNo = [180,189]) || RoundState = 4
+value = 50181
+
+[State 3869, Win voice]
+type = PlaySnd
+trigger1 = Anim = 50181
+trigger1 = AnimElem = 1
+value = 30010, 2
+channel = 0

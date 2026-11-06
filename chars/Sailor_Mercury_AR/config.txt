@@ -1,0 +1,136 @@
+;-------------------------------------------------------------------------------------
+; Use this file to customise some aspects of this character.
+; Don't change anything unless it's stated otherwise! This might break the character.
+;-------------------------------------------------------------------------------------
+
+[Statedef 5900]
+type = S
+[State 5900]
+type = VarRangeSet
+trigger1 = roundsexisted = 0
+value = 0
+[State 5900]
+type = VarRangeSet
+trigger1 = roundsexisted = 0
+fvalue = 0
+
+;==================================================================
+[State 5900, Energy gain multiplier (default is 0.72)]
+type = VarSet
+trigger1 = 1
+fvar(1) = 0.72	;<--this is energy gauge fill rate multiplier
+			;change it to increase/decrease energy gain in battle
+
+[State 5900, Double attack inputs for movement (default is 1)]
+type = VarSet
+trigger1 = 1
+var(51) = 1	;<--set this value to 0/1 to disable/enable the usage of double attack inputs for movement
+		;e.g. PP for running, KK for superjump
+
+[State 5900, Eyecatch intro (default is 1)]
+type = VarSet
+trigger1 = 1
+var(54) = 1	;<--set this value to 0/1 to disable/enable eyecatch-styled intro
+
+[State 5900, Special KO effects (default is 1)]
+type = VarSet
+trigger1 = 1
+var(52) = 1	;<--set this value to 0/1 to disable/enable special effects when an opponent is KOed
+
+[State 5900, Scaling effects (default is 0.75)]
+type = VarSet
+trigger1 = 1
+fvar(32) = 0.75	;<--scaling effects strenght
+			;change it to increase/decrease 'stretching' effect for character sprites during some moves
+
+[State 5900, Supermove music volume (default is 80)]
+type = VarSet
+trigger1 = 1
+var(55) = 80	;<--set this value to 1-100 to change the volume of music theme during supermoves
+		;you can also set it to 0 to keep playing stage music during supermoves
+
+[State 5900, Additional input buffer frames (default is 6)]
+type = VarSet
+trigger1 = 1
+var(56) = 6	;<--change this value to increase/decrease command buffer time for complex inputs.
+		;setting value to 0 also turns off built-in buffers for simple inputs during some moves.
+
+[State 5900, First attack (default is 1)]
+type = VarSet
+trigger1 = 1
+var(40) = 1	;<--set this value to 0/1 to disable/enable first attack advantage
+
+[State 5900, Dash cancel (default is 1)]
+type = VarSet
+trigger1 = 1
+var(57) = 1	;<--set this value to 0/1 to disable/enable attack and guard cancel using dash and superjump.
+
+[State 5900, Projectile limit (default is 1)]
+type = VarSet
+trigger1 = 1
+var(53) = 1	;<--set this value to 0/1 to disable/enable the limit of active projectiles for character.
+		; EX Cancels and Supers will ignore this limit regardless.
+		; Disabling projectile limit might also cause bugs...
+
+[State 5900, Aqua Mist duration (default is 240)]
+type = VarSet
+trigger1 = !var(58)
+persistent = 0
+var(58) = 240;<--here you can change Aqua Mist effect duartion (in frames)
+;==================================================================
+
+[State 5900]
+type = RemapPal
+trigger1 = 1
+source = 1,1
+dest = 1,palno
+[State 5900]
+type = RemapPal
+trigger1 = 1
+source = 7520,1
+dest = 7520,palno
+[State 5900]
+type = RemapPal
+trigger1 = 1
+source = 8100,1
+dest = 8100,palno
+[State 5900]
+type = VarSet
+trigger1 = 1
+var(9) = 40*(palno=1)+30*(palno=2)+150*(palno=3)+20*(palno=4)+40*(palno=5)+170*(palno=6)
+[State 5900]
+type = VarSet
+trigger1 = 1
+var(10) = 100*(palno=1)+75*(palno=2)+40*(palno=3)+130*(palno=4)+180*(palno=5)+90*(palno=6)
+[State 5900]
+type = VarSet
+trigger1 = 1
+var(11) = 180*(palno=1)+200*(palno=2)+160*(palno=3)+180*(palno=4)+120*(palno=5)+90*(palno=6)
+[State 5900]
+type = VarSet
+trigger1 = numenemy>0
+var(22) = enemy(0),ID+0*(var(23):=-9999)
+[State 5900]
+type = VarSet
+trigger1 = numenemy>1
+var(23) = enemy(1),ID
+[State 5900]
+type = VarSet
+trigger1 = numpartner
+trigger2 = enemynear,numpartner
+var(40) = 0
+[State 5900]
+type = VarSet
+trigger1 = 1
+fvar(30) = Const240p(320)+0*(fvar(31):=gameheight/gamewidth*Const240p(320))
+[State 5900]
+type = ChangeState
+trigger1 = roundno = 1
+trigger2 = roundsexisted = 0
+trigger2 = teammode = Turns
+trigger2 = roundno>0
+value = 190
+[State 5900]
+type = ChangeState
+trigger1 = 1
+value = 0

@@ -1,0 +1,2608 @@
+;常時起動用（ヘルパー)
+[Statedef 3000]
+type=A
+movetype=I
+physics=S
+anim=1860
+ctrl=0
+sprpriority=3
+
+[State ]
+type=parentVarset
+trigger1=time=0&&root,RoundsExisted=0
+var(34)=ceil(screenpos x/2)
+
+[State ]
+type=parentVarset
+trigger1=time=0&&root,RoundsExisted=0&&root,var(34)<160
+var(34)=160
+
+[State ]
+type=parentVarset
+trigger1=time=0&&root,RoundsExisted=0
+var(33)=ceil(screenpos y/2)
+
+[State ]
+type=PosSet
+trigger1=root,var(34)!=0
+x=parent,pos x
+y=parent,pos y
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=varset
+trigger1=roundstate=3
+var(19)=0
+
+[State ]
+type=varadd
+trigger1=roundstate=2&&var(19)<=60
+var(19)=1
+
+[State ]
+type=Varadd
+trigger1=var(22)>=1||root,fvar(1)=1
+var(22)=1
+
+[State ]
+type=Varset
+trigger1=root,fvar(1)=0&&var(22)!=0
+var(22)=0
+
+[State ]
+type=Varadd
+trigger1=var(23)>=1||(root,var(30)=10||root,var(30)=20||root,var(30)=30||root,var(30)=40||root,var(30)=50||root,var(30)=60||root,var(30)=70||root,var(30)=80||root,var(30)=90||root,var(30)=100)
+var(23)=1
+
+[State ]
+type=Varset
+trigger1=root,var(30)!=10&&root,var(30)!=20&&root,var(30)!=30&&root,var(30)!=40&&root,var(30)!=50&&root,var(30)!=60&&root,var(30)!=70&&root,var(30)!=80&&root,var(30)!=90&&root,var(30)!=100&&var(23)!=0
+var(23)=0
+
+[State ]
+type=Varadd
+trigger1=var(24)>=1||(root,life<=root,lifemax/3&&root,life>0)
+var(24)=1
+
+[State ]
+type=Varset
+trigger1=var(24)!=0&&root,life>=root,lifemax/3
+var(24)=0
+
+[State ];ホワイト＆ルミナスダウン
+type=varrandom
+triggerall=var(20)=0&&roundstate<=3&&!numexplod(100000)
+trigger1=numhelper(4000)
+trigger1=helper(4000),var(13)=150
+trigger2=numhelper(4500)
+trigger2=helper(4500),var(13)=150
+v=20
+range=201,204
+
+[State ];コンボ
+type=varrandom
+trigger1=var(23)=1&&var(20)=0
+v=20
+range=101,106
+
+[State ]
+type=Varset
+trigger1=var(31)!=0&&root,movetype!=H
+var(31)=0
+
+[State ]
+type=Varadd
+trigger1=((enemynear,hitcount=10||enemynear,hitcount=20||enemynear,hitcount=30||enemynear,hitcount=40||enemynear,hitcount=50||enemynear,hitcount=60||enemynear,hitcount=70)&&var(20)=0&&var(31)=0&&root,movetype=H)||var(31)>=1
+var(31)=1
+
+[State ];相手コンボ
+type=varrandom
+trigger1=var(31)=1
+v=20
+range=601,604
+
+[State ];MAX HEART状態
+type=varrandom
+trigger1=var(22)=1&&var(20)=0
+v=20
+range=801,802
+
+[State ];ラウンド開始
+type=varrandom
+trigger1=var(19)=60&&var(20)=0
+v=20
+range=1,6
+
+[State ];瀕死
+type=varrandom
+trigger1=roundstate<=3&&var(24)=1&&var(20)=0
+v=20
+range=401,410
+
+[State ];勝利
+type=varrandom
+trigger1=roundstate=4&&(root,stateno=[1100,1199])&&root,var(22)=100000&&win&&var(20)=0&&var(25)=0
+v=20
+range=301,310
+persistent=0
+
+[State ];敗北（未決着）
+type=varrandom
+trigger1=roundstate=4&&root,stateno=5150&&root,alive=0&&lose&&root,var(22)=100000&&root,matchover=0&&var(20)=0&&var(25)=0
+v=20
+range=501,505
+persistent=0
+
+[State ];敗北（決着）
+type=varrandom
+trigger1=roundstate=4&&root,stateno=5150&&root,alive=0&&root,var(22)=100000&&lose&&(root,matchover||root,teammode=single ||root,teammode=turns)&&var(20)=0&&var(25)=0
+v=20
+range=701,732
+persistent=0
+
+[State ]
+type=varset
+trigger1=(var(20)=[301,399])||(var(20)=[501,599])||(var(20)=[701,799])
+var(25)=var(20)
+persistent=0
+
+[State ]
+type=varadd
+trigger1=var(25)!=0
+var(27)=1
+
+[State ]
+type=AssertSpecial
+trigger1=((var(25)=303||var(25)=307||var(25)=503)&&var(27)<=131)||((var(25)=304||var(25)=308||var(25)=501)&&var(27)<=136)||(var(25)=305&&var(27)<=141)||((var(25)=306||var(25)=707)&&var(27)<=180)||((var(25)=701||var(25)=703)&&var(27)<=210)
+trigger2=(var(25)=502&&var(27)<=200)||((var(25)=702||var(25)=706)&&var(27)<=250)||(var(25)=704&&var(27)<=380)||(var(25)=301&&var(27)<=150)||((var(25)=603||var(25)=504)&&var(27)<=110)||(var(25)=705&&var(27)<=280)||(var(25)=302&&var(27)<=126)
+trigger3=((var(25)=713||var(25)=723)&&var(27)<=150)||(var(25)=729&&var(27)<=160)||((var(25)=505||(var(25)=[710,711]))&&var(27)<=170)||((var(25)=717||var(25)=720||var(25)=725)&&var(27)<=210)||(var(25)=724&&var(27)<=220)||(var(25)=721&&var(27)<=240)
+trigger4=((var(25)=708||var(25)=715||var(25)=718||var(25)=722||var(25)=727)&&var(27)<=270)||(var(25)=728&&var(27)<=280)||((var(25)=709||var(25)=714)&&var(27)<=300)||((var(25)=712||var(25)=719||var(25)=730||var(25)=732)&&var(27)<=320)
+trigger5=(var(25)=731&&var(27)<=340)||(var(25)=716&&var(27)<=360)||(var(25)=726&&var(27)<=370)||(var(25)=309&&var(27)<=110)||(var(25)=310&&var(27)<=120)
+flag=roundnotover
+
+[State ]
+type=varadd
+trigger1=var(21)>=1||var(20)!=0
+var(21)=1
+
+[state ]
+type=StopSnd
+trigger1=var(21)=1
+channel=15
+
+[state ]
+type=RemoveExplod
+trigger1=var(21)=1
+ID=100000
+
+[state ]
+type=RemoveExplod
+trigger1=var(21)=1
+ID=110000
+
+[state ]
+type=RemoveExplod
+trigger1=var(21)=1
+ID=120000
+
+[State ];妖精～顔
+type=null
+trigger1=!numexplod(100000)&&teamside=1&&var(21)=2&&var(26)=0
+anim=100000+var(20)
+ID=100000
+supermovetime=1000
+pausemovetime=1000
+postype=left
+sprpriority=10950
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=!numexplod(100000)&&teamside=2&&var(21)=2&&var(26)=0
+anim=100000+var(20)
+ID=100000
+supermovetime=1000
+pausemovetime=1000
+postype=right
+sprpriority=10950
+bindtime=-1
+scale=.5,.5
+facing=-1
+
+[State ];妖精～名前
+type=null
+trigger1=!numexplod(110000)&&teamside=1&&var(21)=2&&var(26)=0
+anim=110000+var(20)
+ID=110000
+supermovetime=1000
+pausemovetime=1000
+postype=left
+sprpriority=10951
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=!numexplod(110000)&&teamside=2&&var(21)=2&&var(26)=0
+anim=110000+var(20)
+ID=110000
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=-29,0
+sprpriority=10951
+bindtime=-1
+scale=.5,.5
+
+[State ];妖精～セリフ
+type=null
+trigger1=!numexplod(120000)&&teamside=1&&var(21)=2&&var(26)=0
+anim=120000+var(20)
+ID=120000
+supermovetime=1000
+pausemovetime=1000
+postype=left
+sprpriority=10951
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=!numexplod(120000)&&teamside=2&&var(21)=2&&var(26)=0
+anim=130000+var(20)
+ID=120000
+supermovetime=1000
+pausemovetime=1000
+postype=right
+sprpriority=10951
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=varadd
+trigger1=numexplod(100000)
+var(26)=1
+
+[State ];妖精～ボイス
+type=PlaySnd
+trigger1=var(26)=1
+value=s55,var(20)
+abspan=0
+channel=15
+
+[State ]
+type=varset
+trigger1=!numexplod(100000)&&var(26)!=0
+var(26)=0
+
+[State ]
+type=varset
+trigger1=var(21)=2&&var(25)=0
+var(20)=0
+
+[State ]
+type=varset
+trigger1=var(21)=2&&var(25)=0
+var(21)=0
+
+[State ];特殊やられ判定
+type=Varset
+trigger1=root,anim=5300||(root,anim=[7696,7698])||(root,anim=[7990,7991])||root,anim=9005||root,anim=9010||(root,anim=[9015,9016])||root,anim=9020||root,anim=29971||(root,anim=[66620,66622])||(root,anim=[109005,109010])
+var(0)=205+ifelse(root,anim=7696||root,anim=9010,-3,ifelse(root,anim=7697||root,anim=9015,-2,ifelse(root,anim=7698||(root,anim=[7990,7991])||root,anim=9016,-1,ifelse(root,anim=9005||(root,anim=[109005,109010]),2,ifelse(root,anim=5300,-4,0)))))
+
+[State ]
+type=Varset
+trigger1=root,anim=7694||root,anim=7780||(root,anim=[9000,9004])||(root,anim=[9006,9007])||root,anim=13771||root,anim=9050||root,anim=19005||root,anim=7943||(root,anim=[5555,5556])||root,anim=9848||root,anim=45000||root,anim=333666777
+var(0)=206+ifelse(root,anim=7694,12,ifelse(root,anim=7780||root,anim=9050,24,ifelse(root,anim=13771,40,ifelse(root,anim=7943,2,ifelse((root,anim=[5555,5556]),3,ifelse(root,anim=9848,4,ifelse(root,anim=45000||root,anim=333666777,9,0)))))))
+
+[State ]
+type=Varset
+trigger1=(root,anim=[35990,35992])||root,anim=5003||((root,anim=[5860,5862])&&root,animelemtime(1)=60)||root,anim=34720||(root,stateno=3620&&root,anim=11527&&root,time=65)||((numhelper(1422)||numhelper(1423))&&root,movetype=H)||root,anim=13779
+trigger2=root,anim=5946
+var(0)=221+ifelse(root,anim=5003,1,ifelse((root,anim=[5860,5862]),-5,ifelse(root,anim=34720,4,ifelse(root,anim=11527,5,ifelse((numhelper(1422)||numhelper(1423))&&root,movetype=H,15,ifelse(root,anim=13779,24,ifelse(root,anim=5946,39,0)))))))
+
+[State ]
+type=Varset
+trigger1=root,anim=66224||(root,anim=[5340,5341])||root,anim=9876||root,numexplod(9143)||root,anim=9885||root,numexplod(12511)||(P2name!="Zangief"&&P2name!="Chunli"&&P2name!="Ibuki"&&(root,anim=9030||root,anim=19030))||(root,anim=103102)
+var(0)=212+ifelse(root,anim=66224,25,ifelse(root,anim=9876,ifelse(enemynear,numhelper(3066),2,1),ifelse(root,numexplod(9143),7,ifelse(root,anim=9885,31,ifelse(root,numexplod(12511),32,ifelse((root,anim=[5340,5341]),0,ifelse(root,anim=103102,50,5)))))))
+
+[State ]
+type=Varset
+trigger1=(root,anim=[9017,9018])||root,anim=109031||root,anim=109033||root,anim=109035||((root,stateno=2250||root,stateno=2350||root,stateno=2450)&&root,movetype=H&&root,time=1&&P2name="Anakaris"&&enemynear,authorname="hsiehtm")
+trigger2=root,anim=7008||root,anim=5888||root,anim=5937
+var(0)=249+ifelse(root,anim=9017,5,ifelse(root,anim=9018,1,ifelse(root,anim=109031,4,ifelse(root,anim=109033,2,ifelse(root,anim=109035,3,ifelse((root,anim=[9017,9018]),0,ifelse(root,anim=7008,6,ifelse(root,anim=5888,10,ifelse(root,anim=5937,12,9)))))))))
+
+[State ]
+type=Varset
+trigger1=root,anim=5980||root,anim=100470||root,anim=100920||root,anim=5262||root,anim=5910||root,anim=5912||root,anim=5915||root,anim=5920||root,anim=5922||root,anim=5930||(root,anim=[20526,20529])||root,anim=9545||root,anim=15312||root,anim=35600
+var(0)=267+ifelse(root,anim=5980,-4,ifelse(root,anim=100470,-3,ifelse(root,anim=100920,-2,ifelse(root,anim=5262,-1,ifelse((root,anim=[20526,20529]),1,ifelse(root,anim=9545,3,ifelse(root,anim=15312,-25,ifelse(root,anim=35600,4,0))))))))
+
+[State ]
+type=Varset
+trigger1=root,anim=19851||(root,anim=[26863,26864])||root,anim=20433||root,anim=42190||root,anim=168168||root,anim=25038||root,anim=114510||(root,anim=[114516,114517])
+var(0)=272+ifelse(root,anim=26863,2,ifelse(root,anim=26864,3,ifelse(root,anim=20433,4,ifelse(root,anim=42190,6,ifelse(root,anim=168168,7,ifelse(root,anim=25038,8,ifelse(root,anim=114510,9,ifelse(root,anim=114516,10,ifelse(root,anim=114517,11,0)))))))))
+
+[State ]
+type=Varset
+trigger1=root,anim=5950||root,anim=5961||(root,anim=19863&&root,time=60)||(root,anim=[117261,117262])||root,anim=9219||root,anim=7689
+var(0)=273+ifelse(root,anim=5961,16,ifelse(root,anim=19863&&root,time=60,14,ifelse((root,anim=[117261,117262]),15,ifelse(root,anim=9219,ifelse(enemynear,name="MAMIYA"&&enemynear,authorname="YU-TOHARU",0,13),ifelse(root,anim=7689,-24,0)))))
+
+[State ]
+type=Varset
+trigger1=root,anim=26216||root,anim=142865||root,anim=142878||root,anim=142879||root,anim=199007083||root,anim=19930235||((root,anim=5965||root,anim=5960)&&root,alive)
+var(0)=603+ifelse(root,anim=142865,1,ifelse(root,anim=142878,2,ifelse(root,anim=142879,3,ifelse(root,anim=199007083,17,ifelse(root,anim=19930235,18,ifelse(root,anim=5965,19,ifelse(root,anim=5960,20,0)))))))
+
+[State ]
+type=Varset
+trigger1=root,anim=19930236
+var(0)=ifelse(root,stateno=1863,625,624)
+
+[State ]
+type=Varset
+triggerall=numenemy
+trigger1=enemynear,name="Haruhi Suzumiya"&&enemynear,Authorname="YU-TOHARU"&&root,stateno=1520&&root,anim=1520&&root,movetype=H&&root,time=1
+trigger2=enemynear,name="aof3_ryo"&&enemynear,Authorname="brown"&&root,numexplod(3880)
+var(0)=ifelse(enemynear,name="Haruhi Suzumiya",285,290)
+
+[State ]
+type=Varadd
+trigger1=var(0)=205&&(P2name="Demitri"||P2name="Demitri-Ex"||P2name="Demitri Maximoff"||P2name="Demitri_Maximoff"||P2name="Demitri(DS)"||P2name="DS_Demitri")
+var(0)=24
+
+[State ]
+type=Varset
+trigger1=var(0)=217&&P2name="Agrias_Oaks"
+var(0)=297
+
+[State ]
+type=Varadd
+trigger1=var(0)=258&&(root,stateno=2250||root,stateno=2450)
+var(0)=-ifelse(root,stateno=2250,1,2)
+
+[State ];妖怪KO＆動物KO（レッドアリーマー、アテナ）
+type=parentVarset
+trigger1=roundstate>=3&&root,alive=0&&root,stateno=5150&&MatchOver=1&&(root,anim=5960||root,anim=5965)&&root,var(13)=0
+trigger1=P2name="Red Arremer"||P4name="Red Arremer"||P2name="svcathena"||P4name="svcathena"||P2name="Athena-Goddess"||P4name="Athena-Goddess"||P2name="Princess_Athena"||P4name="Princess_Athena"
+var(13)=ifelse(P2name="Red Arremer"||P4name="Red Arremer",502,501)
+persistent=0
+
+[State ];気絶判定
+type=Varset
+trigger1=var(0)=201&&var(1)=0
+var(39)=1
+
+[State ];気絶判定解除
+type=Varset
+trigger1=var(39)=1&&var(1)=1&&var(0)!=201
+var(1)=0
+
+[State ]
+type=Varset
+trigger1=var(39)=1&&var(0)!=201
+var(39)=0
+
+[State ]
+type=parentVarset
+trigger1=var(0)!=0&&root,var(13)=0&&var(1)=0
+var(13)=var(0)
+
+[State ];特殊やられ判定制御
+type=Varset
+trigger1=var(0)!=0&&var(1)=0
+var(1)=1
+
+[State ];特殊やられ判定解除
+type=Varset
+triggerall=var(0)!=0
+trigger1=(var(0)=201&&root,anim!=5300)||(var(0)=202&&root,anim!=7696&&root,anim!=9010)||(var(0)=203&&root,anim!=7697&&root,anim!=9015)||(var(0)=204&&root,anim!=7698&&(root,anim!=[7990,7991])&&root,anim!=9016)||(var(0)=218&&root,anim!=7694)
+trigger2=(var(0)=207&&root,anim!=9005&&(root,anim!=[109005,109010]))||((var(0)=205||var(0)=229)&&root,anim!=9020&&root,anim!=29971&&(root,anim!=[66620,66622]))||(var(0)=206&&(root,anim!=[9000,9004])&&(root,anim!=[9006,9007])&&root,anim!=19005)
+trigger3=(var(0)=230&&root,anim!=7780&&root,anim!=9050)||(var(0)=217&&(root,anim!=[9030,9042])&&(root,anim!=[19030,19040])&&root,anim!=119032)||(var(0)=215&&root,anim!=45000&&root,anim!=333666777)||(var(0)=209&&(root,anim!=[5555,5556]))
+trigger4=(var(0)=221&&(root,anim!=[35990,35992]))||(var(0)=222&&root,anim!=5003)||(var(0)=216&&(root,anim!=[5860,5862]))||(var(0)=225&&root,anim!=24720)||(var(0)=226&&root,anim!=11527)||(var(0)=232&&root,stateno!=4009)
+trigger5=(var(0)=236&&!numhelper(1422)&&!numhelper(1423))||(var(0)=237&&root,anim!=66224)||(var(0)=212&&(root,anim!=[5340,5341]))||((var(0)=[213,214])&&root,anim!=9876)||(var(0)=210&&root,anim!=9848)||(var(0)=219&&root,numexplod(9143)=0)
+trigger6=(var(0)=243&&root,anim!=9885)||(var(0)=244&&root,numexplod(12511)=0)||(var(0)=245&&root,anim!=13779)||(var(0)=246&&root,anim!=13771)||(var(0)=249&&root,anim!=7689)||(var(0)=250&&root,anim!=9018)||(var(0)=252&&root,anim!=109035)
+trigger7=(var(0)=251&&root,anim!=109033)||(var(0)=253&&root,anim!=109031)||(var(0)=254&&root,anim!=9017)||((var(0)=[256,258])&&root,stateno!=2250&&root,stateno!=2350&&root,stateno!=2450)||(var(0)=255&&root,anim!=7008)||(var(0)=259&&root,anim!=5888)
+trigger8=(var(0)=261&&root,anim!=5937)||(var(0)=260&&root,anim!=5946)||(var(0)=262&&root,anim!=103102)||(var(0)=263&&root,anim!=5980)||(var(0)=264&&root,anim!=100470)||(var(0)=265&&root,anim!=100920)||(var(0)=266&&root,anim!=5262)
+trigger9=(var(0)=267&&root,anim!=5910&&root,anim!=5912&&root,anim!=5915&&root,anim!=5920&&root,anim!=5922&&root,anim!=5930)||(var(0)=268&&(root,anim!=[20526,20529]))||(var(0)=270&&root,anim!=9545)||(var(0)=274&&root,anim!=26863)
+trigger10=(var(0)=208&&root,anim!=7943)||(var(0)=242&&root,anim!=15312)||(var(0)=271&&root,anim!=35600)||(var(0)=272&&root,anim!=19851)||(var(0)=275&&root,anim!=26864)||(var(0)=276&&root,anim!=20433)||(var(0)=278&&root,anim!=42190)
+trigger11=(var(0)=279&&root,anim!=168168)||(var(0)=280&&root,anim!=25038)||(var(0)=281&&root,anim!=114510)||(var(0)=282&&root,anim!=114516)||(var(0)=283&&root,anim!=114517)||(var(0)=285&&root,anim!=1520)||(var(0)=288&&(root,anim!=[117261,117262]))
+trigger12=(var(0)=273&&root,anim!=5950&&root,anim!=9219)||(var(0)=286&&root,anim!=9219)||(var(0)=287&&root,anim!=19863)||(var(0)=289&&root,anim!=5961)||(var(0)=290&&root,numexplod(3880)=0)||(var(0)=291&&root,anim!=101710)||(var(0)=292&&root,anim!=20676)
+trigger13=(var(0)=293&&root,anim!=19137)||(var(0)=294&&root,anim!=195)||(var(0)=224&&root,anim!=807)||(var(0)=601&&root,anim!=9846)||(var(0)=602&&root,stateno!=103395)||(var(0)=603&&root,anim!=26216)||(var(0)=604&&root,anim!=142865)
+trigger14=(var(0)=605&&root,anim!=142878)||(var(0)=606&&root,anim!=142879)||(var(0)=620&&root,anim!=199007083)||(var(0)=621&&root,anim!=19930235)||(var(0)=622&&root,anim!=5965)||(var(0)=623&&root,anim!=5960)
+trigger15=((var(0)=[624,625])&&root,anim!=19930236)
+var(0)=0
+
+[State ];特殊やられ判定制御
+type=Varset
+trigger1=var(0)=0
+var(1)=0
+
+[State ];特殊効果（マイナス）判定
+type=Varset
+trigger1=fvar(12)=1
+var(7)=301
+
+[State ]
+type=Varset
+trigger1=root,numexplod(19864)||root,numexplod(19865)||root,numexplod(142861)||root,numexplod(142862)
+var(46)=ifelse(root,numexplod(19864),1,ifelse(root,numexplod(19865),2,ifelse(root,numexplod(142861),3,4)))
+
+[State ]
+type=Varadd
+trigger1=var(46)!=0&&var(48)=root,time
+var(45)=1
+
+[State ]
+type=Varadd
+trigger1=var(45)!=0&&var(48)!=root,time
+var(47)=1
+
+[State ]
+type=Varset
+trigger1=var(45)>=10&&var(47)=12
+var(7)=ifelse(var(46)=1,302,ifelse(var(46)=2,303,ifelse(var(46)=3,325,326)))
+
+[State ]
+type=varrangeset
+trigger1=(var(7)=[302,303])||(var(7)=[325,326])
+value=0
+first=45
+last=47
+
+[State ]
+type=Varset
+trigger1=Enemy,AuthorName="Souki"&&Enemy,Name="Yuyuko Saigyouji"&&(Enemy,Var(3)=1||Enemy,Var(3)=2)
+var(7)=ifelse(enemy,var(3)=1,314,315)
+
+[State ]
+type=Varset
+trigger1=EnemyNear,Name="Reisen Udongein Inaba"&&((EnemyNear,AuthorName="Shiroto"&&EnemyNear,Var(40)!=0&&(Pos Y=[-30,10]))||(enemy,AuthorName="mikage_th105"&&enemy,fvar(21))||(enemy,AuthorName="mikage_th"&&enemy,fvar(35)))
+var(7)=305
+
+[State ]
+type=Varset
+Trigger1=((Enemynear,Name="Suwako Moriya")*(Enemynear,AuthorName="mikage_th")*(root,TeamMode=single))&&(floor((Enemynear,Var(42)%100)*.1)=[0,1])&&(floor(Enemynear,fvar(38)))%1000>0&&floor(Enemynear,fvar(38)*.001)=2
+var(7)=316
+
+[State ]
+type=Varset
+trigger1=((Enemynear,Name="Suwako Moriya")*(Enemynear,AuthorName="mikage_th")*(root,TeamMode=single))&&Enemynear,palno<7
+trigger1=(floor(Enemynear,fvar(35))=1&&root,movetype=H&&(root,stateno!=[150,155]))||(floor(Enemynear,fvar(35))=2&&root,movetype=H&&(root,stateno=[150,155]))
+var(7)=317
+
+[State ]
+type=Varset
+trigger1=(root,TeamMode=Simul)=0&&(Enemy,TeamMode=Simul)=0&&Enemy,AuthorName="586"&&Enemy,Name="Misuzu Kamio"&&Enemy,fvar(11)>0
+var(7)=313
+
+[State ]
+type=Varset
+trigger1=Enemy,AuthorName="⑨"&&(((Enemy,Name="Len"||Enemy,Name="Hisui")&&(Enemy,Var(47)=1||Enemy,Var(48)=1))||(Enemy,Name="Kohaku"&&Enemy,Var(47)=1)||(Enemy,Name="Warachia"&&(Enemy,Var(47)=[1,4])))
+var(7)=306+ifelse(enemy,name="Hisui",ifelse(enemy,var(47)=1,6,13),ifelse(enemy,name="Kohaku",1,ifelse(enemy,name="Warachia",2,0)))
+
+[State ]
+type=Varset
+trigger1=(Enemy,AuthorName="⑨"&&Enemy,Name="Akiha_Vermilion"&&(Enemy,Var(47)=1||(Enemy,Var(48)=1&&Enemy,NumExplod(4005))))||(Enemy,AuthorName="tukemon&HAL"&&Enemy,Name="Akiha"&&Enemy,Var(56)=1)
+trigger2=enemy,AuthorName="chikuchikugonzalez"&&enemy,Name="Tohno Akiha"&&enemy,var(39)>=0&&PlayerIDExist(enemy,var(39))
+trigger2=Abs(PlayerID(enemy,var(39)),Pos X-Pos X)<(85*PlayerID(enemy,var(39)),const(size.xscale))
+trigger3=NumEnemy>1
+trigger3=Enemy(1),AuthorName="chikuchikugonzalez"&&Enemy(1),Name="Tohno Akiha"&&Enemy(1),var(39)>=0&&PlayerIDExist(Enemy(1),var(39))
+trigger3=Abs(PlayerID(Enemy(1),var(39)),Pos X-Pos X)<(85*PlayerID(Enemy(1),var(39)),const(size.xscale))
+var(7)=309
+
+[State ]
+type=Varset
+trigger1=enemy,authorname="Drowin arcana"&&enemy,fvar(20)>0
+var(7)=318
+
+[State ]
+type=Varset
+trigger1=enemy,name="JUDA"&&enemy,authorname="SAIKEI"&&enemy,fvar(23)>0
+var(7)=320
+
+[State ]
+type=parentVarset
+trigger1=var(7)!=0&&root,var(13)=0&&var(8)=0
+var(13)=var(7)
+
+[State ];特殊効果（マイナス）判定制御
+type=Varset
+trigger1=var(7)!=0&&var(8)=0
+var(8)=1
+
+[State ];特殊効果（マイナス）判定解除
+type=Varset
+triggerall=var(7)!=0
+trigger1=(var(7)=314&&Enemy,Var(3)!=1)||(var(7)=315&&Enemy,Var(3)!=2)||(var(7)=305&&(((enemy,AuthorName="mikage_th105"||enemy,AuthorName="mikage_th")&&Pos y<-240)||(EnemyNear,AuthorName="Shiroto"&&(EnemyNear,Var(40)=0||(Pos Y!=[-30,10])))))
+trigger2=(var(7)=313&&Enemynear,fvar(11)=0)||(((var(7)=312&&enemy,stateno!=242)||(var(7)=307&&enemy,numhelper(2030)=0)||(var(7)=308&&enemy,numhelper(1805)=0&&enemy,numhelper(1855)=0&&enemy,numhelper(2805)=0&&enemy,numhelper(2855)=0))&&Enemy,Var(47)=0)
+trigger3=(var(7)=301&&fvar(12)=0)||(var(7)=316&&Enemynear,fvar(38)=0)||(var(7)=317&&Enemynear,fvar(35)=0)||(var(7)=306&&Enemy,Var(47)=0&&Enemy,Var(48)=0&&enemy,numhelper(1505)=0&&enemy,numhelper(1506)=0)
+trigger4=(var(7)=309&&((Enemy,Var(47)=0&&Enemy,Var(48)=0&&enemy,numhelper(1105)=0&&enemy,numhelper(2105)=0&&enemy,authorname="⑨")||(Enemy,Var(56)=0&&enemy,numhelper(1300)=0&&enemy,numhelper(1301)=0&&enemy,authorname="tukemon&HAL")))
+trigger5=(var(7)=309&&enemy,numhelper(7050)=0&&enemy,numhelper(7055)=0&&enemy,authorname="chikuchikugonzalez")||(var(7)=318&&enemy,fvar(20)=0)||(var(7)=320&&enemy,fvar(23)=0)
+trigger6=NumEnemy>1
+trigger6=var(7)=309&&enemy(1),numhelper(7050)=0&&enemy(1),numhelper(7055)=0&&enemy(1),authorname="chikuchikugonzalez"
+trigger7=(var(7)=302&&root,numexplod(19864)=0)||(var(7)=303&&root,numexplod(19865)=0)||(var(7)=325&&root,numexplod(142861)=0)||(var(7)=326&&root,numexplod(142862)=0)
+var(7)=0
+
+[State ];特殊効果（マイナス）判定制御
+type=Varset
+trigger1=var(7)=0
+var(8)=0
+
+[State ];特殊効果（プラス）判定
+type=Varset
+trigger1=root,var(43)=1
+trigger2=RoundState=2&&root,alive&&Numpartner>0&&root,TeamMode=simul
+trigger2=partner,name="s_sayia-f"&&partner,authorname="sekirei"&&partner,var(3)=1
+var(11)=ifelse(root,var(43)=1,401,408)
+
+[State ]
+type=parentVarset
+trigger1=var(11)!=0&&root,var(13)=0&&var(12)=0
+var(13)=var(11)
+
+[State ];特殊効果（プラス）判定制御
+type=Varset
+trigger1=var(11)!=0&&var(12)=0
+var(12)=1
+
+[State ];特殊効果（プラス）判定解除
+type=Varset
+triggerall=var(11)!=0
+trigger1=(var(11)=401&&root,var(43)!=1)||var(11)=405
+trigger2=numpartner
+trigger2=var(11)=408&&partner,var(3)=0
+var(11)=0
+
+[State ];特殊効果（プラス）判定制御
+type=Varset
+trigger1=var(11)=0
+var(12)=0
+
+[State ];NEGATIVE HEART判定
+type=Varset
+trigger1=root,var(38)<=2142&&(var(2)=0||var(2)>=3)&&root,var(13)=0&&roundstate>=2
+var(2)=1
+
+[State ];NEGATIVE HEART表示セット
+type=parentVarset
+trigger1=var(2)=1
+var(13)=15
+
+[State ];NEGATIVE HEART判定制御
+type=Varset
+trigger1=var(2)=1
+var(2)=2
+
+[State ];NORMAL HEART判定
+type=Varset
+trigger1=root,var(38)=[2143,9999]
+trigger1=(var(2)=2||var(2)=6)&&root,var(13)=0&&roundstate>=2
+var(2)=3
+
+[State ];NORMAL HEART表示セット
+type=parentVarset
+trigger1=var(2)=3
+var(13)=17
+
+[State ];NORMAL HEART判定制御
+type=Varset
+trigger1=var(2)=3
+var(2)=4
+
+[State ];MAX HEART判定
+type=Varset
+trigger1=root,var(38)>=10000
+trigger1=var(2)<=4&&root,var(13)=0&&roundstate>=2
+var(2)=5
+
+[State ];MAX HEART表示セット
+type=parentVarset
+trigger1=var(2)=5
+var(13)=14
+
+[State ];MAX HEART判定制御
+type=Varset
+trigger1=var(2)=5
+var(2)=6
+
+[State ];MAX HEART状態セット
+type=parentVarset
+trigger1=root,fvar(1)=0&&root,var(38)>=10000
+fvar(1)=1
+
+[State ];MAX HEART状態時間
+type=Varadd
+trigger1=root,fvar(1)=1&&var(4)<=629&&(root,stateno!=[2500,2520])&&roundstate=2&&root,palno!=12&&root,var(32)=0
+var(4)=1
+
+[State ];MAX HEART状態時間制御
+type=Varadd
+trigger1=root,fvar(1)=1&&var(4)<=629&&root,stateno=1620
+var(4)=-2
+
+[State ];テンションゲージ強制減少
+type=parentVaradd
+trigger1=var(4)=[600,630]
+var(38)=-100
+
+[State ];MAX HEART状態解除
+type=parentVarset
+trigger1=root,fvar(1)=1&&var(4)=630
+fvar(1)=0
+
+[State ];MAX HEART状態時間0
+type=Varset
+trigger1=var(4)=630||var(4)<=-1
+var(4)=0
+
+[State ];POWER MAX判定
+type=Varset
+trigger1=power>=5000&&var(3)=0&&root,var(13)=0
+var(3)=1
+
+[State ];POWER MAX表示セット
+type=parentVarset
+trigger1=var(3)=1
+var(13)=16
+
+[State ];POWER MAX判定制御
+type=Varset
+trigger1=var(3)=1
+var(3)=2
+
+[State ];POWER MAX判定制御解除
+type=Varset
+trigger1=power<=4999&&var(3)!=0
+var(3)=0
+
+[State ];プリキュアサポートゲージMAX判定
+type=Varadd
+trigger1=root,var(41)>=3000&&var(28)<=3&&root,var(13)=0
+var(28)=1
+
+[State ];プリキュアサポートゲージMAX判定解除
+type=Varset
+trigger1=(root,var(41)<=2999||root,var(36)=1)&&var(28)!=0
+var(28)=0
+
+[State ];SUPPORT MAX表示セット
+type=parentVarset
+trigger1=var(28)=1&&roundstate>=2
+var(13)=35
+
+[State ];ブーストゲージMAX判定
+type=Varadd
+trigger1=root,var(27)>=1000&&var(30)<=3&&root,var(13)=0
+var(30)=1
+
+[State ];ブーストゲージMAX判定解除
+type=Varset
+trigger1=root,var(27)<=999&&var(30)!=0
+var(30)=0
+
+[State ];BOOST MAX表示セット
+type=parentVarset
+trigger1=var(30)=1&&roundstate>=2
+var(13)=36
+
+[State ];ジャストガード判定
+type=varadd
+trigger1=root,command="holdback"||(root,stateno=[120,155])||(root,stateno=[1800,1802])
+var(10)=1
+
+[State ];ジャストガード判定解除
+type=varset
+trigger1=var(10)>=1&&root,command!="holdback"&&(root,stateno!=[120,155])&&(root,stateno!=[1800,1802])
+var(10)=0
+
+[State ]
+type=Varset
+trigger1=root,var(6)=26||root,var(7)=26||root,var(8)=26||root,var(36)=0
+var(13)=ifelse(root,var(36)=0,0,1)
+
+[State ]
+type=Varset
+trigger1=root,var(6)=5||root,var(7)=5||root,var(8)=5||root,var(36)=0
+var(14)=ifelse(root,var(36)=0,0,1)
+
+[State ]
+type=Varset
+trigger1=root,var(6)=28||root,var(7)=28||root,var(8)=28||root,var(36)=0
+var(15)=ifelse(root,var(36)=0,0,1)
+
+[State ]
+type=Varset
+trigger1=var(13)=1||var(14)=1||var(15)=1||root,var(36)=0
+var(16)=ifelse(var(13)=1,1,ifelse(var(14)=1,2,ifelse(var(15)=1,3,0)))
+
+[State ]
+type=varrandom
+trigger1=var(13)=1&&var(14)=1&&var(15)=0
+v=16
+range=1,2
+
+[State ]
+type=varrandom
+trigger1=var(13)=1&&var(14)=0&&var(15)=1
+v=16
+range=3,4
+
+[State ]
+type=varrandom
+trigger1=var(13)=0&&var(14)=1&&var(15)=1
+v=16
+range=2,3
+
+[State ]
+type=varrandom
+trigger1=var(13)=1&&var(14)=1&&var(15)=1
+v=16
+range=1,3
+
+[State ]
+type=parentVarset
+trigger1=(time%10=0&&root,movehit=0&&root,var(36)=1)||(root,var(36)=0&&root,var(24)!=0)
+var(24)=ifelse(root,var(36)=1,var(16),0)
+
+[State ]
+type=Varset
+trigger1=(root,var(27)>=1000&&var(17)=0)||(root,var(27)<=999&&var(17)=1)
+var(17)=ifelse(root,var(27)<=999,0,1)
+
+[State ]
+type=parentVarset
+trigger1=var(17)=1&&root,fvar(23)!=0
+fvar(23)=0
+
+[State ]
+type=parentVaradd
+trigger1=var(17)=0
+var(27)=ifelse(root,fvar(23)=1,3,ifelse(root,fvar(23)=2,4,ifelse(root,fvar(23)=3,2,0)))
+
+[State ]
+type=Varset
+trigger1=root,stateno
+var(17)=ifelse(root,var(27)<=999,0,1)
+
+[State ];チキ神竜石対応用
+type=Varset
+trigger1=enemynear,name="tiki"&&enemynear,Authorname="UJI"&&root,movetype=H&&(root,stateno=3521||root,stateno=3571)
+var(34)=1
+
+[State ];チキ神竜石対応用解除
+type=Varset
+trigger1=enemynear,name="tiki"&&enemynear,Authorname="UJI"&&(root,stateno!=[3521,3522])&&(root,stateno!=[3571,3572])
+var(34)=0
+
+[State ];応援判定解除
+type=Varset
+trigger1=!numhelper(3003)&&var(36)>=1
+var(36)=0
+
+[State ];応援判定追加さんにんめ解除
+type=Varset
+trigger1=!numhelper(3003)&&var(37)>=1
+var(37)=0
+
+[State ];応援判定追加ふたりめ解除
+type=Varset
+trigger1=!numhelper(3003)&&var(38)>=1
+var(38)=0
+
+[State ];応援判定
+type=Varadd
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)>=1
+var(36)=1
+
+[State ];応援判定追加～さんにんめ
+type=Varadd
+trigger1=numhelper(3003)
+trigger1=(helper(3003),var(5)=2&&var(36)>=280)||var(37)>=1
+var(37)=1
+
+[State ];応援判定追加～ふたりめ
+type=Varadd
+trigger1=numhelper(3003)
+trigger1=(helper(3003),var(5)>=1&&var(36)>=140)||var(38)>=1
+var(38)=1
+
+[State ];応援～背景
+type=null
+trigger1=numhelper(3003)&&!numexplod(6021)&&teamside=1&&root,alive=1
+trigger1=(helper(3003),var(4)=3&&(var(36)=40||var(36)=180||var(36)=320))||(helper(3003),var(4)=2&&(var(36)=40||var(36)=180))||(helper(3003),var(4)=1&&var(36)=40)||(var(37)=[40,70])||var(38)=40
+anim=6021+(ifelse(root,var(48),2,0))
+ID=6021
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+sprpriority=11000
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numhelper(3003)&&!numexplod(6021)&&teamside=2&&root,alive=1
+trigger1=(helper(3003),var(4)=3&&(var(36)=40||var(36)=180||var(36)=320))||(helper(3003),var(4)=2&&(var(36)=40||var(36)=180))||(helper(3003),var(4)=1&&var(36)=40)||(var(37)=[40,70])||var(38)=40
+anim=6022+(ifelse(root,var(48),2,0))
+ID=6021
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+sprpriority=11000
+bindtime=-1
+scale=.5,.5
+
+[State ];応援～プリキュアひとりめ
+type=null
+trigger1=numhelper(3003)&&!numexplod(53000)&&teamside=1&&root,alive=1&&var(36)=40
+anim=53000+root,var(52)
+ID=53000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+sprpriority=11001
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numhelper(3003)&&!numexplod(53000)&&teamside=2&&root,alive=1&&var(36)=40
+anim=66000+root,var(52)
+ID=53000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+sprpriority=11001
+bindtime=-1
+scale=.5,.5
+
+[State ];応援～名前ひとりめ
+type=null
+trigger1=numhelper(3003)&&!numexplod(54000)&&teamside=1&&root,alive=1&&var(36)=40
+anim=54000+(ifelse(root,var(48),2000,0))+root,var(52)
+ID=54000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numhelper(3003)&&!numexplod(54000)&&teamside=2&&root,alive=1&&var(36)=40
+anim=55000+(ifelse(root,var(48),2000,0))+root,var(52)
+ID=54000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ];応援～セリフひとりめ
+type=null
+trigger1=numhelper(3003)&&!numexplod(58000)&&teamside=1&&root,alive=1&&var(36)=40
+anim=58000+root,var(52)
+ID=58000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numhelper(3003)&&!numexplod(58000)&&teamside=2&&root,alive=1&&var(36)=40
+anim=67000+root,var(52)
+ID=58000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ];応援～ボイスひとりめ
+type=PlaySnd
+trigger1=numhelper(3003)&&root,alive=1&&var(36)=50
+value=s80,root,var(52)
+abspan=0
+
+[State ];応援～プリキュアふたりめ
+type=null
+triggerall=numhelper(3003)&&!numexplod(53000)&&teamside=1&&root,alive=1
+trigger1=helper(3003),var(4)>=2&&var(36)=180
+trigger2=helper(3003),var(4)=1&&var(38)=40
+anim=53000+root,var(53)
+ID=53000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+sprpriority=11001
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=numhelper(3003)&&!numexplod(53000)&&teamside=2&&root,alive=1
+trigger1=helper(3003),var(4)>=2&&var(36)=180
+trigger2=helper(3003),var(4)=1&&var(38)=40
+anim=66000+root,var(53)
+ID=53000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+sprpriority=11001
+bindtime=-1
+scale=.5,.5
+
+[State ];応援～名前ふたりめ
+type=null
+triggerall=numhelper(3003)&&!numexplod(54000)&&teamside=1&&root,alive=1
+trigger1=helper(3003),var(4)>=2&&var(36)=180
+trigger2=helper(3003),var(4)=1&&var(38)=40
+anim=54000+(ifelse(root,var(48),2000,0))+root,var(53)
+ID=54000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=numhelper(3003)&&!numexplod(54000)&&teamside=2&&root,alive=1
+trigger1=helper(3003),var(4)>=2&&var(36)=180
+trigger2=helper(3003),var(4)=1&&var(38)=40
+anim=55000+(ifelse(root,var(48),2000,0))+root,var(53)
+ID=54000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ];応援～セリフふたりめ
+type=null
+triggerall=numhelper(3003)&&!numexplod(58000)&&teamside=1&&root,alive=1
+trigger1=helper(3003),var(4)>=2&&var(36)=180
+trigger2=helper(3003),var(4)=1&&var(38)=40
+anim=58000+root,var(53)
+ID=58000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=numhelper(3003)&&!numexplod(58000)&&teamside=2&&root,alive=1
+trigger1=helper(3003),var(4)>=2&&var(36)=180
+trigger2=helper(3003),var(4)=1&&var(38)=40
+anim=67000+root,var(53)
+ID=58000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ];応援～ボイスふたりめ
+type=PlaySnd
+triggerall=numhelper(3003)&&root,alive=1
+trigger1=helper(3003),var(4)>=2&&var(36)=190
+trigger2=helper(3003),var(4)=1&&var(38)=50
+value=s80,root,var(53)
+abspan=0
+
+[State ];応援～プリキュアさんにんめ
+type=null
+triggerall=numhelper(3003)&&!numexplod(53000)&&teamside=1&&root,alive=1
+trigger1=helper(3003),var(4)=3&&var(36)=320
+trigger2=helper(3003),var(4)!=3
+trigger2=var(37)=[40,70]
+anim=53000+root,var(54)
+ID=53000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+sprpriority=11001
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=numhelper(3003)&&!numexplod(53000)&&teamside=2&&root,alive=1
+trigger1=helper(3003),var(4)=3&&var(36)=320
+trigger2=helper(3003),var(4)!=3
+trigger2=var(37)=[40,70]
+anim=66000+root,var(54)
+ID=53000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+sprpriority=11001
+bindtime=-1
+scale=.5,.5
+
+[State ];応援～名前さんにんめ
+type=null
+triggerall=numhelper(3003)&&!numexplod(54000)&&teamside=1&&root,alive=1
+trigger1=helper(3003),var(4)=3&&var(36)=320
+trigger2=helper(3003),var(4)!=3
+trigger2=var(37)=[40,70]
+anim=54000+(ifelse(root,var(48),2000,0))+root,var(54)
+ID=54000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=numhelper(3003)&&!numexplod(54000)&&teamside=2&&root,alive=1
+trigger1=helper(3003),var(4)=3&&var(36)=320
+trigger2=helper(3003),var(4)!=3
+trigger2=var(37)=[40,70]
+anim=55000+(ifelse(root,var(48),2000,0))+root,var(54)
+ID=54000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ];応援～セリフさんにんめ
+type=null
+triggerall=numhelper(3003)&&!numexplod(58000)&&teamside=1&&root,alive=1
+trigger1=helper(3003),var(4)=3&&var(36)=320
+trigger2=helper(3003),var(4)!=3
+trigger2=var(37)=[40,70]
+anim=58000+root,var(54)
+ID=58000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=numhelper(3003)&&!numexplod(58000)&&teamside=2&&root,alive=1
+trigger1=helper(3003),var(4)=3&&var(36)=320
+trigger2=helper(3003),var(4)!=3
+trigger2=var(37)=[40,70]
+anim=67000+root,var(54)
+ID=58000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+sprpriority=11002
+bindtime=-1
+scale=.5,.5
+
+[State ];応援～ボイスさんにんめ
+type=PlaySnd
+triggerall=numhelper(3003)&&root,alive=1
+trigger1=helper(3003),var(4)=3&&var(36)=330
+trigger2=helper(3003),var(4)!=3&&var(37)=50
+value=s80,root,var(54)
+abspan=0
+
+[State ]
+type=Varadd
+trigger1=var(41)>=1
+trigger2=numhelper(4000)
+trigger2=helper(4000),stateno=4027&&helper(4000),time<=1
+var(41)=1
+
+[State ]
+type=Varset
+trigger1=var(41)=32
+var(41)=0
+
+[State ]
+type=Varadd
+trigger1=var(43)>=1
+trigger2=numhelper(4500)
+trigger2=helper(4500),stateno=4527&&helper(4500),time<=1
+var(43)=1
+
+[State ]
+type=Varset
+trigger1=var(43)=32
+var(43)=0
+
+[State ];PA背景
+type=Explod
+trigger1=var(41)=2&&!numexplod(6099)&&teamside=1
+anim=6099+ifelse(helper(4000),var(2),2,0)
+ID=6099
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=0, GameHeight/2 + (-1)
+sprpriority=11003
+bindtime=-1
+
+[State ]
+type=Explod
+trigger1=var(41)=2&&!numexplod(6099)&&teamside=2
+anim=6099+ifelse(helper(4000),var(2),2,0)
+ID=6099
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=0, GameHeight/2 + (-1)
+sprpriority=11003
+bindtime=-1
+facing=-1
+
+[State ]
+type=Explod
+trigger1=var(43)=2&&!numexplod(6099)&&teamside=1
+anim=6099+ifelse(helper(4500),var(2),2,0)
+ID=6099
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=0, GameHeight/2 + (-1)
+sprpriority=11003
+bindtime=-1
+
+[State ]
+type=Explod
+trigger1=var(43)=2&&!numexplod(6099)&&teamside=2
+anim=6099+ifelse(helper(4500),var(2),2,0)
+ID=6099
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=0, GameHeight/2 + (-1)
+sprpriority=11003
+bindtime=-1
+facing=-1
+
+[State ];PAカットイン
+type=Explod
+trigger1=(var(41)=2||var(43)=2)&&!numexplod(6451)&&!numexplod(6452)&&teamside=1
+anim=6451+ifelse(var(43)=2,1,0)
+ID=6451+ifelse(var(43)=2,1,0)
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=0, GameHeight/2 + (18)
+sprpriority=11004
+bindtime=-1
+scale=.16,.16
+
+[State ]
+type=Explod
+trigger1=(var(41)=2||var(43)=2)&&!numexplod(6451)&&!numexplod(6452)&&teamside=2
+anim=6451+ifelse(var(43)=2,1,0)
+ID=6451+ifelse(var(43)=2,1,0)
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=0, GameHeight/2 + (18)
+sprpriority=11004
+bindtime=-1
+facing=-1
+scale=.16,.16
+
+[State ]
+type=PlaySnd
+trigger1=var(41)=2
+value=s100,ifelse(helper(4000),var(2)=1,73,74)
+abspan=floor(root,pos x)
+
+[State ]
+type=PlaySnd
+trigger1=var(43)=2
+value=s100,ifelse(helper(4500),var(2)=1,73,74)
+abspan=floor(root,pos x)
+
+[State ]
+type=Varset
+trigger1=var(41)=0&&fvar(19)!=0
+fvar(19)=0
+
+[State ]
+type=Varadd
+trigger1=var(41)=[30,31]
+fvar(19)=.1
+
+[State ]
+type=Varset
+trigger1=var(43)=0&&fvar(22)!=0
+fvar(22)=0
+
+[State ]
+type=Varadd
+trigger1=var(43)=[30,31]
+fvar(22)=.1
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(6099)&&var(41)!=0
+ID=6099
+scale=.4,.3-fvar(19)
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(6099)&&var(43)!=0
+ID=6099
+scale=.4,.3-fvar(22)
+
+[State ]
+type=Varset
+trigger1=var(44)=36||var(44)=0
+fvar(23)=0
+
+[State ]
+type=Varset
+trigger1=((root,stateno=1600||root,stateno=1606)&&root,anim=1603&&root,animelemtime(1)=1)||var(44)=36
+trigger2=(((root,stateno=1601&&root,anim=1604)||(root,stateno=1605&&root,anim=1605)||(root,stateno=1607&&root,anim=1606)||(root,stateno=1608&&root,anim=1607))&&root,animelemtime(4)=1)
+var(44)=0
+
+[State ]
+type=RemoveExplod
+trigger1=var(44)=36||var(44)=0
+ID=6708
+
+[State ]
+type=Varadd
+trigger1=((root,stateno=1600||root,stateno=1606)&&root,anim=1603&&root,animelemtime(1)=1)||var(44)>=1
+trigger2=(((root,stateno=1601&&root,anim=1604)||(root,stateno=1605&&root,anim=1605)||(root,stateno=1607&&root,anim=1606)||(root,stateno=1608&&root,anim=1607))&&root,animelemtime(4)=1)
+var(44)=1
+
+[State ];救出カットイン
+type=Explod
+trigger1=var(44)=1&&!numexplod(6708)&&teamside=1
+anim=6708+ifelse(root,stateno=1605,1,ifelse((root,stateno=[1606,1607]),2,ifelse(root,stateno=1608,3,0)))
+ID=6708
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=45, GameHeight/2 + (18)
+sprpriority=11002
+bindtime=-1
+
+[State ]
+type=Explod
+trigger1=var(44)=1&&!numexplod(6708)&&teamside=2
+anim=6708+ifelse(root,stateno=1605,1,ifelse((root,stateno=[1606,1607]),2,ifelse(root,stateno=1608,3,0)))
+ID=6708
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-45, GameHeight/2 + (18)
+sprpriority=11002
+bindtime=-1
+facing=-1
+
+[State ]
+type=modifyexplod
+trigger1=var(44)!=0
+ID=6708
+scale=.5,fvar(23)
+
+[State ]
+type=Varadd
+trigger1=(var(44)=[1,5])||(var(44)=[31,35])
+fvar(23)=ifelse((var(44)=[1,5]),.1,-.1)
+
+[State ];ミニゲーム判定
+type=Varset
+triggerall=var(33)=0
+trigger1=P2name="chamballoon"||P4name="chamballoon"||P2name="biohazard"||P4name="biohazard"||P2name="BONUS STAGE"||P4name="BONUS STAGE"||P2name="KUPPA GUNDAN"||P4name="KUPPA GUNDAN"||P4name="Street Fighter II Bricks Bonus Stage"||P2name="M-GB Game 1"
+trigger2=P2name="madgear"||P4name="madgear"||P4name="M-GB Game 1"||P2name="bonusgame"||P4name="bonusgame"||P2name="M-NES Game 1"||P4name="M-NES Game 1"||P2name="M-NES Game 2"||P4name="M-NES Game 2"||P4name="Mercedes Benz"||P2name="ro monster hunting"
+trigger3=P4name="ro monster hunting"||P2name="SDF"||P4name="SDF"||P2name="Target Test"||P4name="Target Test"||P2name="Trainingroom"||P4name="Trainingroom"||P2name="Mercedes Benz"||P2name="SF2 Oil Drums"||P2name="Street Fighter II Bricks Bonus Stage"
+trigger4=P4name="SF2 Oil Drums"
+var(33)=1
+
+[State ];死兆星カットイン判定
+type=Varset
+triggerall=roundstate!=0
+trigger1=enemy,Authorname="Drowin hokuto"&&enemy,var(24)>=7&&(enemy,name="KENSHIRO"||enemy,name="RAOH"||enemy,name="Toki"||enemy,name="JAGI"||enemy,name="MOHIKAN"||enemy,name="amiba")
+trigger2=enemy,Authorname="ahuron"&&((enemy,var(4)>=7&&(enemy,name="JAGI"||enemy,name="REI"||enemy,name="THOUTHER"||enemy,name="SHIN"))||(enemy,name="Heart&Heart"&&enemy,var(28)>=7))
+trigger3=(enemy,Authorname="Ts"&&enemy,var(7)>=7&&(enemy,name="Toki"||enemy,name="Amiba"||enemy,name="Jagi"||enemy,name="JagiMeirin"))||(enemy,name="MAMIYA"&&enemy,Authorname="YU-TOHARU"&&enemy,var(51)=7&&enemy,palno!=7)
+trigger4=enemy,Authorname="shuu"&&enemy,var(20)<1&&(enemy,name="Toki Hakurei"||enemy,name="REIsen U Inaba"||enemy,name="TEOC REISEN"||enemy,name="TOKI_S"||enemy,name="Chiester410_S"||enemy,name="KY_S"||enemy,name="Shin Izayoi")
+trigger5=enemy,Authorname="SAIKEI"&&enemy,fvar(1)<=0&&(enemy,name="KENSHIRO-SAIKEI"||enemy,name="KENSHIRO"||enemy,name="THOUTHER"||enemy,name="JUDA")
+trigger6=(enemy,Authorname="Tamago Kanten"&&((enemy,var(35)=7&&(enemy,name="tenshi_rei"||enemy,name="tenshi"))||(enemy,var(35)=7&&enemy,name="ikusan_juda")))||(enemy,name="Hong Meirin"&&enemy,Authorname="hato"&&enemy,var(45)=1)
+trigger7=(enemy,Authorname="NERICYA"&&enemy,var(20)<=0&&(enemy,name="TOKI-(NERICYA)"||enemy,name="JUDA-(NERICYA)"))||(enemy,name="Mr.HEART"&&enemy,Authorname="rei"&&enemy,var(27)=0)
+trigger8=(enemy,Authorname="Nachel_Arrange_By_RockMARISA"&&enemy,var(57)>=7&&(enemy,name="HAKUREI"||enemy,name="TELETTE"))||(enemy,name="MegaMari"&&enemy,Authorname="RockMARISA"&&enemy,var(41)>=7)
+trigger9=enemy,var(24)>=7&&((enemy,Authorname="Drowin"&&(enemy,name="Nagato Yuki"||enemy,name="Q-drowin"))||(enemy,Authorname="Drowin arcana"&&(enemy,name="Setsuna Sakurazaki"||enemy,name="Yumeka Ohajiki")))
+trigger10=enemy,Authorname="simotsuki"&&((enemy,var(31)>=7&&(enemy,name="A-Rei"||enemy,name="saint-of-silver"||enemy,name="Rasho-Zero"))||((enemy,name="silver_of_saint"||enemy,name="saint_of_silver")&&enemy,var(24)>=7))
+trigger11=(enemy,Authorname="KAZ"&&enemy,var(28)>=7&&(enemy,name="Blue Eyes White Karin"||enemy,name="Master Sakura"))||(enemy,name="S-Tomy"&&enemy,Authorname="mosa"&&enemy,var(53)<=0)
+trigger12=enemy,var(4)>=7&&((enemy,name="Hong Meilin"&&enemy,Authorname="barai")||(enemy,name="Buront"&&enemy,Authorname="kunshomo")||(enemy,name="KENSHIRO"&&enemy,Authorname="Cameron"))
+trigger13=enemy,var(24)=7&&((enemy,name="amiba"&&enemy,Authorname="oki")||(enemy,name="CHENSHIROU"&&enemy,Authorname="seapon")||(enemy,name="KOMAOH"&&enemy,Authorname="Drowin hokuto_Unknown"))
+trigger14=enemy,var(20)<=0&&((enemy,name="Ayu Tukumiya"&&enemy,Authorname="IYO")||(enemy,name="TOKI-(NERICYA) reimu patch"&&enemy,Authorname="NERICYA+lanperu"))
+trigger15=enemy,var(7)>=7&&((enemy,name="RAOH"&&enemy,Authorname="shikkoku")||(enemy,name="Shuh"&&enemy,Authorname="Fixxxer+Ts")||(enemy,name="Toki"&&enemy,Authorname="腐った発酵食品"))
+trigger16=(enemy,var(49)=7&&enemy,name="shiki_tohno"&&(enemy,Authorname="チユリ"||enemy,Authorname="チユリ&&エス"))||(enemy,var(38)=70&&enemy,name="zeroko"&&(enemy,Authorname="FenNes&5667&チユリ&エス"||enemy,Authorname=""))
+trigger17=(enemy,var(7)=0&&((enemy,name="shin"&&enemy,Authorname="konpeitou")||(enemy,name="Arima_Miyako"&&enemy,Authorname="deretun")))||(enemy,name="hakureimu"&&enemy,Authorname="すとれいりとでび"&&enemy,var(13)>=7)
+trigger18=(enemy,name="Mei"&&enemy,Authorname="霊柩なき者"&&enemy,var(55)<=0)||(enemy,name="ikusan"&&enemy,Authorname="ikusan"&&enemy,var(20)=7)||(enemy,name="SHYU"&&enemy,Authorname="Fixxxer"&&enemy,var(3)>=7)
+trigger19=(enemy,name="RAOH ATL"&&enemy,Authorname="Ataru"&&enemy,var(8)<=0)||(enemy,name="KaLen"&&enemy,Authorname="BluishCat"&&enemy,var(50)=7)
+trigger20=enemy,name="M-Reimu"&&enemy,authorName="okihaito"&&enemy,var(57)>=7&&enemy,SelfAnimExist(1000000001)=0&&enemy,PalNo<10&&(enemy,sysvar(4)&8388608)=0
+trigger21=enemy,name="M-Reimu"&&enemy,authorname="okihaito"&&(((Floor(enemy,fvar(39))&960)/64)=[1,9])&&enemy,SelfAnimExist(1000000001)&&enemy,NumProjID(890101603)+((Floor(enemy,fvar(39))&7168)/1024)=0
+trigger22=enemy,var(4)>=7&&((enemy,name="Order_Sol_Fist_of_North_Star"&&enemy,Authorname="flowrallia")||(enemy,name="Hokuto Man"&&enemy,Authorname="TOKI"))
+trigger23=(enemy,var(4)<=0&&enemy,name="Heart_Fist_of_North_Star"&&enemy,Authorname="flowrallia")||(enemy,fvar(1)<=0&&enemy,name="Sion Eltnam Atlasia"&&enemy,Authorname="Sion_Love_nameless")
+trigger24=(enemy,name="Master Morrigan"&&enemy,authorName="KAZ"&&enemy,var(28)>=7&&enemy,sysfvar(1))||(enemy,name="Haruhi Suzumiya"&&enemy,Authorname="YU-TOHARU"&&enemy,var(51)>=7&&enemy,var(50)!=0&&enemy,palno!=12)
+trigger25=enemy,Authorname="nameless"&&enemy,var(7)>=7&&(enemy,name="JUDA"||enemy,name="Rei"||enemy,name="Kenshiro"||enemy,name="Mamiya")
+trigger26=(enemy,Authorname="waguna"&&((enemy,var(24)>=7&&enemy,name="Toki")||(enemy,var(4)>=7&&(enemy,name="REI"||enemy,name="SHIN"))))||(enemy,name="Angelia Avallone"&&enemy,Authorname="or2=3"&&enemy,fvar(39)>=7)
+trigger27=enemy,var(24)>=7&&(((enemy,name="JOKER"||enemy,name="UDK")&&enemy,Authorname="kamaboko_saiha")||(enemy,name="Ruili"&&enemy,Authorname="Drowin hokuto and edit by fengkkkkkkkkk(F｢甃)"))
+trigger28=(enemy,name="dagadaga"&&enemy,Authorname="TadanoTabibito"&&enemy,var(21)=0)||(enemy,Authorname="Verstecken"&&enemy,var(7)>=7&&(enemy,name="RAOH"||enemy,name="Rei"))
+trigger29=(enemy,name="Sion_Eltnam_Atlasia"||enemy,name="Yumiduka_Satsuki"||enemy,name="Sion_TATARI"||enemy,name="Ciel"||enemy,name="Arcueid_Brunestud"||enemy,name="Raoh")&&enemy,Authorname="Sion_Love_Nameless"&&enemy,var(7)>=7
+trigger30=enemy,name="Powerd Ciel"&&enemy,Authorname="Sion_Love_Nameless"&&enemy,var(7)>=7
+trigger31=(enemy,Authorname="kakeypurai"&&((enemy,name="THOUTHER-TK"&&enemy,var(4)>=7)||(enemy,name="JUDA"&&enemy,var(7)>=7)))||(enemy,name="Aruaru-Orochi"&&enemy,Authorname="BlackCurl"&&enemy,var(41)>=7)
+trigger32=(enemy,name="Kemono Of Friends vs AC Hokuto 3on3"&&enemy,Authorname="kamaboko_saiha"&&enemy,var(24)>=7)||(enemy,name="Amiba"&&enemy,Authorname="E-FRY"&&enemy,var(7)>=7)
+var(5)=10
+persistent=0
+
+[State ]
+type=Varset
+triggerall=roundstate!=0&&numenemy>=2
+trigger1=enemy(1),Authorname="Drowin hokuto"&&enemy(1),var(24)>=7&&(enemy(1),name="KENSHIRO"||enemy(1),name="RAOH"||enemy(1),name="Toki"||enemy(1),name="JAGI"||enemy(1),name="MOHIKAN"||enemy(1),name="amiba")
+trigger2=enemy(1),Authorname="ahuron"&&((enemy(1),var(4)>=7&&(enemy(1),name="JAGI"||enemy(1),name="REI"||enemy(1),name="THOUTHER"||enemy(1),name="SHIN"))||(enemy(1),name="Heart&Heart"&&enemy(1),var(28)>=7))
+trigger3=(enemy(1),Authorname="Ts"&&enemy(1),var(7)>=7&&(enemy(1),name="Toki"||enemy(1),name="Amiba"||enemy(1),name="Jagi"||enemy(1),name="JagiMeirin"))||(enemy(1),name="MAMIYA"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),var(51)=7&&enemy(1),palno!=7)
+trigger4=enemy(1),Authorname="shuu"&&enemy(1),var(20)<1&&(enemy(1),name="Toki Hakurei"||enemy(1),name="REIsen U Inaba"||enemy(1),name="TEOC REISEN"||enemy(1),name="TOKI_S"||enemy(1),name="Chiester410_S"||enemy(1),name="KY_S"||enemy(1),name="Shin Izayoi")
+trigger5=enemy(1),Authorname="SAIKEI"&&enemy(1),fvar(1)<=0&&(enemy(1),name="KENSHIRO-SAIKEI"||enemy(1),name="KENSHIRO"||enemy(1),name="THOUTHER"||enemy(1),name="JUDA")
+trigger6=(enemy(1),Authorname="Tamago Kanten"&&((enemy(1),var(35)=7&&(enemy(1),name="tenshi_rei"||enemy(1),name="tenshi"))||(enemy(1),var(35)=7&&enemy(1),name="ikusan_juda")))||(enemy(1),name="Hong Meirin"&&enemy(1),Authorname="hato"&&enemy(1),var(45)=1)
+trigger7=(enemy(1),Authorname="NERICYA"&&enemy(1),var(20)<=0&&(enemy(1),name="TOKI-(NERICYA)"||enemy(1),name="JUDA-(NERICYA)"))||(enemy(1),name="Mr.HEART"&&enemy(1),Authorname="rei"&&enemy(1),var(27)=0)
+trigger8=(enemy(1),Authorname="Nachel_Arrange_By_RockMARISA"&&enemy(1),var(57)>=7&&(enemy(1),name="HAKUREI"||enemy(1),name="TELETTE"))||(enemy(1),name="MegaMari"&&enemy(1),Authorname="RockMARISA"&&enemy(1),var(41)>=7)
+trigger9=enemy(1),var(24)>=7&&((enemy(1),Authorname="Drowin"&&(enemy(1),name="Nagato Yuki"||enemy(1),name="Q-drowin"))||(enemy(1),Authorname="Drowin arcana"&&(enemy(1),name="Setsuna Sakurazaki"||enemy(1),name="Yumeka Ohajiki")))
+trigger10=enemy(1),Authorname="simotsuki"&&((enemy(1),var(31)>=7&&(enemy(1),name="A-Rei"||enemy(1),name="saint-of-silver"||enemy(1),name="Rasho-Zero"))||((enemy(1),name="silver_of_saint"||enemy(1),name="saint_of_silver")&&enemy(1),var(24)>=7))
+trigger11=(enemy(1),Authorname="KAZ"&&enemy(1),var(28)>=7&&(enemy(1),name="Blue Eyes White Karin"||enemy(1),name="Master Sakura"))||(enemy(1),name="S-Tomy"&&enemy(1),Authorname="mosa"&&enemy(1),var(53)<=0)
+trigger12=enemy(1),var(4)>=7&&((enemy(1),name="Hong Meilin"&&enemy(1),Authorname="barai")||(enemy(1),name="Buront"&&enemy(1),Authorname="kunshomo")||(enemy(1),name="KENSHIRO"&&enemy(1),Authorname="Cameron"))
+trigger13=enemy(1),var(24)=7&&((enemy(1),name="amiba"&&enemy(1),Authorname="oki")||(enemy(1),name="CHENSHIROU"&&enemy(1),Authorname="seapon")||(enemy(1),name="KOMAOH"&&enemy(1),Authorname="Drowin hokuto_Unknown"))
+trigger14=enemy(1),var(20)<=0&&((enemy(1),name="Ayu Tukumiya"&&enemy(1),Authorname="IYO")||(enemy(1),name="TOKI-(NERICYA) reimu patch"&&enemy(1),Authorname="NERICYA+lanperu"))
+trigger15=enemy(1),var(7)>=7&&((enemy(1),name="RAOH"&&enemy(1),Authorname="shikkoku")||(enemy(1),name="Shuh"&&enemy(1),Authorname="Fixxxer+Ts")||(enemy(1),name="Toki"&&enemy(1),Authorname="腐った発酵食品"))
+trigger16=(enemy(1),var(49)=7&&enemy(1),name="shiki_tohno"&&(enemy(1),Authorname="チユリ"||enemy(1),Authorname="チユリ&&エス"))||(enemy(1),var(38)=70&&enemy(1),name="zeroko"&&(enemy(1),Authorname="FenNes&5667&チユリ&エス"||enemy(1),Authorname=""))
+trigger17=(enemy(1),var(7)=0&&((enemy(1),name="shin"&&enemy(1),Authorname="konpeitou")||(enemy(1),name="Arima_Miyako"&&enemy(1),Authorname="deretun")))||(enemy(1),name="hakureimu"&&enemy(1),Authorname="すとれいりとでび"&&enemy(1),var(13)>=7)
+trigger18=(enemy(1),name="Mei"&&enemy(1),Authorname="霊柩なき者"&&enemy(1),var(55)<=0)||(enemy(1),name="ikusan"&&enemy(1),Authorname="ikusan"&&enemy(1),var(20)=7)||(enemy(1),name="SHYU"&&enemy(1),Authorname="Fixxxer"&&enemy(1),var(3)>=7)
+trigger19=(enemy(1),name="RAOH ATL"&&enemy(1),Authorname="Ataru"&&enemy(1),var(8)<=0)||(enemy(1),name="KaLen"&&enemy(1),Authorname="BluishCat"&&enemy(1),var(50)=7)
+trigger20=enemy(1),Name="M-Reimu"&&enemy(1),authorName="okihaito"&&enemy(1),var(57)>=7&&enemy(1),SelfAnimExist(1000000001)=0&&enemy(1),PalNo<10&&(enemy(1),sysvar(4)&8388608)=0
+trigger21=enemy(1),Name="M-Reimu"&&enemy(1),authorname="okihaito"&&(((Floor(enemy(1),fvar(39))&960)/64)=[1,9])&&enemy(1),SelfAnimExist(1000000001)&&enemy(1),NumProjID(890101603)+((Floor(enemy(1),fvar(39))&7168)/1024)=0
+trigger22=enemy(1),var(4)>=7&&((enemy(1),name="Order_Sol_Fist_of_North_Star"&&enemy(1),Authorname="flowrallia")||(enemy(1),name="Hokuto Man"&&enemy(1),Authorname="TOKI"))
+trigger23=(enemy(1),var(4)<=0&&enemy(1),name="Heart_Fist_of_North_Star"&&enemy(1),Authorname="flowrallia")||(enemy(1),fvar(1)<=0&&enemy(1),name="Sion Eltnam Atlasia"&&enemy(1),Authorname="Sion_Love_nameless")
+trigger24=(enemy(1),name="Master Morrigan"&&enemy(1),authorName="KAZ"&&enemy(1),var(28)>=7&&enemy(1),sysfvar(1))||(enemy(1),name="Haruhi Suzumiya"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),var(51)>=7&&enemy(1),var(50)!=0&&enemy(1),palno!=12)
+trigger25=enemy(1),Authorname="nameless"&&enemy(1),var(7)>=7&&(enemy(1),name="JUDA"||enemy(1),name="Rei"||enemy(1),name="Kenshiro"||enemy(1),name="Mamiya")
+trigger26=(enemy(1),Authorname="waguna"&&((enemy(1),var(24)>=7&&enemy(1),name="Toki")||(enemy(1),var(4)>=7&&(enemy(1),name="REI"||enemy(1),name="SHIN"))))||(enemy(1),name="Angelia Avallone"&&enemy(1),Authorname="or2=3"&&enemy(1),fvar(39)>=7)
+trigger27=enemy(1),var(24)>=7&&(((enemy(1),name="JOKER"||enemy(1),name="UDK")&&enemy(1),Authorname="kamaboko_saiha")||(enemy(1),name="Ruili"&&enemy(1),Authorname="Drowin hokuto and edit by fengkkkkkkkkk(F｢甃)"))
+trigger28=(enemy(1),name="dagadaga"&&enemy(1),Authorname="TadanoTabibito"&&enemy(1),var(21)=0)||(enemy(1),Authorname="Verstecken"&&enemy(1),var(7)>=7&&(enemy(1),name="RAOH"||enemy(1),name="Rei"))
+trigger29=(enemy(1),name="Sion_Eltnam_Atlasia"||enemy(1),name="Yumiduka_Satsuki"||enemy(1),name="Sion_TATARI"||enemy(1),name="Ciel"||enemy(1),name="Arcueid_Brunestud"||enemy(1),name="Raoh")&&enemy(1),Authorname="Sion_Love_Nameless"&&enemy(1),var(7)>=7
+trigger30=enemy(1),name="Powerd Ciel"&&enemy(1),Authorname="Sion_Love_Nameless"&&enemy(1),var(7)>=7
+trigger31=(enemy(1),Authorname="kakeypurai"&&((enemy(1),name="THOUTHER-TK"&&enemy(1),var(4)>=7)||(enemy(1),name="JUDA"&&enemy(1),var(7)>=7)))||(enemy(1),name="Aruaru-Orochi"&&enemy(1),Authorname="BlackCurl"&&enemy(1),var(41)>=7)
+trigger32=(enemy(1),name="Kemono Of Friends vs AC Hokuto 3on3"&&enemy(1),Authorname="kamaboko_saiha"&&enemy(1),var(24)>=7)||(enemy(1),name="Amiba"&&enemy(1),Authorname="E-FRY"&&enemy(1),var(7)>=7)
+var(5)=10
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=var(5)=[10,30]
+var(5)=1
+
+[State ];鬼太郎（蝋燭）＆早苗さん（★ゲージ）＆柊やがみ（一撃ゲージ）カットイン用
+type=Varset
+triggerall=roundstate!=0
+trigger1=(enemy,var(15)=0&&enemy,name="kitarou"&&(enemy,Authorname="Elecbyte"||enemy,Authorname="mother earth"))||(enemy,name="sanaesan"&&enemy,Authorname="huihui"&&enemy,var(4)>=9)
+trigger2=enemy,name="yagami"&&enemy,Authorname="Yogoreneko"&&enemy,var(16)=800
+trigger3=numenemy>=2
+trigger3=(enemy(1),var(15)=0&&enemy(1),name="kitarou"&&(enemy(1),Authorname="Elecbyte"||enemy(1),Authorname="mother earth"))||(enemy(1),name="sanaesan"&&enemy(1),Authorname="huihui"&&enemy(1),var(4)>=9)
+trigger4=numenemy>=2
+trigger4=enemy(1),name="yagami"&&enemy(1),Authorname="Yogoreneko"&&enemy(1),var(16)=800
+var(6)=10
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=var(6)=[10,30]
+var(6)=1
+
+[State ];死兆星ボイス
+type=PlaySnd
+trigger1=var(5)=11
+value=s0,49
+volume=255
+volumescale=255
+abspan=0
+
+[state ]
+type=parentVarset
+trigger1=var(5)=11
+var(13)=327
+
+[State ];死兆星カットイン
+type=Explod
+trigger1=TeamSide=1&&(var(5)=11||var(6)=11)
+anim=3046
+ID=3759
+postype=right
+pos=0, GameHeight/2 + (-30)
+ownpal=1
+scale=.5,.5
+sprpriority=-5
+bindtime=-1
+pausemovetime=100
+supermovetime=100
+
+[State ] 
+type=Explod
+trigger1=TeamSide=2&&(var(5)=11||var(6)=11)
+anim=3046
+ID=3759
+postype=left
+pos=0, GameHeight/2 + (-30)
+ownpal=1
+scale=.5,.5
+sprpriority=-5
+facing=-1
+bindtime=-1
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=modifyexplod
+trigger1=var(5)>=11||var(6)>=11
+ID=3759
+scale=.5,ifelse((var(5)=[11,12])||(var(6)=[11,12]),3,ifelse(var(5)=13||var(6)=13,.1,ifelse(var(5)=14||var(6)=14,.2,ifelse(var(5)=15||var(6)=15,.3,ifelse(var(5)=16||var(6)=16,.4,.5)))))
+
+[State ];戦国BASARAキャラ援軍呼び出しボイス
+type=Varset
+triggerall=roundstate!=0
+trigger1=enemy,var(40)=1&&((enemy,Authorname="Neat Unsou"&&(enemy,name="Date Masamune"||enemy,name="Katakura Kojuro"||enemy,name="Mouri Motonari"))||(enemy,name="Toyotomi Hideyoshi"&&enemy,Authorname="kuri"))
+trigger2=(enemy,var(40)=1&&enemy,Authorname="syouga"&&(enemy,name="Sanada Yukimura"||enemy,name="Uesugi Kensin"||enemy,name="Maeda Keiji"))||(enemy,name="Arima_Miyako"&&enemy,Authorname="deretun"&&(enemy,var(10)=[2,57]))
+trigger3=enemy,var(40)=-10&&enemy,Authorname="rei"&&(enemy,name="Honda Tadakatsu"||enemy,name="Toyotomi Hideyoshi"||enemy,name="Oda Nobunaga"||enemy,name="Oichi")
+trigger4=(enemy,var(40)=-10&&((enemy,name="Keiji"&&enemy,Authorname="Ahuron")||(enemy,name="Chousokabe Motochika"&&enemy,Authorname="Gal129")))||(enemy,var(40)=1&&enemy,name="Toyosatomimi no Miko"&&enemy,Authorname="Barbatos")
+trigger5=(enemy,name="Haruhi Suzumiya"&&enemy,Authorname="YU-TOHARU"&&enemy,var(9)=10000&&enemy,var(50)!=0)||(enemy,name="Youmu_BASARAX-Style"&&enemy,Authorname="Togami"&&enemy,var(3)=2099200)
+var(42)=10
+persistent=0
+
+[State ]
+type=Varset
+triggerall=roundstate!=0&&numenemy>=2
+trigger1=enemy(1),var(40)=1&&((enemy(1),Authorname="Neat Unsou"&&(enemy(1),name="Date Masamune"||enemy(1),name="Katakura Kojuro"||enemy(1),name="Mouri Motonari"))||(enemy(1),name="Toyotomi Hideyoshi"&&enemy(1),Authorname="kuri"))
+trigger2=(enemy(1),var(40)=1&&enemy(1),Authorname="syouga"&&(enemy(1),name="Sanada Yukimura"||enemy(1),name="Uesugi Kensin"||enemy(1),name="Maeda Keiji"))||(enemy(1),name="Arima_Miyako"&&enemy(1),Authorname="deretun"&&(enemy(1),var(10)=[2,57]))
+trigger3=enemy(1),var(40)=-10&&enemy(1),Authorname="rei"&&(enemy(1),name="Honda Tadakatsu"||enemy(1),name="Toyotomi Hideyoshi"||enemy(1),name="Oda Nobunaga"||enemy(1),name="Oichi")
+trigger4=(enemy(1),var(40)=-10&&((enemy(1),name="Keiji"&&enemy(1),Authorname="Ahuron")||(enemy(1),name="Chousokabe Motochika"&&enemy(1),Authorname="Gal129")))||(enemy(1),var(40)=1&&enemy(1),name="Toyosatomimi no Miko"&&enemy(1),Authorname="Barbatos")
+trigger5=(enemy(1),name="Haruhi Suzumiya"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),var(9)=10000&&enemy(1),var(50)!=0)||(enemy(1),name="Youmu_BASARAX-Style"&&enemy(1),Authorname="Togami"&&enemy(1),var(3)=2099200)
+var(42)=10
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=var(42)=[10,90]
+var(42)=1
+
+[State ];援軍呼び出しボイス
+type=PlaySnd
+trigger1=var(42)=71
+value=s0,187
+volume=255
+volumescale=255
+abspan=0
+
+[State ]
+type=parentVarset
+trigger1=var(42)=71
+var(13)=311
+
+[state ];ジョジョ対応
+type=Varset
+triggerall=time=0
+trigger1=P2name="kujo jotaro"||P2name="s.jotaro"||P2name="Jotaro by ANMC"||P2name="jotaro"||P2name="Jotaro Kujo"||P2name="Dio"||P2name="Shadow DIO"||P2name="final dio"||P2name="DIO BRANDO"||P2name="Shadow_Final_DIO"||P2name="Dio Brendo"||P2name="Kakyoin"
+trigger2=P2name="josuke"||P2name="AVDOL"||P2name="Avdul"||P2name="ASB_JOSUKE"||P2name="joseph"||P2name="Joseph Joestar"||(P2name="Bruno"&&enemynear,authorname="yoroko")||P2name="hirose koiti"||P2name="leone abbacchio"||P2name="Giorno"||P2name="alessi"
+trigger3=P2name="mista"||P2name="Requiem Giorno"||P2name="rohan"||P2name="trish una"||P2name="Polnareff"||P2name="Polnareff boy"||P2name="blackpolnareff"||P2name="black_polnareff"||P2name="black polnareff"||P2name="Noriaki Kakyoin"||P2name="HolHorse_ASB"
+trigger4=P2name="Kakyoin2"||P2name="iggy"||P2name="Emporio"||P2name="vanilla ice"||P2name="vanillaice"||P2name="Devo"||P2name="Nijimura Keityou"||P2name="MIDLER"||P2name="MARIAH"||P2name="midler girl"||P2name="DEATH13"||P2name="diavolo"||P2name="rizotto"
+trigger5=P2name="n'doul"||P2name="New Rubber Soul"||P2name="Rubber Soul"||P2name="Hol horse & Boingo"||P2name="Hol horse"||P2name="chaka"||P2name="pucci"||P2name="Arabia_Fats"||(P2name="kenzo"&&enemynear,authorname="Heal_The_World")||P2name="Ghiaccio"
+trigger6=P2name="Oingo & Boingo"||P2name="Wheel of Fortune"||P2name="Yamagishi Yukako"||P2name="Fugo"||P2name="KawajiriKosaku"||P2name="killa yoshikage"||P2name="prosciutto_aniki"||P2name="s_diavolo"||P2name="Khan"||P2name="Gray Fly"||P2name="Steely Dan"
+trigger7=P2name="petshop"||P2name="Yoshikage Killa"||P2name="Diablo by Lord Sinistro"||P2name="Rolling Stone(s)"||P2name="BLACKMORE-IF"||P2name="blackmore"||P2name="Sakuya Shadow Brando"||P2name="Izayoi Sakuya Brando"||P2name="Kujo Meirin"||P2name="enya"
+trigger8=P2name="abbacchio"||P2name="cameo"||P2name="SilverChariot_Youmu"||P2name="Meilyne Cujo"||P2name="トモノイシヲツギシ京"||P2name="Kujo Jotaro (Part4)"||(P2name="BS"&&enemynear,authorname="Torimochi")||P2name="jonathan joestar"||P2name="zeppeli"
+trigger9=P2name="Caesar Anthonio Zeppeli"||P2name="Young Joseph +"||P2name="Young Joseph"||P2name="GiornoMVC"||P2name="Bruno Bucciarati"||P2name="Elizabeth Joestar"||P2name="1st DIO"||P2name="holhol"||P2name="KILL.A"||P2name="otoisi"||P2name="Dio_Brando"
+trigger10=P2name="Secco"||P2name="ringo"||P2name="jonathan joestar_AS"||P2name="Caesar"||P2name="Kars"||P2name="jonathan"||P2name="judgement"||P2name="DioBrando"||P2name="IF_Brando"||P2name="wangchang"||P2name="The World"||P2name="J geil"||P2name="Diego"
+trigger11=P2name="Stroheim"||P2name="nukesaku"||P2name="Star Platinum"||(P2name="johnny"&&enemynear,authorname="salami")||P2name="DIO_AS(Clone DIO)"||P2name="Shadow Dio FC"||P2name="Joseph_AS"||P2name="Kira(Kosaku Kawajiri)"||P2name="Morioh Ambulance"
+trigger12=P2name="jolyne"||P2name="The Boss"||((P2name="kurassyu"||P2name="musikui"||P2name="san")&&enemynear,authorname="d")||P2name="Danny"||P2name="Sheer Heart Attack"||P2name="STAIRWAY TO HEAVEN"||P2name="鰐と百足と海老と竜"||P2name="Diego Brando"
+trigger13=P2name="Funny Valentine"||P2name="Johnny4"||P2name="Narancia Ghirga"||P2name="Norisuke Higashikata"||P2name="Robert E.O. Speedwagon"||P2name="Weather Report"||P2name="JJBA_Jack The Ripper"||P2name="FooFighters"||P2name="tarkus"||P2name="ENIGMA"
+trigger14=P2name="Giorno Giovanna"||P2name="Guido Mista"||P2name="Rohan Kishibe"||P2name="Old Joseph"||P2name="Yoshikage Kira"||P2name="Runaway Girl"||P2name="WeatherReport"||P2name="Diego Brando from Another Timeline"||P2name="Speedwagon"||P2name="baoh"
+trigger15=P2name="Diego_Brando"||P2name="bruford"||P2name="Diavolo-IF"||P2name="Vinegar Doppio"||P2name="Yoshikage Kira 8"||P2name="Gyro Zeppeli"||P2name="Heaven DIO"||P2name="Lisa Lisa"||P2name="Jonathan Joestar"||P2name="Koichi Pose"||P2name="Narancia"
+trigger16=P2name="Josuke Joestar"||P2name="Sport max"||P2name="Okuyasu"||P2name="Rolling Stone"||P2name="sale"||P2name="Koichi"||P2name="Dire"||P2name="violence fugo"||(P2name="Yuya"&&enemynear,authorname="mysh_2002")||P2name="Esidisi"||P2name="Wamuu"
+trigger17=P2name="Viva Reverive Jotaro"||P2name="Jotaro Part 6"||P2name="DIO Part 6"||P2name="Narciso Anasui"||P2name="Anthonio Zeppeli"||P2name="Johnny Joestar"||P2name="JosukeGappy"||P2name="Prosciutto"||P2name="Risotto Nero"||P2name="ValentineJUS"
+trigger18=P2name="Shigechi"||P2name="Hermes"||P2name="Shizuka Joestar"||P2name="Mini Vanilla Ice"
+fvar(1)=1
+
+[state ]
+type=Varset
+triggerall=time=0&&numenemy>=2
+trigger1=P4name="kujo jotaro"||P4name="s.jotaro"||P4name="Jotaro by ANMC"||P4name="jotaro"||P4name="Jotaro Kujo"||P4name="Dio"||P4name="Shadow DIO"||P4name="final dio"||P4name="DIO BRANDO"||P4name="Shadow_Final_DIO"||P4name="Dio Brendo"||P4name="Kakyoin"
+trigger2=P4name="josuke"||P4name="AVDOL"||P4name="Avdul"||P4name="ASB_JOSUKE"||P4name="joseph"||P4name="Joseph Joestar"||(P4name="Bruno"&&enemynear(1),authorname="yoroko")||P4name="hirose koiti"||P4name="leone abbacchio"||P4name="Giorno"||P4name="alessi"
+trigger3=P4name="mista"||P4name="Requiem Giorno"||P4name="rohan"||P4name="trish una"||P4name="Polnareff"||P4name="Polnareff boy"||P4name="blackpolnareff"||P4name="black_polnareff"||P4name="black polnareff"||P4name="Noriaki Kakyoin"||P4name="HolHorse_ASB"
+trigger4=P4name="Kakyoin2"||P4name="iggy"||P4name="Emporio"||P4name="vanilla ice"||P4name="vanillaice"||P4name="Devo"||P4name="Nijimura Keityou"||P4name="MIDLER"||P4name="MARIAH"||P4name="midler girl"||P4name="DEATH13"||P4name="diavolo"||P4name="rizotto"
+trigger5=P4name="n'doul"||P4name="New Rubber Soul"||P4name="Rubber Soul"||P4name="Hol horse & Boingo"||P4name="Hol horse"||P4name="chaka"||P4name="pucci"||P4name="Arabia_Fats"||(P4name="kenzo"&&enemynear(1),authorname="Heal_The_World")||P4name="Ghiaccio"
+trigger6=P4name="Oingo & Boingo"||P4name="Wheel of Fortune"||P4name="Yamagishi Yukako"||P4name="Fugo"||P4name="KawajiriKosaku"||P4name="killa yoshikage"||P4name="prosciutto_aniki"||P4name="s_diavolo"||P4name="Khan"||P4name="Gray Fly"||P4name="Steely Dan"
+trigger7=P4name="petshop"||P4name="Yoshikage Killa"||P4name="Diablo by Lord Sinistro"||P4name="Rolling Stone(s)"||P4name="BLACKMORE-IF"||P4name="blackmore"||P4name="Sakuya Shadow Brando"||P4name="Izayoi Sakuya Brando"||P4name="Kujo Meirin"||P4name="enya"
+trigger8=P4name="abbacchio"||P4name="cameo"||P4name="SilverChariot_Youmu"||P4name="Meilyne Cujo"||P4name="トモノイシヲツギシ京"||P4name="Kujo Jotaro (Part4)"||(P4name="BS"&&enemynear(1),authorname="Torimochi")||P4name="jonathan joestar"||P4name="zeppeli"
+trigger9=P4name="Caesar Anthonio Zeppeli"||P4name="Young Joseph +"||P4name="Young Joseph"||P4name="GiornoMVC"||P4name="Bruno Bucciarati"||P4name="Elizabeth Joestar"||P4name="1st DIO"||P4name="holhol"||P4name="KILL.A"||P4name="otoisi"||P4name="Dio_Brando"
+trigger10=P4name="Secco"||P4name="ringo"||P4name="jonathan joestar_AS"||P4name="Caesar"||P4name="Kars"||P4name="jonathan"||P4name="judgement"||P4name="DioBrando"||P4name="IF_Brando"||P4name="wangchang"||P4name="The World"||P4name="J geil"||P4name="Diego"
+trigger11=P4name="Stroheim"||P4name="nukesaku"||P4name="Star Platinum"||(P4name="johnny"&&enemynear(1),authorname="salami")||P4name="DIO_AS(Clone DIO)"||P4name="Shadow Dio FC"||P4name="Joseph_AS"||P4name="Kira(Kosaku Kawajiri)"||P4name="Morioh Ambulance"
+trigger12=P4name="jolyne"||P4name="The Boss"||((P4name="kurassyu"||P4name="musikui"||P4name="san")&&enemynear(1),authorname="d")||P4name="Danny"||P4name="Sheer Heart Attack"||P4name="STAIRWAY TO HEAVEN"||P4name="鰐と百足と海老と竜"||P4name="Diego Brando"
+trigger13=P4name="Funny Valentine"||P4name="Johnny4"||P4name="Narancia Ghirga"||P4name="Norisuke Higashikata"||P4name="Robert E.O. Speedwagon"||P4name="Weather Report"||P4name="JJBA_Jack The Ripper"||P4name="FooFighters"||P4name="tarkus"||P4name="ENIGMA"
+trigger14=P4name="Giorno Giovanna"||P4name="Guido Mista"||P4name="Rohan Kishibe"||P4name="Old Joseph"||P4name="Yoshikage Kira"||P4name="Runaway Girl"||P4name="WeatherReport"||P4name="Diego Brando from Another Timeline"||P4name="Speedwagon"||P4name="baoh"
+trigger15=P4name="Diego_Brando"||P4name="bruford"||P4name="Diavolo-IF"||P4name="Vinegar Doppio"||P4name="Yoshikage Kira 8"||P4name="Gyro Zeppeli"||P4name="Heaven DIO"||P4name="Lisa Lisa"||P4name="Jonathan Joestar"||P4name="Koichi Pose"||P4name="Narancia"
+trigger16=P4name="Josuke Joestar"||P4name="Sport max"||P4name="Okuyasu"||P4name="Rolling Stone"||P4name="sale"||P4name="Koichi"||P4name="Dire"||P4name="violence fugo"||(P4name="Yuya"&&enemynear(1),authorname="mysh_2002")||P4name="Esidisi"||P4name="Wamuu"
+trigger17=P4name="Viva Reverive Jotaro"||P4name="Jotaro Part 6"||P4name="DIO Part 6"||P4name="Narciso Anasui"||P4name="Anthonio Zeppeli"||P4name="Johnny Joestar"||P4name="JosukeGappy"||P4name="Prosciutto"||P4name="Risotto Nero"||P4name="ValentineJUS"
+trigger18=P4name="Shigechi"||P4name="Hermes"||P4name="Shizuka Joestar"||P4name="Mini Vanilla Ice"
+fvar(1)=1
+
+[State ];ニコ削除判定
+type=Varset
+trigger1=root,stateno=2771&&root,anim=2771&&root,time=1&&enemy,name="Nico"&&(root,TeamMode=single ||root,TeamMode=turns)
+var(32)=1
+
+[State ];秋子謎ジャム判定
+type=Varset
+trigger1=(root,stateno=3551||root,stateno=4540)&&root,anim=5110&&root,alive!=1
+var(32)=2
+
+[State ];ジャギ（良くできた弟～!!）判定
+type=VarSet
+triggerall=(root,TeamMode=single ||root,TeamMode=turns)&&(enemynear,teammode=single ||enemynear,teammode=turns)&&var(35)!=1
+trigger1=enemynear,name="JAGI"&&((enemynear,authorname="Drowin hokuto"&&enemynear,numhelper(1001)=1)||(enemynear,authorname="Ahuron"&&enemynear,numhelper(1705)=1)||(enemynear,authorname="Ts"&&enemynear,numhelper(1610)=1))
+trigger2=enemynear,name="JagiMeirin"&&enemynear,authorname="Ts"&&enemynear,numhelper(1710)=1
+var(35)=1
+
+[State ]
+type=Varadd
+trigger1=var(35)=1
+fvar(8)=1
+
+[State ]
+type=parentVarset
+trigger1=fvar(8)=1
+var(13)=322
+
+[State ]
+type=VarSet
+triggerall=(root,TeamMode=single ||root,TeamMode=turns)&&(enemynear,teammode=single ||enemynear,teammode=turns)&&var(35)!=0
+trigger1=enemynear,name="JAGI"&&((enemynear,authorname="Drowin hokuto"&&enemynear,numhelper(1001)=0)||(enemynear,authorname="Ahuron"&&enemynear,numhelper(1705)=0)||(enemynear,authorname="Ts"&&enemynear,numhelper(1610)=0))
+trigger2=enemynear,name="JagiMeirin"&&enemynear,authorname="Ts"&&enemynear,numhelper(1710)=0
+var(35)=0
+
+[State ]
+type=Varset
+trigger1=var(35)=0&&fvar(8)>=1
+fvar(8)=0
+
+[state ];刹活孔判定
+type=VarSet
+triggerall=fvar(12)=0
+trigger1=(enemynear,authorname="Ts"&&enemynear,var(34)!=0&&(enemynear,name="Toki"||enemynear,name="Amiba"))||(enemynear,authorname="shuu"&&enemynear,var(12)>=1&&(enemynear,name="TOKI_S"||enemynear,name="Toki Hakurei"))
+trigger2=enemynear,var(12)>=1&&((enemynear,name="TOKI-(NERICYA)"&&enemynear,authorname="NERICYA")||(enemynear,name="TOKI-(NERICYA) reimu patch"&&enemynear,authorname="NERICYA+lanperu"))
+trigger3=enemynear,name="Toki"&&enemynear,authorname="Drowin hokuto"&&enemynear,fvar(32)>=.01
+fvar(12)=1
+
+[state ]
+type=VarSet
+triggerall=fvar(12)=1
+trigger1=(enemynear,authorname="Ts"&&enemynear,var(34)=0&&(enemynear,name="Toki"||enemynear,name="Amiba"))||(enemynear,authorname="shuu"&&enemynear,var(12)=0&&(enemynear,name="TOKI_S"||enemynear,name="Toki Hakurei"))
+trigger2=enemynear,var(12)=0&&((enemynear,name="TOKI-(NERICYA)"&&enemynear,authorname="NERICYA")||(enemynear,name="TOKI-(NERICYA) reimu patch"&&enemynear,authorname="NERICYA+lanperu"))
+trigger3=enemynear,name="Toki"&&enemynear,authorname="Drowin hokuto"&&enemynear,fvar(32)<=0
+fvar(12)=0
+
+[State ];VictoryQuote～凡用
+type=Varrandom
+trigger1=1
+v=29
+range=1,10
+persistent=0
+
+[State ];VictoryQuote～右代宮縁寿
+type=varrandom
+trigger1=enemy,name="USHIROMIYA ANGE"
+v=29
+range=11,12
+persistent=0
+
+[State ];ストライカーゲージ0（呼び出し制限）対応ステート
+type=Varset
+trigger1=root,movetype=H&&enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,fvar(19)=1||enemynear,fvar(19)=3)
+var(40)=ifelse(enemynear,fvar(19)=1,1,2)
+
+[State ]
+type=Varset
+triggerall=root,movetype=H
+trigger1=enemynear,name="Eva Roza"&&enemynear,authorname="my100yen"&&enemynear,var(2)&&enemynear,numexplod(6198)
+trigger2=(enemynear,name="Oichi"&&enemynear,authorname="rei"&&enemynear,numexplod(6755))||(enemynear,name="Mouri Motonari"&&enemynear,authorname="Neat Unsou"&&enemynear,var(29)!=0)
+var(40)=ifelse(enemynear,name="Eva Roza",3,ifelse(enemynear,name="Oichi",4,5))
+
+[State ]
+type=parentVarset
+trigger1=var(40)>=1
+var(9)=0
+
+[State ]
+type=parentVarset
+trigger1=var(40)>=1
+var(10)=0
+
+[State ]
+type=parentVarset
+trigger1=var(40)>=1
+var(39)=0
+
+[State ]
+type=parentVarset
+trigger1=var(40)>=1
+var(40)=0
+
+[State ]
+type=varadd
+trigger1=var(40)>=1||fvar(3)>=1
+fvar(3)=1
+
+[State ]
+type=parentVarset
+trigger1=fvar(3)=1&&(var(40)!=2||(var(40)=2&&root,time=1))
+var(13)=ifelse(var(40)=1||var(40)=3,321,ifelse(var(40)=2,322,323))
+
+[state ];ストライカー呼び出し制限解除
+type=VarSet
+trigger1=(var(40)=[1,2])&&enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&enemynear,fvar(19)!=1&&enemynear,fvar(19)!=3
+trigger2=var(40)=3&&enemynear,name="Eva Roza"&&enemynear,authorname="my100yen"&&!(enemynear,var(2)&&enemynear,numexplod(6198))
+trigger3=(var(40)=4&&enemynear,name="Oichi"&&enemynear,authorname="rei"&&enemynear,numexplod(6755)=0)||(var(40)=5&&enemynear,name="Mouri Motonari"&&enemynear,authorname="Neat Unsou"&&enemynear,var(29)=0)
+var(40)=0
+
+[state ]
+type=VarSet
+trigger1=var(40)=0&&fvar(3)!=0
+fvar(3)=0
+
+[State ]
+type=Varset
+trigger1=var(48)!=root,time
+var(48)=root,time
+
+;右代宮朱志香＆ワルギリア＆ベアトリーチェ「メタ返し＆メタ再反論」対応ステート（Eitonさん専用）
+[state ]
+type=Explod
+trigger1=enemy,authorname="Eiton"&&root,power>=2000&&!numexplod(75025)&&(enemy,Stateno=7500||enemy,Stateno=7520)
+trigger1=root,command="recovery"||root,command="a"||root,command="b"||root,command="c"||root,command="x"||root,command="y"||root,command="z"||root,command="start"
+anim=1860
+ID=75025
+pos=0,0
+postype=p2 
+facing=1
+removetime=-1
+bindtime=1
+scale=1,1
+sprpriority=-10
+ownpal=1
+
+[state ]
+type=PowerAdd
+trigger1=numexplod(75025)&&!numexplod(75026)
+value=-2000
+
+[state ]
+type=Explod
+trigger1=numexplod(75025)
+anim=1860
+ID=75026
+pos=0,0
+postype=p2 
+facing=1
+removetime=-1
+bindtime=1
+scale=1,1
+sprpriority=-10
+ownpal=1
+
+[state ]
+type=RemoveExplod
+trigger1=enemy,authorname="Eiton"&&enemy,Stateno != 7500&&enemy,Stateno != 7520
+id=75025
+
+[state ]
+type=RemoveExplod
+trigger1=enemy,authorname="Eiton"&&enemy,Stateno != 7500&&enemy,Stateno != 7520
+id=75026
+
+[State ]
+type=Explod
+trigger1=enemy,authorname="Eiton"&&enemy,Stateno=7510&&enemy,time=25&&enemy,facing=1&&(enemy,var(39)=[2,3])
+anim=19864
+ID=19864
+pos=0, GameHeight - (0)
+postype=right
+facing=-1
+bindtime=1
+scale=(.5) * GameWidth/320,.5
+sprpriority=50
+ownpal=1
+supermovetime=9999
+pausemovetime=9999
+
+[State ]
+type=Explod
+trigger1=enemy,authorname="Eiton"&&enemy,Stateno=7510&&enemy,time=25&&enemy,facing=-1&&(enemy,var(39)=[2,3])
+anim=19864
+ID=19864
+pos=0, GameHeight - (0)
+postype=left
+bindtime=1
+scale=(.5) * GameWidth/320,.5
+sprpriority=50
+ownpal=1
+supermovetime=9999
+pausemovetime=9999
+
+[state ]
+type=PlaySnd
+trigger1=enemy,authorname="Eiton"&&enemy,Stateno=7510&&enemy,time=25&&(enemy,var(39)=[2,3])
+value=s0,43
+volume=255
+volumescale=255
+abspan=floor(root,pos x)
+
+[State ]
+type=Explod
+trigger1=enemy,authorname="Eiton"&&enemy,Stateno=7510&&enemy,time=25&&enemy,facing=1&&enemy,var(39)>=4
+anim=19865
+ID=19865
+pos=0, GameHeight - (0)
+postype=right
+facing=-1
+bindtime=1
+scale=(.5) * GameWidth/320,.5
+sprpriority=50
+ownpal=1
+supermovetime=9999
+pausemovetime=9999
+
+[State ]
+type=Explod
+trigger1=enemy,authorname="Eiton"&&enemy,Stateno=7510&&enemy,time=25&&enemy,facing=-1&&enemy,var(39)>=4
+anim=19865
+ID=19865
+pos=0, GameHeight - (0)
+postype=left
+bindtime=1
+scale=(.5) * GameWidth/320,.5
+sprpriority=50
+ownpal=1
+supermovetime=9999
+pausemovetime=9999
+
+[state ]
+type=PlaySnd
+trigger1=enemy,authorname="Eiton"&&enemy,Stateno=7510&&enemy,time=25&&enemy,var(39)>= 4
+value=s30,18
+volume=255
+volumescale=255
+abspan=floor(root,pos x)
+
+;画面外アイコン（ヘルパー）
+[Statedef 3030]
+type=A
+movetype=I
+anim=1860
+ctrl=0
+
+[State ];アイコン～キュアブラック
+type=varset
+trigger1=time=0&&(ishelper(3030)||ishelper(1003030))
+var(1)=1
+
+[State ];アイコン～キュアホワイト
+type=varset
+trigger1=time=0&&(ishelper(13030)||ishelper(1013030))
+var(1)=2
+
+[State ];アイコン～シャイニールミナス
+type=varset
+trigger1=time=0&&(ishelper(23030)||ishelper(1023030))
+var(1)=3
+
+[State ];上下判定
+type=varset
+trigger1=time=0&&(ishelper(1003030)||ishelper(1013030)||ishelper(1023030))
+var(3)=1
+
+[State ];自分がパートナーか判定
+type=varset
+trigger1=time=0&&numpartner
+trigger1=root,ID>Partner,ID
+var(2)=1
+
+[State ]
+type=Varadd
+trigger1=var(0)<=19
+var(0)=1
+
+[State ];顔アイコン
+type=Explod
+trigger1=1
+anim=6469+var(1)
+ID=6470
+pos=ceil(backedgedist+Parentdist x)+25,ifelse(var(3)=0,20+(parent,screenpos y>0)*350,-103+(root,screenpos y<-1)*350)
+postype=back
+ontop=1
+ownpal=1
+bindtime=-1
+scale=.5,.5
+supermovetime=10
+pausemovetime=10
+
+[State ];P
+type=Explod
+trigger1=1
+anim=6473+ifelse(teamside=1,ifelse(var(2)=0,0,2),ifelse(var(2)=0,1,3))
+ID=6473
+pos=ceil(backedgedist+Parentdist x)+25,ifelse(var(3)=0,20+(parent,screenpos y>0)*350,-103+(root,screenpos y<-1)*350)
+postype=back
+ontop=1
+ownpal=1
+bindtime=-1
+scale=.5,.5
+supermovetime=10
+pausemovetime=10
+
+[State ];矢印1
+type=Explod
+trigger1=var(0)=[0,4]
+anim=6477+ifelse(var(3)=1,3,0)
+ID=6477
+pos=ceil(backedgedist+Parentdist x)+25,ifelse(var(3)=0,20+(parent,screenpos y>0)*350,-103+(root,screenpos y<-1)*350)
+postype=back
+ontop=1
+ownpal=1
+bindtime=-1
+scale=.5,.5
+supermovetime=10
+pausemovetime=10
+
+[State ];矢印2
+type=Explod
+trigger1=(var(0)=[5,9])||(var(0)=[15,19])
+anim=6478+ifelse(var(3)=1,3,0)
+ID=6478
+pos=ceil(backedgedist+Parentdist x)+25,ifelse(var(3)=0,20+(parent,screenpos y>0)*350,-103+(root,screenpos y<-1)*350)
+postype=back
+ontop=1
+ownpal=1
+bindtime=-1
+scale=.5,.5
+removetime=1
+supermovetime=10
+pausemovetime=10
+
+[State ];矢印3
+type=Explod
+trigger1=var(0)=[10,14]
+anim=6479+ifelse(var(3)=1,3,0)
+ID=6479
+pos=ceil(backedgedist+Parentdist x)+25,ifelse(var(3)=0,20+(parent,screenpos y>0)*350,-103+(root,screenpos y<-1)*350)
+postype=back
+ontop=1
+ownpal=1
+bindtime=-1
+scale=.5,.5
+supermovetime=10
+pausemovetime=10
+
+[State ]
+type=Varset
+trigger1=var(0)>=19
+var(0)=0
+
+[State ]
+type=DestroySelf
+trigger1=numhelper(1423)||root,stateno=5150||(var(3)=1&&parent,screenpos Y>=0)
+trigger2=var(3)=0&&(((parent,statetype=S||parent,statetype=A)&&parent,screenpos Y<=319)||(parent,statetype=C&&root,screenpos Y<=299)||(parent,statetype=L&&root,screenpos Y<=279))
+trigger3=(var(1)=2&&!numhelper(4000))||(var(1)=3&&!numhelper(4500))
+
+;壁バウンド用（ヘルパー)
+[Statedef 1205]
+type=A
+movetype=I
+physics=S
+anim=1860
+ctrl=0
+
+[State ]
+type=PosSet
+trigger1=ishelper(1205)||ishelper(11205)
+x=enemy,pos x
+y=enemy,pos y-60
+
+[State ]
+type=PosSet
+trigger1=(ishelper(1206)||ishelper(11206))&&numenemy>=2
+x=enemy(1),pos x
+y=enemy(1),pos y-60
+
+[State ]
+type=Explod
+trigger1=(ishelper(1205)||ishelper(11205))&&enemy,stateno=1204&&enemy,movetype=H
+trigger2=numenemy>=2
+trigger2=(ishelper(1206)||ishelper(11206))&&enemy(1),stateno=1204&&enemy(1),movetype=H
+anim=6058
+postype=p1
+pos=-15,0
+scale=.5,.5
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=(ishelper(1205)||ishelper(11205))&&enemy,stateno=1204&&enemy,movetype=H
+trigger2=numenemy>=2
+trigger2=(ishelper(1206)||ishelper(11206))&&enemy(1),stateno=1204&&enemy(1),movetype=H
+value=s100,92
+persistent=0
+
+[State ]
+type=DestroySelf
+trigger1=(ishelper(1205)||ishelper(11205))&&enemy,stateno=1204&&enemy,movetype=H
+trigger2=(ishelper(1205)&&(enemy,stateno!=[1201,1203]))||(ishelper(11205)&&enemy,stateno!=1634)
+trigger3=numenemy>=2
+trigger3=(ishelper(1206)||ishelper(11206))&&enemy(1),stateno=1204&&enemy(1),movetype=H
+trigger4=numenemy>=2
+trigger4=(ishelper(1206)&&(enemy(1),stateno!=[1201,1203]))||(ishelper(11206)&&enemy(1),stateno!=1634)
+
+;画面中央値測定（ヘルパー）
+[Statedef 3031]
+type=A
+movetype=I
+anim=1860
+ctrl=0
+
+[State ]
+type=parentVarset
+trigger1=1
+var(21)=ceil(parentdist x)
+
+;絶対に負けない！モード（ヘルパー）非表示対策
+[Statedef 7093]
+type=A
+movetype=I
+physics=S
+anim=1860
+ctrl=0
+
+[State ]
+type=ChangeState
+trigger1=root,stateno!=1010&&root,stateno!=100191&&root,stateno!=110191&&root,stateno!=1012&&root,stateno!=19601223&&root,stateno!=19680301&&root,stateno!=19940630&&root,stateno!=1004&&root,prevstateno!=1004
+trigger1=root,stateno!=19521122&&root,stateno!=19550702
+trigger2=(root,stateno=0&&root,prevstateno=1004&&root,time=610)||(root,stateno=1012&&root,time>1400)
+value=7094
+
+;絶対に負けない！モード（ヘルパー）
+[Statedef 7094]
+type=A
+movetype=I
+physics=S
+anim=1860
+ctrl=0
+
+;--------------------------
+;絶対に負けない！モード設定
+;絶対に負けない！モードを常にonにする場合、下記var(0)のtypeの"null;"を消して下さい。
+
+[State ];絶対に負けない！モード常時起動
+type=null;Varset
+trigger1=root,var(32)=0&&var(0)<60
+var(0)=60
+
+;--------------------------
+
+[State ]
+type=Varadd
+trigger1=root,var(32)=0&&root,command="holds"&&var(0)<=59&&roundstate=1
+var(0)=1
+
+[State ]
+type=PlaySnd
+trigger1=root,var(32)=0&&var(0)=60
+value=s100,97
+volume=255
+volumescale=255
+abspan=0
+persistent=0
+
+[State ]
+type=parentVarset
+trigger1=root,var(32)=0&&var(0)=60
+var(32)=1
+
+[State ]
+type=Varset
+trigger1=root,var(32)=0&&root,command!="holds"&&(var(0)=[1,59])
+var(0)=0
+
+[State ];SET UP SPECIAL MODE Push to hold s
+type=null
+trigger1=root,var(32)=0&&!numexplod(306750)&&teamside=1
+anim=306750
+ID=306750
+supermovetime=999999999
+pausemovetime=999999999
+postype=left
+pos=30,210
+ontop=1
+bindtime=-1
+scale=.5,.5
+removetime=-1
+ownpal=1
+
+[State ]
+type=null
+trigger1=root,var(32)=0&&!numexplod(306750)&&teamside=2
+anim=306750
+ID=306750
+supermovetime=999999999
+pausemovetime=999999999
+postype=right
+pos=-30,210
+ontop=1
+bindtime=-1
+scale=.5,.5
+removetime=-1
+ownpal=1
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(306750)
+ID=306750
+trans=addalpha
+alpha=256-var(1),var(1)
+
+[State ]
+type=varadd
+trigger1=1
+var(1)=ifelse(roundstate>=2||root,var(32)=1,20,ifelse(var(2)=0,5,-5))
+
+[State ]
+type=varset
+trigger1=var(1)<=0||var(1)>=256
+var(1)=ifelse(var(1)<=0,0,256)
+
+[State ]
+type=varset
+trigger1=var(1)<=0||var(1)>=256
+var(2)=ifelse(var(1)<=0,0,1)
+
+[State ]
+type=RemoveExplod
+trigger1=(roundstate>=2||root,var(32)=1)&&numexplod(306750)&&var(1)>=256
+ID=306750
+
+[State ];絶対に負けない！モード
+type=null
+trigger1=root,var(32)=1&&teamside=1
+anim=306751
+ID=306751
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=30,210
+ontop=1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+persistent=0
+
+[State ]
+type=null
+trigger1=root,var(32)=1&&teamside=2
+anim=306751
+ID=306751
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-30,210
+ontop=1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+persistent=0
+
+[State ]
+type=DestroySelf
+trigger1=roundstate>=2&&var(1)>=256
+
+;遭遇システム（ヘルパー）非表示対策
+[Statedef 7098]
+type=A
+movetype=I
+physics=S
+anim=1860
+ctrl=0
+
+[State ]
+type=ChangeState
+trigger1=root,stateno!=1010&&root,stateno!=100191&&root,stateno!=110191&&root,stateno!=1012&&root,stateno!=19601223&&root,stateno!=19680301&&root,stateno!=19940630&&root,stateno!=1004&&root,prevstateno!=1004
+trigger1=root,stateno!=19521122&&root,stateno!=19550702
+trigger2=(root,stateno=0&&root,prevstateno=1004&&root,time=610)||(root,stateno=1012&&root,time>1400)
+value=7099
+
+;遭遇システム（ヘルパー）
+[Statedef 7099]
+type=A
+movetype=I
+physics=S
+anim=1860
+ctrl=0
+sprpriority=3
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ];パートナー（遭遇システム持ち）判定
+type=Varset
+trigger1=NumPartner
+trigger1=partner,Authorname="YU-TOHARU"
+var(49)=1
+persistent=0
+
+[State ];タッグパートナー判定（自分が2番手）
+type=Varset
+trigger1=NumPartner
+trigger1=root,ID>Partner,ID
+var(50)=1
+persistent=0
+
+[State ];相手（遭遇システム持ち）1P判定
+type=Varset
+trigger1=numenemy
+trigger1=enemy,authorname="YU-TOHARU"
+var(51)=1
+persistent=0
+
+[State ];相手（遭遇システム持ち）2P判定
+type=Varset
+trigger1=numenemy>=2
+trigger1=enemy(1),authorname="YU-TOHARU"
+var(52)=1
+persistent=0
+
+[State ];相手（同キャラ）判定
+type=Varset
+trigger1=enemy,name="CURE BLACK"&&enemy,authorname="YU-TOHARU"
+trigger2=numenemy>=2
+trigger2=enemy(1),name="CURE BLACK"&&enemy(1),authorname="YU-TOHARU"
+var(53)=1
+persistent=0
+
+[State ];パートナー（同キャラ）判定
+type=Varset
+trigger1=NumPartner
+trigger1=p3name="CURE BLACK"&&partner,Authorname="YU-TOHARU"
+var(54)=1
+persistent=0
+
+[State ];遭遇システム対応表示位置
+type=parentVarset
+trigger1=time=0
+var(0)=90-ifelse(var(49)=1,ifelse(var(50)=1,0,26),0)+ifelse(teamside=2&&(var(51)=1||var(52)=1),12,0)+ifelse(var(49)=1&&var(50)=0,26,0)-ifelse(var(49)=1&&var(50)=1,26,0)
+
+[state ];遭遇システム対応判定～長老
+type=VarSet
+triggerall=fvar(17)=0&&(teamside=1||(teamside=2&&var(53)=0))&&(var(54)=0||(var(54)=1&&var(50)=0))
+trigger1=(enemy,RoundsExisted=0||(root,RoundsExisted=0&&enemy,RoundsExisted>=1))&&enemy,SelfAnimExist(198765441)&&enemy,SelfAnimExist(198765442)
+trigger2=numenemy>=2
+trigger2=(enemy(1),RoundsExisted=0||(root,RoundsExisted=0&&enemy(1),RoundsExisted>=1))&&enemy(1),SelfAnimExist(198765441)&&enemy(1),SelfAnimExist(198765442)
+fvar(17)=1
+persistent=0
+
+[State ]
+type=parentvarset
+trigger1=root,var(28)=1987651
+var(28)=0
+persistent=0
+
+[State ]
+type=parentvarset
+trigger1=fvar(17)=1
+var(28)=1987651
+persistent=0
+
+[state ];遭遇システム対応判定～ウィズダム
+type=VarSet
+triggerall=(fvar(17)=0||fvar(17)=101)&&(teamside=1||(teamside=2&&var(53)=0))&&(var(54)=0||(var(54)=1&&var(50)=0))
+trigger1=(enemy,RoundsExisted=0||(root,RoundsExisted=0&&enemy,RoundsExisted>=1))&&enemy,SelfAnimExist(198765443)&&enemy,SelfAnimExist(198765444)
+trigger2=numenemy>=2
+trigger2=(enemy(1),RoundsExisted=0||(root,RoundsExisted=0&&enemy(1),RoundsExisted>=1))&&enemy(1),SelfAnimExist(198765443)&&enemy(1),SelfAnimExist(198765444)
+fvar(17)=2
+persistent=0
+
+[State ]
+type=parentvarset
+trigger1=root,var(28)=1987652
+var(28)=0
+persistent=0
+
+[State ]
+type=parentvarset
+trigger1=fvar(17)=2
+var(28)=1987652
+persistent=0
+
+[state ];遭遇システム対応判定～メップル
+type=VarSet
+triggerall=(fvar(17)=0||(fvar(17)=[101,102]))&&(teamside=1||(teamside=2&&var(53)=0))&&(var(54)=0||(var(54)=1&&var(50)=0))
+trigger1=(enemy,RoundsExisted=0||(root,RoundsExisted=0&&enemy,RoundsExisted>=1))&&enemy,SelfAnimExist(198765445)&&enemy,SelfAnimExist(198765446)
+trigger2=numenemy>=2
+trigger2=(enemy(1),RoundsExisted=0||(root,RoundsExisted=0&&enemy(1),RoundsExisted>=1))&&enemy(1),SelfAnimExist(198765445)&&enemy(1),SelfAnimExist(198765446)
+fvar(17)=3
+persistent=0
+
+[State ]
+type=parentvarset
+trigger1=root,var(28)=1987653
+var(28)=0
+persistent=0
+
+[State ]
+type=parentvarset
+trigger1=fvar(17)=3
+var(28)=1987653
+persistent=0
+
+[State ]
+type=parentVarset
+trigger1=fvar(17)=[1,3]
+var(13)=85
+persistent=0
+
+[state ]
+type=Varadd
+trigger1=fvar(17)=1
+var(0)=1
+persistent=0
+
+[state ]
+type=Varadd
+trigger1=fvar(17)=2
+var(0)=1
+persistent=0
+
+[state ]
+type=Varset
+trigger1=fvar(17)=1
+var(1)=132
+persistent=0
+
+[state ]
+type=Varset
+trigger1=fvar(17)=2
+var(1)=132
+persistent=0
+
+[state ]
+type=Varset
+trigger1=fvar(17)=3
+var(1)=ifelse(var(0)=2,60,130)
+persistent=0
+
+[State ];セリフ演出～背景（遭遇システム対応専用～長老）
+type=Explod
+trigger1=teamside=1&&fvar(17)=1&&!numexplod(84001)
+anim=84001
+ID=84001
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,root,var(0)
+sprpriority=9999995-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=teamside=2&&fvar(17)=1&&!numexplod(84001)
+anim=84501
+ID=84001
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,root,var(0)
+sprpriority=9999995-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ];セリフ演出～キャラ（遭遇システム対応専用～長老）
+type=Explod
+trigger1=teamside=1&&fvar(17)=1&&!numexplod(84101)
+anim=84101
+ID=84101
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,root,var(0)
+sprpriority=9999996-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=teamside=2&&fvar(17)=1&&!numexplod(84101)
+anim=84601
+ID=84101
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,root,var(0)
+sprpriority=9999996-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ];セリフ演出～名前（遭遇システム対応専用～長老）
+type=Explod
+trigger1=teamside=1&&fvar(17)=1&&!numexplod(84201)
+anim=84201
+ID=84201
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,root,var(0)
+sprpriority=9999997-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=teamside=2&&fvar(17)=1&&!numexplod(84201)
+anim=84701
+ID=84201
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,root,var(0)
+sprpriority=9999997-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[state ];遭遇システム対応判定解除～長老
+type=VarSet
+trigger1=fvar(17)=1&&!numexplod(84001)
+fvar(17)=101
+persistent=0
+
+[State ];セリフ演出～背景（遭遇システム対応専用～ウィズダム）
+type=Explod
+trigger1=teamside=1&&fvar(17)=2&&!numexplod(84002)
+anim=84002
+ID=84002
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,root,var(0)
+sprpriority=9999995-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=teamside=2&&fvar(17)=2&&!numexplod(84002)
+anim=84502
+ID=84002
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,root,var(0)
+sprpriority=9999995-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ];セリフ演出～キャラ（遭遇システム対応専用～ウィズダム）
+type=Explod
+trigger1=teamside=1&&fvar(17)=2&&!numexplod(84102)
+anim=84102
+ID=84102
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,root,var(0)
+sprpriority=9999996-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=teamside=2&&fvar(17)=2&&!numexplod(84102)
+anim=84602
+ID=84102
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,root,var(0)
+sprpriority=9999996-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ];セリフ演出～名前（遭遇システム対応専用～ウィズダム）
+type=Explod
+trigger1=teamside=1&&fvar(17)=2&&!numexplod(84202)
+anim=84202
+ID=84202
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,root,var(0)
+sprpriority=9999997-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=teamside=2&&fvar(17)=2&&!numexplod(84202)
+anim=84702
+ID=84202
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,root,var(0)
+sprpriority=9999997-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[state ];遭遇システム対応判定解除～ウィズダム
+type=VarSet
+trigger1=fvar(17)=2&&!numexplod(84002)
+fvar(17)=102
+persistent=0
+
+[State ];セリフ演出～背景（遭遇システム対応専用～メップル）
+type=Explod
+trigger1=teamside=1&&fvar(17)=3&&!numexplod(84003)
+anim=84003
+ID=84003
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,root,var(0)
+sprpriority=9999995-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=teamside=2&&fvar(17)=3&&!numexplod(84003)
+anim=84503
+ID=84003
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,root,var(0)
+sprpriority=9999995-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ];セリフ演出～キャラ（遭遇システム対応専用～メップル）
+type=Explod
+trigger1=teamside=1&&fvar(17)=3&&!numexplod(84103)
+anim=84103
+ID=84103
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,root,var(0)
+sprpriority=9999996-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=teamside=2&&fvar(17)=3&&!numexplod(84103)
+anim=84603
+ID=84103
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,root,var(0)
+sprpriority=9999996-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ];セリフ演出～名前（遭遇システム対応専用～メップル）
+type=Explod
+trigger1=teamside=1&&fvar(17)=3&&!numexplod(84203)
+anim=84203
+ID=84203
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,root,var(0)
+sprpriority=9999997-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=teamside=2&&fvar(17)=3&&!numexplod(84203)
+anim=84703
+ID=84203
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,root,var(0)
+sprpriority=9999997-ifelse(var(49)=1&&var(50)=1,10,0)
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[state ];遭遇システム対応判定解除～メップル
+type=VarSet
+trigger1=fvar(17)=3&&!numexplod(84003)
+fvar(17)=103
+persistent=0
+
+[State ]
+type=AssertSpecial
+trigger1=var(1)>0
+flag=Intro
+
+[state ]
+type=Varadd
+trigger1=var(1)>0
+var(1)=-1
+
+[State ]
+type=DestroySelf
+trigger1=time>=10&&var(1)=0&&roundstate>1

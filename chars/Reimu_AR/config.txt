@@ -1,0 +1,250 @@
+; _________________________________
+;| Reimu Hakurei by CrystalizedSun |
+; '''''''''''''''''''''''''''''''''
+
+;===============< INITIALIZE >===================
+;Initialize Start Round
+[Statedef 5900]
+type = S
+
+;__________________________________________________________________________
+;==========================================================================
+;__________________________________________________________________________
+[state 5900, Reset Variables]
+type = varrangeset
+trigger1 = !roundsexisted && matchno = 1
+value = 0
+[state 5900, Reset Variables]
+type = varrangeset
+trigger1 = !roundsexisted && matchno = 1
+fvalue = 0
+;__________________________________________________________________________
+;==========================================================================
+;__________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+;==========================================================================
+;Customizable Configuartion 
+;==========================================================================
+; Palette Selector
+[State 5900, Palette Selector]
+type = VarSet
+trigger1 = 1
+v = 27
+value = 0   ;Abstract Reordered: no palette select at round start
+;___________________________________________________________________________
+;Change the value number to 0 if you do not want Palette Selector on Intro
+;Change the value number to 1 if you do want Palette Selector on Intro
+;Default value is 1.
+;===========================================================================
+; CUSTOM COMBO / MAX MODE SELECT
+[State 5900, Custom Combo / Max Mode Select]
+type = VarSet
+trigger1 = 1
+var(54) = 0
+ignoreHitPause = 1
+;0 = custom combo
+;1 = max mode
+;___________________________________________________________________________
+;Change the value number to 0 if you do want Custom Combo (By PoTS)
+;Change the value number to 1 if you do want MAX Mode (By DivineWolf)
+;Default value is 1.
+;===========================================================================
+; POT's Style Hitsparks
+[State 5900, POTS Style Hitsparks]
+type = VarSet
+trigger1 = 1
+v = 45
+value = 4
+;___________________________________________________________________________
+;Change the value number to 0 if you do not want POTS style hitsparks
+;Change the value number to 1 if you want the POTS style hitsparks
+;Change the value number to 2 if you want multi-colored POTS style hitsparks with blue impact
+;Change the value number to 3 if you want multi-colored POTS style hitsparks
+;Change the value number to 4 if you want a 2022 POTS style hitsparks
+;Default value is 4.
+;===========================================================================
+; POT's Style Hit Sounds
+[State 5900, POT's Style Hit Sounds]
+type = VarSet
+trigger1 = 1
+v = 44
+value = 1
+;___________________________________________________________________________
+;Change the value number to 0 if you do not want any style hitsounds
+;Change the value number to 1 if you want the POT's style hitsounds
+;Change the value number to 2 if you want the Infinite's SvK style hitsounds
+;Change the value number to 3 if you want SFxTK style hitsounds
+;Default value is 1.
+;===========================================================================
+; Chain Combos/Air Combos
+[State 5900, Chain Combos/Air Combos]
+type = VarSet
+trigger1 = 1
+v = 55
+value = 2   ;Abstract Reordered: chains + air combos (2C launcher, hold up on hit)
+;___________________________________________________________________________
+;Change the value number to 0 if you do not want chain comboing
+;Change the value number to 1 if you want chain comboing
+;Change the value number to 2 if you want chain comboing and Air Comboing
+;Default value is 0.
+;===========================================================================
+; Special Finish
+[State 5900, Special Finish]
+type = VarSet
+trigger1 = 1
+v = 56
+value = 0
+;___________________________________________________________________________
+;Change the value number to 0 if you do not want Special Finish
+;Change the value number to 1 if you do want Special Finish
+;Change the value number to 2 if you do want Special Finish (NoMusic)
+;Change the value number to 3 if you do want Special Finish (NoMusic + NoBarDisplay)
+;Change the value number to 4 if you do want Special Finish (NoMusic + NoBarDisplay + NoFG)
+;Default value is 1.
+;===========================================================================
+; Super Finish
+[State 5900, Super Finish]
+type = VarSet
+trigger1 = 1
+v = 57
+value = 3
+;___________________________________________________________________________
+;Change the value number to 0 if you do not want Super Finish
+;Change the value number to 1 if you do want Super Finish
+;Change the value number to 2 if you do want Super Finish (NoMusic)
+;Change the value number to 3 if you do want Super Finish PoTS 2022 style
+;Change the value number to 4 if you do want Super Finish PoTS 2022 style (NoMusic)
+;Default value is 1.
+;===========================================================================
+; Movement Style
+[State 5900, Movement Style]
+type = VarSet
+trigger1 = 1
+fv = 15
+value = 0
+;___________________________________________________________________________
+;Change the value number to 0 if you liked CvS-style movement
+;Change the value number to 1 if you liked Soku-style movement
+;Default value is 1.
+;===========================================================================
+; Auto Config Change for Add004
+[State 5900, Auto Config Change for Add004]
+type = VarSet
+trigger1 = 1
+v = 58
+value = 0
+;___________________________________________________________________________
+;Change the value number to 0 if you do not want Auto Config Change for Add004
+;Change the value number to 1 if you do want Auto Config Change for Add004
+;Default value is 0.
+;===========================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;=============================================================================
+;Do Not Edit Below This Line
+;=============================================================================
+
+;-----------------------------------------------------------------------------
+;Auto Config Change for Add004
+[State 5900, Palette Selector]
+type = VarSet
+triggerall = var(58)
+trigger1 = 1
+v = 27
+value = 0
+
+[State 5900, EX Mode Selector]
+type = VarSet
+triggerall = var(58)
+trigger1 = 1
+v = 54
+value = 0
+
+[State 5900, Tag Assist StateNo]
+type = VarSet
+triggerall = var(58)
+trigger1 = 1
+sysvar(0) = 1000
+
+;-----------------------------------------------------------------------------
+
+[State 5900, Pal Selector on]
+type=helper
+triggerall=var(27)&&!numhelper(256)&&!AILevel&&numenemy 
+trigger1= roundno = 1 && matchno=1 && !(teammode = simul) && !(enemy, teammode = simul)
+trigger2= !var(28) 
+trigger3=(teammode = turns)
+trigger3=!roundsexisted && (enemy,roundsexisted)
+id=256
+stateno=256
+facing=facing
+ownpal=1
+size.xScale=0.5
+size.yScale=0.5
+[state 5900, No Palette selector]
+type = remappal
+trigger1 = !var(27)
+trigger2 = AILevel && !var(28)
+source = 1, 1
+dest = 1, palno
+ignorehitpause = 1
+
+[State 5900, Intro vs Marisa Kirisame]
+type = null;ChangeState
+triggerAll = NumEnemy
+triggerAll = RoundNo = 1 || (!(Enemy, RoundsExisted) && !(TeamMode = Simul) && !(Enemy, TeamMode = Simul))
+trigger1 = Enemy, Name = "Marisa Kirisame" && enemy,authorname = "Cylia Margatroid"
+value = 193
+
+[State 5900, Intro vs Yuugi]
+type = null;ChangeState
+triggerAll = NumEnemy
+triggerAll = RoundNo = 1 || (!(Enemy, RoundsExisted) && !(TeamMode = Simul) && !(Enemy, TeamMode = Simul))
+trigger1 = Enemy, Name = "Alice Margatroid" && enemy,authorname = "Cylia Margatroid"
+value = 193
+
+[State 5900, Intro vs Yukari]
+type = null;ChangeState
+triggerAll = NumEnemy
+triggerAll = RoundNo = 1 || (!(Enemy, RoundsExisted) && !(TeamMode = Simul) && !(Enemy, TeamMode = Simul))
+trigger1 = Enemy, Name = "Yukari Yakumo" && enemy,authorname = "Cylia Margatroid"
+value = 193
+
+[State 5900, Turns Intro]
+type = ChangeState
+trigger1 = TeamMode = Turns
+trigger1 = !RoundsExisted && RoundNo >= 2
+value = 6900
+
+[State 5900, Intro Decider]
+type = ChangeState
+trigger1 = RoundNo = 1
+value = 190+random%3
+
+[State 5900, End]
+type = ChangeState
+trigger1 = 1
+value = 0

@@ -1,0 +1,255 @@
+キュアブラック　「遭遇システム」（長老、ウィズダム、メップル）の専用セリフ演出の対応方法
+
+
+このキュアブラックにはイントロ開始時に対応画像及び対応ステートを登録する事によって、長老、ウィズダム、メップルのいずれかまたは複数名が「あの子可愛いわね！」的なセリフが表示される演出が発生します。
+
+この演出時のセリフを相手側で自由に専用セリフを表示できます。
+
+相手側のairファイルに198765441～198765446番のアニメを登録して-2に対応ステートを追記すると専用セリフを対応させることができます。
+
+対応の仕方が少し特殊でして、登録したanim番号によってセリフを出すキャラ（喋らせるキャラ）と喋る人数を決めることができます。
+
+　・長老
+　　anim198765441（遭遇システム～長老 1P側）
+　　anim198765442（遭遇システム～長老 2P側）
+
+　・ウィズダム
+　　anim198765443（遭遇システム～ウィズダム 1P側）
+　　anim198765444（遭遇システム～ウィズダム 2P側）
+
+　・メップル
+　　anim198765445（遭遇システム～メップル 1P側）
+　　anim198765446（遭遇システム～メップル 2P側）
+
+　※　上記対応animは1P、2P側で座標が違うので必ず2組1セットで登録します。
+
+上記のように登録したanim番号によってセリフを表示させるキャラと数が変更します。
+
+　　例　長老のみ表示させる場合、anim198765441＆198765442の２つだけ登録する
+　　　　ウィズダムとメップルの２人を表示させる場合、anim198765443＆198765444とanim198765445＆198765446の４つを登録する
+　　　　３人とも表示させる場合はanim198765441～198765446の６つ全て登録する
+
+　複数人分セリフ登録した場合、必ず 1.長老 ＞ 2.ウィズダム ＞ 3.メップル という順番で表示されます。　
+
+
+まず、相手側のSFFファイルの19876,19041～19043に作成したセリフ文字画像を座標を-74,-177にして登録してください。
+
+　※　19876,19041が長老、19876,19042がウィズダム、19876,19043がメップル用です。セリフを表示させたいキャラの分だけの登録で大丈夫です。
+　　　文字の組み合わせによってy座標を-178にした方が良い場合があります。わかりづらければキュアブラックやIV号戦車のSFFを参照してください。
+
+　※　セリフ用の文字画像は"遭遇システム"対応素材に同梱されているものをご使用ください。
+
+次に、相手側のairファイルに下記のアニメ番号を表示させたいキャラ分だけコピペしてください。
+
+
+;遭遇システム～長老 1P側
+[Begin Action 198765441]
+9999,9999,0,0,10,,0
+19876,19041,0,0,1,,AS50D250
+19876,19041,0,0,1,,AS100D200
+19876,19041,0,0,1,,AS150D150
+19876,19041,0,0,1,,AS200D100
+19876,19041,0,0,1,,AS250D50
+19876,19041,0,0,100
+19876,19041,0,0,1,,AS250D50
+19876,19041,0,0,1,,AS200D100
+19876,19041,0,0,1,,AS150D150
+19876,19041,0,0,1,,AS100D200
+19876,19041,0,0,1,,AS50D250
+
+;遭遇システム～長老 2P側
+[Begin Action 198765442]
+9999,9999,0,0,10,,0
+19876,19041,-389,0,1,,AS50D250
+19876,19041,-389,0,1,,AS100D200
+19876,19041,-389,0,1,,AS150D150
+19876,19041,-389,0,1,,AS200D100
+19876,19041,-389,0,1,,AS250D50
+19876,19041,-389,0,100
+19876,19041,-389,0,1,,AS250D50
+19876,19041,-389,0,1,,AS200D100
+19876,19041,-389,0,1,,AS150D150
+19876,19041,-389,0,1,,AS100D200
+19876,19041,-389,0,1,,AS50D250
+
+;遭遇システム～ウィズダム 1P側
+[Begin Action 198765443]
+9999,9999,0,0,10,,0
+19876,19042,0,0,1,,AS50D250
+19876,19042,0,0,1,,AS100D200
+19876,19042,0,0,1,,AS150D150
+19876,19042,0,0,1,,AS200D100
+19876,19042,0,0,1,,AS250D50
+19876,19042,0,0,100
+19876,19042,0,0,1,,AS250D50
+19876,19042,0,0,1,,AS200D100
+19876,19042,0,0,1,,AS150D150
+19876,19042,0,0,1,,AS100D200
+19876,19042,0,0,1,,AS50D250
+
+;遭遇システム～ウィズダム 2P側
+[Begin Action 198765444]
+9999,9999,0,0,10,,0
+19876,19042,-333,0,1,,AS50D250
+19876,19042,-333,0,1,,AS100D200
+19876,19042,-333,0,1,,AS150D150
+19876,19042,-333,0,1,,AS200D100
+19876,19042,-333,0,1,,AS250D50
+19876,19042,-333,0,100
+19876,19042,-333,0,1,,AS250D50
+19876,19042,-333,0,1,,AS200D100
+19876,19042,-333,0,1,,AS150D150
+19876,19042,-333,0,1,,AS100D200
+19876,19042,-333,0,1,,AS50D250
+
+;遭遇システム～メップル 1P側
+[Begin Action 198765445]
+9999,9999,0,0,10,,0
+19876,19043,0,0,1,,AS50D250
+19876,19043,0,0,1,,AS100D200
+19876,19043,0,0,1,,AS150D150
+19876,19043,0,0,1,,AS200D100
+19876,19043,0,0,1,,AS250D50
+19876,19043,0,0,100
+19876,19043,0,0,1,,AS250D50
+19876,19043,0,0,1,,AS200D100
+19876,19043,0,0,1,,AS150D150
+19876,19043,0,0,1,,AS100D200
+19876,19043,0,0,1,,AS50D250
+
+;遭遇システム～メップル 2P側
+[Begin Action 198765446]
+9999,9999,0,0,10,,0
+19876,19043,-287,0,1,,AS50D250
+19876,19043,-287,0,1,,AS100D200
+19876,19043,-287,0,1,,AS150D150
+19876,19043,-287,0,1,,AS200D100
+19876,19043,-287,0,1,,AS250D50
+19876,19043,-287,0,100
+19876,19043,-287,0,1,,AS250D50
+19876,19043,-287,0,1,,AS200D100
+19876,19043,-287,0,1,,AS150D150
+19876,19043,-287,0,1,,AS100D200
+19876,19043,-287,0,1,,AS50D250
+
+
+airファイルでの座標設定ですが、1P側は0,0で問題ありませんが2P側の分は横にずらす必要があります。
+数値は簡単に割り出すことができます。
+
+対応画像の横幅サイズ+150分に-を付ければ良いだけです。
+
+　例　対応セリフ画像が横幅239ドットの場合　239+150＝389　なので、それに"-"をつけて『 -389 』となります。（上記長老2P側はIV号戦車と同等の数値になっているのでSAE等でIV号戦車のairを見ればわかりやすいと思います。※同梱しているサンプル画像と同じものを登録しています。）
+
+　　　※　セリフの最後に　"！"　が付く場合は更に-5した方がいいかもです。この例の場合は　-394　です。
+
+
+最後にこちらの記述を相手側のCNSの[Statedef -2]内に
+
+
+;キュアブラック「遭遇システム（長老、ウィズダム、メップル）」対応ステート
+[State ];セリフ画像～1P側に表示
+type=Explod
+triggerall=teamside=2&&roundstate=1&&numenemy
+triggerall=enemy,name="CURE BLACK"&&enemy,Authorname="YU-TOHARU"&&enemy,numhelper(7099)&&(RoundsExisted=0||(enemy,RoundsExisted=0&&RoundsExisted>=1))
+trigger1=((enemy,var(28)=1987651&&!numexplod(198765441)&&SelfAnimExist(198765441))||(enemy,var(28)=1987652&&!numexplod(198765443)&&SelfAnimExist(198765443))||(enemy,var(28)=1987653&&!numexplod(198765445)&&SelfAnimExist(198765445)))&&!numpartner
+trigger2=enemy,var(28)=1987651&&!numexplod(198765441)&&SelfAnimExist(198765441)&&numpartner
+trigger2=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765441)=0))
+trigger3=enemy,var(28)=1987652&&!numexplod(198765443)&&SelfAnimExist(198765443)&&numpartner
+trigger3=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765443)=0))
+trigger4=enemy,var(28)=1987653&&!numexplod(198765445)&&SelfAnimExist(198765445)&&numpartner
+trigger4=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765445)=0))
+anim=198765440+ifelse(enemy,var(28)=1987651,1,ifelse(enemy,var(28)=1987652,3,5))
+ID=198765440+ifelse(enemy,var(28)=1987651,1,ifelse(enemy,var(28)=1987652,3,5))
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,enemy,var(0)
+sprpriority=9999998
+ontop=1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ];セリフ画像～2P側に表示
+type=Explod
+triggerall=teamside=1&&roundstate=1&&numenemy
+triggerall=enemy,name="CURE BLACK"&&enemy,Authorname="YU-TOHARU"&&enemy,numhelper(7099)&&(RoundsExisted=0||(enemy,RoundsExisted=0&&RoundsExisted>=1))
+trigger1=((enemy,var(28)=1987651&&!numexplod(198765441)&&SelfAnimExist(198765442))||(enemy,var(28)=1987652&&!numexplod(198765443)&&SelfAnimExist(198765444))||(enemy,var(28)=1987653&&!numexplod(198765445)&&SelfAnimExist(198765446)))&&!numpartner
+trigger2=enemy,var(28)=1987651&&!numexplod(198765441)&&SelfAnimExist(198765442)&&numpartner
+trigger2=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765442)=0))
+trigger3=enemy,var(28)=1987652&&!numexplod(198765443)&&SelfAnimExist(198765444)&&numpartner
+trigger3=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765444)=0))
+trigger4=enemy,var(28)=1987653&&!numexplod(198765445)&&SelfAnimExist(198765446)&&numpartner
+trigger4=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765446)=0))
+anim=198765440+ifelse(enemy,var(28)=1987651,2,ifelse(enemy,var(28)=1987652,4,6))
+ID=198765440+ifelse(enemy,var(28)=1987651,1,ifelse(enemy,var(28)=1987652,3,5))
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,enemy,var(0)
+sprpriority=9999998
+ontop=1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ];セリフ画像～1P側に表示（相手キュアブラックがタッグパートナー）
+type=Explod
+triggerall=teamside=2&&roundstate=1&&numenemy>=2
+triggerall=enemy(1),name="CURE BLACK"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),numhelper(7099)&&(RoundsExisted=0||(enemy(1),RoundsExisted=0&&RoundsExisted>=1))
+trigger1=((enemy(1),var(28)=1987651&&!numexplod(198765441)&&SelfAnimExist(198765441))||(enemy(1),var(28)=1987652&&!numexplod(198765443)&&SelfAnimExist(198765443))||(enemy(1),var(28)=1987653&&!numexplod(198765445)&&SelfAnimExist(198765445)))&&!numpartner
+trigger2=enemy(1),var(28)=1987651&&!numexplod(198765441)&&SelfAnimExist(198765441)&&numpartner
+trigger2=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765441)=0))
+trigger3=enemy(1),var(28)=1987652&&!numexplod(198765443)&&SelfAnimExist(198765443)&&numpartner
+trigger3=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765443)=0))
+trigger4=enemy(1),var(28)=1987653&&!numexplod(198765445)&&SelfAnimExist(198765445)&&numpartner
+trigger4=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765445)=0))
+anim=198765440+ifelse(enemy(1),var(28)=1987651,1,ifelse(enemy(1),var(28)=1987652,3,5))
+ID=198765440+ifelse(enemy(1),var(28)=1987651,1,ifelse(enemy(1),var(28)=1987652,3,5))
+supermovetime=1000
+pausemovetime=1000
+postype=left
+pos=0,enemy(1),var(0)
+sprpriority=9999998
+ontop=1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ];セリフ画像～2P側に表示（相手キュアブラックがタッグパートナー）
+type=Explod
+triggerall=teamside=1&&roundstate=1&&numenemy>=2
+triggerall=enemy(1),name="CURE BLACK"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),numhelper(7099)&&(RoundsExisted=0||(enemy(1),RoundsExisted=0&&RoundsExisted>=1))
+trigger1=((enemy(1),var(28)=1987651&&!numexplod(198765441)&&SelfAnimExist(198765442))||(enemy(1),var(28)=1987652&&!numexplod(198765443)&&SelfAnimExist(198765444))||(enemy(1),var(28)=1987653&&!numexplod(198765445)&&SelfAnimExist(198765446)))&&!numpartner
+trigger2=enemy(1),var(28)=1987651&&!numexplod(198765441)&&SelfAnimExist(198765442)&&numpartner
+trigger2=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765442)=0))
+trigger3=enemy(1),var(28)=1987652&&!numexplod(198765443)&&SelfAnimExist(198765444)&&numpartner
+trigger3=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765444)=0))
+trigger4=enemy(1),var(28)=1987653&&!numexplod(198765445)&&SelfAnimExist(198765446)&&numpartner
+trigger4=(ID<Partner,ID||(ID>Partner,ID&&partner,SelfAnimExist(198765446)=0))
+anim=198765440+ifelse(enemy(1),var(28)=1987651,2,ifelse(enemy(1),var(28)=1987652,4,6))
+ID=198765440+ifelse(enemy(1),var(28)=1987651,1,ifelse(enemy(1),var(28)=1987652,3,5))
+supermovetime=1000
+pausemovetime=1000
+postype=right
+pos=0,enemy(1),var(0)
+sprpriority=9999998
+ontop=1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+
+↑ここまで
+
+上記４種のステコンを登録して終了です。
+
+※　自分がタッグ（simul）かつパートナー（P3）の場合、メイン側（P1）もこの「遭遇システム」に対応している（anim198765441～198765446登録＆-2追記されている）とP1だけ表示されてP3側は同時に表示されないようになっています。（重複表示をしない）
+
+
+すべての登録が完了したら、キュアブラックとのイントロ時に登録した分だけ対応キャラの専用セリフが表示されます。
+
+※　セリフは長老、ウィズダム、メップルがそれぞれ喋っているという体で作成なさってください。
+　　上の方でも書きましたが、複数人分セリフ登録した場合、必ず 1.長老 ＞ 2.ウィズダム ＞ 3.メップル の順番で表示されます。　
+
+　　また、この遭遇システムに対応するとキュアブラック側に"ENCOUNTER SYSTEM"というインフォメーションが表示されます。

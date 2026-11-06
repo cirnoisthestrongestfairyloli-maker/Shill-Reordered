@@ -1,0 +1,905 @@
+;-----------------------------------------------------------------------------
+[Statedef -2]
+
+[state -2]
+type = varset
+trigger1 = 1
+var(57) = 1
+
+[State -2, 巨乳に勝利]
+type = VictoryQuote
+Trigger1 = Enemy,Name = "Maori"||enemy,name="beatrice"||enemy,name="baiken"
+Trigger2 = Enemy,Name = "Clarice_Di_Lanza"||enemy,name="cvsmai"||enemy,name="I-NO"
+Trigger3 = Enemy,Name = "IROHA"||enemy,name="Mai Shiranui"||enemy,name="Marilyn Sue"
+Trigger4 = Enemy,Name = "Meifang"||enemy,name="Morrigan Aensland"||enemy,name="Psylocke"
+Trigger5 = Enemy,Name = "Luna Himeki"||enemy,name="Yuka Takeuchi"||enemy,name="Shiranui Mai"
+Value = 96
+
+[State -2, 宇宙人や超能力者などに勝利]
+type = VictoryQuote
+Trigger1 = Enemy,Name = "Blanka"||enemy,name="AKATSUKI"||enemy,name="CaptainAmerica"
+Trigger2 = Enemy,Name = "Android 18"||enemy,name="Arcueid_Brunestud"||enemy,name="Asamiya Athena"
+Trigger3 = Enemy,Name = "Athena"||enemy,name="clara"||enemy,name="Date Masamune"
+Trigger4 = Enemy,Name = "Dhalsim with clones"||enemy,name="goenitz"||enemy,name="Heart_Aino"
+Trigger5 = Enemy,Name = "Momoko"||enemy,name="Jotaro Kujo"||enemy,name="KENSHIRO"
+Trigger6 = Enemy,Name = "Kensou"||enemy,name="kira"||enemy,name="Kohaku"
+Trigger7 = Enemy,Name = "Mudman"||enemy,name="Rasputin"||enemy,name="Reimu_Hakurei"
+Trigger8 = Enemy,Name = "Sakuya Izayoi"||enemy,name="Gill"||enemy,name="Tamara"
+Trigger9 = Enemy,Name = "tesse"||enemy,name="Yoriko_Yasuzumi"||enemy,name="Mycale"
+Trigger10 = Enemy,Name = "MURAKUMO"||enemy,name="Gambit"||enemy,name="Scharlachrot"
+Trigger11 = Enemy,Name = "Weiss"||enemy,name="Saber"||enemy,name="Wolverine"
+Trigger12 = Enemy,Name = "vanillaice"||enemy,name="TOKI-(NERICYA)"||enemy,name="Cyclops"
+Value = 97
+
+[State -2, みくるちゃんに勝利]
+type = VictoryQuote
+Trigger1 = Enemy,Name = "asahina mikuru"||enemy,name="Mikuru Asahina"
+Value = 98
+
+[State -2, キョンに勝利]
+type = VictoryQuote
+Trigger1 = Enemy,Name = "kyon"||enemy,name="ragnamau"||enemy,name="Ragna"
+Value = 99
+
+[State -2]
+Type = LifeAdd
+TriggerAll = Enemy,AuthorName = "⑨" && Enemy,Name = "Akiha_Vermilion"
+Trigger1 = Enemy,Var(47) = 1
+Value = -5
+Kill = 0
+
+[State -2]
+Type = PowerAdd
+TriggerAll = Enemy,AuthorName = "⑨" && Enemy,Name = "Akiha_Vermilion"
+Trigger1 = Enemy,Var(47) = 1
+Value = -26
+
+[State -2]
+Type = LifeAdd
+TriggerAll = Enemy,AuthorName = "tukemon&HAL" && Enemy,Name = "Akiha"
+Trigger1 = Enemy,Var(56) = 1
+Value = -8
+Kill = 0
+
+[State -2]
+Type = PowerAdd
+TriggerAll = Enemy,AuthorName = "tukemon&HAL" && Enemy,Name = "Akiha"
+Trigger1 = Enemy,Var(56) = 1
+Value = -33
+
+;パウダースノウ　相手用
+[State -2]
+Type = LifeAdd
+TriggerAll = Enemy,AuthorName = "⑨" && Enemy,Name = "Len"
+Trigger1 = Enemy,Var(47) = 1 || Enemy,Var(48) = 1
+Value = -Enemy,Var(47)*4-Enemy,Var(48)*4
+Kill = 0
+
+;じょうろ　相手用
+[State -2]
+Type = LifeAdd
+TriggerAll = Enemy,AuthorName = "⑨" && Enemy,Name = "Hisui"
+Trigger1 = Enemy,Var(47) = 1
+Value = -10
+Kill = 0
+
+[State -2]
+Type = PowerAdd
+TriggerAll = Enemy,AuthorName = "⑨" && Enemy,Name = "Hisui"
+Trigger1 = Enemy,Var(47) = 1
+Value = -150
+
+[state ];メタ返し＆メタ再反論～パワーゲージ消費×2
+type=Poweradd
+triggerall=alive&&!numexplod(19864)&&!numexplod(19865)
+trigger1=numenemy&&!numpartner
+trigger1=enemy,name="USHIROMIYA ANGE"&&enemy,Authorname="YU-TOHARU"&&(enemy,stateno=2910||enemy,stateno=2930)&&enemy,time=2
+trigger2=numenemy&&numpartner
+trigger2=enemy,name="USHIROMIYA ANGE"&&enemy,Authorname="YU-TOHARU"&&(enemy,stateno=2910||enemy,stateno=2930)&&enemy,time=2&&(ID<Partner,ID||(ID>Partner,ID&&partner,numexplod(19864)=0&&partner,numexplod(19865)=0))
+trigger3=numenemy>=2&&!numpartner
+trigger3=enemy(1),name="USHIROMIYA ANGE"&&enemy(1),Authorname="YU-TOHARU"&&(enemy(1),stateno=2910||enemy(1),stateno=2930)&&enemy(1),time=2
+trigger4=numenemy>=2&&numpartner
+trigger4=enemy(1),name="USHIROMIYA ANGE"&&enemy(1),Authorname="YU-TOHARU"&&(enemy(1),stateno=2910||enemy(1),stateno=2930)&&enemy(1),time=2&&(ID<Partner,ID||(ID>Partner,ID&&partner,numexplod(19864)=0&&partner,numexplod(19865)=0))
+value=-1000
+ignorehitpause=1
+
+[state ];メタ返し～ボイス
+type=PlaySnd
+triggerall=alive&&!numexplod(19864)
+trigger1=numenemy
+trigger1=enemy,name="USHIROMIYA ANGE"&&enemy,Authorname="YU-TOHARU"&&enemy,stateno=2910&&enemy,time=2
+trigger2=numenemy>=2
+trigger2=enemy(1),name="USHIROMIYA ANGE"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),stateno=2910&&enemy(1),time=2
+value=s701,0
+ignorehitpause=1
+
+[state ];メタ返し～カットイン（右向き）
+type=Explod
+triggerall=alive&&!numexplod(19864)
+trigger1=numenemy
+trigger1=enemy,name="USHIROMIYA ANGE"&&enemy,Authorname="YU-TOHARU"&&enemy,stateno=2910&&enemy,time=2&&enemy,facing=-1
+trigger2=numenemy>=2
+trigger2=enemy(1),name="USHIROMIYA ANGE"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),stateno=2910&&enemy(1),time=2&&enemy(1),facing=-1
+anim=19864
+ID=19864
+postype=left
+pos=0, GameHeight - (0)
+scale=0.5,0.5
+ownpal=1
+bindtime=-1
+sprpriority=50
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+
+[state ];メタ返し～カットイン（左向き）
+type=Explod
+triggerall=alive&&!numexplod(19864)
+trigger1=numenemy
+trigger1=enemy,name="USHIROMIYA ANGE"&&enemy,Authorname="YU-TOHARU"&&enemy,stateno=2910&&enemy,time=2&&enemy,facing=1
+trigger2=numenemy>=2
+trigger2=enemy(1),name="USHIROMIYA ANGE"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),stateno=2910&&enemy(1),time=2&&enemy(1),facing=1
+anim=19864
+ID=19864
+postype=right
+pos=0, GameHeight - (0)
+facing=-1
+scale=0.5,0.5
+ownpal=1
+bindtime=-1
+sprpriority=50
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+
+[state ];メタ再反論～ボイス
+type=PlaySnd
+triggerall=alive&&!numexplod(19865)
+trigger1=numenemy
+trigger1=enemy,name="USHIROMIYA ANGE"&&enemy,Authorname="YU-TOHARU"&&enemy,stateno=2930&&enemy,time=2
+trigger2=numenemy>=2
+trigger2=enemy(1),name="USHIROMIYA ANGE"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),stateno=2930&&enemy(1),time=2
+value=s190,3
+ignorehitpause=1
+
+[state ];メタ再反論～カットイン（右向き）
+type=Explod
+triggerall=alive&&!numexplod(19865)
+trigger1=numenemy
+trigger1=enemy,name="USHIROMIYA ANGE"&&enemy,Authorname="YU-TOHARU"&&enemy,stateno=2930&&enemy,time=2&&enemy,facing=-1
+trigger2=numenemy>=2
+trigger2=enemy(1),name="USHIROMIYA ANGE"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),stateno=2930&&enemy(1),time=2&&enemy(1),facing=-1
+anim=19865
+ID=19865
+postype=left
+pos=0, GameHeight - (0)
+scale=0.5,0.5
+ownpal=1
+bindtime=-1
+sprpriority=50
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+
+[state ];メタ再反論～カットイン（左向き）
+type=Explod
+triggerall=alive&&!numexplod(19865)
+trigger1=numenemy
+trigger1=enemy,name="USHIROMIYA ANGE"&&enemy,Authorname="YU-TOHARU"&&enemy,stateno=2930&&enemy,time=2&&enemy,facing=1
+trigger2=numenemy>=2
+trigger2=enemy(1),name="USHIROMIYA ANGE"&&enemy(1),Authorname="YU-TOHARU"&&enemy(1),stateno=2930&&enemy(1),time=2&&enemy(1),facing=1
+anim=19865
+ID=19865
+postype=right
+pos=0, GameHeight - (0)
+facing=-1
+scale=0.5,0.5
+ownpal=1
+bindtime=-1
+sprpriority=50
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+
+;オヤシロリカ「メタ返し＆メタ再反論」対応ステート
+[State -2];メタ返し～カットイン（右向き）
+type = Explod
+triggerall = numenemy
+triggerall = enemynear,stateno = 2910 && enemynear,time = 2
+triggerall = facing = 1
+trigger1 = enemynear,name = "oyashirorika" && enemynear,Authorname = "baggy"
+trigger2 = enemynear,name = "Furudo_erika" && enemynear,Authorname = "baggy"
+anim = 19864
+ID = 19864
+postype = left
+pos = 0, GameHeight - (0)
+facing = 1
+scale = 0.5,0.5
+ownpal = 1
+sprpriority = 50
+pausemovetime = 999999999
+supermovetime = 999999999
+
+[State -2];メタ返し～カットイン（左向き）
+type = Explod
+triggerall = numenemy
+triggerall = enemynear,stateno = 2910 && enemynear,time = 2
+triggerall = facing = -1
+trigger1 = enemynear,name = "oyashirorika" && enemynear,Authorname = "baggy"
+trigger2 = enemynear,name = "Furudo_erika" && enemynear,Authorname = "baggy"
+anim = 19864
+ID = 19864
+postype = right
+pos = 0, GameHeight - (0)
+facing = -1
+scale = 0.5,0.5
+ownpal = 1
+sprpriority = 50
+pausemovetime = 999999999
+supermovetime = 999999999
+
+[State -2];メタ返し～ボイス
+type = PlaySnd
+triggerall = numenemy
+triggerall = enemynear,stateno = 2910 && enemynear,time = 2
+trigger1 = enemynear,name = "oyashirorika" && enemynear,Authorname = "baggy"
+trigger2 = enemynear,name = "Furudo_erika" && enemynear,Authorname = "baggy"
+value=s701,0
+
+[State -2];メタ返し～パワーゲージ消費
+type = Poweradd
+triggerall = numenemy
+triggerall = enemynear,stateno = 2910 && enemynear,time = 2
+trigger1 = enemynear,name = "oyashirorika" && enemynear,Authorname = "baggy"
+trigger2 = enemynear,name = "Furudo_erika" && enemynear,Authorname = "baggy"
+value = -1000
+
+[State -2];メタ再反論～カットイン（右向き）
+type = Explod
+triggerall = numenemy
+triggerall = enemynear,stateno = 2930 && enemynear,time = 2
+triggerall = facing = 1
+trigger1 = enemynear,name = "oyashirorika" && enemynear,Authorname = "baggy"
+trigger2 = enemynear,name = "Furudo_erika" && enemynear,Authorname = "baggy"
+anim = 19865
+ID = 19865
+postype = left
+pos = 0, GameHeight - (0)
+facing = 1
+scale = 0.5,0.5
+ownpal = 1
+sprpriority = 50
+pausemovetime = 999999999
+supermovetime = 999999999
+
+[State -2];メタ再反論～カットイン（左向き）
+type = Explod
+triggerall = numenemy
+triggerall = enemynear,stateno = 2930 && enemynear,time = 2
+triggerall = facing = -1
+trigger1 = enemynear,name = "oyashirorika" && enemynear,Authorname = "baggy"
+trigger2 = enemynear,name = "Furudo_erika" && enemynear,Authorname = "baggy"
+anim = 19865
+ID = 19865
+postype = right
+pos = 0, GameHeight - (0)
+facing = -1
+scale = 0.5,0.5
+ownpal = 1
+sprpriority = 50
+pausemovetime = 999999999
+supermovetime = 999999999
+
+[State -2];メタ再反論～ボイス
+type = PlaySnd
+triggerall = numenemy
+triggerall = enemynear,stateno = 2930 && enemynear,time = 2
+trigger1 = enemynear,name = "oyashirorika" && enemynear,Authorname = "baggy"
+trigger2 = enemynear,name = "Furudo_erika" && enemynear,Authorname = "baggy"
+value=s190,3
+
+[State -2];メタ再反論～パワーゲージ消費
+type = Poweradd
+triggerall = numenemy
+triggerall = enemynear,stateno = 2930 && enemynear,time = 2
+trigger1 = enemynear,name = "oyashirorika" && enemynear,Authorname = "baggy"
+trigger2 = enemynear,name = "Furudo_erika" && enemynear,Authorname = "baggy"
+value = -1000
+
+;マミヤ
+;「さようなら」対応ステート
+[state ];夜空に浮かぶ顔
+type=Explod
+triggerall=!numexplod(13777)&&!alive
+trigger1=numenemy
+trigger1=enemy,name="MAMIYA"&&enemy,authorname="YU-TOHARU"&&enemy,fvar(19)=1
+trigger2=numenemy>=2
+trigger2=enemy(1),name="MAMIYA"&&enemy(1),authorname="YU-TOHARU"&&enemy(1),fvar(19)=1
+anim=13777
+ID=13777
+postype=left
+pos=GameWidth - (76),37
+ownpal=1
+sprpriority=-498
+supermovetime=9999999999
+pausemovetime=9999999999
+scale=0.5,0.5
+bindtime=-1
+removetime=-1
+
+[state ];夜空に浮かぶ顔枠
+type=Explod
+triggerall=!numexplod(13778)&&!alive
+trigger1=numenemy
+trigger1=enemy,name="MAMIYA"&&enemy,authorname="YU-TOHARU"&&enemy,fvar(19)=1
+trigger2=numenemy>=2
+trigger2=enemy(1),name="MAMIYA"&&enemy(1),authorname="YU-TOHARU"&&enemy(1),fvar(19)=1
+anim=13778
+ID=13778
+postype=left
+pos=GameWidth - (76),37
+ownpal=1
+sprpriority=-499
+supermovetime=9999999999
+pausemovetime=9999999999
+scale=0.5,0.5
+bindtime=-1
+removetime=-1
+
+;ジェダ「サングェ・パッサーレ」対応ステート
+[state ]
+type=selfstate
+trigger1=numenemy
+trigger1=stateno=1420&&anim=9050&&movetype=H&&enemynear,name="Jedah"&&(enemynear,authorname="Izumo"||enemynear,authorname="rei")
+value=1420
+ignorehitpause=1
+persistent=0
+
+[state ]
+type=ChangeAnim
+trigger1=numenemy
+trigger1=enemynear,name="Crossover Jedah"&&enemynear,authorname="Tenebrous"&&stateno=7901&&anim=7901&&movetype=H
+value=109051
+ignorehitpause=1
+persistent=0
+
+[state ]
+type=VelSet
+trigger1=numenemy
+trigger1=enemynear,name="Crossover Jedah"&&enemynear,authorname="Tenebrous"&&stateno=7901&&anim=109051&&movetype=H
+x=0
+y=0
+
+;水瀬秋子「甘くないのもありますよ」（謎ジャム）対応ステート
+[state ]
+type=PlaySnd
+trigger1=(anim=5555&&stateno=4530&&time=510)||((anim=[5555,5556])&&stateno=3550&&time=590)
+value=s5555,0
+
+;-----------------------------------------------------------------------------
+; 脱衣KO
+
+[State -2, Sexy KO]
+type = Helper
+triggerall = var(20) != 0
+triggerall = NumHelper(6969) = 0
+trigger1 = !alive
+trigger1 = matchover || teammode = turns
+helpertype = normal
+name = "Sexy KO detect"
+id = 6969
+postype = p1
+pos = 0,0
+stateno = 6969
+keyctrl = 0
+ownpal = 1
+facep2 = 0
+ignorehitpause = 1
+
+[State -2, 1]
+type = ChangeAnim
+trigger1 = stateno = 5020
+trigger1 = time >= 0
+trigger1 = NumHelper(6969) = 1
+trigger1 = anim != 25030
+value = 25030
+ignorehitpause
+
+[State -2, 1]
+type=varset
+triggerall=roundstate=2
+trigger1=ctrl
+trigger2=movetype!=i
+var(58)=1
+
+[State -2, 超勇者エフェクト消去]
+type = RemoveExplod
+triggerall = NumExplod(3023) > 0
+trigger1 = Movetype = H
+ID = 3023
+
+[State -2, SOSレイプエフェクト消去]
+type = RemoveExplod
+triggerall = NumExplod(3205) > 0
+trigger1 = stateno != 3205
+ID = 3205
+
+[State -2, ライブ長門消去]
+type = RemoveExplod
+triggerall = NumExplod(3720) > 0
+trigger1 = stateno != [3700,3701]
+trigger1 = Roundstate = 2
+ID = 3720
+
+[State -2, ライブ長門消去]
+type = RemoveExplod
+triggerall = NumExplod(3721) > 0
+trigger1 = stateno != [3700,3701]
+trigger1 = Roundstate = 2
+ID = 3721
+
+[State -2, ライブ長門消去]
+type = RemoveExplod
+triggerall = NumExplod(3722) > 0
+trigger1 = stateno != [3700,3701]
+trigger1 = Roundstate = 2
+ID = 3722
+
+[State -2, ライブゲージ消去]
+type = RemoveExplod
+triggerall = NumExplod(3800) > 0
+trigger1 = stateno != [3700,3701]
+trigger1 = Roundstate = 2
+trigger2 = Roundstate >= 3
+ID = 3800
+
+[State -2, ライブロゴ消去]
+type = RemoveExplod
+triggerall = NumExplod(3801) > 0
+trigger1 = stateno != [3700,3701]
+trigger1 = Roundstate = 2
+trigger2 = Roundstate >= 3
+ID = 3801
+
+[State 3301]
+type = AssertSpecial
+triggerall = NumExplod(3720) > 0
+trigger1 = 1
+flag = nomusic
+
+[state a]
+type = stopsnd
+trigger1 = stateno != [3700,3701]
+trigger1 = Roundstate = 2
+channel = 6
+ignorehitpause = 1
+
+[State 100, 0]
+type = StopSnd
+trigger1 = stateno != 700
+channel = 1
+
+[State 100, 0]
+type = StopSnd
+trigger1 = stateno != 100
+trigger2 = stateno != 100321
+channel = 1
+
+[State 100, 0]
+type = StopSnd
+triggerall = NumHelper(3302) = 0
+;keep Misaka's theme playing while her helper is out (it ends/fades the song itself)
+triggerall = NumHelper(3860) = 0
+triggerall = NumHelper(3870) = 0
+trigger1 = stateno != [3300,3304]
+channel = 5
+
+[State 3301]
+type = AssertSpecial
+trigger1 = stateno = 3300
+trigger1 = Time >= 1
+flag = nomusic
+
+;SOSマーク消え
+[state -2,remove]
+type = removeExplod
+trigger1 = stateno != [3510,3512]
+ignorehitpause = 1
+id = 3505
+
+;SOSマーク消え
+[state -2,remove]
+type = removeExplod
+trigger1 = stateno != [3510,3512]
+ignorehitpause = 1
+id = 3506
+
+[State -2, エフェクトを消す]
+type = RemoveExplod
+triggerall = NumExplod(130) > 0
+trigger1 = StateNo != 700
+trigger2 = MoveType != I
+ID = 130
+
+[State -2]
+type = width
+trigger1 = NumExplod(3720) > 0
+edge = 20,40
+
+[State -2, AssertSpecial]
+type = assertspecial
+trigger1 = roundstate > 1
+trigger1 = Losetime = 1
+flag = nokosnd
+
+[State -2]
+type = PlaySnd
+trigger1 = Var(8) = 1
+trigger1 = roundstate > 2
+trigger1 = alive = 0
+value = 11, 1+(Random % 2)
+channel = 2
+persistent = 0
+
+[State -2]
+type = Varadd
+trigger1 = alive = 0
+v = 8
+value = 1
+
+[State -2]
+type = VarSet
+trigger1 = alive = 1
+v = 8
+value = 0
+
+;Charged air z spike hit (fvar(8) = when): free juggles for 2 s so the air combo off the bounce connects
+[State -2, Spike free juggle]
+type = AssertSpecial
+trigger1 = fvar(8) > 0
+trigger1 = GameTime - fvar(8) < 120
+flag = nojugglecheck
+ignorehitpause = 1
+
+;Goku KO (root fvar(7) = 1 + clip): fade the karaoke (channel 5) and start the vocal version at the same spot (channel 6)
+[State -2, Goku vocal fade karaoke]
+type = VarSet
+trigger1 = fvar(7) > 0
+trigger1 = var(16) = 0
+var(16) = 1
+ignorehitpause = 1
+
+[State -2, Goku vocal version]
+type = PlaySnd
+trigger1 = fvar(7) > 0
+value = 40600, floor(fvar(7)) - 1
+channel = 6
+ignorehitpause = 1
+
+[State -2, Goku vocal request done]
+type = VarSet
+trigger1 = fvar(7) > 0
+fvar(7) = 0
+ignorehitpause = 1
+
+;Misaka hit / Haruhi KO during Goku: theme (channel 5): fade her theme (channel 5) out over 75 ticks, then stop it
+[State -2, Misaka theme fade]
+type = ModifySnd
+trigger1 = var(16) > 0
+channel = 5
+volumescale = ifelse(var(16) >= 75, 0, 100 - var(16) * 100 / 75)
+ignorehitpause = 1
+
+[State -2, Misaka theme stop]
+type = StopSnd
+trigger1 = var(16) >= 75
+channel = 5
+ignorehitpause = 1
+
+[State -2, Misaka theme fade end]
+type = VarSet
+trigger1 = var(16) >= 75
+var(16) = 0
+ignorehitpause = 1
+
+[State -2, Misaka theme fade tick]
+type = VarAdd
+trigger1 = var(16) > 0
+var(16) = 1
+ignorehitpause = 1
+
+[State -2,根性値]
+Type = DefenceMulSet
+Trigger1 = 1
+IgnoreHitPause = 1
+;Goku Spirit Bomb charging (root var(17) = 0..1080): take up to 10% more damage
+Value = (0.70+(0.30*Life/LifeMax)) / (1.0 + 0.10 * var(17) / 1080.0)
+
+[State -2, 勝利バグ解消]
+type = ChangeState
+value = 180
+triggerall = RoundState = 4
+trigger1 = stateno = [10,40]
+
+;----------------------------------------------------------------------------
+;コンボ補正
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 0
+trigger2 = enemy,gethitvar(hitcount) = 1
+fvar(5) = 1.0
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 2
+fvar(5) = 0.9
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 3
+fvar(5) = 0.8
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 4
+fvar(5) = 0.7
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 5
+fvar(5) = 0.6
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 6
+fvar(5) = 0.5
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 7
+fvar(5) = 0.45
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 8
+fvar(5) = 0.45
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 9
+fvar(5) = 0.45
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 10
+fvar(5) = 0.4
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 11
+fvar(5) = 0.4
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 12
+fvar(5) = 0.4
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 13
+fvar(5) = 0.375
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 14
+fvar(5) = 0.375
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) = 15
+fvar(5) = 0.375
+
+[state -2]
+type = varset
+trigger1 = enemy,gethitvar(hitcount) >= 16
+fvar(5) = 0.35
+
+[state -2]
+type = varset
+trigger1 = enemy,movetype != H
+fvar(5) = 1.0
+
+[state -2]
+type = varset
+trigger1 = 1
+fvar(0) = 1.0
+
+[state -2]
+type = varset
+trigger1 = enemy,movetype = H
+trigger1 = enemy,gethitvar(hitcount) > 1
+fvar(0) = fvar(5)
+
+[state -2]
+type = attackmulset
+trigger1 = 1
+value = fvar(0)
+
+;----------------------------------------------------------------------------
+
+;[State -2, DEBUG]
+;type = DisplayToClipboard
+;trigger1 = 1
+;text = "AI VAR = %d P2dist = %f Frontedge =%d Backedge = %d Y dist =%f\nHaruhi by Choiyer"
+;params = var(59), p2dist x, frontedgebodydist , backedgebodydist ,(p2dist y); - enemynear(0), const(size.height))
+;ignorehitpause = 1
+;supermovetime = 9999
+;pausemovetime = 9999
+
+;[State -2, DisplaytoClipBoard]
+;type = DisplayToClipBoard
+;trigger1 = 1
+;text = "SP X = %f SP Y = %f"
+;params = ScreenPos X,ScreenPos Y
+;ignorehitpause = 1
+;supermovetime = 9999
+;pausemovetime = 9999
+
+[State -2,被さば折]
+type = PlaySnd
+TriggerAll = Enemy,AuthorName = "Gal129" && Enemy,Name = "cvshonda"
+triggerall = movetype = H
+trigger1 = AnimElem = 1,= 15
+trigger1 = stateno = 826
+trigger2 = AnimElem = 1,= 1
+trigger2 = stateno = 827
+value = 4218,21 + (Random%2)
+channel = 0
+
+[State -2,被さば折]
+type = PlaySnd
+TriggerAll = Enemy,AuthorName = "Phantom.of.the.Server" && Enemy,Name = "Edmond Honda"
+triggerall = movetype = H
+trigger1 = AnimElem = 1,= 15
+trigger1 = stateno = 825
+trigger2 = AnimElem = 1,= 1
+trigger2 = stateno = 826
+value = 4218,21 + (Random%2)
+channel = 0
+
+[State -2,被オーラ握り]
+type = PlaySnd
+triggerall = p2name = "Rasputin"
+triggerall = movetype = H
+trigger1 = stateno = 9000
+trigger1 = AnimElem = 3,= 1
+value = 4218, 90
+channel = 0
+
+[State -2,被せっかんストーム]
+type = PlaySnd
+triggerall = p2name = "Rasputin"
+triggerall = stateno = 9010
+triggerall = movetype = H
+trigger1 = AnimElem = 6,= 1
+trigger2 = AnimElem = 10,= 1
+value = 4218, 22 + (Random%2)
+channel = 0
+
+[State -2,被秘密の花園]
+type = PlaySnd
+triggerall = p2name = "Rasputin"
+triggerall = stateno = 9050
+triggerall = alive
+triggerall = movetype = H
+trigger1 = AnimElem = 4,= 21
+trigger2 = AnimElem = 4,= 42
+trigger3 = AnimElem = 4,= 63
+trigger4 = AnimElem = 4,= 84
+trigger5 = AnimElem = 4,= 105
+value = 4218,21 + (Random%2)
+channel = 0
+
+[State -2,被秘密の花園MAX]
+type = PlaySnd
+triggerall = p2name = "Rasputin"
+triggerall = stateno = 9052
+triggerall = alive
+triggerall = movetype = H
+trigger1 = AnimElem = 4,= 21
+trigger2 = AnimElem = 4,= 42
+trigger3 = AnimElem = 4,= 63
+trigger4 = AnimElem = 4,= 84
+trigger5 = AnimElem = 4,= 105
+value = 4218,21 + (Random%2)
+channel = 0
+
+[State -2,外道の烙印押し]
+type = PlaySnd
+triggerall = p2name = "kusaregedo"
+triggerall = stateno = 1121
+triggerall = movetype = H
+trigger1 = AnimElem = 2,= 3
+trigger2 = AnimElem = 6,= 3
+value = 4218,21
+channel = 0
+
+[State -2,外道の烙印押し]
+type = PlaySnd
+triggerall = p2name = "kusaregedo"
+triggerall = stateno = 1121
+triggerall = movetype = H
+trigger1 = AnimElem = 10,= 3
+value = 4218,23
+channel = 0
+
+[state -2,レイ通常投げ]
+type = playsnd
+TriggerAll = Enemy,AuthorName = "ahuron" && Enemy,Name = "REI"
+triggerall = movetype = H
+trigger1 = stateno = 807
+trigger1 = time = 0
+value = 4218,22
+channel = 0
+ignorehitpause = 1
+
+[State -2,ダメージボイス ランダム]
+type = varrandom
+triggerall = alive = 1
+triggerall = time = 0
+trigger1 = stateno = 5000
+trigger2 = stateno = 5010
+v = 7
+range = 0,9
+IgnoreHitPause = 1
+
+[State -2, ダメージボイス]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = Alive
+triggerall = Random < 750
+trigger1 = stateno = 5000 || stateno = 5010 || stateno = 5020
+trigger2 = stateno = 5070 || stateno = 5080
+value = 5000,var(7)
+channel = 0
+IgnoreHitPause = 1
+
+[State -2, ガードボイス]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = Alive
+triggerall = Random < 450
+trigger1 = stateno=151 || stateno=153 || stateno=155
+trigger2 = stateno = 702
+value = 6000,0
+channel = 0
+IgnoreHitPause = 1
+
+[State -2, 叩きつけられボイス]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = Alive
+triggerall = Random < 650
+trigger1 = stateno = 5100
+value = 5100,0 + (Random%2)
+channel = 0
+
+[State -2, 受身ボイス]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = Alive
+trigger1 = stateno = 5200 || stateno = 5210
+trigger1 = Prevstateno != 3513
+value = 5200,0 + (Random%6)
+channel = 0
+IgnoreHitPause = 1
+
+[State -2, 起き上がりボイス]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = Alive
+trigger1 = stateno = 5120
+value = 5200,0 + (Random%6)
+channel = 0
+IgnoreHitPause = 1

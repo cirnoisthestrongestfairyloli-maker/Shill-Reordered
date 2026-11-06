@@ -1,0 +1,118 @@
+﻿;---------------------------------------------------------------------------
+[Data]
+life              = 950
+power             = 5000
+attack            = 85
+defence           = 100
+fall.defence_up   = 50
+liedown.time      = 60
+airjuggle         = 20
+sparkno           = s6900
+guard.sparkno     = s6950
+KO.echo           = 0
+volumescale       = 250
+intpersistindex   = 20
+floatpersistindex = 40
+
+
+;---------------------------------------------------------------------------
+[Size]
+xscale           = 0.985
+yscale           = 0.985
+ground.back      = 15       ;キャラの幅（地上後方）
+ground.front     = 16       ;キャラの幅（地上前方）
+air.back         = 12       ;キャラの幅（空中後方）
+air.front        = 12       ;キャラの幅（空中前方）
+height           = 60       ;跳び越す相手のためのキャラの高さ
+attack.dist      = 160      ;攻撃を出した時に相手がガード体勢に入る最低の距離
+proj.attack.dist = 90       ;相手がガード体勢に入る発射物との最低の距離
+proj.doscale     = 0        ;xscaleとyscaleが発射物のスケールにも影響するかどうか（0=しない・1=する）
+head.pos         = -5, -90  ;BindToTargetの時に必要な頭の座標
+mid.pos          = -5, -60  ;BindToTargetの時に必要な体中心の座標
+shadowoffset     = -1       ;影の垂直方向の位置
+draw.offset      = 0,0      ;キャラ描画表示位置（Ｘ軸,Ｙ軸）
+
+;---------------------------------------------------------------------------
+;移動速度設定
+[Velocity]
+walk.fwd     = 2.4         ;前進歩行速度
+walk.back    = -2.2        ;後退歩行速度
+run.fwd      = 4.6, 0      ;前に走る時の速度（Ｘ軸,Ｙ軸）
+run.back     = -4.5,-3.8   ;後ろに走る時の速度（Ｘ軸,Ｙ軸）
+jump.neu     = 0,-8.4      ;垂直ジャンプ速度（Ｘ軸,Ｙ軸）
+jump.back    = -2.75        ;後ジャンプ速度
+jump.fwd     = 2.75        ;前ジャンプ速度
+runjump.back = -3.55,-8.1  ;後ろに走りながらのジャンプ速度（オプション）
+runjump.fwd  = 4.25,-8.1      ;前に走りながらのジャンプ速度（オプション）
+airjump.neu  = 0,-8.1      ;空中垂直ジャンプ速度（オプション）
+airjump.back = -2.5        ;空中後ジャンプ速度（オプション）
+airjump.fwd  = 2.55        ;空中前ジャンプ速度（オプション）
+
+;---------------------------------------------------------------------------
+;動作設定
+[Movement]
+airjump.num     = 1      ;空中ジャンプが出来る回数（オプション）
+airjump.height  = 35     ;空中ジャンプするために必要な最低限の高さ（オプション）
+yaccel          = .44    ;重力（垂直下降加速度）
+stand.friction  = .85    ;立ち状態の摩擦係数
+crouch.friction = .82    ;しゃがみ状態の摩擦係数
+
+[Quotes]
+; Up to 100 victory quotes can be specified per language (victory0 - victory99)
+victory1 = "First off, I'm not interested in ordinary people."
+victory2 = "I never thought MUGEN would be such a simple battle, we won too easily!""
+victory3 = "The commander is the SOS Brigade's holiest and most symbolic existence and cannot be desecrated!"
+victory4 = "What the hell you muttering about? I have no time to hear excuses from sore losers."
+victory5 = "From now on, you're to swear absolute allegiance to me."
+victory6 = "I want to challenge more skilled fighters!"
+victory7 = "I am the supreme leader of the SOS Brigade, after all!"
+
+;Alternate language victory quotes (optional).
+;0 or more alternate language sections may be added, preceded by the
+;ISO 639-1 code followed by a ".", e.g. "[ja.Quotes]".
+;See language setting in mugen.cfg.
+[ja.Quotes]
+victory1 = "あたしに勝とうなんて１０万年早いのよ！"
+victory2 = "あたしにはＭＵＧＥＮなんて戦い、簡単すぎるわね。"
+victory3 = "神聖にして不可侵な象徴たる存在、それがＳＯＳ団団長なのよ！"
+victory4 = "何ブツブツ言ってんの？ 負けたイイワケなんて聞きたくないわよ"
+victory5 = "あんたは今後、あたしに絶対的な忠誠を誓いなさい！"
+victory6 = "もっと強い相手に挑戦したいわ！"
+victory7 = "ＳＯＳ団の最高責任者は あたしなんだからね！"
+victory8 = "あんたの衣装、気に入ったわ 今度みくるちゃんに着せてみようかしら？"
+victory96 = "あたしより良い乳してるなんて生意気だわ！ ちょっと揉ませなさいよ！"
+victory97 = "気にいったわ、あなたのその力！ 明日からＳＯＳ団で発揮してもらうわよ！"
+victory98 = "さあ、みくるちゃん観念しなさい！　ふっふっふ～！"
+victory99 = "キョンの癖にあたしに歯向かうなんて生意気なのよ！"
+
+;---------------------------------------------------------------------------
+; Varの使用状況
+; ここに自分が使ったvarをメモしておくといろいろと好都合です。
+; var(1)  - コマンドファイルのコンボ用
+; var(2)  - 投げに使った(800)
+; var(3)  - ハイジャンプ
+; var(4)  - 空中ダッシュ
+; var(5)  - ショートジャンプ
+; var(6)  - こなたセリフランダム用
+; var(7)  - ハルヒセリフランダム用
+; var(8)  - KO判定
+; var(10) - SOSアタック!用
+; var(11) - ライブアライブゲージ用
+; var(12) - イントロ分岐用
+; var(19) - AI-Random var用
+; var(20) - 脱衣KO選択用
+; var(21) - Random var用
+; var(22) - 脱衣KO認識var
+; var(23) - おもらし認識var
+; var(24) - オシオキ選択用
+; var(25) - こなたパワー変化用
+; var(26) - ライブアライブエンディング時間用
+; var(58) - フライング防止用
+; var(59) - AI
+
+; channel = 0 ジャンプ音
+; channel = 1 パワー溜め音
+; channel = 2 効果音 
+; channel = 3 その他セリフ
+; channel = 4 ハルヒセリフ
+; channel = 5 脱衣関連

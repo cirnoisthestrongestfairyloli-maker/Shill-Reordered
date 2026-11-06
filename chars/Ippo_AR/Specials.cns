@@ -1,0 +1,1833 @@
+;Gazelle Punch Light
+[Statedef 1020]
+type = S
+movetype = A
+physics = S
+anim = 1000
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 2
+facep2 = 1
+
+[State 0, Button Detect]
+type = VarSet
+trigger1 = !Time && !var(59)
+var(10) = ifElse((command = "x" || command = "rlsx"  || PrevStateNo = 750), 2, ifElse((command = "x" || command = "rlsx"), 1, 0))
+
+[State 0, Button Detect (AI)]
+type = VarSet
+trigger1 = !Time && var(59)
+var(10) = ifElse((P2MoveType = H || PrevStateNo = 750 || Random < 333), 2, ifElse(Random < 500, 1, 0))
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 0,3
+channel = 0
+
+[State 1020, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 1, 2
+
+[State 0, Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 41, 0
+channel = 1
+
+[State 1020, Rising Velocity]
+type = VelSet
+trigger1 = AnimElem = 3
+x = 5
+
+[State 1020, Rising Velocity]
+type = VelSet
+trigger1 = AnimElem = 5
+x = 0
+
+[State 1020, FX]
+type = Explod
+trigger1 = AnimElem = 5
+anim = 4000
+ID = 4000
+postype = p1
+pos = 40,0
+bindtime = -1
+sprpriority = 2
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 0
+persistent = 0
+ontop = 1
+scale = .5,.5
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 5
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 30 < 7, 7, fvar(11) * 30)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 50 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 8,8
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 50), var(36) := -110
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -2, ifelse(var(49) >= 1, -5, -10)   ;Abstract Reordered: 2nd one drops
+air.velocity = -2, ifelse(var(49) >= 1, -5, -10)
+guard.velocity = -5
+airguard.velocity = -5, -2
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = ifelse(var(49) >= 1, .9, .5)
+fall = 1
+fall.recover = 0
+forcestand = 0
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1020, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(6) >= 0
+moveType = I
+
+[State 1020, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Gazelle Punch Medium
+[Statedef 1021]
+type = S
+movetype = A
+physics = S
+anim = 1000
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 2
+facep2 = 1
+
+[State 0, Button Detect]
+type = VarSet
+trigger1 = !Time && !var(59)
+var(10) = ifElse((command = "y" || command = "rlsy"  || PrevStateNo = 750), 2, ifElse((command = "y" || command = "rlsy"), 1, 0))
+
+[State 0, Button Detect (AI)]
+type = VarSet
+trigger1 = !Time && var(59)
+var(10) = ifElse((P2MoveType = H || PrevStateNo = 750 || Random < 333), 2, ifElse(Random < 500, 1, 0))
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 0,4
+channel = 0
+
+[State 1020, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 1, 2
+
+[State 0, Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 41, 0
+channel = 1
+
+[State 1020, Rising Velocity]
+type = VelSet
+trigger1 = AnimElem = 3
+x = 7
+
+[State 1020, Rising Velocity]
+type = VelSet
+trigger1 = AnimElem = 5
+x = 0
+
+[State 1020, FX]
+type = Explod
+trigger1 = AnimElem = 5
+anim = 4000
+ID = 4000
+postype = p1
+pos = 40,0
+bindtime = -1
+sprpriority = 2
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 0
+persistent = 0
+ontop = 1
+scale = .5,.5
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 5
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 60 < 7, 7, fvar(11) * 60)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 50 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 10,10
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 50), var(36) := -110
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -3, ifelse(var(49) >= 1, -5, -10)   ;Abstract Reordered: 2nd one drops
+air.velocity = -3, ifelse(var(49) >= 1, -5, -10)
+guard.velocity = -7
+airguard.velocity = -7, -3
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = ifelse(var(49) >= 1, .9, .5)
+fall = 1
+fall.recover = 0
+forcestand = 0
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1020, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(6) >= 0
+moveType = I
+
+[State 1021, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Gazelle Punch Strong
+[Statedef 1022]
+type = S
+movetype = A
+physics = S
+anim = 1000
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 2
+facep2 = 1
+
+[State 0, Button Detect]
+type = VarSet
+trigger1 = !Time && !var(59)
+var(10) = ifElse((command = "z" || command = "rlsz"  || PrevStateNo = 750), 2, ifElse((command = "z" || command = "rlsz"), 1, 0))
+
+[State 0, Button Detect (AI)]
+type = VarSet
+trigger1 = !Time && var(59)
+var(10) = ifElse((P2MoveType = H || PrevStateNo = 750 || Random < 333), 2, ifElse(Random < 500, 1, 0))
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 0,4
+channel = 0
+
+[State 1020, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 1, 2
+
+[State 0, Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 41, 0
+channel = 1
+
+[State 1020, Rising Velocity]
+type = VelSet
+trigger1 = AnimElem = 3
+x = 9
+
+[State 1020, Rising Velocity]
+type = VelSet
+trigger1 = AnimElem = 5
+x = 0
+
+[State 1020, FX]
+type = Explod
+trigger1 = AnimElem = 5
+anim = 4000
+ID = 4000
+postype = p1
+pos = 40,0
+bindtime = -1
+sprpriority = 2
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 0
+persistent = 0
+ontop = 1
+scale = .5,.5
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 5
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 90 < 7, 7, fvar(11) * 90)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 50 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 12,12
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 50), var(36) := -110
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -4, ifelse(var(49) >= 1, -5, -10)   ;Abstract Reordered: 2nd one drops
+air.velocity = -4, ifelse(var(49) >= 1, -5, -10)
+guard.velocity = -9
+airguard.velocity = -9, -4
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = ifelse(var(49) >= 1, .9, .5)
+fall = 1
+fall.recover = 0
+forcestand = 0
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1020, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(6) >= 0
+moveType = I
+
+[State 1022, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Gazelle Punch EX
+[Statedef 1023]
+type = S
+movetype = A
+physics = S
+anim = 1000
+ctrl = 0
+velset = 0,0
+poweradd = ifelse(var(20) > 0, 0, -500)
+sprpriority = 2
+facep2 = 1
+
+[State 1023, MAX Timer Drain]
+type = VarAdd
+trigger1 = !Time
+trigger1 = var(20) > 0
+var(20) = -500
+
+[State 1023, EX Sound]
+type = PlaySnd
+trigger1 = !Time
+value = 0, 1000
+channel = 1
+
+[State 1023, EX Flash]
+type = VarSet
+trigger1 = !Time
+var(25) = 40
+
+[State 1023, EX FX]
+type = Explod
+trigger1 = !Time
+anim = 8210
+sprPriority = 3
+posType = p1
+pos = 21, -73
+scale = 0.5, 0.5
+pauseMoveTime = -1
+superMoveTime = -1
+ownPal = 1
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 0,6
+channel = 0
+
+[State 1020, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 1, 2
+
+[State 0, Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 41, 0
+channel = 2
+
+[State 1020, Rising Velocity]
+type = VelSet
+trigger1 = AnimElem = 3
+x = 11
+
+[State 1020, Rising Velocity]
+type = VelSet
+trigger1 = AnimElem = 4
+x = 0
+
+[State 1020, FX]
+type = Explod
+trigger1 = AnimElem = 4
+anim = 4000
+ID = 4000
+postype = p1
+pos = 40,0
+bindtime = -1
+sprpriority = 2
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 0
+persistent = 0
+ontop = 1
+scale = .5,.5
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 4 || Animelem = 5
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 55 < 7, 7, fvar(11) * 55)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 0, 0
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 12,12
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 50), var(36) := -110
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -2, ifelse(var(49) >= 1, -5, -15)   ;Abstract Reordered: 2nd one drops
+air.velocity = -2, ifelse(var(49) >= 1, -5, -15)
+guard.velocity = -11
+airguard.velocity = -11, -5
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = ifelse(var(49) >= 1, .9, .5)
+fall = 1
+fall.recover = 0
+forcestand = 0
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1020, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(6) >= 0
+moveType = I
+
+[State 1023, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Twisting Gut Blow Light
+[Statedef 1010]
+type = S
+movetype = A
+physics = S
+anim = 1020
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 2
+facep2 = 1
+
+[State 0, Button Detect]
+type = VarSet
+trigger1 = !Time && !var(59)
+var(10) = ifElse((command = "x" || command = "rlsx"  || PrevStateNo = 750), 2, ifElse((command = "x" || command = "rlsx"), 1, 0))
+
+[State 0, Button Detect (AI)]
+type = VarSet
+trigger1 = !Time && var(59)
+var(10) = ifElse((P2MoveType = H || PrevStateNo = 750 || Random < 333), 2, ifElse(Random < 500, 1, 0))
+
+[State 1010, Voice]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 0,9
+channel = 0
+
+[State 1010, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 1, 2
+
+[State 1010, VelSet]
+type = VelSet
+trigger1 = Animelem = 3
+x = 5
+
+[State 1010, VelSet]
+type = VelSet
+trigger1 = Animelem = 5
+x = 0
+
+[State 0, FX]
+type = Explod
+trigger1 = AnimElem = 5
+anim = 4010
+ID = 4010
+postype = p1
+pos = 20,-20
+bindtime = -1
+sprpriority = 2
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 0
+persistent = 0
+ontop = 1
+scale = .5,.5
+
+[State #, Resist]
+type = NotHitBy
+trigger1 = Animelem = 1
+time = 12
+value = SCA
+
+[State 1010, HitDef] 
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 5
+attr = S, SA
+damage = ceil(ifElse(fvar(11) * 40 < 7, 7, fvar(11) * 40)), 5
+priority = 4, hit
+animtype = Hard
+getpower = 70 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130, 0
+pausetime = 8,8
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 45), var(36) := -65
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -5
+air.velocity = -5, -2
+guard.velocity = -5
+airguard.velocity = -5, -2
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .5
+fall = 0
+fall.recover = 0
+forcestand = 1
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 20
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1010, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(6) >= 0
+movetype = I
+
+[State 1010, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Twisting Gut Blow Medium
+[Statedef 1011]
+type = S
+movetype = A
+physics = S
+anim = 1020
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 2
+facep2 = 1
+
+[State 0, Button Detect]
+type = VarSet
+trigger1 = !Time && !var(59)
+var(10) = ifElse((command = "y" || command = "rlsy"  || PrevStateNo = 750), 2, ifElse((command = "y" || command = "rlsy"), 1, 0))
+
+[State 0, Button Detect (AI)]
+type = VarSet
+trigger1 = !Time && var(59)
+var(10) = ifElse((P2MoveType = H || PrevStateNo = 750 || Random < 333), 2, ifElse(Random < 500, 1, 0))
+
+[State 1011, Voice]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 0,9
+channel = 0
+
+[State 1011, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 1, 2
+
+[State 1011, VelSet]
+type = VelSet
+trigger1 = Animelem = 3
+x = 10
+
+[State 1010, VelSet]
+type = VelSet
+trigger1 = Animelem = 5
+x = 0
+
+[State 0, FX]
+type = Explod
+trigger1 = AnimElem = 5
+anim = 4010
+ID = 4010
+postype = p1
+pos = 20,-20
+bindtime = -1
+sprpriority = 2
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 0
+persistent = 0
+ontop = 1
+scale = .5,.5
+
+[State #, Resist]
+type = NotHitBy
+trigger1 = Animelem = 1
+time = 12
+value = SCA
+
+[State 1011, HitDef] 
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 5
+attr = S, SA
+damage = ceil(ifElse(fvar(11) * 60 < 7, 7, fvar(11) * 60)), 5
+priority = 4, hit
+animtype = Hard
+getpower = 70 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130, 0
+pausetime = 10,10
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 45), var(36) := -65
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -10
+air.velocity = -10, -4
+guard.velocity = -7
+airguard.velocity = -7, -4
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .5
+fall = 0
+fall.recover = 0
+forcestand = 1
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 20
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1011, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(6) >= 0
+movetype = I
+
+[State 1011, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Twisting Gut Blow Strong
+[Statedef 1012]
+type = S
+movetype = A
+physics = S
+anim = 1020
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 2
+facep2 = 1
+
+[State 0, Button Detect]
+type = VarSet
+trigger1 = !Time && !var(59)
+var(10) = ifElse((command = "z" || command = "rlsz"  || PrevStateNo = 750), 2, ifElse((command = "z" || command = "rlsz"), 1, 0))
+
+[State 0, Button Detect (AI)]
+type = VarSet
+trigger1 = !Time && var(59)
+var(10) = ifElse((P2MoveType = H || PrevStateNo = 750 || Random < 333), 2, ifElse(Random < 500, 1, 0))
+
+[State 1012, Voice]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 0,9
+channel = 0
+
+[State 1012, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 1, 2
+
+[State 1012, VelSet]
+type = VelSet
+trigger1 = Animelem = 3
+x = 15
+
+[State 1010, VelSet]
+type = VelSet
+trigger1 = Animelem = 5
+x = 0
+
+[State 0, FX]
+type = Explod
+trigger1 = AnimElem = 5
+anim = 4010
+ID = 4010
+postype = p1
+pos = 20,-20
+bindtime = -1
+sprpriority = 2
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 0
+persistent = 0
+ontop = 1
+scale = .5,.5
+
+[State #, Resist]
+type = NotHitBy
+trigger1 = Animelem = 1
+time = 12
+value = SCA
+
+[State 1012, HitDef] 
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 5
+attr = S, SA
+damage = ceil(ifElse(fvar(11) * 80 < 7, 7, fvar(11) * 80)), 5
+priority = 4, hit
+animtype = Hard
+getpower = 70 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130, 0
+pausetime = 12,12
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 45), var(36) := -65
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -15
+air.velocity = -15, -4
+guard.velocity = -9
+airguard.velocity = -9, -4
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .5
+fall = 0
+fall.recover = 0
+forcestand = 1
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 20
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1012, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(6) >= 0
+movetype = I
+
+[State 1012, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Twisting Gut Blow Ex
+[Statedef 1013]
+type = S
+movetype = A
+physics = S
+anim = 1021
+ctrl = 0
+velset = 0,0
+poweradd = ifelse(var(20) > 0, 0, -500)
+sprpriority = 2
+facep2 = 1
+
+[State 1013, MAX Timer Drain]
+type = VarAdd
+trigger1 = !Time
+trigger1 = var(20) > 0
+var(20) = -500
+
+[State 1013, EX Sound]
+type = PlaySnd
+trigger1 = !Time
+value = 0, 1000
+channel = 1
+
+[State 1013, EX Flash]
+type = VarSet
+trigger1 = !Time
+var(25) = 40
+
+[State 1013, EX FX]
+type = Explod
+trigger1 = !Time
+anim = 8210
+sprPriority = 3
+posType = p1
+pos = 5, -70
+scale = 0.5, 0.5
+pauseMoveTime = -1
+superMoveTime = -1
+ownPal = 1
+
+[State 1013, Voice]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 0,5
+channel = 0
+
+[State 1013, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 5
+value = 1, 2
+
+[State 1013, VelSet]
+type = VelSet
+trigger1 = Animelem = 3
+x = 20
+
+[State 1010, VelSet]
+type = VelSet
+trigger1 = Animelem = 5
+x = 0
+
+[State 0, FX]
+type = Explod
+trigger1 = AnimElem = 5
+anim = 4010
+ID = 4010
+postype = p1
+pos = 20,-20
+bindtime = -1
+sprpriority = 2
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 0
+persistent = 0
+ontop = 1
+scale = .5,.5
+
+[State #, Resist]
+type = NotHitBy
+trigger1 = Animelem = 1
+time = 12
+value = SCA
+
+[State 1013, HitDef] 
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 8
+trigger1 = Animelem = 5
+attr = S, SA
+damage = ceil(ifElse(fvar(11) * 50 < 7, 7, fvar(11) * 50)), 5
+priority = 4, hit
+animtype = Hard
+getpower = 0, 0
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130, 0
+pausetime = 12,12
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 45), var(36) := -65
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -5
+air.velocity = -5, -5
+guard.velocity = -11
+airguard.velocity = -11, -5
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .5
+fall = 0
+fall.recover = 0
+forcestand = 0
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 20
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1013, HitDef] 
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 8
+trigger1 = Animelem = 6
+attr = S, SA
+damage = ceil(ifElse(fvar(11) * 50 < 7, 7, fvar(11) * 50)), 5
+priority = 4, hit
+animtype = Hard
+getpower = 0, 0
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130, 0
+pausetime = 12,12
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 45), var(36) := -85
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 12
+ground.hittime = 55
+guard.hittime = 18
+ground.velocity = -1.5   ;Abstract Reordered: stagger
+air.velocity = -20, -5
+guard.velocity = -10
+airguard.velocity = -10, -5
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .5
+fall = 0
+fall.recover = 0
+forcestand = 0
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 20
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1013, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(7) >= 0
+movetype = I
+
+[State 1013, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Dempsey Roll Light
+[Statedef 1000]
+type = S
+movetype = A
+physics = S
+anim = 1010
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 4
+facep2 = 1
+
+[State 0, Button Detect]
+type = VarSet
+trigger1 = !Time && !var(59)
+var(10) = ifElse((command = "x" || command = "rlsx"  || PrevStateNo = 750), 2, ifElse((command = "x" || command = "rlsx"), 1, 0))
+
+[State 0, Button Detect (AI)]
+type = VarSet
+trigger1 = !Time && var(59)
+var(10) = ifElse((P2MoveType = H || PrevStateNo = 750 || Random < 333), 2, ifElse(Random < 500, 1, 0))
+
+[State 1000, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 3 || animelem = 7
+value = 1, 2
+
+[State 1000, Reversal]
+type = reversaldef
+trigger1 = !Time
+reversal.attr = SA, NA, SA, HA
+pausetime = 0, 100
+sparkno = s8013
+sparkxy = -10 + 0 * (var(35) := 1000), var(36):=-1000
+hitsound = s2, 100
+p1stateno = 1100
+
+[State 1000, AR rush in]
+type = VelSet
+trigger1 = Time < 24
+x = 3.5
+
+[State 1000, AR unload]
+type = ChangeState
+trigger1 = Time >= 6
+trigger1 = p2bodydist x <= 20
+value = 1100   ;Abstract Reordered: Dempsey Roll attacks on its own when it reaches them
+
+[State 1000, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Dempsey Roll Medium
+[Statedef 1001]
+type = S
+movetype = A
+physics = S
+anim = 1011
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 4
+facep2 = 1
+
+[State 0, Button Detect]
+type = VarSet
+trigger1 = !Time && !var(59)
+var(10) = ifElse((command = "y" || command = "rlsy"  || PrevStateNo = 750), 2, ifElse((command = "y" || command = "rlsy"), 1, 0))
+
+[State 0, Button Detect (AI)]
+type = VarSet
+trigger1 = !Time && var(59)
+var(10) = ifElse((P2MoveType = H || PrevStateNo = 750 || Random < 333), 2, ifElse(Random < 500, 1, 0))
+
+[State 1001, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 3 || animelem = 7
+value = 1, 2
+
+[State 1001, Reversal]
+type = reversaldef
+trigger1 = !Time
+reversal.attr = SA, NA, SA, HA
+pausetime = 0, 100
+sparkno = s8013
+sparkxy = -10 + 0 * (var(35) := 1000), var(36):=-1000
+hitsound = s2, 100
+p1stateno = 1101
+
+[State 1001, AR rush in]
+type = VelSet
+trigger1 = Time < 24
+x = 4
+
+[State 1001, AR unload]
+type = ChangeState
+trigger1 = Time >= 6
+trigger1 = p2bodydist x <= 20
+value = 1101   ;Abstract Reordered: Dempsey Roll attacks on its own when it reaches them
+
+[State 1001, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Dempsey Roll Strong
+[Statedef 1002]
+type = S
+movetype = A
+physics = S
+anim = 1012
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 2
+facep2 = 1
+
+[State 0, Button Detect]
+type = VarSet
+trigger1 = !Time && !var(59)
+var(10) = ifElse((command = "z" || command = "rlsz"  || PrevStateNo = 750), 2, ifElse((command = "z" || command = "rlsz"), 1, 0))
+
+[State 0, Button Detect (AI)]
+type = VarSet
+trigger1 = !Time && var(59)
+var(10) = ifElse((P2MoveType = H || PrevStateNo = 750 || Random < 333), 2, ifElse(Random < 500, 1, 0))
+
+[State 1001, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 3 || animelem = 7
+value = 1, 2
+
+[State 1001, Reversal]
+type = reversaldef
+trigger1 = !Time
+reversal.attr = SA, NA, SA, HA
+pausetime = 0, 100
+sparkno = s8013
+sparkxy = -10 + 0 * (var(35) := 1000), var(36):=-1000
+hitsound = s2, 100
+p1stateno = 1102
+
+[State 1002, AR rush in]
+type = VelSet
+trigger1 = Time < 24
+x = 4.5
+
+[State 1002, AR unload]
+type = ChangeState
+trigger1 = Time >= 6
+trigger1 = p2bodydist x <= 20
+value = 1102   ;Abstract Reordered: Dempsey Roll attacks on its own when it reaches them
+
+[State 1002, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Dempsey Roll Ex
+[Statedef 1003]
+type = S
+movetype = A
+physics = S
+anim = 1012
+ctrl = 0
+velset = 0,0
+poweradd = ifelse(var(20) > 0, 0, -500)
+sprpriority = 4
+facep2 = 1
+
+[State 1003, MAX Timer Drain]
+type = VarAdd
+trigger1 = !Time
+trigger1 = var(20) > 0
+var(20) = -500
+
+[State 1003, EX Sound]
+type = PlaySnd
+trigger1 = !Time
+value = 0, 1000
+channel = 1
+
+[State 1003, EX Flash]
+type = VarSet
+trigger1 = !Time
+var(25) = 40
+
+[State 1003, EX FX]
+type = Explod
+trigger1 = !Time
+anim = 8210
+sprPriority = 3
+posType = p1
+pos = 1, -65
+scale = 0.5, 0.5
+pauseMoveTime = -1
+superMoveTime = -1
+ownPal = 1
+
+[State 1001, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 3 || animelem = 7
+value = 1, 2
+
+[State 1001, Reversal]
+type = reversaldef
+trigger1 = !Time
+reversal.attr = SA, NA, SA, HA
+pausetime = 0, 100
+sparkno = s8013
+sparkxy = -10 + 0 * (var(35) := 1000), var(36):=-1000
+hitsound = s2, 100
+p1stateno = 1103
+
+[State 1003, AR rush in]
+type = VelSet
+trigger1 = Time < 24
+x = 4.5
+
+[State 1003, AR unload]
+type = ChangeState
+trigger1 = Time >= 6
+trigger1 = p2bodydist x <= 20
+value = 1103   ;Abstract Reordered: Dempsey Roll attacks on its own when it reaches them
+
+[State 1003, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Dempsey Roll Hit Light
+[Statedef 1100]
+type = S
+movetype = A
+physics = S
+anim = 1015
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 2
+facep2 = 1
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 3
+value = 0,0
+channel = 0
+
+[State 1020, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 3
+value = 1, 2
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 3
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 30 < 7, 7, fvar(11) * 30)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 50 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 8,8
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 80), var(36) := -70
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -5, -5
+air.velocity = -5, -5
+guard.velocity = -2
+airguard.velocity = -2, -2
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .5
+fall = 1
+fall.recover = 0
+forcestand = 0
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1020, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(4) >= 0
+moveType = I
+
+[State 1020, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Dempsey Roll Hit Medium
+[Statedef 1101]
+type = S
+movetype = A
+physics = S
+anim = 1016
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 2
+facep2 = 1
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 3
+value = 0,0
+channel = 0
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 12
+value = 0,2
+channel = 1
+
+[State 1020, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 3 || AnimElem = 12
+value = 1, 2
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 3
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 25 < 7, 7, fvar(11) * 25)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 50 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 10,50
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 80), var(36) := -70
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = 0
+air.velocity = -5, -5
+guard.velocity = -2
+airguard.velocity = -2, -2
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .58
+fall = 0
+fall.recover = 0
+forcestand = 1
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 12
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 25 < 7, 7, fvar(11) * 25)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 50 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 10,10
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 80), var(36) := -70
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -7, -5
+air.velocity = -7, -5
+guard.velocity = -2
+airguard.velocity = -2, -2
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .5
+fall = 1
+fall.recover = 0
+forcestand = 0
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1020, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(13) >= 0
+moveType = I
+
+[State 1021, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Dempsey Roll Hit Strong
+[Statedef 1102]
+type = S
+movetype = A
+physics = S
+anim = 1017
+ctrl = 0
+velset = 0,0
+poweradd = 70 * !var(20)
+sprpriority = 2
+facep2 = 1
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 3
+value = 0,0
+channel = 0
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 12
+value = 0,2
+channel = 1
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 19
+value = 0,5
+channel = 2
+
+[State 1020, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 3 || AnimElem = 12 || AnimElem = 19
+value = 1, 2
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 3 || Animelem = 12
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 24 < 7, 7, fvar(11) * 24)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 50 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 12,50
+guard.pausetime = 12,12
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 80), var(36) := -70
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = 0
+air.velocity = -5, -5
+guard.velocity = -2
+airguard.velocity = -2, -2
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .58
+fall = 0
+fall.recover = 0
+forcestand = 1
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 19
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 24 < 7, 7, fvar(11) * 24)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 50 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 12,12
+guard.pausetime = 12,12
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 80), var(36) := -70
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -7, -5
+air.velocity = -7, -5
+guard.velocity = -2
+airguard.velocity = -2, -2
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .5
+fall = 1
+fall.recover = 0
+forcestand = 0
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1020, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(20) >= 0
+moveType = I
+
+[State 1022, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Dempsey Roll Hit EX
+[Statedef 1103]
+type = S
+movetype = A
+physics = S
+anim = 1018
+ctrl = 0
+velset = 0,0
+poweradd = 0
+sprpriority = 2
+facep2 = 1
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 3
+value = 0,0
+channel = 0
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 12
+value = 0,2
+channel = 1
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 19
+value = 0,5
+channel = 2
+
+[State 1020, Voice]
+type = PlaySnd
+trigger1 = AnimElem = 25
+value = 0,7
+channel = 3
+
+[State 1020, Swing Snd]
+type = PlaySnd
+trigger1 = Animelem = 3 || AnimElem = 12 || AnimElem = 19 || AnimElem = 25
+value = 1, 2
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 3 || Animelem = 12 || AnimElem = 19
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 30 < 7, 7, fvar(11) * 30)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 50 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 12,50
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 80), var(36) := -70
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = 0
+air.velocity = -5, -5
+guard.velocity = -2
+airguard.velocity = -2, -2
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .58
+fall = 0
+fall.recover = 0
+forcestand = 1
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+
+[State 1020, Hit]
+type = HitDef
+air.fall = 1   ;Abstract Reordered: juggles
+trigger1 = !var(16) && var(15) < 6
+trigger1 = Animelem = 25
+attr = A, SA
+damage = ceil(ifElse(fvar(11) * 30 < 7, 7, fvar(11) * 30)), 8
+priority = 4, hit
+animtype = Hard
+getpower = 50 * !var(20), 30 * !var(20)
+givepower = 35, 35
+guardflag = MA
+hitflag = MAF
+hitsound = S2,2
+guardsound = S130,0
+pausetime = 12,12
+guard.pausetime = 10,10
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0 * (var(34) := 8001)
+sparkXY = -10 + 0 * (var(35) := 62), var(36) := -72
+air.animtype = Back
+fall.animtype = Back
+ground.type = Low
+air.type = Low
+ground.slidetime = 18
+ground.hittime  = 18
+guard.hittime = 18
+ground.velocity = -16, -4.5   ;Abstract Reordered: into the wall
+air.velocity = -16, -4.5
+guard.velocity = -2
+airguard.velocity = -2, -2
+airguard.ctrlTime = 16
+ground.cornerPush.velOff = 0
+guard.cornerPush.velOff = 0
+air.cornerPush.velOff = 0
+yaccel = .35
+fall = 1
+fall.recover = 0
+forcestand = 0
+palFX.time = 12 * var(9)
+palFX.add = 255,255,255
+palFX.sinAdd= -255,-255,-255,48
+envshake.time = 14
+envshake.ampl = 4
+envShake.freq = 140
+id = 1103
+
+[State 1103, AR wall bounce]
+type = TargetState
+trigger1 = MoveHit && NumTarget(1103)
+trigger1 = (Target(1103), StateNo = 5000) || (Target(1103), StateNo = 5010) || (Target(1103), StateNo = 5020)
+value = 1031
+ID = 1103
+ignoreHitPause = 1
+
+[State 1020, StateTypeSet: Idle]
+type = StateTypeSet
+trigger1 = AnimElemTime(26) >= 0
+moveType = I
+
+[State 1023, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1
+
+;Land
+[Statedef 47]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 47
+velset = 0, 0
+
+[State 47, On Ground]
+type = Posset
+trigger1 = !Time
+Y = 0
+
+[State 47, Land Snd]
+type = PlaySnd
+trigger1 = Time = 1
+value = 52,0
+
+[State 47, Landing Dust Explod]
+type = Explod
+trigger1 = !Time
+anim = 8102
+sprpriority = -3
+postype = P1
+scale = 0.5,0.5
+pauseMoveTime = -1
+superMoveTime = -1
+ownPal = 1
+
+[State 47, End]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1

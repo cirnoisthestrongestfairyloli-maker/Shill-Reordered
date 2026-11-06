@@ -1,0 +1,46 @@
+アレッシー（H"さん製作）　～子供化　完全対応方法
+
+-2ステートと独自対応ステートで対応は可能でしたが、子供化から元に戻る時の少年の画像はどうしても回避できませんでした。
+元に戻る時のみですので、気にしなければそのままでも良いですが、どうしても気になる方は下記の記述をアレッシー側のCNSに追記をしてください。
+
+
+“alessi-child.cns”内の下記の記述箇所
+
+[Statedef 18600]内
+～
+
+[State 18600, Explod]
+type = Explod
+trigger1 = Time = 0 && parent,Var(22) = 0
+anim = 19001
+sprpriority = 0
+removetime = 39
+bindtime = -1
+shadow = -1,-1,-1
+scale = 1,1
+id = 18600
+
+↑
+このような所がありますので、このステートのトリガーに
+
+!(enemy,name="CURE BLACK"&&enemy,authorname="YU-TOHARU")
+
+↑
+を追加してください。
+
+[State 18600, Explod]
+type = Explod
+trigger1 = Time = 0 && parent,Var(22) = 0 && !(enemy,name="CURE BLACK"&&enemy,authorname="YU-TOHARU")
+anim = 19001
+sprpriority = 0
+removetime = 39
+bindtime = -1
+shadow = -1,-1,-1
+scale = 1,1
+id = 18600
+
+↑
+このようになればよろしいです。
+triggerは下の行に追加しても構いません。
+
+記述に問題がなければ、子供化から元に戻る時に少年の画像が表示されなくなります。

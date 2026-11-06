@@ -1,0 +1,221 @@
+;=============================================
+;Vars
+;=============================================
+;0: 
+;1: air basics juggle limiter(system)
+;2: Toggle Infinite Zamasu combo counter
+;3: 
+;4: Jump variable (from normal or super jump) - Ki Blast Charge Variable
+;5: zam meter
+;6:  System var. (OTG Juggling)
+;7: System var. (for juggle limits)
+;8: KO Voice choice
+;9: Specific Move Variables
+;10: Air dash limiter
+;11: 
+;12: 
+;13: Super BG choice (config)
+;14: Play Zamasu SND (Typically used for winposes)
+;15: Animate blur through hitpause
+;16: Zamasus used in combo counter
+;17: Zero Counter command
+;18: Juggle Safety
+;19: 
+;20: varset for 1st/2nd state of Focus Attack
+;21: 
+;22: Super jump var
+;23: Focus Attack animelem set
+;24: Focus Attack repel
+;25: 
+;26: 
+;27: First attack notification
+;28: helper destroy redirect (prevent too many helpers)
+;29: Portal Clones Super timer
+;30: Dash Collision count - Beam Collision count
+;31: Ticks Back is held down (Charge char)
+;32: Back Charge Buffer (Charge char)
+;33: Ticks Down is held down (Charge char)
+;34: Down Charge Buffer (Charge char)
+;35: 
+;36: Hitcount store for finisher 2
+;37: 
+;38: throw check
+;39: Save finisher level 
+;40: emo exit clone pos
+;41: 
+;42: 
+;43: Choose Helper out sensitivity
+;44: Repel Projectile choice (config)
+;45: X axis Rage Gauge (config)
+;46: Y axis Rage Gauge (config)
+;47: flip knockout bounce
+;48: -2 Custom State Checker
+;49: -3 Custom State Checker
+;50: ?
+;51: buff mode
+;52: EMOTION MODE - Buffer variable. 1000 and goes down
+;53: EMOTION MODE - Flames variable. 0 to 2100
+;54: 
+;55: 
+;56: counter system notification
+;57: counter system notification
+;58: Pal Color used with Var 5
+;59:  AI
+
+
+;fvar(1)  : Cheap KO
+;fvar(2)  : Damage Detection variable
+;fvar(3)  : Specific Move Variabls (Velocities and such)
+;fvar(8)  : Counter Hit
+;fvar(9)  : Focus Attack Strength
+;fvar(10) : Damage Dampener
+;fvar(11) : Root Dampener
+;fvar(13) : Hit Count Reset
+;fvar(20) : LVL3 scaling P2 var
+;fvar(21) : Finisher winpose
+;fvar(22) : down Zam
+;fvar(24) : back zam
+;fvar(26) : fwd zam
+;fvar(28) : up zam
+;fvar(37) : boss?
+;fvar(38) : Boss Revenge
+;=============================================
+; CNS File for Gotenks Z2 by Team Z2
+; Constants file
+;=============================================
+
+
+;=============================================
+; CNS File for SSJ Goku Z2 by Team Z2
+; Constants file
+;=============================================
+
+[Data]
+life		= 1000
+power		= 3000
+attack		= 100
+defence		= 100
+fall.defence_up	= 50
+liedown.time	= 15
+airjuggle		= 15
+sparkno		= 2	
+guard.sparkno	= -1
+KO.echo		= 0	
+;volume		= 150
+IntPersistIndex	= 49
+FloatPersistIndex	= 20
+
+;--	--	--	--	--	--	--
+
+[Size]
+xscale		= 1		;Horizontal scaling factor.
+yscale		= 1		;Vertical scaling factor.
+ground.back	= 30		;Player width (back, ground)
+ground.front	= 25		;Player width (front, ground)
+air.back		= 12		;Player width (back, air)
+air.front		= 12		;Player width (front, air)
+height		= 60		;Height of player (for opponent to jump over)
+attack.dist	= 160		;Default attack distance
+proj.attack.dist	= 90		;Default attack distance for projectiles
+proj.doscale	= 0		;Set to 1 to scale projectiles too   
+head.pos		= 12,-72		;Approximate position of head
+mid.pos		= -1,-46		;Approximate position of midsection
+shadowoffset	= 0		;Number of pixels to vertically offset the shadow
+draw.offset	= 0,0		;Player drawing offset in pixels (x, y)
+
+;--	--	--	--	--	--	--
+
+[Velocity]
+walk.fwd		= 2.0		;Walk forward
+walk.back		= -1.2		;Walk backward
+run.fwd		= 6.0, 0		;Run forward (x, y)
+run.back		= -5.5,-4.8	;Hop backward (x, y)
+jump.neu		= 0,-10		;Neutral jumping velocity (x, y)
+jump.back		= -3.25		;Jump back Speed (x, y)
+jump.fwd		= 3.25		;Jump forward Speed (x, y)
+runjump.back	= -7.5,-8.5	;Running jump speeds (opt)
+runjump.fwd	= 6,-8.5
+airjump.neu	= 0,-8.1
+airjump.back	= -2.75		;Air jump speeds (opt)
+airjump.fwd	= 2.75
+
+[Movement]
+airjump.num	= 0		;Number of air jumps allowed (opt)
+airjump.height	= 35		;Minimum distance from ground before you can air jump (opt)
+yaccel		= .51        	;Vertical acceleration
+stand.friction	= .85		;Friction coefficient when standing
+crouch.friction	= .85		;Friction coefficient when crouching
+air.gethit.groundrecover.groundlevel = 0
+
+
+[Quotes]
+victory30        = "You are used to monsters and beasts, full of want and desires. I want for nothing but peace and I'm willing to kill you to get it."
+victory31        = "Baring fangs, like an animal? No wonder I had to do this."
+victory32        = "The sacred timelines are a field of opportunities... you'll never stop me."
+victory33        = "I have seen the dark universe yawning, where the black planets roll without aim, where they roll in their horror, unheeded, without mortals."
+victory34        = "Soon as you were born mortal you were crawling towards the grave, I'm just here to perform your last rites."
+victory35        = "If anger is power, my infinite wrath will feed this body forever!"
+victory36        = "I'm aware of my limitations, every fight reforges this body anew, closer to my perfect control."
+victory37        = "We are done fighting, mortals. Now get to dying."
+victory38        = "You can't kill me, not in a way that matters."
+victory39        = "Out of corruption, horrid life springs, and things have learnt to walk that ought to crawl..."
+victory40        = "You caused this, now accept your punishment."
+victory41        = "Baring fangs, like an animal? No wonder I had to do this."
+victory42        = "I willingly sacrifice myself to save this world from filth... I am the universe's only hero."
+victory43        = "Shhh... can you hear it? It's a world free of monsters like you."
+victory44        = "Your prayers come too little too late."
+victory45        = "A weak god that cannot deliver justice is worthless."
+victory46        = "I am the hope of the universe."
+victory47        = "Who knew I would have to steal this filthy body in order to truly become beautiful?"
+victory48        = "We are above all that lives, we're the judges of what deserves to live and what doesn't. And nothing does."
+victory49        = "The pain... It makes me stronger."
+victory50        = "Is that a death rattle? Ahahahah, how quaint."
+victory51        = "Dont think of it as the end, think of it as going early to avoid the rush hour."
+victory52        = "Godly wisdom lies in doing what must be done. Now shush, oblivion awaits."
+victory53        = "Lining up to die... you are just saving me the trouble of seeking you out."
+victory54        = "This body craves the fight.... I feel it hungering."
+victory55        = "How fantastic, the filth all came out to play."
+victory56        = "I wonder how strong I can really become?"
+victory57        = "This body is mine now."
+victory58        = "This feral body hungers for fighting... for blood... for conflict...."
+victory59        = "Ahahaha, I'll get even stronger at this rate."
+victory60        = "The gods have been good to your kind. That kindness ends now."
+victory61        = "Sweet sweet nothingness..."
+victory62        = "You can't run! Not to the past! Not to the future! Not from me!!"
+victory63        = "How quaint, the animals presume to be more than what they are."
+victory64        = "Crawl back to your hole and die an undignified death."
+victory65        = "Disgusting."
+victory66        = "You are only getting what you deserve."
+victory67        = "Filth. Mortal, unclean filth."
+victory68        = "Mortals should know their place in the firmament."
+victory69        = "Zeno, Beerus, anyone... they won't hold a candle to me."
+victory70        = "Get out ! NINGEN! GET OUT!!"
+victory71        = "Everything dies, from a smallest blade of grass to the largest galaxy... everything but me."
+victory72        = "Stop ruining EVERYTHING!"
+victory73        = "Look onwards my friends, for the gods have taken pity on you all."
+victory74        = "I'll erase everything in my path till perfection is achieved."
+victory75        = "I think I just got stronger... fantastic."
+victory76        = "Everything was fine until you bloody ningens turned up!!!"
+victory77        = "You have reinforced my decision to exterminate all mortals."
+victory78        = "My tears, they are for this world, that desperately needs a savior."
+victory79        = "I understand your jealousy... There is a huge gap between mortals and Gods."
+victory80        = "Such is the destiny of you sinful creatures!"
+victory81        = "My cause is noble, my power is true, my rule... absolute."
+victory82        = "And now to annihilate you for the sake of justice."
+victory83        = "In the void, no one can hear you die."
+victory84        = "What is this feeling? My blood pumps fiercely, my spirit is eager... is this.. excitement?"
+victory85        = "How commited you are. Seeing you struggle to breathe is a joy."
+victory86        = "There was nothing you could do, not against your betters."
+victory87        = "I have no need for servants. Die."
+victory88        = "I see certainty in your terrified eyes. You know that you'll die here."
+victory89        = "Drown in your own blood!"
+victory90        = "Extinction is too good for you!"
+victory91        = "Fantastic, simply fantastic!"
+victory92        = "Peer into oblivion!"
+victory93        = "There are no more tomorrows for scum like you."
+victory94        = "Universal peace at last."
+victory95        = "Who do you think you are?!"
+victory96        = "I'm kind of a creep? Well, you're kind of dead."
+victory97        = "I feel it deep within, just beneath the skin... I must confess that I'm enjoying feeling like a monster."
+victory98        = "Burn as an offering to me."
+victory99        = "How rude of me, can I offer you something? Tea perhaps?"

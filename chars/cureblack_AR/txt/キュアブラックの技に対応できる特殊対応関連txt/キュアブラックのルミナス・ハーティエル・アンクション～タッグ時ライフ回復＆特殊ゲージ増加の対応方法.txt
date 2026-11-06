@@ -1,0 +1,29 @@
+キュアブラックのルミナス・ハーティエル・アンクション～タッグ時ライフ回復＆特殊ゲージ増加の対応方法
+
+こちらの記述を相手側のCNSの[Statedef -2]内に
+
+
+;キュアブラック「ルミナス・ハーティエル・アンクション」対応ステート
+[state ]
+type=lifeadd
+trigger1=numpartner
+trigger1=partner,name="CURE BLACK"&&partner,authorname="YU-TOHARU"&&partner,var(28)=1&&alive
+Value=ifelse(partner,var(6)=3||partner,var(7)=3||partner,var(8)=3||partner,palno=12,150,100)
+Absolute=1
+ignorehitpause=1
+
+の記述をコピペ等して追加してください。
+
+↓特殊ゲージがあるキャラは特殊ゲージも増加させてもよろしいかと思います。
+
+[State ]
+type=Varadd
+trigger1=numpartner
+trigger1=partner,name="CURE BLACK"&&partner,authorname="YU-TOHARU"&&partner,var(28)=1&&alive
+var(○)=ceil(○*ifelse(partner,var(6)=3||partner,var(7)=3||partner,var(8)=3||partner,palno=12,1.5,1))
+
+
+"○"の部分を適切な数値に変更してください。
+増加させる数値はその特殊ゲージの最大量の1割程にするとよろしいかもしれません。（キュアブラックが1割増加に設定しています）
+
+問題がなければ、キュアブラックのストライカー～シャイニールミナスが使う『ルミナス・ハーティエル・アンクション』がパートナーに触れた際にライフが回復し、特殊ゲージがある場合は増加するようになります。

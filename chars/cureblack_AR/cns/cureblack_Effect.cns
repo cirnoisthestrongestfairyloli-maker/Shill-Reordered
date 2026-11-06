@@ -1,0 +1,2950 @@
+;キュアブラック（ヘルパー）通常イントロ1～降下
+[Statedef 7900]
+type=S
+ctrl=0
+anim=1860
+
+[State ]
+type=PosSet
+trigger1=Time=0&&!(P2name="Combat Echizen"||P4name="Combat Echizen")
+y=0-ScreenPos Y
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ] 
+type=ChangeAnim
+trigger1=time=10
+value=700
+persistent=0
+
+[State ]
+type=VelSet
+trigger1=time<=9
+y=0
+
+[State ]
+type=VelSet
+trigger1=time=10
+y=12
+
+[State ]
+type=VelAdd
+trigger1=time>=10
+y=.48
+
+[State ]
+type=VelSet
+trigger1=Pos Y>=0&&time>=10
+y=0
+
+[State ]
+type=PosSet
+trigger1=Pos Y>=0&&time>=10
+y=0
+
+[State ]
+type=ChangeState
+trigger1=Pos Y>=0&&time>=10
+value=7901
+
+;キュアブラック（ヘルパー）通常イントロ1～着地
+[Statedef 7901]
+type=S
+ctrl=0
+anim=701
+physics=N
+
+[State ]
+type=DestroySelf
+trigger1=time=1
+
+;キュアブラック（ヘルパー）通常イントロ3～降下
+[Statedef 7902]
+type=S
+ctrl=0
+anim=1860
+
+[State ]
+type=PosSet
+trigger1=Time=0&&!(P2name="Combat Echizen"||P4name="Combat Echizen")
+y=0-ScreenPos Y
+
+[State ]
+type=VelSet
+trigger1=time>=25
+x=5
+
+[State ]
+type=VelSet
+trigger1=time<=24
+y=0
+
+[State ]
+type=VelSet
+trigger1=time=25
+y=1
+
+[State ]
+type=VelAdd
+trigger1=time>=25
+y=.48
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ] 
+type=ChangeAnim
+trigger1=time=25
+value=703
+
+[State ]
+type=VelSet
+trigger1=Pos Y>=0&&time>=10
+y=0
+
+[State ]
+type=PosSet
+trigger1=Pos Y>=0&&time>=10
+y=0
+
+[State ]
+type=ChangeState
+trigger1=Pos Y>=0&&time>=10
+value=7903
+
+;キュアブラック（ヘルパー）通常イントロ3～着地
+[Statedef 7903]
+type=S
+ctrl=0
+anim=704
+physics=N
+velset=0,0
+
+[State ]
+type=EnvShake
+trigger1=time=0
+time=10
+freq=160
+ampl=-4
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,92
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6097
+postype=p1
+pos=floor(-30*root,fvar(32)),floor(10*root,fvar(33))
+scale=.5*root,fvar(32),.5*root,fvar(33)
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6097
+postype=p1
+pos=floor(30*root,fvar(32)),floor(10*root,fvar(33))
+scale=.5*root,fvar(32),.5*root,fvar(33)
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6007
+postype=p1
+pos=floor(17*root,fvar(32)),0
+scale=.5*root,fvar(32),.5*root,fvar(33)
+sprpriority=-6
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=DestroySelf
+trigger1=time=1
+
+;ジャンプエフェクト（ヘルパー)
+[Statedef 7000]
+type=A
+movetype=I
+physics=S
+anim=6003
+ctrl=0
+sprpriority=12
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=ifelse(ishelper(7000)||ishelper(7001)||ishelper(7002)||ishelper(7006),.25,.5),ifelse(ishelper(7000)||ishelper(7001)||ishelper(7002)||ishelper(7006),.32,.38)
+
+[State ]
+type=Angleset
+trigger1=time=0&&(ishelper(7001)||ishelper(7002)||ishelper(7004)||ishelper(7005)||ishelper(7006)||ishelper(17006)||ishelper(27006)||ishelper(17001))
+value=ifelse(ishelper(7001)||ishelper(7004),-25,ifelse(ishelper(7006),45,ifelse(ishelper(17006),60,ifelse(ishelper(27006),30,ifelse(ishelper(17001),-55,25)))))
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;空中ジャンプエフェクト（ヘルパー）
+[Statedef 7007]
+type=A
+physics=S
+velset=0,0
+anim=6064
+ctrl=0
+sprpriority=6
+
+[State ]
+type=ChangeAnim
+trigger1=time=0&&ishelper(17007)
+value=6078
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=.35*root,fvar(32),.35*root,fvar(33)
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256-var(0),256
+
+[State ]
+type=Varadd
+trigger1=1
+var(0)=8
+
+[state ]
+type=AngleAdd
+trigger1=time=0&&root,vel x>=.0001
+value=160
+
+[state ]
+type=AngleAdd
+trigger1=time=0&&root,vel x=0
+value=180
+
+[state ]
+type=AngleAdd
+trigger1=time=0&&root,vel x<=-.0001
+value=-160
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;地上ダウン受身エフェクト（ヘルパー）
+[Statedef 7008]
+type=A
+physics=S
+velset=0,0
+anim=1860
+ctrl=0
+sprpriority=-30
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,ifelse(ishelper(7008),93,94)
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6148
+ID=6148
+postype=p1
+pos=0,floor(5*root,fvar(33))
+sprpriority=-30
+bindtime=-1
+
+[State ]
+type=Varadd
+trigger1=1
+fvar(0)=ifelse(ishelper(7008),.02,.03)*root,fvar(32)
+
+[State ]
+type=Varadd
+trigger1=1
+fvar(1)=.002*root,fvar(32)
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=6148
+scale=ifelse(ishelper(7008),.3,.5)+fvar(0)*root,fvar(32),.05+fvar(1)*root,fvar(33)
+
+[State ]
+type=DestroySelf
+trigger1=time=20
+
+;ヒットエフェクト小～黄金夢想曲（ヘルパー)
+[Statedef 7100]
+type=A
+movetype=I
+physics=S
+anim=6008
+ctrl=0
+sprpriority=20
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="hitura"
+ID=7101
+postype=p1
+stateno=7101
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12)
+anim=6048
+postype=p1
+scale=.5,.5
+sprpriority=18
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12)
+value=s100,31
+
+[State ]
+type=Helper
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=9||root,var(7)=9||root,var(8)=9||root,palno=12)
+helpertype=normal
+name="SURPRISE COUNTER"
+ID=7400
+postype=p1
+stateno=7400
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0&&parent,var(15)=1
+anim=6010
+postype=p1
+scale=.5,.5
+sprpriority=20
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&parent,var(15)=1
+value=s100,17
+
+[State ]
+type=Helper
+trigger1=time=0&&parent,var(18)=1
+helpertype=normal
+name="critical"
+ID=7200
+postype=p1
+stateno=7200
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=Varadd
+trigger1=1
+fvar(0)=.018
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=.1+fvar(0),.3+fvar(0)
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=1
+range=0,360
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=var(1)
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;ヒットエフェクト小裏～黄金夢想曲（ヘルパー)
+[Statedef 7101]
+type=A
+movetype=I
+physics=S
+anim=6009
+ctrl=0
+sprpriority=-5
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=Varadd
+trigger1=1
+fvar(0)=.023
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=.3+fvar(0),.3+fvar(0)
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=1
+range=0,360
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=var(1)
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;ヒットエフェクト小～アルカナハート（ヘルパー）
+[Statedef 7102]
+type=A
+movetype=I
+physics=N
+ctrl=0
+anim=6066
+sprpriority=11
+
+[State ]
+type=Explod
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12)
+anim=6048
+postype=p1
+scale=.5,.5
+sprpriority=18
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12)
+value=s100,31
+
+[State ]
+type=Helper
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=9||root,var(7)=9||root,var(8)=9||root,palno=12)
+helpertype=normal
+name="SURPRISE COUNTER"
+ID=7400
+postype=p1
+stateno=7400
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0&&parent,var(15)=1
+anim=6010
+postype=p1
+scale=.5,.5
+sprpriority=20
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&parent,var(15)=1
+value=s100,17
+
+[State ]
+type=Helper
+trigger1=time=0&&parent,var(18)=1
+helpertype=normal
+name="critical"
+ID=7200
+postype=p1
+stateno=7200
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6067
+ID=6067
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=10
+scale=1.5,1.5
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="en1"
+ID=7103
+postype=p1
+stateno=7103
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="en2"
+ID=17103
+postype=p1
+stateno=7103
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="sen1"
+ID=7104
+postype=p1
+stateno=7104
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="sen2"
+ID=7104
+postype=p1
+stateno=7104
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="sen3"
+ID=7104
+postype=p1
+stateno=7104
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="sen4"
+ID=7104
+postype=p1
+stateno=7104
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Varadd
+trigger1=1
+fvar(0)=.075
+
+[State ]
+type=Varset
+trigger1=fvar(0)>=.76
+fvar(0)=.75
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=6067
+scale=.75-fvar(0),.75-fvar(0)
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=varadd
+trigger1=1
+fvar(1)=.1
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=fvar(1),fvar(1)
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,360
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=var(0)
+
+[State ]
+type=varadd
+trigger1=time>=3
+var(1)=30
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256-var(1),256
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;ヒットエフェクト小2～アルカナハート（ヘルパー）
+[Statedef 7103]
+type=A
+movetype=I
+physics=N
+ctrl=0
+anim=6068
+sprpriority=9
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=varadd
+trigger1=time>=1&&(ishelper(27103)||ishelper(37103))
+fvar(0)=.125
+
+[State ]
+type=varadd
+trigger1=time>=1&&(ishelper(57103)||ishelper(47103))
+fvar(2)=.1
+
+[State ]
+type=varadd
+trigger1=time>=1&&(ishelper(7103)||ishelper(17103))
+fvar(1)=.075
+
+[State ]
+type=AngleDraw
+trigger1=ishelper(47103)||ishelper(57103)
+scale=.5625+fvar(2),.125
+
+[State ]
+type=AngleDraw
+trigger1=ishelper(7103)||ishelper(17103)
+scale=.25+fvar(1),.125
+
+[State ]
+type=AngleDraw
+trigger1=ishelper(27103)||ishelper(37103)
+scale=.875+fvar(0),.125
+
+[State ]
+type=AngleAdd
+trigger1=time=0&&(ishelper(57103)||ishelper(17103)||ishelper(37103))
+value=90
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=-30,30
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=var(0)
+
+[State ]
+type=varadd
+trigger1=time>=4
+var(1)=30
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256-var(1),256
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;ヒットエフェクト小3～アルカナハート（ヘルパー）
+[Statedef 7104]
+type=A
+movetype=I
+physics=N
+ctrl=0
+anim=6069
+sprpriority=13
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=1,5
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=ifelse(var(0)=1,.05,ifelse(var(0)=2,.075,ifelse(var(0)=3,.1,ifelse(var(0)=4,.125,ifelse(var(0)=5,.15,0))))),.4
+
+[State ]
+type=VelSet
+trigger1=1
+x=ifelse(var(0)=1,2,ifelse(var(0)=2,3.5,ifelse(var(0)=3,5,ifelse(var(0)=4,6.5,ifelse(var(0)=5,8,0)))))
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=1
+range=0,5
+
+[State ]
+type=AngleAdd
+trigger1=time=0&&(var(1)=[1,5])
+value=ifelse(var(1)=1,6,ifelse(var(1)=2,12,ifelse(var(1)=3,18,ifelse(var(1)=4,24,ifelse(var(1)=5,30,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=1&&var(1)>=1
+y=ifelse(var(0)=1&&var(1)=1,-.3,ifelse(var(0)=1&&var(1)=2,-.7,ifelse(var(0)=1&&var(1)=3,-1,ifelse(var(0)=1&&var(1)=4,-1.3,ifelse(var(0)=1&&var(1)=5,-1.6,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=2&&var(1)>=1
+y=ifelse(var(0)=2&&var(1)=1,-.4,ifelse(var(0)=2&&var(1)=2,-1,ifelse(var(0)=2&&var(1)=3,-1.5,ifelse(var(0)=2&&var(1)=4,-2,ifelse(var(0)=2&&var(1)=5,-2.5,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=3&&var(1)>=1
+y=ifelse(var(0)=3&&var(1)=1,-.8,ifelse(var(0)=3&&var(1)=2,-1.2,ifelse(var(0)=3&&var(1)=3,-1.8,ifelse(var(0)=3&&var(1)=4,-2.4,ifelse(var(0)=3&&var(1)=5,-3,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=4&&var(1)>=1
+y=ifelse(var(0)=4&&var(1)=1,-1,ifelse(var(0)=4&&var(1)=2,-2,ifelse(var(0)=4&&var(1)=3,-2.7,ifelse(var(0)=4&&var(1)=4,-3.4,ifelse(var(0)=4&&var(1)=5,-4.3,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=5&&var(1)>=1
+y=ifelse(var(0)=5&&var(1)=1,-1,ifelse(var(0)=5&&var(1)=2,-2,ifelse(var(0)=5&&var(1)=3,-3,ifelse(var(0)=5&&var(1)=4,-4,ifelse(var(0)=5&&var(1)=5,-5,0)))))
+
+[State ]
+type=varadd
+trigger1=time>=9
+var(2)=25
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256-var(2),256
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;ヒットエフェクト大～アルカナハート（ヘルパー）
+[Statedef 7105]
+type=A
+movetype=I
+physics=N
+ctrl=0
+anim=6066
+sprpriority=11
+
+[State ]
+type=Explod
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12)
+anim=6048
+postype=p1
+scale=.5,.5
+sprpriority=18
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12)
+value=s100,31
+
+[State ]
+type=Helper
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=9||root,var(7)=9||root,var(8)=9||root,palno=12)
+helpertype=normal
+name="SURPRISE COUNTER"
+ID=7400
+postype=p1
+stateno=7400
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0&&parent,var(15)=1
+anim=6010
+postype=p1
+scale=.5,.5
+sprpriority=20
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&parent,var(15)=1
+value=s100,17
+
+[State ]
+type=Helper
+trigger1=time=0&&parent,var(18)=1
+helpertype=normal
+name="critical"
+ID=7200
+postype=p1
+stateno=7200
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6067
+ID=6067
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=10
+scale=1.5,1.5
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7105)
+helpertype=normal
+name="en1"
+ID=27103
+postype=p1
+stateno=7103
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7105)
+helpertype=normal
+name="en2"
+ID=37103
+postype=p1
+stateno=7103
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7105)
+helpertype=normal
+name="sen1"
+ID=7106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7105)
+helpertype=normal
+name="sen2"
+ID=7106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7105)
+helpertype=normal
+name="sen3"
+ID=7106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7105)
+helpertype=normal
+name="sen4"
+ID=7106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7105)
+helpertype=normal
+name="sen5"
+ID=7106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7105)
+helpertype=normal
+name="sen6"
+ID=7106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Varadd
+trigger1=fvar(0)<=1.49&&ishelper(7105)
+fvar(0)=.15
+
+[State ]
+type=Varset
+trigger1=fvar(0)>=1.51&&ishelper(7105)
+fvar(0)=1.5
+
+[State ]
+type=modifyexplod
+trigger1=ishelper(7105)
+ID=6067
+scale=1.5-fvar(0),1.5-fvar(0)
+
+[State ]
+type=varadd
+trigger1=ishelper(7105)
+fvar(1)=.2
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(17105)
+helpertype=normal
+name="en1"
+ID=47103
+postype=p1
+stateno=7103
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(17105)
+helpertype=normal
+name="en2"
+ID=57103
+postype=p1
+stateno=7103
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(17105)
+helpertype=normal
+name="sen1"
+ID=17106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(17105)
+helpertype=normal
+name="sen2"
+ID=17106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(17105)
+helpertype=normal
+name="sen3"
+ID=17106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(17105)
+helpertype=normal
+name="sen4"
+ID=17106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(17105)
+helpertype=normal
+name="sen5"
+ID=17106
+postype=p1
+stateno=7106
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Varadd
+trigger1=fvar(0)<=1.49&&ishelper(17105)
+fvar(0)=.1125
+
+[State ]
+type=Varset
+trigger1=fvar(0)>=1.51&&ishelper(17105)
+fvar(0)=1.125
+
+[State ]
+type=modifyexplod
+trigger1=ishelper(17105)
+ID=6067
+scale=1.125-fvar(0),1.125-fvar(0)
+
+[State ]
+type=varadd
+trigger1=ishelper(17105)
+fvar(1)=.15
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=fvar(1),fvar(1)
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,360
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=var(0)
+
+[State ]
+type=varadd
+trigger1=time>=3
+var(1)=30
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256-var(1),256
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;ヒットエフェクト大3～アルカナハート（ヘルパー）
+[Statedef 7106]
+type=A
+movetype=I
+physics=N
+ctrl=0
+anim=6069
+sprpriority=13
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=1,8
+
+[State ]
+type=AngleDraw
+trigger1=ishelper(17106)
+scale=ifelse(var(0)=1,.05,ifelse(var(0)=2,.075,ifelse(var(0)=3,.1,ifelse(var(0)=4,.125,ifelse(var(0)=5,.15,ifelse(var(0)=6,.175,ifelse(var(0)=7,.2,ifelse(var(0)=8,.225,0)))))))),.45
+
+[State ]
+type=AngleDraw
+trigger1=ishelper(7106)
+scale=ifelse(var(0)=1,.05,ifelse(var(0)=2,.075,ifelse(var(0)=3,.1,ifelse(var(0)=4,.125,ifelse(var(0)=5,.15,ifelse(var(0)=6,.175,ifelse(var(0)=7,.2,ifelse(var(0)=8,.225,0)))))))),.6
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=1
+range=0,12
+
+[State ]
+type=AngleAdd
+trigger1=time=0&&(var(1)=[1,5])
+value=ifelse(var(1)=1,6,ifelse(var(1)=2,12,ifelse(var(1)=3,18,ifelse(var(1)=4,24,ifelse(var(1)=5,30,0)))))
+
+[State ]
+type=VelSet
+trigger1=1
+x=ifelse(var(0)=1,2,ifelse(var(0)=2,3.5,ifelse(var(0)=3,5,ifelse(var(0)=4,6.5,ifelse(var(0)=5,8,ifelse(var(0)=6,9.5,ifelse(var(0)=7,11,ifelse(var(0)=8,12.5,0))))))))
+
+[State ]
+type=AngleAdd
+trigger1=time=0&&(var(1)=[6,12])
+value=ifelse(var(1)=6,36,ifelse(var(1)=7,42,ifelse(var(1)=8,-6,ifelse(var(1)=9,-12,ifelse(var(1)=10,-18,ifelse(var(1)=11,-24,ifelse(var(1)=12,-30,0)))))))
+
+[State ]
+type=AngleAdd
+trigger1=var(1)>=8&&var(2)=1
+value=ifelse(var(1)=8,12,ifelse(var(1)=9,24,ifelse(var(1)=10,36,ifelse(var(1)=11,48,ifelse(var(1)=12,60,0)))))
+persistent=0
+
+[State ]
+type=VelSet
+trigger1=var(0)=1&&(var(1)=[1,5])
+y=ifelse(var(0)=1&&var(1)=1,-.3,ifelse(var(0)=1&&var(1)=2,-.7,ifelse(var(0)=1&&var(1)=3,-1,ifelse(var(0)=1&&var(1)=4,-1.3,ifelse(var(0)=1&&var(1)=5,-1.6,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=1&&(var(1)=[6,9])
+y=ifelse(var(0)=1&&var(1)=6,-1.9,ifelse(var(0)=1&&var(1)=7,-2.2,ifelse(var(0)=1&&var(1)=8,.3-ifelse(var(2)=1,.6,0),ifelse(var(0)=1&&var(1)=9,.7-ifelse(var(2)=1,1.4,0),0))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=1&&(var(1)=[10,12])
+y=ifelse(var(0)=1&&var(1)=10,1-ifelse(var(2)=1,2,0),ifelse(var(0)=1&&var(1)=11,1.3-ifelse(var(2)=1,2.6,0),ifelse(var(0)=1&&var(1)=12,1.6-ifelse(var(2)=1,3.2,0),0)))
+
+[State ]
+type=VelSet
+trigger1=var(0)=2&&(var(1)=[1,5])
+y=ifelse(var(0)=2&&var(1)=1,-.4,ifelse(var(0)=2&&var(1)=2,-1,ifelse(var(0)=2&&var(1)=3,-1.5,ifelse(var(0)=2&&var(1)=4,-2,ifelse(var(0)=2&&var(1)=5,-2.5,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=2&&(var(1)=[6,9])
+y=ifelse(var(0)=2&&var(1)=6,-3,ifelse(var(0)=2&&var(1)=7,-3.5,ifelse(var(0)=2&&var(1)=8,.4-ifelse(var(2)=1,.8,0),ifelse(var(0)=2&&var(1)=9,1-ifelse(var(2)=1,2,0),0))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=2&&(var(1)=[10,12])
+y=ifelse(var(0)=2&&var(1)=10,1.5-ifelse(var(2)=1,3,0),ifelse(var(0)=2&&var(1)=11,2-ifelse(var(2)=1,4,0),ifelse(var(0)=2&&var(1)=12,2.5-ifelse(var(2)=1,5,0),0)))
+
+[State ]
+type=VelSet
+trigger1=var(0)=3&&(var(1)=[1,5])
+y=ifelse(var(0)=3&&var(1)=1,-.8,ifelse(var(0)=3&&var(1)=2,-1.2,ifelse(var(0)=3&&var(1)=3,-1.8,ifelse(var(0)=3&&var(1)=4,-2.4,ifelse(var(0)=3&&var(1)=5,-3,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=3&&(var(1)=[6,9])
+y=ifelse(var(0)=3&&var(1)=6,-3.6,ifelse(var(0)=3&&var(1)=7,-3.9,ifelse(var(0)=3&&var(1)=8,.8-ifelse(var(2)=1,1.6,0),ifelse(var(0)=3&&var(1)=9,1.2-ifelse(var(2)=1,2.4,0),0))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=3&&(var(1)=[10,12])
+y=ifelse(var(0)=3&&var(1)=10,1.8-ifelse(var(2)=1,3.6,0),ifelse(var(0)=3&&var(1)=11,2.4-ifelse(var(2)=1,4.8,0),ifelse(var(0)=3&&var(1)=12,3-ifelse(var(2)=1,6,0),0)))
+
+[State ]
+type=VelSet
+trigger1=var(0)=4&&(var(1)=[1,5])
+y=ifelse(var(0)=4&&var(1)=1,-1,ifelse(var(0)=4&&var(1)=2,-2,ifelse(var(0)=4&&var(1)=3,-2.7,ifelse(var(0)=4&&var(1)=4,-3.4,ifelse(var(0)=4&&var(1)=5,-4.3,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=4&&(var(1)=[6,9])
+y=ifelse(var(0)=4&&var(1)=6,-6,ifelse(var(0)=4&&var(1)=7,-7.8,ifelse(var(0)=4&&var(1)=8,1-ifelse(var(2)=1,2,0),ifelse(var(0)=4&&var(1)=9,2-ifelse(var(2)=1,4,0),0))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=4&&(var(1)=[10,12])
+y=ifelse(var(0)=4&&var(1)=10,2.7-ifelse(var(2)=1,5.4,0),ifelse(var(0)=4&&var(1)=11,3.4-ifelse(var(2)=1,6.8,0),ifelse(var(0)=4&&var(1)=12,4.3-ifelse(var(2)=1,8.6,0),0)))
+
+[State ]
+type=VelSet
+trigger1=var(0)=5&&(var(1)=[1,5])
+y=ifelse(var(0)=5&&var(1)=1,-1,ifelse(var(0)=5&&var(1)=2,-2,ifelse(var(0)=5&&var(1)=3,-3,ifelse(var(0)=5&&var(1)=4,-4,ifelse(var(0)=5&&var(1)=5,-5,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=5&&(var(1)=[6,9])
+y=ifelse(var(0)=5&&var(1)=6,-6,ifelse(var(0)=5&&var(1)=7,-7,ifelse(var(0)=5&&var(1)=8,1-ifelse(var(2)=1,2,0),ifelse(var(0)=5&&var(1)=9,2-ifelse(var(2)=1,4,0),0))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=5&&(var(1)=[10,12])
+y=ifelse(var(0)=5&&var(1)=10,3-ifelse(var(2)=1,6,0),ifelse(var(0)=5&&var(1)=11,4-ifelse(var(2)=1,8,0),ifelse(var(0)=5&&var(1)=12,5-ifelse(var(2)=1,10,0),0)))
+
+[State ]
+type=VelSet
+trigger1=var(0)=6&&(var(1)=[1,5])
+y=ifelse(var(0)=6&&var(1)=1,-1,ifelse(var(0)=6&&var(1)=2,-2,ifelse(var(0)=6&&var(1)=3,-3.5,ifelse(var(0)=6&&var(1)=4,-5,ifelse(var(0)=6&&var(1)=5,-6,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=6&&(var(1)=[6,9])
+y=ifelse(var(0)=6&&var(1)=6,-8,ifelse(var(0)=6&&var(1)=7,-10,ifelse(var(0)=6&&var(1)=8,1-ifelse(var(2)=1,2,0),ifelse(var(0)=6&&var(1)=9,2-ifelse(var(2)=1,4,0),0))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=6&&(var(1)=[10,12])
+y=ifelse(var(0)=6&&var(1)=10,3-ifelse(var(2)=1,6,0),ifelse(var(0)=6&&var(1)=11,4-ifelse(var(2)=1,8,0),ifelse(var(0)=6&&var(1)=12,5-ifelse(var(2)=1,10,0),0)))
+
+[State ]
+type=VelSet
+trigger1=var(0)=7&&(var(1)=[1,5])
+y=ifelse(var(0)=7&&var(1)=1,-1,ifelse(var(0)=7&&var(1)=2,-2.5,ifelse(var(0)=7&&var(1)=3,-4,ifelse(var(0)=7&&var(1)=4,-5.5,ifelse(var(0)=7&&var(1)=5,-6.5,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=7&&(var(1)=[6,9])
+y=ifelse(var(0)=7&&var(1)=6,-9,ifelse(var(0)=7&&var(1)=7,-11,ifelse(var(0)=7&&var(1)=8,1-ifelse(var(2)=1,2,0),ifelse(var(0)=7&&var(1)=9,2-ifelse(var(2)=1,4,0),0))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=7&&(var(1)=[10,12])
+y=ifelse(var(0)=7&&var(1)=10,3.5-ifelse(var(2)=1,7,0),ifelse(var(0)=7&&var(1)=11,4.5-ifelse(var(2)=1,9,0),ifelse(var(0)=7&&var(1)=12,5.5-ifelse(var(2)=1,11,0),0)))
+
+[State ]
+type=VelSet
+trigger1=var(0)=8&&(var(1)=[1,5])
+y=ifelse(var(0)=8&&var(1)=1,-1.5,ifelse(var(0)=8&&var(1)=2,-2.5,ifelse(var(0)=8&&var(1)=3,-4,ifelse(var(0)=8&&var(1)=4,-6,ifelse(var(0)=8&&var(1)=5,-7.5,0)))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=8&&(var(1)=[6,9])
+y=ifelse(var(0)=8&&var(1)=6,-9,ifelse(var(0)=8&&var(1)=7,-11,ifelse(var(0)=8&&var(1)=8,1.5-ifelse(var(2)=1,3,0),ifelse(var(0)=8&&var(1)=9,2.5-ifelse(var(2)=1,5,0),0))))
+
+[State ]
+type=VelSet
+trigger1=var(0)=8&&(var(1)=[10,12])
+y=ifelse(var(0)=8&&var(1)=10,3.5-ifelse(var(2)=1,7,0),ifelse(var(0)=8&&var(1)=11,5-ifelse(var(2)=1,10,0),ifelse(var(0)=8&&var(1)=12,6-ifelse(var(2)=1,12,0),0)))
+
+[State ]
+type=varset
+trigger1=Pos Y>=0&&time>=1
+var(2)=1
+
+[State ]
+type=varadd
+trigger1=time>=9
+var(3)=25
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256-var(3),256
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;魔法ヒットエフェクト大～黄金夢想曲（ヘルパー）
+[Statedef 7107]
+type=A
+movetype=I
+physics=S
+anim=6094
+ctrl=0
+SprPriority=20
+
+[State ]
+type=Explod
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12)
+anim=6048
+postype=p1
+scale=.5,.5
+sprpriority=18
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12)
+value=s100,31
+
+[State ]
+type=Helper
+trigger1=time=0&&parent,var(15)=1&&(root,var(6)=9||root,var(7)=9||root,var(8)=9||root,palno=12)
+helpertype=normal
+name="SURPRISE COUNTER"
+ID=7400
+postype=p1
+stateno=7400
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0&&parent,var(15)=1
+anim=6010
+postype=p1
+scale=.5,.5
+sprpriority=20
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&parent,var(15)=1
+value=s100,17
+
+[State ]
+type=Helper
+trigger1=time=0&&parent,var(18)=1
+helpertype=normal
+name="critical"
+ID=7200
+postype=p1
+stateno=7200
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=Varadd
+trigger1=1
+fvar(0)=.04
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=.5+fvar(0),.5+fvar(0)
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=1
+range=0,360
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=var(1)
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;クリティカルヒットエフェクト1（ヘルパー)
+[Statedef 7200]
+type=A
+movetype=I
+physics=S
+anim=6011
+ctrl=0
+sprpriority=19
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="critical2"
+ID=7201
+postype=p1
+stateno=7201
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&(root,var(6)=24||root,var(7)=24||root,var(8)=24||palno=12)
+helpertype=normal
+name="CRITICAL RATE"
+ID=7401
+postype=p1
+stateno=7401
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,16
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=Varadd
+trigger1=1
+fvar(0)=.03
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=.05+fvar(0),.05+fvar(0)
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=40-var(2),256
+
+[State ]
+type=Varadd
+trigger1=time>=6
+var(2)=6
+
+[State ]
+type=DestroySelf
+trigger1=var(2)>=40
+
+;クリティカルヒットエフェクト2（ヘルパー)
+[Statedef 7201]
+type=A
+movetype=I
+physics=S
+anim=6012
+ctrl=0
+sprpriority=20
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=VelSet
+trigger1=1
+x=0
+y=0
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=1.3,1.3
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=1
+range=0,360
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=var(1)
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;ジャストガードずらす（ヘルパー）
+[Statedef 7202]
+type=A
+movetype=I
+physics=S
+anim=6070
+ctrl=0
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=VelSet
+trigger1=time=0
+x=-3
+
+[State ]
+type=Veladd
+trigger1=1
+x=.15
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;空中ダウン受身エフェクト（ヘルパー）
+[Statedef 7203]
+type=A
+physics=S
+anim=1860
+ctrl=0
+sprpriority=10
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6071
+ID=6071
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=5
+scale=.5,.5
+bindtime=-1
+
+[State ]
+type=Varset
+trigger1=time=0
+fvar(0)=.75*root,fvar(32)
+
+[State ]
+type=Varadd
+trigger1=time<=5
+fvar(0)=-.1*root,fvar(32)
+
+[State ]
+type=Varset
+trigger1=time=6
+fvar(0)=1*root,fvar(32)
+
+[State ]
+type=Varadd
+trigger1=time>=7
+fvar(0)=-.1*root,fvar(32)
+
+[State ]
+type=Varset
+trigger1=time=0
+fvar(1)=.75*root,fvar(33)
+
+[State ]
+type=Varadd
+trigger1=time<=5
+fvar(1)=-.1*root,fvar(33)
+
+[State ]
+type=Varset
+trigger1=time=6
+fvar(1)=1*root,fvar(33)
+
+[State ]
+type=Varadd
+trigger1=time>=7
+fvar(1)=-.1*root,fvar(33)
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=6071
+scale=fvar(0),fvar(1)
+
+[State ]
+type=BindToParent
+trigger1=1
+time=1
+pos=0,floor(-60*root,fvar(33))
+
+[State ]
+type=DestroySelf
+trigger1=time=15
+
+;空中ジャンプエフェクト（ヘルパー）
+[Statedef 7204]
+type=A
+physics=S
+anim=6113
+ctrl=0
+sprpriority=6
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=.7+fvar(0),.7+fvar(0)
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=AngleAdd
+trigger1=time=0&&root,vel x>=.00001
+value=-160
+
+[State ]
+type=AngleAdd
+trigger1=time=0&&root,vel x<=-.00001
+value=160
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;チャージ～電撃（ヘルパー)
+[Statedef 7205]
+type=A
+movetype=I
+physics=S
+anim=1860
+ctrl=0
+sprpriority=3
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=3
+range=0,2
+
+[State ] 
+type=ChangeAnim
+trigger1=time=0
+value=6115+var(3)
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=0
+range=-70,-30
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=2
+range=-10,10
+
+[State ]
+type=BindToParent
+trigger1=1
+time=1
+pos=floor(var(2)*root,fvar(32)),floor(var(0)*root,fvar(33))
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,78
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=.4,.4
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=1
+range=0,360
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=var(1)
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0||root,movetype=H||root,stateno!=1620||(root,stateno=1620&&root,anim=1561)
+
+;ガードエフェクト～アルカナハート（ヘルパー）
+[Statedef 7300]
+type=A
+movetype=I
+physics=N
+ctrl=0
+anim=6006
+sprpriority=11
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=-50,-5
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=1
+range=30,50
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6065
+ID=6065
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=12
+scale=.5,.5
+vel=var(0)*.1,var(1)*.1
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=2
+range=-50,-5
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=3
+range=10,30
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6065
+ID=6065
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=12
+scale=.5,.5
+vel=var(2)*.1,var(3)*.1
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=4
+range=-50,-5
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=5
+range=-10,10
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6065
+ID=6065
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=12
+scale=.5,.5
+vel=var(4)*.1,var(5)*.1
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=6
+range=-50,-5
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=7
+range=-30,-10
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6065
+ID=6065
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=12
+scale=.5,.5
+vel=var(6)*.1,var(7)*.1
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=8
+range=-50,-5
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=9
+range=-50,-30
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6065
+ID=6065
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=12
+scale=.5,.5
+vel=var(8)*.1,var(9)*.1
+
+[State ]
+type=Varadd
+trigger1=fvar(0)<=.49&&time>=10
+fvar(0)=.075
+
+[State ]
+type=Varset
+trigger1=fvar(0)>=.51&&time>=10
+fvar(0)=.5
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=6065
+scale=.5-fvar(0),.5-fvar(0)
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=AngleDraw
+trigger1=ishelper(7300)
+scale=.5,.5
+
+[State ]
+type=AngleDraw
+trigger1=ishelper(17300)
+scale=.8,.8
+
+[State ]
+type=AngleDraw
+trigger1=ishelper(27300)
+scale=1,1
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;SURPRISE COUNTERエフェクト（ヘルパー)
+[Statedef 7400]
+type=A
+movetype=I
+physics=S
+anim=1860
+ctrl=0
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,25
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=0
+range=-5,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=1
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=2
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=3
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=4
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=5
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=6
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=7
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=8
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=9
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=10
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=11
+range=-9,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=12
+range=1,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=13
+range=1,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=14
+range=1,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=15
+range=1,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=16
+range=1,9
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=17
+range=1,9
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6035
+ID=6035
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=30
+scale=.1,.1
+
+[State ]
+type=Varadd
+trigger1=numexplod(6035)=1
+fvar(0)=.06
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(6035)=1
+ID=6035
+scale=.1+fvar(0),.1+fvar(0)
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6036
+ID=6036
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=30
+scale=.2,.2
+vel=-3.4-(.1*var(0)),-3-(.1*var(1))
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6037
+ID=6037
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=30
+scale=.2,.2
+vel=-2.9-(.1*var(2)),-.6-(.1*var(3))
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6038
+ID=6038
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=30
+scale=.2,.2
+vel=-2.2-(.1*var(4)),2.8+(.1*var(5))
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6039
+ID=6039
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=30
+scale=.2,.2
+vel=2.2+(.1*var(6)),2.1+(.1*var(7))
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6040
+ID=6040
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=30
+scale=.2,.2
+vel=1.8+(.1*var(8)),-2.3-(.1*var(9))
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6041
+ID=6041
+supermovetime=100
+pausemovetime=100
+postype=p1
+sprpriority=30
+scale=.2,.2
+vel=2.9+(.1*var(10)),0+(.1*var(11))
+
+[State ]
+type=Varadd
+trigger1=numexplod(6036)=1
+fvar(1)=.03+(.001*var(12))
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(6036)=1
+ID=6036
+scale=.2+fvar(1),.2+fvar(1)
+
+[State ]
+type=Varadd
+trigger1=numexplod(6037)=1
+fvar(2)=.025+(.001*var(13))
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(6037)=1
+ID=6037
+scale=.2+fvar(2),.2+fvar(2)
+
+[State ]
+type=Varadd
+trigger1=numexplod(6038)=1
+fvar(3)=.028+(.001*var(14))
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(6038)=1
+ID=6038
+scale=.2+fvar(3),.2+fvar(3)
+
+[State ]
+type=Varadd
+trigger1=numexplod(6039)=1
+fvar(4)=.036+(.001*var(15))
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(6039)=1
+ID=6039
+scale=.2+fvar(4),.2+fvar(4)
+
+[State ]
+type=Varadd
+trigger1=numexplod(6040)=1
+fvar(5)=.018+(.001*var(16))
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(6040)=1
+ID=6040
+scale=.2+fvar(5),.2+fvar(5)
+
+[State ]
+type=Varadd
+trigger1=numexplod(6041)=1
+fvar(6)=.027+(.001*var(17))
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(6041)=1
+ID=6041
+scale=.2+fvar(6),.2+fvar(6)
+
+[State ]
+type=DestroySelf
+trigger1=time=20
+
+;CRITICAL RATE1（ヘルパー)
+[Statedef 7401]
+type=A
+movetype=I
+physics=S
+anim=6042
+ctrl=0
+sprpriority=19
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="critical2"
+ID=7402
+postype=p1
+stateno=7402
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,26
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=Varadd
+trigger1=1
+fvar(0)=.03
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=.05+fvar(0),.05+fvar(0)
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=40-var(2),256
+
+[State ]
+type=Varadd
+trigger1=time>=6
+var(2)=3
+
+[State ]
+type=DestroySelf
+trigger1=var(2)>=40
+
+;CRITICAL RATE2（ヘルパー)
+[Statedef 7402]
+type=A
+movetype=I
+physics=S
+velset=0,0
+anim=6043
+ctrl=0
+sprpriority=20
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=VelSet
+trigger1=1
+x=0
+y=0
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=1.8,1.8
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=1
+range=0,360
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=var(1)
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;SPECIAL CANCEL（ヘルパー）
+[Statedef 7403]
+type=S
+movetype=I
+physics=S
+anim=6076
+ctrl=0
+sprpriority=-3
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&ishelper(7403)
+value=s100,52
+
+[state ]
+type=Explod
+trigger1=time=0&&ishelper(7403)
+anim=6077
+ID=6077
+postype=p1
+pos=floor(190*root,fvar(32)),0
+scale=.8,.8
+sprpriority=3
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7403)
+helpertype=normal
+name="SPECIAL CANCEL2"
+ID=17403
+postype=p1
+stateno=7403
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7403)
+helpertype=normal
+name="SPECIAL CANCEL3"
+ID=27403
+postype=p1
+stateno=7403
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7403)
+helpertype=normal
+name="SPECIAL CANCEL4"
+ID=37403
+postype=p1
+stateno=7403
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7403)
+helpertype=normal
+name="SPECIAL CANCEL5"
+ID=47403
+postype=p1
+stateno=7403
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&ishelper(7403)
+helpertype=normal
+name="SPECIAL CANCEL6"
+ID=57403
+postype=p1
+stateno=7403
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=3*root,fvar(32),.5*root,fvar(33)
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256-var(0),256
+
+[State ]
+type=varadd
+trigger1=1
+var(0)=5
+
+[State ]
+type=posadd
+trigger1=time=0&&ishelper(7403)
+x=floor(-160*root,fvar(32))
+y=floor(-10*root,fvar(33))
+
+[state ]
+type=AngleAdd
+trigger1=time=0&&ishelper(7403)
+value=85
+
+[state ]
+type=VelSet
+trigger1=ishelper(7403)
+x=2
+y=-22
+
+[State ]
+type=posadd
+trigger1=time=0&&ishelper(17403)
+x=floor(-180*root,fvar(32))
+y=floor(-40*root,fvar(33))
+
+[state ]
+type=AngleAdd
+trigger1=time=0&&ishelper(17403)
+value=15
+
+[state ]
+type=VelSet
+trigger1=ishelper(17403)
+x=22
+y=-5.5
+
+[State ]
+type=posadd
+trigger1=time=0&&ishelper(27403)
+x=floor(-150*root,fvar(32))
+y=floor(-10*root,fvar(33))
+
+[state ]
+type=AngleAdd
+trigger1=time=0&&ishelper(27403)
+value=-38
+
+[state ]
+type=VelSet
+trigger1=ishelper(27403)
+x=16
+y=12
+
+[State ]
+type=posadd
+trigger1=time=0&&ishelper(37403)
+x=floor(-160*root,fvar(32))
+y=floor(-10*root,fvar(33))
+
+[state ]
+type=AngleAdd
+trigger1=time=0&&ishelper(37403)
+value=-95
+
+[state ]
+type=VelSet
+trigger1=ishelper(37403)
+x=-2.5
+y=22
+
+[State ]
+type=posadd
+trigger1=time=0&&ishelper(47403)
+x=floor(-140*root,fvar(32))
+y=floor(-50*root,fvar(33))
+
+[state ]
+type=AngleAdd
+trigger1=time=0&&ishelper(47403)
+value=-168
+
+[state ]
+type=VelSet
+trigger1=ishelper(47403)
+x=-22
+y=5.2
+
+[State ]
+type=posadd
+trigger1=time=0&&ishelper(57403)
+x=floor(-160*root,fvar(32))
+y=floor(-15*root,fvar(33))
+
+[state ]
+type=AngleAdd
+trigger1=time=0&&ishelper(57403)
+value=138
+
+[state ]
+type=VelSet
+trigger1=ishelper(57403)
+x=-17
+y=-16
+
+[State ]
+type=DestroySelf
+trigger1=time=25
+
+;SP CANCEL（ヘルパー)
+[Statedef 7404]
+type=A
+movetype=I
+physics=S
+anim=6149
+ctrl=0
+sprpriority=0
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=35+fvar(0),.0125+fvar(1)
+
+[State ]
+type=Varadd
+trigger1=time=[9,13]
+fvar(0)=-.33125*root,fvar(32)
+
+[State ]
+type=Varadd
+trigger1=time=[15,22]
+fvar(0)=.33125
+
+[State ]
+type=Varadd
+trigger1=time=[1,8]
+fvar(1)=.175
+
+[State ]
+type=Varadd
+trigger1=time=14
+fvar(1)=.875
+
+[State ]
+type=Varadd
+trigger1=time>=15
+fvar(1)=-.1203945
+
+[State ]
+type=Angleset
+trigger1=time=0
+value=90
+
+[State ]
+type=Angleset
+trigger1=time=14
+value=0
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=DestroySelf
+trigger1=time>=34&&fvar(1)<=0
+
+;プリキュアサポートエフェクト（ヘルパー）発動～円 
+[Statedef 7500]
+type=A
+movetype=I
+physics=S
+anim=6019
+ctrl=0
+sprpriority=19
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="hikari"
+ID=7501
+postype=p1
+stateno=7501
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,19
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=Varadd
+trigger1=1
+fvar(0)=.07
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=.05+fvar(0),.05+fvar(0)
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=160-var(2),256
+
+[State ]
+type=Varadd
+trigger1=time>=6
+var(2)=28
+
+[State ]
+type=DestroySelf
+trigger1=var(2)>=160
+
+;プリキュアサポートエフェクト（ヘルパー）発動～光
+[Statedef 7501]
+type=A
+movetype=I
+physics=S
+anim=6014
+ctrl=0
+sprpriority=20
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=VelSet
+trigger1=1
+x=0
+y=0
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=1,1
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256,256
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=1
+range=0,360
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=var(1)
+
+[State ]
+type=DestroySelf
+trigger1=animtime=0
+
+;カットイン（ヘルパー）
+[Statedef 7600]
+type=A
+movetype=I
+physics=S
+ctrl=0
+anim=1860
+sprpriority=-30
+
+[State ]
+type=Explod
+trigger1=Time=0
+anim=6450+ifelse(ishelper(17600),3,ifelse(ishelper(27600),4,0))
+ID=6450
+postype=p1
+bindtime=-1
+sprpriority=-30
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=6450
+scale=.5+fvar(1),.5+fvar(1)
+
+[State ]
+type=modifyexplod
+trigger1=time>=30
+ID=6450
+trans=addalpha
+alpha=256-var(1),256
+
+[State ]
+type=Varadd
+trigger1=time>=30
+fvar(1)=.01
+
+[State ]
+type=Varadd
+trigger1=time>=30
+var(1)=24
+
+[State ]
+type=RemoveExplod
+trigger1=time=55
+ID=6450
+
+[State ]
+type=PosSet
+trigger1=Time=0
+y=ifelse(ishelper(7600),130,ifelse(ishelper(17600),139,156))-ScreenPos Y
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=AngleDraw
+trigger1=time<=29
+scale=.95,.95
+
+[State ]
+type=Varadd
+trigger1=time>=30
+fvar(0)=.02
+
+[State ]
+type=AngleDraw
+trigger1=time>=30
+scale=.95+fvar(0),.95+fvar(0)
+
+[State ]
+type=VelSet
+trigger1=time<=15
+x=13
+
+[State ]
+type=VelSet
+trigger1=time=16
+x=10
+
+[State ]
+type=VelSet
+trigger1=time=17
+x=8
+
+[State ]
+type=VelSet
+trigger1=time=18
+x=6
+
+[State ]
+type=VelSet
+trigger1=time=19
+x=4
+
+[State ]
+type=VelSet
+trigger1=time=20
+x=2
+
+[State ]
+type=VelSet
+trigger1=time=21
+x=0
+
+[State ]
+type=Trans
+trigger1=time>=30
+trans=addalpha
+alpha=256-var(0),256
+
+[State ]
+type=Varadd
+trigger1=time>=30
+var(0)=24
+
+[State ]
+type=DestroySelf
+trigger1=time=55
+
+;ルミナス　アタック　エフェクト（ヘルパー）
+[Statedef 7700]
+type=A
+movetype=I
+physics=S
+anim=6141
+ctrl=0
+sprpriority=-3
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=1*root,fvar(32),1*root,fvar(33)
+
+[State ]
+type=AngleAdd
+trigger1=time=0
+value=-45
+
+[State ]
+type=BindToParent
+trigger1=1
+time=1
+pos=floor(50*root,fvar(32)),floor(0*root,fvar(33))
+
+[State ]
+type=DestroySelf
+trigger1=parent,stateno!=4527||parent,movetype=H
+
+;ルミナス　バリアー　エフェクト（ヘルパー）
+[Statedef 7701]
+type=A
+movetype=I
+physics=S
+anim=6146
+ctrl=0
+sprpriority=8
+
+[State ]
+type=parentVarset
+trigger1=time=0&&parent,animelemtime(3)>=1
+fvar(27)=1
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=parent,fvar(25)*root,fvar(32),parent,fvar(25)*root,fvar(33)
+
+[State ]
+type=BindToParent
+trigger1=1
+time=1
+pos=0,0
+
+[State ]
+type=hitby
+trigger1=1
+value=SCA,NP,SP,HP,AP
+time=1
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,NP,SP,HP,AP
+slot=1
+stateno=7701
+time=-1
+
+[State ]
+type=DestroySelf
+trigger1=parent,stateno!=4506||parent,movetype=H||((parent,animelemtime(19)>=0||parent,anim=3118)&&parent,fvar(25)<=0)
+
+;ルミナスハーティエルアンクションエフェクト（ヘルパー）
+[Statedef 4545]
+type=A
+movetype=I
+physics=S
+anim=1860
+ctrl=0
+
+[State ]
+type=posset
+trigger1=ishelper(4545)
+x=root,pos x+ifelse(root,facing=1,10,-10)
+y=floor(root,pos y-(60*root,fvar(33)))
+
+[State ]
+type=posset
+trigger1=ishelper(14545)
+x=partner,pos x+ifelse(root,facing=1,10,-10)
+y=partner,pos y-60
+
+[State ]
+type=Varrandom
+trigger1=time=0
+v=3
+range=0,3
+
+[State ]
+type=Explod
+trigger1=time=0&&ishelper(4545)
+anim=6110+var(3)
+ID=6110
+postype=p1
+ownpal=1
+scale=1*root,fvar(32),1*root,fvar(33)
+sprpriority=10
+bindtime=-1
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0&&ishelper(14545)
+anim=6110+var(3)
+postype=p1
+ownpal=1
+scale=1,1
+sprpriority=10
+bindtime=-1
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=DestroySelf
+trigger1=time=20

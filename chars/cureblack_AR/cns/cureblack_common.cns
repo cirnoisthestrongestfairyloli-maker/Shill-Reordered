@@ -1,0 +1,3023 @@
+;Stand
+[Statedef 0]
+type=S
+physics=S
+sprpriority=0
+anim=0
+
+[State ];ポケモン出現イントロ対応用
+type=AssertSpecial
+trigger1=prevstateno=1004&&roundstate<=1&&time<=610
+flag=invisible
+flag2=Intro
+flag3=nomusic
+
+[State ]
+type=AssertSpecial
+trigger1=prevstateno=1004&&roundstate<=1&&time<=610
+flag=nofg
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1&&fvar(1)=0&&time>=60&&((time%1=0&&var(6)!=10&&var(7)!=10&&var(8)!=10&&palno!=12)||(time%3=0&&(var(6)=10||var(7)=10||var(8)=10||palno=12)))
+trigger1=helper(3001),fvar(0)>=120
+var(38)=-1
+
+[state ]
+type=Varset
+trigger1=(prevstateno=130||prevstateno=153||prevstateno=155||prevstateno=5120)&&time=0
+var(23)=1
+
+[state ]
+type=Varset
+trigger1=time=3
+var(23)=0
+
+[state ];ヘルパー分身回避
+type=DestroySelf
+trigger1=ishelper
+
+[State ];バグ回避
+type=VelSet
+trigger1=pos Y<=-1||pos Y>=1
+x=0
+y=0
+
+[State ];バグ回避
+type=PosSet
+trigger1=pos Y<=-1||pos Y>=1
+y=0
+
+[State ]
+type=AfterImage
+trigger1=Time=0
+time=0
+ignorehitpause=1
+
+[State ]
+type=ChangeAnim
+trigger1=(Anim!=0&&Anim!=5)||(Anim=5&&AnimTime=0)
+value=0
+
+[State ]
+type=VelSet
+trigger1=Time=0
+y=0
+
+[State ]
+type=ChangeState
+trigger1=!alive
+value=5050
+
+;Stand to Crouch
+[Statedef 10]
+type=C
+physics=C
+
+[State ]
+type=varset
+trigger1=fvar(13)!=1&&prevstateno=100
+fvar(13)=1
+
+[State ]
+type=StateTypeSet
+trigger1=prevstateno=100
+statetype=S
+physics=S
+
+[State ]
+type=VelSet
+trigger1=prevstateno=100
+x=const(velocity.run.fwd.x)
+
+[State ]
+type=changeanim
+trigger1=time=0&&prevstateno!=100
+value=10
+
+[state ]
+type=Varset
+trigger1=(prevstateno=5120||prevstateno=151||prevstateno=153||prevstateno=155)&&time=0
+var(23)=1
+
+[state ]
+type=Varset
+trigger1=time=3
+var(23)=0
+
+[State ]
+type=VelMul
+trigger1=Time=0&&prevstateno!=100
+x=.75
+
+[State ]
+type=ctrlset
+trigger1=prevstateno=100&&command="holddown"
+value=0
+
+[State ]
+type=ctrlset
+trigger1=prevstateno=100&&command!="holddown"
+value=1
+
+[State ];走りストップ移行
+type=ChangeState
+trigger1=prevstateno=100&&(command!="holddown"||(command="holddown"&&time>=5))
+value=101
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0&&prevstateno!=100
+value=11
+ctrl=1
+
+;Crouching
+[Statedef 11]
+type=C
+physics=C
+anim=11
+sprpriority=0
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1&&fvar(1)=0&&time>=60&&(time%1=0&&var(6)!=10&&var(7)!=10&&var(8)!=10&&palno!=12)||(time%3=0&&(var(6)=10||var(7)=10||var(8)=10||palno=12))
+trigger1=helper(3001),fvar(0)>=120
+var(38)=-1
+
+[state ]
+type=Varset
+trigger1=(prevstateno=5120||prevstateno=151||prevstateno=153||prevstateno=155)&&time=0
+var(23)=1
+
+[state ]
+type=Varset
+trigger1=time=3
+var(23)=0
+
+[State ];lバグ回避
+type=VelSet
+trigger1=pos Y<=-1||pos Y>=1
+x=0
+y=0
+
+[State ];バグ回避
+type=PosSet
+trigger1=pos Y<=-1||pos Y>=1
+y=0
+
+[State ]
+type=ChangeAnim
+trigger1=Anim=6&&AnimTime=0
+value=11
+
+;Crouch to Stand
+[Statedef 12]
+type=S
+physics=S
+anim=12
+
+[state ]
+type=Varset
+trigger1=(prevstateno=5120||prevstateno=151||prevstateno=153||prevstateno=155)&&time=0
+var(23)=1
+
+[state ]
+type=Varset
+trigger1=time=3
+var(23)=0
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+
+;Walk
+[Statedef 20]
+type=S
+physics=S
+sprpriority=0
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1&&fvar(1)=0&&command!="holdfwd"&&((time%1=0&&var(6)!=10&&var(7)!=10&&var(8)!=10&&palno!=12)||(time%3=0&&(var(6)=10||var(7)=10||var(8)=10||palno=12)))
+trigger1=helper(3001),fvar(0)>=120
+var(38)=-1
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1&&fvar(1)=0&&command="holdfwd"&&time%1=0
+trigger1=helper(3001),fvar(0)>=120
+var(38)=ceil(1*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[state ]
+type=Varset
+trigger1=(prevstateno=5120||prevstateno=151||prevstateno=153||prevstateno=155)&&time=0
+var(23)=1
+
+[state ]
+type=Varset
+trigger1=time=3
+var(23)=0
+
+[State ]
+type=VelSet
+trigger1=command="holdfwd"
+x=const(velocity.walk.fwd.x)*ifelse(helper(3000),var(35),.5,1)
+
+[State ]
+type=VelSet
+trigger1=command="holdback"
+x=const(velocity.walk.back.x)*ifelse(helper(3000),var(35),.5,1)
+
+[State ]
+type=ChangeAnim
+trigger1=vel x>0&&((Anim!=20&&Anim!=5)||(Anim=5&&AnimTime=0))
+value=20
+
+[State ]
+type=ChangeAnim
+trigger1=vel x<0&&((Anim!=21&&Anim!=5)||(Anim=5&&AnimTime=0))
+value=21
+
+;Jump Start
+[Statedef 40]
+type=S
+physics=S
+anim=40
+ctrl=0
+sprpriority=1
+
+[State ]
+type=Varset
+trigger1=prevstateno=251&&time=0
+var(13)=29
+
+[State ];ブーストダッシュ（地上）
+type=ChangeState
+value=1630
+trigger1=command="z"&&command="holdfwd"&&command="holdup"&&numhelper(3000)=1
+trigger1=helper(3000),var(35)=0
+
+[State ]
+type=ChangeState
+trigger1=numhelper(3000)=1
+trigger1=helper(3000),var(35)=1
+value=0
+ctrl=1
+
+[state ]
+type=Turn
+trigger1=numhelper(3000)
+trigger1=helper(3000),var(33)=0&&P2Dist X<0&&time=0
+
+[State ]
+type=VarSet
+trigger1=Time=0
+sysvar(1)=0
+
+[State ]
+type=VarSet
+trigger1=command="holdfwd"
+sysvar(1)=1
+
+[State ]
+type=VarSet
+trigger1=command="holdback"
+sysvar(1)=-1
+
+[State ]
+type=VelSet
+trigger1=AnimTime=0
+x=ifelse(sysvar(1)=0,const(velocity.jump.neu.x),ifelse(sysvar(1)=1,const(velocity.jump.fwd.x),const(velocity.jump.back.x)))
+y=const(velocity.jump.y)
+
+[State ]
+type=VelSet
+trigger1=AnimTime=0&&prevstateno=100&&sysvar(1)=1
+x=const(velocity.runjump.fwd.x)
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=50
+ctrl=1
+
+;AirJump Start
+[Statedef 45]
+type=A
+physics=N
+ctrl=0
+
+[State ]
+type=ChangeState
+trigger1=time=0&&(fvar(8)=2||fvar(10)=1)&&var(6)!=11&&var(7)!=11&&var(8)!=11&&palno!=12
+value=51
+ctrl=1
+
+[State ]
+type=ChangeState
+trigger1=time=0&&fvar(8)=5&&(var(6)=11||var(7)=11||var(8)=11||palno=12)
+value=51
+ctrl=1
+
+[State ]
+type=VelSet
+trigger1=1
+x=0
+y=0
+
+[State ]
+type=ChangeAnim
+trigger1=SelfAnimExist(44)
+value=44
+
+[State ]
+type=ChangeAnim
+trigger1=!SelfAnimExist(44)
+value=41
+
+[State ]
+type=VarSet
+trigger1=Time=0
+sysvar(1)=0
+
+[State ]
+type=VarSet
+trigger1=command="holdfwd"
+sysvar(1)=1
+
+[State ]
+type=VarSet
+trigger1=command="holdback"
+sysvar(1)=-1
+
+[State ]
+type=VelSet
+trigger1=Time=2
+x=ifelse(sysvar(1)=0,const(velocity.airjump.neu.x),ifelse(sysvar(1)=1,const(velocity.airjump.fwd.x),const(velocity.airjump.back.x)))
+y=const(velocity.airjump.y)
+
+[State ]
+type=ChangeState
+trigger1=Time=2
+value=50
+ctrl=1
+
+;Jump Up
+[Statedef 50]
+type=A
+physics=A
+
+[state ]
+type=Turn
+trigger1=numhelper(3000)
+trigger1=helper(3000),var(33)=0&&P2Dist X<0&&time=0
+
+[State ];ハイジャンプ後のジャンプ制御
+type=VarSet
+trigger1=var(11)=1&&Time=0
+fvar(10)=1
+
+[State ];空中ジャンプ回数+2セット用
+type=VarSet
+trigger1=time=0&&fvar(8)=0&&fvar(10)=1&&(var(6)=11||var(7)=11||var(8)=11||palno=12)
+fvar(8)=3
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1&&fvar(1)=0&&vel x<=-.001&&((time%1=0&&var(6)!=10&&var(7)!=10&&var(8)!=10&&palno!=12)||(time%3=0&&(var(6)=10||var(7)=10||var(8)=10||palno=12)))
+trigger1=helper(3001),fvar(0)>=120
+var(38)=-1
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1&&fvar(1)=0&&vel x>=.001&&time%1=0
+trigger1=helper(3001),fvar(0)>=120
+var(38)=ceil(1*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=PlaySnd
+trigger1=var(11)=0&&time=0&&fvar(8)=0
+value=s0,10
+channel=0
+
+[State ]
+type=PlaySnd
+trigger1=var(11)=0&&time=0&&fvar(8)=0
+value=s100,0
+
+[State ]
+type=PlaySnd
+trigger1=var(11)=1&&time=0&&(fvar(8)=0||fvar(8)=3)
+value=s0,11
+channel=0
+
+[State ]
+type=PlaySnd
+trigger1=var(11)=1&&time=0&&(fvar(8)=0||fvar(8)=3)
+value=s100,6
+
+[state ]
+type=AfterImage
+trigger1=var(11)=1&&time=0&&(fvar(8)=0||fvar(8)=3)
+time=45
+length=5
+palbright=0,0,0
+palcontrast=200,200,200
+palpostbright=0,0,0
+paladd=0,0,0
+palmul=.8,.8,.8
+timegap=2
+framegap=1
+trans=add1
+
+[State ]
+type=Helper
+trigger1=time=0&&fvar(8)=1
+helpertype=normal
+name="air jump"
+ID=7007
+pos=0,floor(-50*fvar(33))
+postype=p1
+stateno=7007
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&fvar(8)=1
+value=s100,44
+
+[State ]
+type=Helper
+trigger1=time=0&&(fvar(8)=2||fvar(8)=4)&&(var(6)=11||var(7)=11||var(8)=11||palno=12)
+helpertype=normal
+name="AERIAL JUMP"
+ID=17007
+pos=0,floor(-50*fvar(33))
+postype=p1
+stateno=7007
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&(fvar(8)=2||fvar(8)=4)&&(var(6)=11||var(7)=11||var(8)=11||palno=12)
+value=s100,48
+
+[State ];空中ジャンプ回数+2
+type=VarSet
+trigger1=time=0&&fvar(8)=4
+fvar(8)=5
+
+[State ];空中ジャンプ回数+2
+type=VarSet
+trigger1=time=0&&fvar(8)=3
+fvar(8)=4
+
+[State ];空中ジャンプ回数+2
+type=VarSet
+trigger1=time=0&&fvar(8)=1
+fvar(8)=2
+
+[State ];空中ジャンプ回数+1
+type=VarSet
+trigger1=time=0&&fvar(8)=0
+fvar(8)=1
+
+[State ]
+type=VarSet
+trigger1=Time=0
+sysvar(1)=0
+
+[State ]
+type=ChangeAnim
+trigger1=(Time=0&&var(11)=0)||(Time<=10&&var(11)=1)
+value=ifelse((vel x)=0,41,ifelse((vel x)>0,42,43))
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="jump effect"
+ID=(7000+ifelse(var(11)=1,3,0))+ifelse(vel x>=.1,1,ifelse(vel x<=-.1,2,0))
+pos=floor(ifelse(vel x>=.1,-30,ifelse(vel x<=-.1,30,0))*fvar(32)),floor(ifelse(vel x=0,10,0))
+postype=p1
+stateno=7000
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0&&var(11)=1
+anim=6004+ifelse(vel x=0,1,0)
+postype=p1
+pos=floor(ifelse(vel x>=.1,-40,ifelse(vel x<=-.1,40,-10))*fvar(32)),floor(20*fvar(33))
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=4
+pausemovetime=100
+supermovetime=100
+facing=ifelse(vel x<=-.1,-1,1)
+
+[State ]
+type=ChangeAnim
+trigger1=Vel y>-2&&SelfAnimExist(anim+3)
+persistent=0
+value=Anim+3
+
+;Jump Down(empty state for compatibility)
+[Statedef 51]
+type=A
+physics=A
+
+[State ]
+type=changeanim
+trigger1=((prevstateno=[1631,1633])||(prevstateno=1630&&anim!=1572))&&time=0
+value=41
+elem=ifelse(prevstateno=1633||(prevstateno=1630&&anim=1570),7,2)
+
+[State ]
+type=VelSet
+trigger1=time=0&&fvar(17)=1
+y=-5
+persistent=0
+
+[State ]
+type=varset
+trigger1=time=0&&fvar(17)=1
+fvar(17)=0
+
+[State ]
+type=Veladd
+trigger1=prevstateno=[1630,1633]
+y=.6
+
+[State ]
+type=varset
+trigger1=(prevstateno=[1630,1633])&&command="up"
+fvar(10)=1
+
+[State ]
+type=varset
+trigger1=(prevstateno=[1630,1633])&&command="up"
+fvar(8)=4
+
+[State ]
+type=ChangeState
+trigger1=(prevstateno=[1630,1633])&&command="up"
+value=45
+
+;Jump Land
+[Statedef 52]
+type=S
+physics=S
+ctrl=0
+anim=47
+
+[State ]
+type=PlaySnd
+trigger1=Time=0
+value=s100,2
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6001
+postype=p1
+pos=floor(-5*fvar(33)),0
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=3
+vel=-2.2*fvar(32),0
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6001
+postype=p1
+pos=floor(5*fvar(33)),0
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=3
+vel=2.2*fvar(32),0
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=VelSet
+trigger1=Time=0
+y=0
+
+[State ]
+type=PosSet
+trigger1=Time=0
+y=0
+
+[State ]
+type=CtrlSet
+trigger1=Time=1
+value=1
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;RUN_FWD
+[Statedef 100]
+type=S
+physics=S
+anim=100
+sprpriority=1
+
+[state ];テンションゲージ増加
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=time%1=0&&helper(3001),fvar(0)>=120&&fvar(1)=0&&vel x>=.001
+var(38)=ceil(2*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=Varset
+trigger1=1
+fvar(18)=vel x
+
+[state ]
+type=Varset
+trigger1=time=0&&(prevstateno=220||prevstateno=230||prevstateno=261)
+var(13)=11
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=220||prevstateno=230||prevstateno=261)
+anim=6134
+postype=p1
+pos=floor(-10*fvar(32)),floor(-40*fvar(33))
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=4
+vel=-1,0
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&(prevstateno=220||prevstateno=230||prevstateno=261)
+value=s100,1
+
+[State ]
+type=Varset
+trigger1=time=0&&(prevstateno=220||prevstateno=230||prevstateno=261)
+var(27)=0
+
+[State ]
+type=Varset
+trigger1=time=0&&(prevstateno=220||prevstateno=230||prevstateno=261)
+fvar(23)=1
+
+[State ]
+type=PlaySnd
+trigger1=time%13=0
+value=s100,4
+channel=9
+
+[State ]
+type=Explod
+trigger1=time%15=0
+anim=6000
+postype=p1
+pos=floor(10*fvar(32)),0
+scale=.5*fvar(32),.5*fvar(33)
+ID=6000
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=VelSet
+trigger1=1
+x=const(velocity.run.fwd.x)
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=NoWalk
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=NoAutoTurn
+
+[state ]
+type=Varset
+trigger1=time=0&&((var(23)=1||prevstateno=151||prevstateno=153||prevstateno=155||prevstateno=5120)||(prevstateno=[120,155]))
+var(13)=9
+
+[State ]
+type=ChangeState
+trigger1=time>=10&&(command!="holdfwd"||command="holddown")
+value=101
+
+;走りストップ
+[Statedef 101]
+type=S
+physics=S
+anim=101
+sprpriority=1
+ctrl=0
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=time%1=0&&helper(3001),fvar(0)>=120&&fvar(1)=0&&vel x>=.001
+var(38)=ceil(2*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=Varset
+trigger1=1
+fvar(18)=vel x
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,5
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01
+x=const(velocity.run.fwd.x)-(time*.3)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009
+x=0
+
+[State ]
+type=Velset
+trigger1=time=0
+y=0
+
+[State ]
+type=ChangeState
+trigger1=animtime=0
+value=0
+ctrl=1
+
+;RUN_BACK
+[Statedef 105]
+type=A
+physics=A
+ctrl=0
+anim=105
+sprpriority=1
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(-100/ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[state ]
+type=Varset
+trigger1=time=0&&(var(23)=1||prevstateno=151||prevstateno=153||prevstateno=155||prevstateno=5120)
+var(13)=9
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noairguard
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s0,10
+channel=0
+
+[state ]
+type=PlaySnd
+trigger1=time=0
+value=s100,7
+
+[state ]
+type=AfterImage
+trigger1=Time=0
+time=30
+length=5
+palbright=0,0,0
+palcontrast=200,200,200
+palpostbright=0,0,0
+paladd=0,0,0
+palmul=.8,.8,.8
+timegap=1
+framegap=1
+trans=add1
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6002
+postype=p1
+pos=floor(-10*fvar(32)),floor(5*fvar(32))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[state ]
+type=NotHitBy
+trigger1=time<=10
+value=SCA
+time=1
+
+[State ]
+type=VelSet
+trigger1=Time=0
+x=const(velocity.run.back.x)
+y=const(velocity.run.back.y)
+
+[State ]
+type=ChangeState
+trigger1=Vel Y>0&&Pos Y>=10
+value=106
+
+;RUN_BACK2(land)
+[Statedef 106]
+type=S
+physics=S
+ctrl=0
+anim=106
+
+[State ]
+type=PlaySnd
+trigger1=Time=0
+value=s100,2
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6001
+postype=p1
+pos=floor(-10*fvar(32)),0
+scale=.4*fvar(32),.4*fvar(33)
+ID=6001
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+vel=-1.2*fvar(32),0
+
+[State ]
+type=VelSet
+trigger1=Time=0
+x=0
+y=0
+
+[State ]
+type=PosSet
+trigger1=Time=0
+y=0
+
+[State ]
+type=MakeDust
+trigger1=Time=2
+pos=floor(-5*fvar(32)),floor(-2*fvar(33))
+spacing=1
+
+[State ]
+type=ChangeState
+trigger1=animtime=0
+value=0
+ctrl=1
+
+;GUARD(start)
+[Statedef 120]
+type=U
+physics=U
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0
+value=120+(statetype=C)+(statetype=A)*2
+
+[State ]
+type=StateTypeSet
+trigger1=Time=0&&statetype=S
+physics=S
+
+[State ]
+type=StateTypeSet
+trigger1=Time=0&&statetype=C
+physics=C
+
+[State ]
+type=StateTypeSet
+trigger1=Time=0&&statetype=A
+physics=A
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=S&&command="holddown"
+statetype=C
+physics=C
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=C&&command!="holddown"
+statetype=S
+physics=S
+
+[State ];ジャストガード（立ち）
+type=HitOverride
+trigger1=numhelper(3000)=1&&statetype=S
+trigger1=(helper(3000),var(10)<=3&&var(6)!=21&&var(7)!=21&&var(8)!=21&&palno!=12)||(helper(3000),var(10)<=12&&(var(6)=21||var(7)=21||var(8)=21||palno=12))
+attr=SCA,NA,SA,HA,NP,SP,HP,AA,AP
+slot=0
+stateno=1800
+time=1
+
+[State ];ジャストガード（しゃがみ）
+type=HitOverride
+trigger1=numhelper(3000)=1&&statetype=C
+trigger1=(helper(3000),var(10)<=3&&var(6)!=21&&var(7)!=21&&var(8)!=21&&palno!=12)||(helper(3000),var(10)<=12&&(var(6)=21||var(7)=21||var(8)=21||palno=12))
+attr=SCA,NA,SA,HA,NP,SP,HP,AA,AP
+slot=1
+stateno=1801
+time=1
+
+[State ];ジャストガード（空中）
+type=HitOverride
+trigger1=numhelper(3000)=1&&statetype=A
+trigger1=(helper(3000),var(10)<=3&&var(6)!=21&&var(7)!=21&&var(8)!=21&&palno!=12)||(helper(3000),var(10)<=12&&(var(6)=21||var(7)=21||var(8)=21||palno=12))
+attr=SCA,NA,SA,HA,NP,SP,HP,AA,AP
+slot=2
+stateno=1802
+time=1
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=130+(statetype=C)+(statetype=A)*2
+
+[State ]
+type=ChangeState
+trigger1=command!="holdback"||!inguarddist
+value=140
+
+;STAND GUARD(guarding)
+[Statedef 130]
+type=S
+physics=S
+
+[State ]
+type=ChangeAnim
+trigger1=Anim!=130
+value=130
+
+[State ]
+type=ChangeState
+trigger1=command="holddown"
+value=131
+
+[State ]
+type=ChangeState
+trigger1=command!="holdback"||!inguarddist
+value=140
+
+;CROUCH GUARD(guarding)
+[Statedef 131]
+type=C
+physics=C
+
+[State ]
+type=ChangeAnim
+trigger1=Anim!=131
+value=131
+
+[State ]
+type=ChangeState
+trigger1=command!="holddown"
+value=130
+
+[State ]
+type=ChangeState
+trigger1=command!="holdback"||!inguarddist
+value=140
+
+;AIR GUARD(guarding)
+[Statedef 132]
+type=A
+physics=N
+
+[State ]
+type=ChangeAnim
+trigger1=Anim!=132
+value=132
+
+[State ]
+type=VelAdd
+trigger1=1
+y=Const(movement.yaccel)
+
+[State ]
+type=VarSet
+trigger1=1
+sysvar(0)=(pos y>=0)&&(vel y>0)
+
+[State ]
+type=VelSet
+trigger1=sysvar(0)
+y=0
+
+[State ]
+type=PosSet
+trigger1=sysvar(0)
+y=0
+
+[State ]
+type=ChangeState
+trigger1=sysvar(0)&&command="holdback"&&inguarddist
+value=130
+
+[State ]
+type=ChangeState
+trigger1=sysvar(0)
+value=52
+
+[State ]
+type=ChangeState
+trigger1=command!="holdback"||!inguarddist
+value=140
+
+;GUARD(end)
+[Statedef 140]
+type=U
+physics=U
+ctrl=1
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0
+value=140+(statetype=C)+(statetype=A)*2
+
+[State ]
+type=StateTypeSet
+trigger1=Time=0&&statetype=S
+physics=S
+
+[State ]
+type=StateTypeSet
+trigger1=Time=0&&statetype=C
+physics=C
+
+[State ]
+type=StateTypeSet
+trigger1=Time=0&&statetype=A
+physics=A
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=S&&command="holddown"
+statetype=C
+physics=C
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=C&&command!="holddown"
+statetype=S
+physics=S
+
+;SGUARDHIT(shaking)
+[Statedef 150]
+type=S
+movetype=H
+physics=N
+velset=0,0
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(-30/ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[state ]
+type=Varadd
+trigger1=time=0
+var(14)=(40*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+[state ]
+type=Varadd
+trigger1=time=0&&(enemynear,HitDefAttr=SCA,NA||enemynear,HitDefAttr=SCA,NT||enemynear,HitDefAttr=SCA,NP)
+var(14)=(10*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+[state ]
+type=Varadd
+trigger1=time=0&&(enemynear,HitDefAttr=SCA,SA||enemynear,HitDefAttr=SCA,ST||enemynear,HitDefAttr=SCA,SP)
+var(14)=(80*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+[state ]
+type=Varadd
+trigger1=time=0&&(enemynear,HitDefAttr=SCA,HA||enemynear,HitDefAttr=SCA,HT||enemynear,HitDefAttr=SCA,HP)
+var(14)=(160*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+;右代宮縁寿「SILENT ATTACK」対応ステート
+[State ]
+type=Varadd
+trigger1=var(36)=0&&time=0&&enemynear,name="USHIROMIYA ANGE"&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=6||enemynear,palno=12)
+var(41)=-8
+
+[State ]
+type=Varadd
+trigger1=var(36)=0&&time=0
+var(41)=10
+
+[State ];ガードクラッシュ（立ち）移行
+type=changestate
+trigger1=var(14)>=1000
+value=1900
+
+[State ]
+type=Helper
+trigger1=enemynear,movecontact&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=400&&command!="holdfwd")||(var(10)=1000&&var(40)>=400&&command="holdfwd")))
+helpertype=normal
+name="precure protection"
+ID=4000+ifelse(var(10)=1000&&var(40)>=400&&command="holdfwd",500,0)
+pos=-320-ifelse(frontedgedist<=95,30,0)+ifelse(P2bodydist X>=50,30,0),-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=400&&command="holdfwd",500,0)
+persistent=0
+
+[State ]
+type=ChangeAnim
+trigger1=1
+value=150
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver
+value=151+2*(command="holddown")
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=S&&command="holddown"
+statetype=C
+physics=C
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=C&&command!="holddown"
+statetype=S
+physics=S
+
+[State ]
+type=ForceFeedback
+trigger1=time=0
+waveform=square
+time=3
+
+;SGUARDHIT2(knocked back)
+[Statedef 151]
+type=S
+movetype=H
+physics=S
+anim=150
+
+[State ]
+type=HitVelSet
+trigger1=Time=0
+x=1
+
+[State ]
+type=VelSet
+trigger1=Time=GetHitVar(slidetime)||HitOver
+x=0
+
+[State ]
+type=CtrlSet
+trigger1=Time=GetHitVar(ctrltime)
+value=1
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=S&&command="holddown"
+statetype=C
+physics=C
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=C&&command!="holddown"
+statetype=S
+physics=S
+
+[State ]
+type=ChangeState
+trigger1=HitOver
+value=130
+ctrl=1
+
+;CGUARDHIT(shaking)
+[Statedef 152]
+type=C
+movetype=H
+physics=N
+velset=0,0
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(-30/ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[state ]
+type=Varadd
+trigger1=time=0
+var(14)=(40*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+[state ]
+type=Varadd
+trigger1=time=0&&(enemynear,HitDefAttr=SCA,NA||enemynear,HitDefAttr=SCA,NT||enemynear,HitDefAttr=SCA,NP)
+var(14)=(10*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+[state ]
+type=Varadd
+trigger1=time=0&&(enemynear,HitDefAttr=SCA,SA||enemynear,HitDefAttr=SCA,ST||enemynear,HitDefAttr=SCA,SP)
+var(14)=(80*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+[state ]
+type=Varadd
+trigger1=time=0&&(enemynear,HitDefAttr=SCA,HA||enemynear,HitDefAttr=SCA,HT||enemynear,HitDefAttr=SCA,HP)
+var(14)=(160*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+;右代宮縁寿「SILENT ATTACK」対応ステート
+[State ]
+type=Varadd
+trigger1=var(36)=0&&time=0&&enemynear,name="USHIROMIYA ANGE"&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=6||enemynear,palno=12)
+var(41)=-8
+
+[State ]
+type=Varadd
+trigger1=var(36)=0&&time=0
+var(41)=10
+
+[State ];ガードクラッシュ（しゃがみ）移行
+type=changestate
+trigger1=var(14)>=1000
+value=1901
+
+[State ]
+type=Helper
+trigger1=enemynear,movecontact&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=400&&command!="holdfwd")||(var(10)=1000&&var(40)>=400&&command="holdfwd")))
+helpertype=normal
+name="precure protection"
+ID=4000+ifelse(var(10)=1000&&var(40)>=400&&command="holdfwd",500,0)
+pos=-320-ifelse(frontedgedist<=95,30,0)+ifelse(P2bodydist X>=50,30,0),-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=400&&command="holdfwd",500,0)
+persistent=0
+
+[State ]
+type=ChangeAnim
+trigger1=1
+value=151
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver
+value=151+2*(command="holddown")
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=S&&command="holddown"
+statetype=C
+physics=C
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=C&&command!="holddown"
+statetype=S
+physics=S
+
+[State ]
+type=ForceFeedback
+trigger1=time=0
+waveform=square
+time=4
+
+;CGUARDHIT2(knocked back)
+[Statedef 153]
+type=C
+movetype=H
+physics=C
+anim=151
+
+[State ]
+type=HitVelSet
+trigger1=Time=0
+x=1
+
+[State ]
+type=VelSet
+trigger1=Time=GetHitVar(slidetime)||HitOver
+x=0
+
+[State ]
+type=CtrlSet
+trigger1=Time=GetHitVar(ctrltime)
+value=1
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=S&&command="holddown"
+statetype=C
+physics=C
+
+[State ]
+type=StateTypeSet
+trigger1=statetype=C&&command!="holddown"
+statetype=S
+physics=S
+
+[State ]
+type=ChangeState
+trigger1=HitOver
+value=131
+ctrl=1
+
+;AGUARDHIT(shaking)
+[Statedef 154]
+type=A
+movetype=H
+physics=N
+velset=0,0
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(-30/ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[state ]
+type=Varadd
+trigger1=time=0
+var(14)=(40*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+[state ]
+type=Varadd
+trigger1=time=0&&(enemynear,HitDefAttr=SCA,NA||enemynear,HitDefAttr=SCA,NT||enemynear,HitDefAttr=SCA,NP)
+var(14)=(10*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+[state ]
+type=Varadd
+trigger1=time=0&&(enemynear,HitDefAttr=SCA,SA||enemynear,HitDefAttr=SCA,ST||enemynear,HitDefAttr=SCA,SP)
+var(14)=(80*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+[state ]
+type=Varadd
+trigger1=time=0&&(enemynear,HitDefAttr=SCA,HA||enemynear,HitDefAttr=SCA,HT||enemynear,HitDefAttr=SCA,HP)
+var(14)=(160*ifelse(var(6)=15||var(7)=15||var(8)=15||palno=12,0,1))*ifelse(enemynear,var(56)=19861004&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=9||enemynear,palno=12),2,1)
+
+;右代宮縁寿「SILENT ATTACK」対応ステート
+[State ]
+type=Varadd
+trigger1=var(36)=0&&time=0&&enemynear,name="USHIROMIYA ANGE"&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=6||enemynear,palno=12)
+var(41)=-8
+
+[State ]
+type=Varadd
+trigger1=var(36)=0&&time=0
+var(41)=10
+
+[State ];ガードクラッシュ（空中）移行
+type=changestate
+trigger1=var(14)>=1000
+value=1902
+
+[State ]
+type=ChangeAnim
+trigger1=1
+value=152
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver
+value=155
+
+[State ]
+type=ForceFeedback
+trigger1=time=0
+waveform=square
+time=4
+
+;AGUARDHIT2(knocked away)
+[Statedef 155]
+type=A
+movetype=H
+physics=N
+anim=152
+
+[State ]
+type=HitVelSet
+trigger1=Time=0
+x=1
+y=1
+
+[State ]
+type=VelAdd
+trigger1=1
+y=Const(movement.yaccel)
+
+[State ]
+type=CtrlSet
+trigger1=Time=GetHitVar(ctrltime)
+value=1
+
+[State ]
+type=VarSet
+trigger1=1
+sysvar(0)=(pos y>=0)&&(vel y>0)
+
+[State ]
+type=VelSet
+trigger1=sysvar(0)
+y=0
+
+[State ]
+type=PosSet
+trigger1=sysvar(0)
+y=0
+
+[State ]
+type=ChangeState
+trigger1=sysvar(0)&&command="holdback"&&inguarddist
+value=130
+
+[State ]
+type=ChangeState
+trigger1=sysvar(0)
+value=52
+
+;LOSE(Time over)
+[Statedef 170]
+type=S
+ctrl=0
+anim=170
+velset=0,0
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+;PREINTRO
+[Statedef 190]
+type=S
+ctrl=0
+velset=0,0
+
+[State ]
+type=ChangeAnim
+trigger1=SelfAnimExist(190)
+value=190
+
+[State ]
+type=ChangeState
+trigger1=Time=0
+value=191
+
+;INTRO(override this state to give character an intro)
+[Statedef 191]
+type=S
+ctrl=0
+
+[State ]
+type=ChangeState
+trigger1=Time=0
+value=0
+
+;HITG_SHAKE
+[Statedef 5000]
+type=S
+movetype=H
+physics=N
+velset=0,0
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(-30/ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+;右代宮縁寿「SILENT ATTACK」対応ステート
+[State ];プリキュアサポートゲージ加算～やられ・ガード時（SILENT ATTACK）
+type=Varadd
+trigger1=var(36)=0&&time=0&&enemynear,name="USHIROMIYA ANGE"&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=6||enemynear,palno=12)
+var(41)=-18
+
+[State ];プリキュアサポートゲージ加算～やられ・ガード時
+type=Varadd
+trigger1=var(36)=0&&time=0
+var(41)=20
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)!=[3,5])
+value=ifelse((GetHitVar(groundtype)=1),5000,5010)+GetHitVar(animtype)
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)=[3,5])
+value=5030
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)=[4,5])&&(SelfAnimExist(5047+GetHitVar(animtype)))
+value=5047+GetHitVar(animtype)
+
+[State ]
+type=ChangeAnim
+trigger1=Time>0&&anim!=15312
+value=anim
+
+[State ]
+type=StateTypeSet
+trigger1=(Time=0&&(GetHitVar(yvel)!=0||GetHitVar(fall)))||Pos Y!=0
+statetype=a
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver&&GetHitVar(yvel)=0&&!GetHitVar(fall)
+value=5001
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver
+value=5030
+
+[State ]
+type=ForceFeedback
+trigger1=anim=5000||anim=5010
+persistent=0
+time=6
+waveform=square
+
+[State ]
+type=ForceFeedback
+trigger1=anim=5001||anim=5011
+persistent=0
+time=8
+waveform=sinesquare
+ampl=110,-1,-.3
+
+[State ]
+type=ForceFeedback
+trigger1=anim=5012||anim=5002||anim=5030
+persistent=0
+time=15
+waveform=sinesquare
+ampl=140
+
+;HITG_SLIDE
+[Statedef 5001]
+type=S
+movetype=H
+physics=S
+
+[State ]
+type=HitVelSet
+trigger1=Time=0
+x=1
+
+[State ]
+type=ChangeAnim
+trigger1=AnimTime=0
+value=5005+GetHitVar(animtype)+(GetHitVar(groundtype)=2)*10
+
+[State ]
+type=VelMul
+trigger1=Time>=GetHitVar(slidetime)
+x=.6
+
+[State ]
+type=VelSet
+trigger1=HitOver
+x=0
+
+[State ]
+type=DefenceMulSet
+trigger1=HitOver
+value=1
+
+[State ]
+type=ChangeState
+trigger1=HitOver
+value=0
+ctrl=1
+
+;HITC_SHAKE
+[Statedef 5010]
+type=C
+movetype=H
+physics=N
+velset=0,0
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(-50/ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+;右代宮縁寿「SILENT ATTACK」対応ステート
+[State ];プリキュアサポートゲージ加算～やられ・ガード時（SILENT ATTACK）
+type=Varadd
+trigger1=var(36)=0&&time=0&&enemynear,name="USHIROMIYA ANGE"&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=6||enemynear,palno=12)
+var(41)=-18
+
+[State ];プリキュアサポートゲージ加算～やられ・ガード時
+type=Varadd
+trigger1=var(36)=0&&time=0
+var(41)=20
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)!=[3,5])
+value=5020+GetHitVar(animtype)
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)=[3,5])
+value=5030
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)=[4,5])&&(SelfAnimExist(5047+GetHitVar(animtype)))
+value=5047+GetHitVar(animtype)
+
+[State ]
+type=ChangeAnim
+trigger1=Time>0
+value=anim
+
+[State ]
+type=StateTypeSet
+trigger1=Time=0&&((GetHitVar(yvel)!=0||GetHitVar(fall))||Pos Y!=0)
+statetype=a
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver&&GetHitVar(yvel)=0&&!GetHitVar(fall)
+value=5011
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver
+value=5030
+
+[State ]
+type=ForceFeedback
+trigger1=anim=5020
+persistent=0
+time=6
+waveform=square
+
+[State ]
+type=ForceFeedback
+trigger1=anim=5021
+persistent=0
+time=8
+waveform=sinesquare
+ampl=110,-1,-.3
+
+[State ]
+type=ForceFeedback
+trigger1=anim=5022
+persistent=0
+time=15
+waveform=sinesquare
+ampl=140
+
+;HITC_SLIDE
+[Statedef 5011]
+type=C
+movetype=H
+physics=C
+
+[State ]
+type=HitVelSet
+trigger1=Time=0
+x=1
+
+[State ]
+type=ChangeAnim
+trigger1=AnimTime=0
+value=5025+GetHitVar(animtype)
+
+[State ]
+type=VelMul
+trigger1=Time>=GetHitVar(slidetime)
+x=.6
+
+[State ]
+type=VelSet
+trigger1=HitOver
+x=0
+
+[State ]
+type=DefenceMulSet
+trigger1=HitOver
+value=1
+
+[State ]
+type=ChangeState
+trigger1=HitOver
+value=11
+ctrl=1
+
+;HITA_SHAKE
+[Statedef 5020]
+type=A
+movetype=H
+physics=N
+velset=0,0
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(-50/ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+;右代宮縁寿「SILENT ATTACK」対応ステート
+[State ];プリキュアサポートゲージ加算～やられ・ガード時（SILENT ATTACK）
+type=Varadd
+trigger1=var(36)=0&&time=0&&enemynear,name="USHIROMIYA ANGE"&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=6||enemynear,palno=12)
+var(41)=-18
+
+[State ];プリキュアサポートゲージ加算～やられ・ガード時
+type=Varadd
+trigger1=var(36)=0&&time=0
+var(41)=20
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)!=[3,5])
+value=ifelse((GetHitVar(airtype)=1),5000,5010)+GetHitVar(animtype)
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)=[3,5])
+value=5030
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)=[4,5])&&(SelfAnimExist(5047+GetHitVar(animtype)))
+value=5047+GetHitVar(animtype)
+
+[State ]
+type=ChangeAnim
+trigger1=Time>0
+value=anim
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver
+value=5030
+
+[State ]
+type=ForceFeedback
+trigger1=anim=5000||anim=5010
+persistent=0
+time=6
+waveform=square
+
+[State ]
+type=ForceFeedback
+trigger1=anim=5001||anim=5011
+persistent=0
+time=8
+waveform=sinesquare
+ampl=110,-1,-.3
+
+[State ]
+type=ForceFeedback
+trigger1=anim=5012||anim=5002||anim=5030||(anim=[5051,5059])
+persistent=0
+time=15
+waveform=sinesquare
+ampl=140
+
+;HITA_UP(initial going up)
+[Statedef 5030]
+type=A
+movetype=H
+physics=N
+ctrl=0
+
+[State ]
+type=VarSet
+trigger1=pos y>=-5&&(command="a"||command="b"||command="c")&&CanRecover
+fvar(26)=1
+
+[State ]
+type=VelAdd
+trigger1=1
+y=GetHitVar(yaccel)
+
+[State ]
+type=HitVelSet
+trigger1=Time=0
+x=1
+y=1
+
+[State ]
+type=ChangeState
+trigger1=!HitFall&&(HitOver||(Vel Y>0&&Pos Y>=10))
+value=5040
+
+[State ]
+type=ChangeState
+trigger1=HitFall&&(HitOver||(Vel Y>0&&Pos Y>=10))
+value=5050
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=5035
+
+;HITA_UP_T(transition)
+[Statedef 5035]
+type=A
+movetype=H
+physics=N
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&SelfAnimExist(5035)&&(Anim!=[5051,5059])&&Anim!=5090
+value=5035
+
+[State ]
+type=VelAdd
+trigger1=1
+y=GetHitVar(yaccel)
+
+[State ]
+type=ChangeState
+trigger1=!HitFall&&(HitOver||AnimTime=0||(Vel Y>0&&Pos Y>=10)||(Time=0&&Anim!=5035))
+value=5040
+
+[State ]
+type=ChangeState
+trigger1=HitFall&&(HitOver||AnimTime=0||(Vel Y>0&&Pos Y>=10)||(Time=0&&Anim!=5035))
+value=5050
+
+;HITA_RECOV(recovering in air,not falling)
+[Statedef 5040]
+type=A
+movetype=H
+physics=N
+
+[State ]
+type=ChangeState
+trigger1=!Alive
+value=5050
+
+[State ]
+type=ChangeAnim
+trigger1=(AnimTime=0&&Anim!=5040)||(Time=0&&Anim!=5035)
+value=5040
+
+[State ]
+type=CtrlSet
+trigger1=HitOver
+value=1
+
+[State ]
+type=StateTypeSet
+trigger1=HitOver
+movetype=I
+
+[State ]
+type=VelAdd
+trigger1=1
+y=GetHitVar(yaccel)
+
+[State ]
+type=ChangeState
+trigger1=Vel Y>0&&Pos Y>=0
+value=52
+
+;HITA_FALL(knocked up,falling)
+[Statedef 5050]
+type=A
+movetype=H
+physics=N
+
+[State ]
+type=VarSet
+trigger1=pos y>=-25&&(command="a"||command="b"||command="c")&&CanRecover
+fvar(26)=1
+
+[State ]
+type=ChangeAnim
+trigger1=(AnimTime=0&&Anim=5035)||(Time=0&&Anim!=5035&&(Anim!=[5051,5059])&&(Anim!=[5061,5069])&&Anim!=5090)
+value=5050
+
+[State ]
+type=ChangeAnim
+trigger1=(anim=[5050,5059])&&Vel Y>=ifelse(anim=5050,1,-2)&&SelfAnimExist(anim+10)
+value=anim+10
+persistent=0
+
+[State ]
+type=VelAdd
+trigger1=1
+y=GetHitVar(yaccel)
+
+[State ]
+type=ChangeState
+trigger1=Vel Y>0&&Pos Y<=-20&&alive&&CanRecover&&(Command="a"||Command="b"||Command="c"||Command="holda"||Command="holdb"||Command="holdc")
+value=1500
+
+[State ]
+type=ChangeState
+trigger1=Vel Y>0&&Pos Y>=ifelse((anim=[5051,5059])||(anim=[5061,5069]),0,25)
+value=5100
+
+;HIT_TRIP(shaking)
+[Statedef 5070]
+type=A
+movetype=H
+physics=N
+velset=0,0
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(-50/ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+;右代宮縁寿「SILENT ATTACK」対応ステート
+[State ];プリキュアサポートゲージ加算～やられ・ガード時（SILENT ATTACK）
+type=Varadd
+trigger1=var(36)=0&&time=0&&enemynear,name="USHIROMIYA ANGE"&&enemynear,Authorname="YU-TOHARU"&&(enemynear,var(31)=6||enemynear,palno=12)
+var(41)=-18
+
+[State ];プリキュアサポートゲージ加算～やられ・ガード時
+type=Varadd
+trigger1=var(36)=0&&time=0
+var(41)=20
+
+[State ]
+type=ChangeAnim 
+trigger1=time=0
+value=5070
+
+[State ]
+type=ChangeAnim 
+trigger1=time=0&&enemynear,statetype=C
+value=5071
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver
+value=5071
+
+[State ]
+type=ForceFeedback
+trigger1=time=0
+time=12
+waveform=sinesquare
+ampl=140
+
+;HIT_TRIP2(fall through air)
+[Statedef 5071]
+type=A
+movetype=H
+physics=N
+
+[State ]
+type=HitVelSet
+trigger1=Time=0
+x=1
+y=1
+
+[State ]
+type=VelAdd
+trigger1=1
+y=GetHitVar(yaccel)
+
+[State ]
+type=ChangeState
+trigger1=Vel Y>0&&Pos Y>=15
+value=5110
+
+;HITL_SHAKE
+[Statedef 5080]
+type=L
+movetype=H
+physics=N
+velset=0,0
+
+[State ]
+type=VarSet
+trigger1=time=0
+sysvar(2)=ifelse(GetHitVar(yvel)=0,5080,5090)
+
+[State ]
+type=VarAdd
+trigger1=time=0&&((anim=[5081,5089])||(anim=[5111,5119]))&&SelfAnimExist(sysvar(2)+(anim%10))
+sysvar(2)=anim%10
+
+[State ]
+type=VarSet
+trigger1=time=0&&sysvar(2)=5090&&!SelfAnimExist(5090)
+sysvar(2)=5030
+
+[State ];Freeze
+type=ChangeAnim
+trigger1=1
+value=sysvar(2)
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver&&GetHitVar(yvel)=0
+value=5081
+
+[State ]
+type=ChangeState
+trigger1=HitShakeOver&&GetHitVar(yvel)!=0
+value=5030
+
+;HITL_SLIDE
+[Statedef 5081]
+type=L
+movetype=H
+physics=C
+
+[State ]
+type=HitVelSet
+trigger1=Time=0
+x=1
+
+[State ]
+type=VelSet
+trigger1=HitOver
+x=0
+
+[State ]
+type=VarSet
+trigger1=Time=0
+sysvar(0)=1
+
+[State ]
+type=ChangeState
+trigger1=HitOver
+value=5110
+
+;HIT_BOUNCE(hit ground)
+[Statedef 5100]
+type=L
+movetype=H
+physics=N
+
+[State ]
+type=ChangeState
+trigger1=Time=0&&fvar(26)=1&&alive=1&&CanRecover
+value=ifelse(vel x<=-5,1612,1611)
+
+[State ]
+type=VelSet
+trigger1=Time=0&&GetHitVar(fall.yvel)=0&&vel x>1
+x=1
+
+[State ]
+type=FallEnvShake
+trigger1=Time=0
+
+[State ]
+type=VarSet
+trigger1=Time=0
+sysvar(1)=floor(vel y)
+
+[State ]
+type=ChangeAnim
+trigger1=time=0&&(((anim!=[5051,5059])&&(anim!=[5061,5069]))||!SelfAnimExist(5100+(anim%10)))
+value=5100
+
+[State ]
+type=ChangeAnim
+trigger1=time=0&&((anim=[5051,5059])||(anim=[5061,5069]))&&SelfAnimExist(5100+(anim%10))
+value=5100+(anim%10)
+
+[State ]
+type=PosSet
+trigger1=Time=0
+y=0
+
+[State ]
+type=VelSet
+trigger1=Time=0
+y=0
+
+[State ]
+type=VelMul
+trigger1=Time=0
+x=.75
+
+[State ]
+type=ChangeState
+trigger1=Time=0&&GetHitVar(fall.yvel)=0
+value=5110
+
+[State ]
+type=HitFallDamage
+trigger1=Time=3
+
+[State ]
+type=PlaySnd
+trigger1=Time=1
+value=s100,3
+
+[state ]
+type=Explod
+trigger1=time=1
+anim=6007
+postype=p1
+ownpal=1
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=-6
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=EnvShake
+trigger1=time=1
+time=10
+freq=160
+ampl=-4
+
+[State ]
+type=PosFreeze
+trigger1=1
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=5101
+
+[State ]
+type=ForceFeedback
+trigger1=Time=0
+waveform=sinesquare
+ampl=128,-3,-.2,.005
+time=20
+
+;HIT_BOUNCE(bounce into air)
+[Statedef 5101]
+type=L
+movetype=H
+physics=N
+
+[State ]
+type=ChangeAnim
+trigger1=time=0&&((anim!=[5101,5109])||!SelfAnimExist(5160+(anim%10)))
+value=5160
+
+[State ]
+type=ChangeAnim
+trigger1=time=0&&(anim=[5101,5109])&&SelfAnimExist(5160+(anim%10))
+value=5160+(anim%10)
+
+[State ]
+type=HitFallVel
+trigger1=Time=0
+
+[State ]
+type=PosSet
+trigger1=Time=0
+y=20
+
+[State ]
+type=VelAdd
+trigger1=1
+y=.4
+
+[State ]
+trigger1=Vel Y>0&&Pos Y>=12
+type=ChangeState
+value=5110
+
+;HIT_LIEDOWN
+[Statedef 5110]
+type=L
+movetype=H
+physics=N
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time%1=0
+var(38)=ceil(-4/ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=ChangeState
+trigger1=numhelper(4000)
+trigger1=helper(4000),var(8)=1&&command="x"
+value=1605
+
+[State ]
+type=ChangeState
+trigger1=numhelper(4500)
+trigger1=helper(4500),var(8)=1&&command="x"
+value=1608
+
+[State ]
+type=FallEnvShake
+trigger1=Time=0
+
+[State ]
+type=ChangeAnim
+persistent=0
+trigger1=SelfAnimExist(5110+(anim%10))&&(anim=[5081,5089])
+value=5110+(anim%10)
+
+[State ]
+type=ChangeAnim
+trigger1=time=0&&(anim!=[5110,5119])&&((anim!=[5161,5169])||!SelfAnimExist(5170+(anim%10)))
+value=5170
+
+[State ]
+type=ChangeAnim
+trigger1=time=0&&(anim!=[5110,5119])&&((anim=[5161,5169])&&SelfAnimExist(5170+(anim%10)))
+value=5170+(anim%10)
+
+[State ]
+type=HitFallDamage
+trigger1=Time=0
+
+[State ]
+type=PosSet
+trigger1=Time=0
+y=0
+
+[State ]
+type=VarSet
+trigger1=Time=0&&GetHitVar(fall.yvel)!=0
+sysvar(1)=floor(vel y)
+
+[State ]
+type=PlaySnd
+trigger1=prevstateno!=5101&&Time=0&&!SysVar(0)
+value=s100,3
+
+[state ]
+type=Explod
+trigger1=prevstateno!=5101&&time=0
+anim=6007
+postype=p1
+ownpal=1
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=-6
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=EnvShake
+trigger1=time=0
+time=10
+freq=160
+ampl=-4
+
+[State ]
+type=VelSet
+trigger1=Time=0
+y=0
+
+[State ]
+type=ChangeAnim
+persistent=0
+trigger1=(anim=[5171,5179])&&SelfAnimExist(5110+(anim%10))&&(AnimTime=0||SysVar(0))
+value=5110+(anim%10)
+
+[State ]
+type=ChangeAnim
+persistent=0
+trigger1=(Anim!=[5111,5119])&&(AnimTime=0||SysVar(0))
+value=5110
+
+[State ]
+type=ChangeState
+trigger1=!alive&&(AnimTime=0||SysVar(0)||(Anim=[5110,5119]))
+value=5150
+
+[State ]
+type=VarSet
+trigger1=SysVar(0)&&Time=0
+sysvar(0)=0
+
+[State ]
+type=VelMul
+trigger1=1
+x=.85
+
+[State ]
+type=ForceFeedback
+trigger1=alive&&Time=0
+time=8
+ampl=240
+waveform=sine
+
+[State ]
+type=ForceFeedback
+trigger1=!alive&&Time=0
+ampl=200,7,-.467
+time=30
+waveform=sine
+
+;HIT_GETUP
+[Statedef 5120]
+type=L
+movetype=I
+physics=N
+
+[state ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time%1=0
+var(38)=ceil(-3/ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=ChangeAnim
+trigger1=time=0&&((anim!=[5111,5119])||!SelfAnimExist(5120+(anim%10)))
+value=5120
+
+[State ]
+type=ChangeAnim
+trigger1=time=0&&(anim=[5111,5119])&&SelfAnimExist(5120+(anim%10))
+value=5120+(anim%10)
+
+[State ]
+type=VelSet
+trigger1=Time=0
+x=0
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=HitFallSet
+trigger1=AnimTime=0
+value=1
+
+[State ]
+type=NotHitBy
+trigger1=AnimTime=0
+value=,NT,ST,HT
+time=12
+
+[State ]
+type=NotHitBy
+trigger1=AnimTime=0
+value2=SCA
+time=3
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;HIT_LIEDEAD
+[Statedef 5150]
+type=L
+movetype=H
+physics=N
+sprpriority=-3
+
+[state ]
+type=Varset
+trigger1=var(13)=0&&numexplod(13777)&&!alive
+var(13)=503
+persistent=0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=0
+
+[State ]
+type=Varadd
+trigger1=!alive&&roundstate=4
+var(0)=1
+
+[State ]
+type=Varset
+trigger1=(!matchover&&var(0)=100)||(matchover&&var(0)=150)
+var(22)=100000
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&SelfAnimExist(5140)&&(((anim!=[5111,5119])&&(anim!=[5171,5179]))||!SelfAnimExist(5140+(anim%10)))&&!numhelper(19311)&&!numhelper(19312)
+value=5140
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&((anim=[5111,5119])||(anim=[5171,5179]))&&SelfAnimExist(5140+(anim%10))&&!numhelper(19311)&&!numhelper(19312)
+value=5140+(anim%10)
+
+[State ]
+type=ChangeAnim
+persistent=0
+trigger1=MatchOver=1&&(Anim=[5140,5149])&&SelfAnimExist(anim+10)&&!numhelper(19311)&&!numhelper(19312)
+value=anim+10
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&!numhelper(19311)&&!numhelper(19312)
+value=5150
+
+[State ]
+type=ChangeAnim
+trigger1=anim!=1200&&numhelper(3000)=1&&(TeamMode=single ||TeamMode=simul)&&MatchOver=0&&roundstate>=4&&!numhelper(19311)&&!numhelper(19312)
+trigger1=helper(3000),var(43)=0&&helper(3000),var(32)=0
+value=1200
+
+[state ]
+type=PlaySnd
+trigger1=!alive&&anim=1200&&animelem=2
+value=s0,7
+channel=0
+
+[state ]
+type=ChangeAnim
+trigger1=numhelper(3000)=1
+trigger1=anim!=1201&&helper(3000),var(32)=0&&MatchOver=1&&roundstate>=4&&!numhelper(19311)&&!numhelper(19312)&&anim!=20920
+value=1201
+
+[state ]
+type=PlaySnd
+trigger1=!alive&&anim=1201&&animelem=2
+value=s0,8
+channel=0
+
+[State ]
+type=EnvShake
+trigger1=!alive&&anim=1201&&animelem=5
+time=10
+freq=160
+ampl=-2
+
+[state ]
+type=Explod
+trigger1=!alive&&anim=1201&&animelem=5
+anim=6007
+postype=p1
+ownpal=1
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=-6
+pausemovetime=100
+supermovetime=100
+
+[state ]
+type=PlaySnd
+trigger1=!alive&&anim=1201&&animelem=5
+value=s100,3
+
+[State ]
+type=AssertSpecial
+trigger1=(anim=1200&&animelemtime(4)<=60)||(anim=1201&&animelemtime(5)<=90)
+flag=roundnotover
+
+[State ]
+type=VelMul
+trigger1=1
+x=.85
+
+[State ]
+type=VelSet
+trigger1=Vel x<.05
+persistent=0
+x=0
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&anim!=1860&&(numhelper(19311)||numhelper(19312))
+value=1860
+
+[State ]
+type=VelSet
+trigger1=(time=0&&numhelper(19311))||(numhelper(19312))
+x=0
+y=0
+
+[State ]
+type=VelSet
+trigger1=time=17&&numhelper(19311)
+y=-7
+
+[State ]
+type=VelAdd
+trigger1=time>=17&&numhelper(19311)
+y=.34
+
+[State ]
+type=VelSet
+trigger1=time>=17&&pos y>0&&numhelper(19311)
+y=0
+
+[State ]
+type=posset
+trigger1=time>=17&&pos y>0&&numhelper(19311)
+y=0
+
+[State ]
+type=ScreenBound
+trigger1=numhelper(19312)
+trigger1=helper(19312),time>=180||roundstate=4
+value=0
+movecamera=1,0
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+;HIT_FALLRECOVER(still falling)
+[Statedef 5200]
+type=A
+movetype=H
+physics=N
+
+[State ]
+type=ChangeAnim
+trigger1=Anim=5035&&AnimTime=0
+value=5050
+
+[State ]
+type=VelAdd
+trigger1=1
+y=GetHitVar(yaccel)
+
+[State ]
+type=SelfState
+trigger1=Vel Y>0&&Pos Y>=10
+value=5201
+
+;HIT_FALLRECOVER(on the ground)
+[Statedef 5201]
+type=A
+movetype=H
+physics=A
+anim=5200
+
+[State ]
+type=ChangeState
+trigger1=Time=0&&alive=1&&CanRecover&&pos y>=-25
+value=ifelse(vel x<=-5,1612,1611)
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=10
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(30*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=Varset
+trigger1=time=0
+var(13)=4
+
+[State ]
+type=Varset
+trigger1=time=0
+fvar(7)=0
+
+[State ]
+type=Varset
+trigger1=time=0&&((P2Dist X<=-1&&command="holdback")||(P2Dist X>=0&&command="holdfwd"))
+fvar(7)=2
+
+[State ]
+type=Varset
+trigger1=time=0&&((P2Dist X<=-1&&command="holdfwd")||(P2Dist X>=0&&command="holdback"))
+fvar(7)=1
+
+[State ]
+type=ChangeAnim
+trigger1=fvar(7)=1&&time=0
+value=1501
+
+[State ]
+type=Turn
+trigger1=P2Dist X<-1&&time=0
+
+[State ]
+type=VelSet
+trigger1=time>=1
+x=ifelse(fvar(7)=1,-3,0)+ifelse(fvar(7)=2,3,0)
+
+[State ]
+type=Veladd
+trigger1=time>=1&&vel x>=.1
+x=-.1
+
+[State ]
+type=Veladd
+trigger1=time>=1&&vel x<=-.1
+x=.1
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="recovery"
+ID=7203
+postype=p1
+stateno=7203
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,47
+
+[State ]
+type=PlaySnd
+trigger1=Time=0
+value=s0,28
+channel=0
+
+[State ]
+type=NotHitBy
+trigger1=time<=20
+value=SCA
+time=1
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=0
+
+[State ]
+type=PalFX
+trigger1=time<=15
+add=255-var(0),255-var(0),255-var(0)
+time=1
+
+[State ]
+type=Varadd
+trigger1=time<=15
+var(0)=17
+
+[State ]
+type=VelSet
+trigger1=time=0
+y=-8
+
+[State ]
+type=VelAdd
+trigger1=Pos Y<=-1
+y=.60
+
+[State ]
+type=VelSet
+trigger1=Pos Y>=0
+x=0
+y=0
+
+[State ]
+type=PosSet
+trigger1=Pos Y>=0
+y=0
+
+[State ]
+type=CtrlSet
+trigger1=var(59)!=1&&time>=20
+value=1
+
+[State ]
+type=ChangeState
+trigger1=Pos Y=0
+value=52
+
+;HIT_AIRFALLRECOVER
+[Statedef 5210]
+type=A
+movetype=I
+physics=N
+anim=5210
+ctrl=0
+
+[State ]
+type=ChangeState
+trigger1=Time=0&&alive=1&&CanRecover&&pos y>=-25
+value=ifelse(vel x<=-5,1612,1611)
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=10
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(30*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=Varset
+trigger1=time=0
+var(13)=4
+
+[State ]
+type=Varset
+trigger1=time=0
+fvar(7)=0
+
+[State ]
+type=Varset
+trigger1=time=0&&((P2Dist X<=-1&&command="holdback")||(P2Dist X>=0&&command="holdfwd"))
+fvar(7)=2
+
+[State ]
+type=Varset
+trigger1=time=0&&((P2Dist X<=-1&&command="holdfwd")||(P2Dist X>=0&&command="holdback"))
+fvar(7)=1
+
+[State ]
+type=ChangeAnim
+trigger1=fvar(7)=1&&time=0
+value=1501
+
+[State ]
+type=Turn
+trigger1=P2Dist X<-1&&time=0
+
+[State ]
+type=VelSet
+trigger1=time>=1
+x=ifelse(fvar(7)=1,-3,0)+ifelse(fvar(7)=2,3,0)
+
+[State ]
+type=Veladd
+trigger1=time>=1&&vel x>=.1
+x=-.1
+
+[State ]
+type=Veladd
+trigger1=time>=1&&vel x<=-.1
+x=.1
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="recovery"
+ID=7203
+postype=p1
+stateno=7203
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,47
+
+[State ]
+type=PlaySnd
+trigger1=Time=0
+value=s0,28
+channel=0
+
+[State ]
+type=NotHitBy
+trigger1=time<=20
+value=SCA
+time=1
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=0
+
+[State ]
+type=PalFX
+trigger1=time<=15
+add=255-var(0),255-var(0),255-var(0)
+time=1
+
+[State ]
+type=Varadd
+trigger1=time<=15
+var(0)=17
+
+[State ]
+type=VelSet
+trigger1=time=0
+y=-8
+
+[State ]
+type=VelAdd
+trigger1=Pos Y<=-1
+y=.60
+
+[State ]
+type=VelSet
+trigger1=Pos Y>=0
+x=0
+y=0
+
+[State ]
+type=PosSet
+trigger1=Pos Y>=0
+y=0
+
+[State ]
+type=CtrlSet
+trigger1=var(59)!=1&&time>=20
+value=1
+
+[State ]
+type=ChangeState
+trigger1=Pos Y=0
+value=52
+
+;Continue?
+[Statedef 5500]
+type=S
+ctrl=0
+anim=5500
+velset=0,0
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s46,0
+
+;Initialize(at the start of the round)
+[Statedef 5900]
+type=S
+
+[State ];2ラウンド以降ストライカーアクションゲージ回復～キュアホワイト
+type=Varadd
+trigger1=roundsexisted>=1&&palno!=12
+var(39)=500
+persistent=0
+
+[State ];2ラウンド以降ストライカーアクションゲージ回復～シャイニールミナス
+type=Varadd
+trigger1=roundsexisted>=1&&palno!=12
+var(40)=500
+persistent=0
+
+[State ];2ラウンド以降ストライカーアクションゲージ全回復～キュアホワイト
+type=Varadd
+trigger1=roundsexisted>=1&&palno=12
+var(39)=1000
+persistent=0
+
+[State ];2ラウンド以降ストライカーアクションゲージ全回復～シャイニールミナス
+type=Varadd
+trigger1=roundsexisted>=1&&palno=12
+var(40)=1000
+persistent=0
+
+[State ];2ラウンド以降テンションゲージ減少
+type=Varadd
+trigger1=roundsexisted>=1&&palno!=12&&var(38)>=7000
+var(38)=-4000
+persistent=0
+
+[State ];2ラウンド以降テンションゲージ通常値セット
+type=Varset
+trigger1=roundsexisted>=1&&palno!=12&&var(38)<=3213
+var(38)=3214
+persistent=0
+
+[State ];前ラウンド敗北時増加
+type=Varadd
+trigger1=roundsexisted>=1&&palno!=12
+var(38)=1500+ifelse(fvar(36)=2,1500,0)
+persistent=0
+
+[State ];プリキュアサポートゲージ0
+type=Varset
+trigger1=roundsexisted>=1&&var(36)=1
+var(41)=0
+persistent=0
+
+[State ];プリキュアサポート発動判定解除
+type=Varset
+trigger1=roundsexisted>=1&&var(36)=1
+var(36)=0
+persistent=0
+
+[state ]
+type=Varset
+trigger1=roundsexisted>=1&&var(43)=1
+var(13)=402
+persistent=0
+
+[state ];GGキャラ専用勝ち挑発（RAKUSYO）対応ステート
+Type=PowerAdd
+trigger1=roundsexisted>=1&&var(43)=1
+Value=2500
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=roundsexisted>=1&&var(43)=1
+var(41)=1500
+
+[State ]
+type=Varadd
+trigger1=roundsexisted>=1&&var(43)=1
+var(38)=5000
+
+[State ]
+type=Varadd
+trigger1=roundsexisted>=1&&var(43)=1
+var(39)=500
+
+[State ]
+type=Varadd
+trigger1=roundsexisted>=1&&var(43)=1
+var(40)=500
+
+[state ];GGキャラ専用勝ち挑発（RAKUSYO）解除ステート
+type=Varset
+trigger1=roundsexisted>=1&&var(43)=1
+var(43)=0
+
+[State ]
+type=VarRangeSet
+trigger1=roundsexisted=0
+value=0
+persistent=0
+
+[State ]
+type=VarRangeSet
+trigger1=roundsexisted=0
+fvalue=0
+persistent=0
+
+[State ]
+type=ChangeState
+trigger1=RoundsExisted=0&&enemy,roundsexisted>0&&teammode=turns
+value=190
+
+[State ];iwakickさん製作キャライントロ対応
+type=ChangeState
+trigger1=prevstateno!=100191&&((teammode=single &&roundno=1)||teammode=turns)&&!(teammode=simul)&&enemy,animexist(18000)&&enemy,stateno!=192&&enemy,stateno!=199&&enemy,authorname="iwakick"
+value=100191
+
+[State ];世紀末ガイル＆HSF2仕様ガイルイントロ対応
+Type=changestate
+Trigger1=!NumPartner&&PrevStateNo!=19601223&&((TeamMode=Single &&RoundNo=1)||TeamMode=Turns)&&!(TeamMode=Simul)&&NumEnemy<=1
+Trigger1=Enemy,AuthorName="KAZ"&&(Enemy,Name="Seikimatu Guile"||Enemy,Name="SF2 Guile")
+Value=19601223
+
+[State ];HSF2仕様ダルシムイントロ対応
+Type=changestate
+Trigger1=!NumPartner&&PrevStateNo!=19521122&&((TeamMode=Single &&RoundNo=1)||TeamMode=Turns)&&!(TeamMode=Simul)&&NumEnemy<=1
+Trigger1=Enemy,AuthorName="KAZ"&&Enemy,Name="SF2 Dhalsim"
+Value=19521122
+
+[State ];HSF2仕様サガットイントロ対応
+Type=changestate
+Trigger1=!NumPartner&&PrevStateNo!=19550702&&((TeamMode=Single &&RoundNo=1)||TeamMode=Turns)&&!(TeamMode=Simul)&&NumEnemy<=1
+Trigger1=Enemy,AuthorName="KAZ"&&Enemy,Name="SF2 Sagat"
+Value=19550702
+
+[State ];春麗（スパⅡ）イントロ対応
+Type=SelfState
+Trigger1=!NumPartner&&PrevStateNo!=19680301&&((TeamMode=Single &&RoundNo=1)||TeamMode=Turns)&&!(TeamMode=Simul)&&NumEnemy<=1
+Trigger1=Enemy,AuthorName="KAZ"&&Enemy,Name="Chunli_Sf3_Marvel"
+Value=19680301
+
+[State ];マスターモリガン（ヴァンパイア）イントロ対応
+Type=SelfState
+Trigger1=!NumPartner&&PrevStateNo!=19940630&&((TeamMode=Single &&RoundNo=1)||TeamMode=Turns)&&!(TeamMode=Simul)&&NumEnemy<=1
+Trigger1=Enemy,AuthorName="KAZ"&&Enemy,Name="Master Morrigan"
+Value=19940630
+
+[State ]
+type=ChangeState
+trigger1=roundno=1
+value=190

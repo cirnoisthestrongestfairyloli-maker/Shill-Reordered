@@ -1,0 +1,196 @@
+;=============================================
+;Vars
+;=============================================
+;0: Throw Tech(config)
+;1: air basics juggle limiter(system)
+;2: Helper Target Tracker
+;3: Throw mash limiter
+;4: Jump variable (from normal or super jump) - Ki Blast Charge Variable
+;5: Allows player to use directions to change Pal (config)
+;6:  System var. (OTG Juggling)
+;7: System var. (for juggle limits)
+;8: KO Voice choice
+;9: Specific Move Variables
+;10: Air dash limiter
+;11: Air Grab Bounce limiter
+;12: Throw Direction Checker
+;13: Super BG choice (config)
+;14: Throw Mash Checker
+;15: Animate blur through hitpause
+;16: Save Teleport position
+;17: Zero Counter command
+;18: Juggle Safety
+;19: Emo Cancel Timer 
+;20: varset for 1st/2nd state of Focus Attack
+;21: Stomp Winpose Activation Check
+;22: Super jump var
+;23: Focus Attack animelem set
+;24: Focus Attack repel
+;25: Final Impact Timing/LVL 3 emo deactivation
+;26: Save Grab Velocity X/BG Pal FX timer
+;27: First attack notification
+;28: Pride cancel limiter
+;29: Emotion Exit Bomb limiter
+;30: Dash Collision count - Beam Collision count
+;31: Ticks Back is held down (Charge char)
+;32: Back Charge Buffer (Charge char)
+;33: Ticks Down is held down (Charge char)
+;34: Down Charge Buffer (Charge char)
+;35: SSG transformation Check
+;36: Savage Grounder 1-limiter
+;37: superjump ai var (state 40)
+;38: throw check
+;39: Super Startup Check
+;40: Ex superdash 1-limiter
+;41: Enhanced Royal Buster 1-limiter
+;42: Royal Buster Input Strength Check
+;43: Dance Hyper
+;44: Repel Projectile choice (config)
+;45: X axis Rage Gauge (config)
+;46: Y axis Rage Gauge (config)
+;47: flip knockout bounce
+;48: Emo Exit afterimage check
+;49: Special Winpose Activation
+;50: 
+;51: EMOTION MODE - Activation Check
+;52: EMOTION MODE - Buffer variable. 0 to 1000
+;53: EMOTION MODE - Levels variable. 0 to 2100
+;54: EMOTION MODE - Recovery variable
+;55: 
+;56: counter system notification
+;57: counter system notification
+;58: Pal Color used with Var 5
+;59:  AI
+
+
+;fvar(1)  : Cheap KO
+;fvar(2)  : Damage Detection variable
+;fvar(3)  : Specific Move Variabls (Velocities and such)
+;fvar(5)  : Stomp winpose Vel X tracking
+;fvar(6)  : Stomp winpose Vel Y tracking
+;fvar(8)  : Counter Hit
+;fvar(9)  : Focus Attack Strength
+;fvar(10) : Damage Dampener
+;fvar(11) : Root Dampener
+;fvar(13) : Hit Count Reset
+;fvar(14) : Emo Explosion Timer Spawn
+;fvar(15) : Emo Explosion Condition Spawn
+;fvar(16) : Electric Limiter
+;fvar(17) : Track FF hit number
+;fvar(18) : Allow Royal Buster follow ups(Reverse Beat limiter)
+;fvar(19) : Restand limiter(Reverse EX Royal Buster Ender)
+;fvar(20) : Pride UP activation variable
+;fvar(21) : Enh.Elbow Limiter var
+
+;=============================================
+; CNS File for Name Z2 by Team Z2
+; Constants file
+;=============================================
+
+[Data]
+life = 1000
+power = 3000
+attack = 100
+defence = 100
+fall.defence_up = 50
+liedown.time = 15
+airjuggle = 15
+sparkno = 2	
+guard.sparkno = -1
+KO.echo = 0	
+volumescale = 150
+IntPersistIndex = 49
+FloatPersistIndex = 20
+
+[Size]
+xscale = 1				;Horizontal scaling factor.
+yscale = 1				;Vertical scaling factor.
+ground.back = 30		;Player width (back, ground)
+ground.front = 25		;Player width (front, ground)
+air.back = 15			;Player width (back, air)
+air.front = 15			;Player width (front, air)
+height = 60				;Height of player (for opponent to jump over)
+attack.dist = 160		;Default attack distance
+proj.attack.dist = 90	;Default attack distance for projectiles
+proj.doscale = 0		;Set to 1 to scale projectiles too   
+head.pos = 12,-65   ;-5, -90		;Approximate position of head
+mid.pos = -1,-45   ;-5, -60		;Approximate position of midsection
+shadowoffset = 0		;Number of pixels to vertically offset the shadow
+draw.offset = 0,0		;Player drawing offset in pixels (x, y)
+
+[Velocity]
+walk.fwd  = 2.8			;Walk forward
+walk.back = -2.0		;Walk backward
+run.fwd  = 7.0, 0			;Run forward (x, y)
+run.back = -8.3	;Hop backward (x, y)
+jump.neu = 0,-9		;Neutral jumping velocity (x, y)
+jump.back = -3.25		;Jump back Speed (x, y)
+jump.fwd = 3.25			;Jump forward Speed (x, y)
+runjump.back = -7.5,-8.5		;Running jump speeds (opt)
+runjump.fwd = 6,-8.5	;.
+airjump.neu = 0,-8.1	;.
+airjump.back = -2.55	;Air jump speeds (opt)
+airjump.fwd = 2.5		;.
+
+[Movement]
+airjump.num = 0			;Number of air jumps allowed (opt)
+airjump.height = 35		;Minimum distance from ground before you can air jump (opt)
+yaccel = .51        	;Vertical acceleration
+stand.friction = .85	;Friction coefficient when standing
+crouch.friction = .85	;Friction coefficient when crouching
+air.gethit.groundrecover.groundlevel = 0
+
+
+[Quotes]
+
+victory0 = "This is no place for freaks! Leave!"
+victory1 = "This power in my hands, it has surpassed everything!"
+victory2 = "Beerus is above me... for now."
+victory3 = "I'll be here to finish the job after you weaklings have had a try."
+victory4 = "Failing is acceptable, quitting is not."
+victory5 = "You know nothing of pride."
+victory6 = "You? Stop me?"
+victory7 = "Plebeians should remain in the sidelines!"
+victory8 = "Shut up."
+victory9 = "Pathetic! Crawl away into the darkness."
+victory10 = "I don't care about limits. No one is going to stop me."
+victory11 = "I am the greatest weapon of the Saiyan Empire, the descendant of a long line of elites! I AM VEGETA, PRINCE OF ALL SAIYANS!"
+victory12 = "While I was wasting my time with you, I could've been out there training."
+victory13 = "No such thing as an unfair battle, that's just called defeat."
+victory14 = "Don't ever forget this pain."
+victory15 = "I cast aside nothing. I am Vegeta, and you won't stop me."
+victory16 = "My greatest weapon is my rage... and you just had to make me angry."
+victory17 = "Hail to me!"
+victory18 = "Do you feel fear? You do now."
+victory19 = "Leave my planet, scum."
+victory20 = "Bow to the elite."
+victory21 = "My pride won't allow me to lose, not to the likes of you!"
+victory22 = "Push through the pain. Giving up will hurt more."
+victory23 = "The delusion of the weak is that strength doesn't matter!"
+victory24 = "The strong conquer all!"
+victory25 = "Overcome your fears! Fight, weakling!"
+victory26 = "I'm going to punch you in your stupid face until you stop moving and THEN I'm going to hurt you, badly."
+victory27 = "You keep trying to hold on? Fool!"
+victory28 =  "There's further strength I must reach. For me, for my pride... but also for them."
+victory29 =  "You're nothing, and you'll keep being nothing!"
+victory30 =  "This is the mark of the elite, cower in fear!"
+victory31 =  "A true saiyan warrior doesn't run from a fight to the death."
+victory32 = "Get stronger! Get madder! Yes!! YES!!! You'll become a challenge yet!"
+victory33 = "Out of my way!"
+victory34 = "Get out of my battlefield, punk!"
+victory35 = "Witness this power!"
+victory36 = "I've surpassed power itself... the Godly Ki that sears through my body burns with the resolution of my anger!"
+victory37 = "I'm no longer the monster that you think I am... I am worse."
+victory38 = "Shall I tell you where you miscalculated?"
+victory39 = "I beat you black and blue!"
+victory40 = "Scream blue murder if you want, Vegeta has beaten you!"
+victory41 = "Cyan you later!"
+victory42 = "I'm afraid I just blue you away!"
+victory43 = "Keep screaming until you are blue in the face! The prince wins it all!"
+victory44 = "My royal blood burns BLUE."
+victory45 = "I'm a SAPPHIRE GOD!"
+victory46 = "Me? A monster? It's MISTER monster to you!"
+victory47 = "No match for Vegeta!"
+victory48 = "Go lick your wounds, I expected better!"
+victory49 = "Turn all the colors you want, you are leaving this battle BLACK AND BLUE."
+victory50 = "I am the brightest spark of the royal blood, trained in battle since I was but a mere child! I AM VEGETA, PRINCE OF ALL SAIYANS!"

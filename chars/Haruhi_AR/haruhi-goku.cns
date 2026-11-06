@@ -1,0 +1,1491 @@
+;===========================================================================
+; SSJ Goku - Kamehameha summon (random pick from the Flame Haze super, 2424+c, 1100 meter,
+; only in the wheel at half life or less; holding c after the input at 25% life with 5 bars = guaranteed, all 5 bars)
+; Assets copied from SSJ_GokuZ2 (Team Z2): personal use only.
+;   sprites: group 45000 + original (Blue copies: 41000 + original)   anims: 80000 + original (Blue: 90000 + original)
+;   sounds: group 40000 + original
+;   music: 40500,0 = Chou Super Dragon Soul (karaoke, 26 s, Haruhi channel 5, started in state 3300)
+;          40600,k = vocal version starting k seconds in (crossfaded in on a KO, Haruhi channel 6)
+;
+; Flow: teleport in -> charge 18 s (bar; Haruhi takes up to +10% damage)
+;   regular: SSJ -> SSJ3 at 9 s            5-bar (desperation): SSJ -> SSJ3 at 6 s -> Blue at 12 s
+;   2424+c again during the charge = fire now (blockable, damage scaled to the charge)
+;   bar full = fires on his own, unblockable
+;   SSJ / SSJ3: ground Kamehameha     Blue: aerial Super Saiyan Blue Kaioken Kamehameha
+;   KO: vocal version, teleports next to Haruhi, back-to-normal win pose with her
+;   Haruhi KO'd first: time-over pose     otherwise: teleports away, music fades
+;
+; Root vars: var(17) charge progress (0-1080), var(16) > 0 fade channel 5, var(18) GameTime the karaoke started,
+;            var(19) = 100 desperation summon, fvar(7) = 1 + vocal clip to start
+; Helper vars: var(1) beam hit, var(4) full charge (unblockable), var(5) form (0 SSJ, 1 SSJ3, 2 Blue),
+;              var(6) GameTime at summon, var(8) desperation, var(9) fire mode (0 ground, 1 air),
+;              fvar(0) charge fraction at firing
+;===========================================================================
+
+;---------------------------------------------------------------------------
+; Goku - teleports in on screen
+[Statedef 3870]
+type     = S
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = 80000
+velset   = 0,0
+sprpriority = 1
+
+[State 3870, Setup]
+type = VarSet
+trigger1 = Time = 0
+var(6) = GameTime
+
+[State 3870, Desperation]
+type = VarSet
+trigger1 = Time = 0
+var(8) = (root,var(19) = 100)
+
+[State 3870, Music]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3870, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3870, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3870, Hidden]
+type = AssertSpecial
+trigger1 = Time < 6
+flag = invisible
+
+[State 3870, Face the opponent]
+type = Turn
+trigger1 = Time = 0
+trigger1 = NumEnemy
+trigger1 = P2Dist X < 0
+
+[State 3870, Teleport flash]
+type = Explod
+trigger1 = Time = 0
+anim = 81411
+postype = p1
+pos = 0,-50
+scale = 2,2
+sprpriority = 2
+ownpal = 1
+removetime = -2
+
+[State 3870, Teleport snd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 42302, 0
+
+[State 3870, Haruhi KO]
+type = ChangeState
+trigger1 = root,alive = 0
+value = 3881
+
+[State 3870, Charge]
+type = ChangeState
+trigger1 = Time >= 12
+value = 3871
+
+;---------------------------------------------------------------------------
+; Goku - charging (1080 ticks = 18 s), transforms on the way, bar fills at the bottom
+[Statedef 3871]
+type     = S
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = 80900
+velset   = 0,0
+sprpriority = 1
+
+[State 3871, Music]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3871, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3871, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3871, Progress]
+;Haruhi takes up to 10% more damage while this fills
+type = RootVarSet
+trigger1 = 1
+var(17) = Time
+ignorehitpause = 1
+
+[State 3871, Power up snd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 42400, 20
+
+[State 3871, Charge loop snd]
+type = PlaySnd
+trigger1 = Time % 40 = 20
+value = 42400, 2
+volumescale = 60
+
+[State 3871, Almost done]
+;5 seconds left: "This is my chance!"
+type = PlaySnd
+trigger1 = Time = 780
+value = 40003, 296
+channel = 0
+
+[State 3871, Shake]
+type = EnvShake
+trigger1 = Time % 60 = 0
+time = 60
+freq = 100
+ampl = 1 + floor(Time / 270)
+
+; --- aura
+[State 3871, Aura back]
+type = Explod
+trigger1 = Time = 0
+anim = 80905
+ID = 38730
+postype = p1
+pos = 0,0
+sprpriority = 0
+ownpal = 1
+bindtime = -1
+removetime = -1
+
+[State 3871, Aura front]
+type = Explod
+trigger1 = Time = 0
+anim = 80907
+ID = 38731
+postype = p1
+pos = 0,0
+sprpriority = 2
+ownpal = 1
+bindtime = -1
+removetime = -1
+
+; --- SSJ3: 9 s (regular) / 6 s (5-bar)
+[State 3871, SSJ3 transform]
+type = ChangeAnim
+trigger1 = var(5) = 0
+trigger1 = Time = ifelse(var(8), 360, 540)
+value = 80188
+
+[State 3871, SSJ3 stance]
+type = ChangeAnim
+trigger1 = Anim = 80188
+trigger1 = AnimTime = 0
+value = 80902
+
+[State 3871, SSJ3 flash]
+type = Explod
+trigger1 = var(5) = 0
+trigger1 = Time = ifelse(var(8), 360, 540)
+anim = 82951
+postype = p1
+pos = 0,-45
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+
+[State 3871, SSJ3 snd]
+type = PlaySnd
+trigger1 = var(5) = 0
+trigger1 = Time = ifelse(var(8), 360, 540)
+value = 40188, 0
+
+[State 3871, SSJ3 burst snd]
+type = PlaySnd
+trigger1 = var(5) = 0
+trigger1 = Time = ifelse(var(8), 360, 540)
+value = 40008, 1
+
+[State 3871, SSJ3]
+type = VarSet
+trigger1 = var(5) = 0
+trigger1 = Time = ifelse(var(8), 360, 540)
+var(5) = 1
+
+[State 3871, SSJ3 lightning]
+type = Explod
+trigger1 = var(5) = 1
+trigger1 = Time % 9 = 0
+anim = 82450 + Random % 6
+postype = p1
+pos = -20 + Random % 40, -20 - Random % 80
+sprpriority = 3
+ownpal = 1
+removetime = -2
+
+; --- Blue (5-bar only): 12 s
+[State 3871, Blue]
+type = ChangeAnim
+trigger1 = var(8) = 1
+trigger1 = var(5) = 1
+trigger1 = Time = 720
+value = 90900
+
+[State 3871, Blue flash]
+type = Explod
+trigger1 = var(8) = 1
+trigger1 = var(5) = 1
+trigger1 = Time = 720
+anim = 82951
+postype = p1
+pos = 0,-45
+bindtime = -1
+removetime = -2
+sprpriority = 3
+ownpal = 1
+
+[State 3871, Blue snd]
+type = PlaySnd
+trigger1 = var(8) = 1
+trigger1 = var(5) = 1
+trigger1 = Time = 720
+value = 40188, 0
+
+[State 3871, Blue burst snd]
+type = PlaySnd
+trigger1 = var(8) = 1
+trigger1 = var(5) = 1
+trigger1 = Time = 720
+value = 40008, 1
+
+[State 3871, Blue aura off 1]
+type = RemoveExplod
+trigger1 = var(8) = 1
+trigger1 = var(5) = 1
+trigger1 = Time = 720
+ID = 38730
+
+[State 3871, Blue aura off 2]
+type = RemoveExplod
+trigger1 = var(8) = 1
+trigger1 = var(5) = 1
+trigger1 = Time = 720
+ID = 38731
+
+[State 3871, Blue aura back]
+type = Explod
+trigger1 = var(8) = 1
+trigger1 = var(5) = 1
+trigger1 = Time = 720
+anim = 90905
+ID = 38730
+postype = p1
+pos = 0,0
+sprpriority = 0
+ownpal = 1
+bindtime = -1
+removetime = -1
+
+[State 3871, Blue aura front]
+type = Explod
+trigger1 = var(8) = 1
+trigger1 = var(5) = 1
+trigger1 = Time = 720
+anim = 90907
+ID = 38731
+postype = p1
+pos = 0,0
+sprpriority = 2
+ownpal = 1
+bindtime = -1
+removetime = -1
+
+[State 3871, Blue form]
+type = VarSet
+trigger1 = var(8) = 1
+trigger1 = var(5) = 1
+trigger1 = Time = 720
+var(5) = 2
+
+; --- bar at the bottom of the screen (Goku's teleport meter, 2x)
+[State 3871, Bar back]
+type = Explod
+trigger1 = Time = 0
+anim = 89032
+ID = 38711
+postype = left
+facing = 1
+pos = 100, GameHeight - (14)
+scale = 2,2
+sprpriority = 8
+ontop = 1
+ownpal = 1
+bindtime = -1
+removetime = -1
+supermovetime = 9**8
+pausemovetime = 9**8
+
+[State 3871, Bar fill]
+type = Explod
+trigger1 = Time = 0
+anim = 89033
+ID = 38712
+postype = left
+facing = 1
+pos = 102, GameHeight - (14)
+scale = 0,2
+sprpriority = 9
+ontop = 1
+ownpal = 1
+bindtime = -1
+removetime = -1
+supermovetime = 9**8
+pausemovetime = 9**8
+
+[State 3871, Bar fill grows]
+type = ModifyExplod
+trigger1 = NumExplod(38712)
+ID = 38712
+scale = 2.0 * Time / 1080.0, 2
+
+[State 3871, Bar frame]
+type = Explod
+trigger1 = Time = 0
+anim = 89035
+ID = 38713
+postype = left
+facing = 1
+pos = 100, GameHeight - (14)
+scale = 2,2
+sprpriority = 10
+ontop = 1
+ownpal = 1
+bindtime = -1
+removetime = -1
+supermovetime = 9**8
+pausemovetime = 9**8
+
+; --- firing
+[State 3871, Charge fraction]
+type = VarSet
+trigger1 = 1
+fvar(0) = Time / 1080.0
+
+[State 3871, Full]
+type = VarSet
+trigger1 = Time >= 1080
+var(4) = 1
+
+[State 3871, Air for Blue]
+type = VarSet
+trigger1 = 1
+var(9) = (var(5) = 2)
+
+[State 3871, Haruhi KO]
+type = ChangeState
+trigger1 = root,alive = 0
+value = 3881
+
+[State 3871, Fire]
+;2424+c again = fire now (blockable); full bar = fires on his own (unblockable)
+type = ChangeState
+trigger1 = Time >= 1080
+trigger2 = Time >= 30
+trigger2 = root,command = "shana"
+value = ifelse(var(5) = 2, 3876, 3872)
+
+;---------------------------------------------------------------------------
+; Ground Kamehameha (SSJ / SSJ3) - "Kamehame..."
+[Statedef 3872]
+type     = S
+movetype = A
+physics  = N
+ctrl     = 0
+anim     = 82400
+velset   = 0,0
+sprpriority = 2
+
+[State 3872, Music]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3872, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3872, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3872, Charge over]
+type = RootVarSet
+trigger1 = Time = 0
+var(17) = 0
+ignorehitpause = 1
+
+[State 3872, Bar off 1]
+type = RemoveExplod
+trigger1 = Time = 20
+ID = 38711
+
+[State 3872, Bar off 2]
+type = RemoveExplod
+trigger1 = Time = 20
+ID = 38712
+
+[State 3872, Bar off 3]
+type = RemoveExplod
+trigger1 = Time = 20
+ID = 38713
+
+[State 3872, Face the opponent]
+type = Turn
+trigger1 = Time = 0
+trigger1 = NumEnemy
+trigger1 = P2Dist X < 0
+
+[State 3872, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = 82400
+elem = 6
+
+[State 3872, Kamehame]
+type = PlaySnd
+trigger1 = Time = 0
+value = 40003, 300 + (Random % 8)
+channel = 0
+
+[State 3872, Gather snd]
+type = PlaySnd
+trigger1 = Time = 5
+value = 42350, 0
+
+[State 3872, Charge ball]
+type = Explod
+trigger1 = Time = 5
+anim = 82420
+ID = 38740
+postype = p1
+pos = -21,-55
+sprpriority = 3
+ownpal = 1
+bindtime = -1
+removetime = -1
+
+[State 3872, Charge lightning]
+type = Explod
+trigger1 = Time = 5
+anim = 82430
+ID = 38741
+postype = p1
+pos = -17,-52
+sprpriority = 3
+ownpal = 1
+bindtime = -1
+removetime = -1
+
+[State 3872, Fire]
+type = ChangeState
+trigger1 = Time >= 45
+value = 3873
+
+;---------------------------------------------------------------------------
+; Ground Kamehameha - "HAAA!"
+[Statedef 3873]
+type     = S
+movetype = A
+physics  = N
+ctrl     = 0
+anim     = 82401
+velset   = 0,0
+sprpriority = 2
+
+[State 3873, Music]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3873, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3873, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3873, Ball off]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38740
+
+[State 3873, Lightning off]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38741
+
+[State 3873, Haaa]
+type = PlaySnd
+trigger1 = Time = 0
+value = 40003, 320 + (Random % 6)
+channel = 0
+
+[State 3873, Launch snd]
+type = PlaySnd
+trigger1 = Time = 4
+value = 42401, 1
+
+[State 3873, Hold]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = 82401
+elem = 5
+
+[State 3873, Hands]
+type = Explod
+trigger1 = Time = 4
+anim = 82403
+ID = 38742
+postype = p1
+pos = 58,-58
+sprpriority = 4
+ownpal = 1
+bindtime = -1
+removetime = -1
+
+[State 3873, Beam]
+type = Helper
+trigger1 = Time = 4
+ID = 3884
+name = "kamehameha"
+stateno = 3884
+postype = p1
+pos = 40,-58
+helpertype = normal
+keyctrl = 0
+ownpal = 1
+
+[State 3873, Beam body]
+type = Helper
+trigger1 = Time = 4
+ID = 3885
+name = "kamehameha beam"
+stateno = 3885
+postype = p1
+pos = 47,-58
+helpertype = normal
+keyctrl = 0
+ownpal = 1
+
+[State 3873, Shake]
+type = EnvShake
+trigger1 = Time = 4
+time = 70
+freq = 100
+ampl = 3
+
+[State 3873, Done]
+type = ChangeState
+trigger1 = Time >= 80
+value = 3878
+
+;---------------------------------------------------------------------------
+; Aerial Super Saiyan Blue Kaioken Kamehameha - rises, "Kamehame..."
+[Statedef 3876]
+type     = A
+movetype = A
+physics  = N
+ctrl     = 0
+anim     = 92600
+velset   = 0,-4
+sprpriority = 2
+
+[State 3876, Music]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3876, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3876, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3876, Charge over]
+type = RootVarSet
+trigger1 = Time = 0
+var(17) = 0
+ignorehitpause = 1
+
+[State 3876, Bar off 1]
+type = RemoveExplod
+trigger1 = Time = 20
+ID = 38711
+
+[State 3876, Bar off 2]
+type = RemoveExplod
+trigger1 = Time = 20
+ID = 38712
+
+[State 3876, Bar off 3]
+type = RemoveExplod
+trigger1 = Time = 20
+ID = 38713
+
+[State 3876, Face the opponent]
+type = Turn
+trigger1 = Time = 0
+trigger1 = NumEnemy
+trigger1 = P2Dist X < 0
+
+[State 3876, Rise]
+type = VelMul
+trigger1 = 1
+y = 0.9
+
+[State 3876, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = 92600
+elem = 5
+
+[State 3876, Kaioken]
+type = PalFX
+trigger1 = Time % 10 = 0
+time = 10
+add = 160,-20,-60
+sinadd = 60,0,0,10
+
+[State 3876, Kaioken snd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 40008, 1
+
+[State 3876, Kamehame]
+type = PlaySnd
+trigger1 = Time = 4
+value = 40003, 300 + (Random % 8)
+channel = 0
+
+[State 3876, Gather snd]
+type = PlaySnd
+trigger1 = Time = 8
+value = 42350, 0
+
+[State 3876, Charge ball]
+type = Explod
+trigger1 = Time = 8
+anim = 82420
+ID = 38740
+postype = p1
+pos = -21,-81
+sprpriority = 3
+ownpal = 1
+bindtime = -1
+removetime = -1
+
+[State 3876, Hyper charge]
+type = Explod
+trigger1 = Time = 8
+anim = 82441
+ID = 38741
+postype = p1
+pos = -21,-80
+sprpriority = 3
+ownpal = 1
+bindtime = -1
+removetime = -1
+
+[State 3876, Fire]
+type = ChangeState
+trigger1 = Time >= 50
+value = 3877
+
+;---------------------------------------------------------------------------
+; Aerial Super Saiyan Blue Kaioken Kamehameha - "HAAA!" down at the opponent
+[Statedef 3877]
+type     = A
+movetype = A
+physics  = N
+ctrl     = 0
+anim     = 92601
+velset   = 0,0
+sprpriority = 2
+
+[State 3877, Music]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3877, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3877, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3877, Kaioken]
+type = PalFX
+trigger1 = Time % 10 = 0
+time = 10
+add = 160,-20,-60
+sinadd = 60,0,0,10
+
+[State 3877, Ball off]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38740
+
+[State 3877, Hyper charge off]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38741
+
+[State 3877, Haaa]
+type = PlaySnd
+trigger1 = Time = 0
+value = 40003, 320 + (Random % 6)
+channel = 0
+
+[State 3877, Launch snd]
+type = PlaySnd
+trigger1 = Time = 3
+value = 42401, 1
+
+[State 3877, Hold]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = 92601
+elem = 4
+
+[State 3877, Beam]
+type = Helper
+trigger1 = Time = 3
+ID = 3884
+name = "kamehameha"
+stateno = 3884
+postype = p1
+pos = 50,-72
+helpertype = normal
+keyctrl = 0
+ownpal = 1
+
+[State 3877, Beam body]
+type = Helper
+trigger1 = Time = 3
+ID = 3885
+name = "kamehameha beam"
+stateno = 3885
+postype = p1
+pos = 56,-72
+helpertype = normal
+keyctrl = 0
+ownpal = 1
+
+[State 3877, Shake]
+type = EnvShake
+trigger1 = Time = 3
+time = 70
+freq = 100
+ampl = 4
+
+[State 3877, Done]
+type = ChangeState
+trigger1 = Time >= 80
+value = 3878
+
+;---------------------------------------------------------------------------
+; Kamehameha over - stop pose, then KO / leave
+[Statedef 3878]
+type     = U
+movetype = I
+physics  = N
+ctrl     = 0
+velset   = 0,0
+sprpriority = 2
+
+[State 3878, Music]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3878, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3878, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3878, Stop pose]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(var(9), 92610, 82410)
+
+[State 3878, Hands off]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38742
+
+[State 3878, KO]
+type = ChangeState
+trigger1 = Time >= 20
+trigger1 = var(1) = 1
+trigger1 = NumEnemy
+trigger1 = Enemy, Alive = 0
+value = 3880
+
+[State 3878, Leave]
+type = ChangeState
+trigger1 = Time >= 30
+value = 3882
+
+;---------------------------------------------------------------------------
+; Kamehameha head (moves out, multi-hits): 12 hits, last one launches
+[Statedef 3884]
+type     = A
+movetype = A
+physics  = N
+ctrl     = 0
+anim     = 82405
+velset   = 0,0
+juggle   = 0
+sprpriority = 4
+
+[State 3884, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 3884, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3884, No shadow]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[State 3884, Aim]
+;ground: straight ahead; air (Blue): straight at the opponent
+type = VarSet
+trigger1 = Time = 0
+fvar(1) = ifelse(parent,var(9) && NumEnemy, atan((EnemyNear,Pos Y - 50 - Pos Y) / ifelse(abs(EnemyNear,Pos X - Pos X) < 1, 1, abs(EnemyNear,Pos X - Pos X))), 0)
+
+[State 3884, Life at start]
+type = VarSet
+trigger1 = Time = 0
+trigger1 = NumEnemy
+fvar(2) = EnemyNear, Life
+
+[State 3884, Damage per hit]
+;full charge: 350 (ground) / 450 (Blue); early: scaled down with the charge
+type = VarSet
+trigger1 = Time = 0
+var(3) = ceil(ifelse(parent,var(4), ifelse(parent,var(9), 450, 350), 60 + 290 * parent,fvar(0)) / 12.0)
+
+[State 3884, Tip]
+type = Explod
+trigger1 = Time = 0
+anim = 82404
+ID = 38750
+postype = p1
+pos = 10,0
+sprpriority = 5
+ownpal = 1
+bindtime = -1
+removetime = 90
+angle = -fvar(1) * 57.2958
+scale = ifelse(parent,var(9), 1.4, 1), ifelse(parent,var(9), 1.4, 1)
+
+[State 3884, Travel]
+type = VelSet
+trigger1 = MoveContact = 0
+trigger1 = Time < 60
+x = 16 * cos(fvar(1))
+y = 16 * sin(fvar(1))
+
+[State 3884, Stop on contact]
+type = VelSet
+trigger1 = MoveContact
+x = 0
+y = 0
+
+[State 3884, Hit count]
+type = VarAdd
+trigger1 = MoveHit = 1
+var(2) = 1
+ignorehitpause = 1
+
+[State 3884, Report hit]
+type = ParentVarSet
+trigger1 = MoveHit = 1
+var(1) = 1
+ignorehitpause = 1
+
+; --- blockable (fired early)
+[State 3884, Hit]
+type = HitDef
+triggerall = parent,var(4) = 0
+triggerall = var(2) < 11
+trigger1 = Time % 5 = 0
+attr = S, HP
+hitflag = MAF
+guardflag = MA
+priority = 7, Hit
+damage = var(3), ceil(var(3) / 4.0)
+getpower = 0, 0
+givepower = 15, 15
+pausetime = 1, 6
+animtype = Back
+ground.type = High
+air.type = Low
+ground.hittime = 16
+ground.slidetime = 16
+guard.hittime = 16
+air.hittime = 13
+airguard.ctrltime = 16
+ground.velocity = -2, 0
+guard.velocity = -6
+air.velocity = -4, -2
+airguard.velocity = -4, -1.5
+ground.cornerpush.veloff = 0
+sparkno = s87020
+sparkxy = 20 - (Random % 40), 20 - (Random % 40)
+hitsound = S41000, 0
+guardsound = S40006, 1
+
+[State 3884, Last hit]
+type = HitDef
+triggerall = parent,var(4) = 0
+triggerall = var(2) >= 11
+trigger1 = Time % 5 = 0
+attr = S, HP
+hitflag = MAF
+guardflag = MA
+priority = 7, Hit
+damage = var(3), ceil(var(3) / 4.0)
+getpower = 0, 0
+givepower = 15, 15
+pausetime = 4, 10
+animtype = Back
+ground.type = High
+air.type = Low
+ground.hittime = 20
+guard.hittime = 16
+air.hittime = 20
+ground.velocity = -10, -3
+guard.velocity = -9
+air.velocity = -6, -4
+fall = 1
+air.fall = 1
+fall.recover = 0
+sparkno = s87020
+hitsound = S41000, 0
+guardsound = S40006, 1
+
+; --- unblockable (full charge): same hits, no guardflag
+[State 3884, Hit full]
+type = HitDef
+triggerall = parent,var(4) = 1
+triggerall = var(2) < 11
+trigger1 = Time % 5 = 0
+attr = S, HP
+hitflag = MAFD
+priority = 7, Hit
+damage = var(3), 0
+getpower = 0, 0
+givepower = 15, 15
+pausetime = 1, 6
+animtype = Back
+ground.type = High
+air.type = Low
+ground.hittime = 16
+ground.slidetime = 16
+air.hittime = 13
+ground.velocity = -2, 0
+air.velocity = -4, -2
+ground.cornerpush.veloff = 0
+sparkno = s87020
+sparkxy = 20 - (Random % 40), 20 - (Random % 40)
+hitsound = S41000, 0
+
+[State 3884, Last hit full]
+type = HitDef
+triggerall = parent,var(4) = 1
+triggerall = var(2) >= 11
+trigger1 = Time % 5 = 0
+attr = S, HP
+hitflag = MAFD
+priority = 7, Hit
+damage = var(3), 0
+getpower = 0, 0
+givepower = 15, 15
+pausetime = 4, 10
+animtype = Back
+ground.type = High
+air.type = Low
+ground.hittime = 20
+air.hittime = 20
+ground.velocity = -10, -3
+air.velocity = -6, -4
+fall = 1
+air.fall = 1
+fall.recover = 0
+sparkno = s87020
+hitsound = S41000, 0
+
+[State 3884, Ending]
+type = VarSet
+trigger1 = var(2) >= 12
+trigger1 = Time % 5 = 4
+trigger2 = Time >= 75
+trigger3 = RoundState >= 4
+var(7) = 1
+
+[State 3884, Full charge: at least 55%]
+;tops up whatever the hits did (after attack/defence scaling) to 55% of the opponent's max life, ignoring defence
+type = TargetLifeAdd
+trigger1 = var(7) = 1
+trigger1 = parent,var(4) = 1
+trigger1 = var(2) >= 1
+trigger1 = NumEnemy
+trigger1 = ceil(0.55 * EnemyNear, LifeMax) - (fvar(2) - EnemyNear, Life) > 0
+value = -(ceil(0.55 * EnemyNear, LifeMax) - (fvar(2) - EnemyNear, Life))
+absolute = 1
+kill = 1
+
+[State 3884, Tip off]
+type = RemoveExplod
+trigger1 = var(7) = 1
+ID = 38750
+
+[State 3884, Done]
+type = DestroySelf
+trigger1 = var(7) = 1
+
+;---------------------------------------------------------------------------
+; Kamehameha beam body: stretched from Goku's hands to the head
+[Statedef 3885]
+type     = A
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = 82464
+velset   = 0,0
+sprpriority = 3
+
+[State 3885, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 3885, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3885, No shadow]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[State 3885, At the hands]
+type = PosSet
+trigger1 = 1
+x = parent,Pos X + ifelse(parent,var(9), 56, 47) * parent,Facing
+y = parent,Pos Y - ifelse(parent,var(9), 72, 58)
+
+[State 3885, Stretch]
+type = AngleDraw
+trigger1 = NumHelper(3884)
+value = -atan((helper(3884),Pos Y - Pos Y) / ifelse(abs(helper(3884),Pos X - Pos X) < 1, 1, abs(helper(3884),Pos X - Pos X))) * 57.2958
+scale = (50.0 + ((helper(3884),Pos X - Pos X) ** 2 + (helper(3884),Pos Y - Pos Y) ** 2) ** 0.5) / 58.0, ifelse(parent,var(9), 1.5, 1)
+
+[State 3885, Kaioken beam]
+type = PalFX
+trigger1 = parent,var(9) = 1
+time = 2
+add = 120,-30,-40
+
+[State 3885, Gone]
+type = DestroySelf
+trigger1 = NumHelper(3884) = 0
+trigger1 = Time > 5
+trigger2 = RoundState >= 4
+
+;---------------------------------------------------------------------------
+; KO: vocal version, teleport next to Haruhi, back-to-normal win pose with her
+[Statedef 3880]
+type     = S
+movetype = I
+physics  = N
+ctrl     = 0
+velset   = 0,0
+sprpriority = 1
+
+[State 3880, Music]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3880, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3880, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3880, Vocal version]
+;crossfade into the vocal clip that starts where the karaoke is now
+type = RootVarSet
+trigger1 = Time = 0
+fvar(7) = 1 + ifelse(floor((GameTime - root,var(18)) / 60.0 + 0.5) > 26, 26, ifelse(floor((GameTime - root,var(18)) / 60.0 + 0.5) < 0, 0, floor((GameTime - root,var(18)) / 60.0 + 0.5)))
+ignorehitpause = 1
+
+[State 3880, Aura off 1]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38730
+
+[State 3880, Aura off 2]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38731
+
+[State 3880, Vanish flash]
+type = Explod
+trigger1 = Time = 0
+anim = 81410
+postype = p1
+pos = 0,-40
+scale = 2,2
+sprpriority = 2
+ownpal = 1
+removetime = -2
+
+[State 3880, Teleport snd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 42302, 1
+
+[State 3880, Hidden]
+type = AssertSpecial
+trigger1 = Time < 12
+flag = invisible
+
+[State 3880, Next to Haruhi]
+type = PosSet
+trigger1 = Time = 10
+x = root,Pos X - 45 * root,Facing
+y = 0
+
+[State 3880, Same way as Haruhi]
+type = Turn
+trigger1 = Time = 10
+trigger1 = Facing != root,Facing
+
+[State 3880, Arrive flash]
+type = Explod
+trigger1 = Time = 10
+anim = 81411
+postype = p1
+pos = 0,-50
+scale = 2,2
+sprpriority = 2
+ownpal = 1
+removetime = -2
+
+[State 3880, Arrive snd]
+type = PlaySnd
+trigger1 = Time = 10
+value = 42302, 2
+
+[State 3880, Stand]
+type = ChangeAnim
+trigger1 = Time = 12
+value = 80000
+
+[State 3880, Win pose]
+;Super Saiyan -> back to normal
+type = ChangeAnim
+trigger1 = Anim = 80000
+trigger1 = Time >= 12
+trigger1 = (root,StateNo = [180,189]) || RoundState = 4
+value = 80181
+
+[State 3880, Revert snd]
+type = PlaySnd
+trigger1 = Anim = 80181
+trigger1 = AnimElemTime(18) = 0
+value = 40181, 0
+
+[State 3880, Win voice]
+type = PlaySnd
+trigger1 = Anim = 80181
+trigger1 = AnimElemTime(23) = 0
+value = 40003, 259 + (Random % 7)
+channel = 0
+
+;---------------------------------------------------------------------------
+; Haruhi KO'd during the charge: teleport in next to her, time-over pose
+[Statedef 3881]
+type     = S
+movetype = I
+physics  = N
+ctrl     = 0
+velset   = 0,0
+sprpriority = 1
+
+[State 3881, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3881, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3881, Stop charging]
+type = RootVarSet
+trigger1 = Time = 0
+var(17) = 0
+ignorehitpause = 1
+
+[State 3881, Fade music]
+type = RootVarSet
+trigger1 = Time = 0
+trigger1 = root,var(16) = 0
+var(16) = 1
+ignorehitpause = 1
+
+[State 3881, Bar off 1]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38711
+
+[State 3881, Bar off 2]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38712
+
+[State 3881, Bar off 3]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38713
+
+[State 3881, Aura off 1]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38730
+
+[State 3881, Aura off 2]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38731
+
+[State 3881, Vanish flash]
+type = Explod
+trigger1 = Time = 0
+anim = 81410
+postype = p1
+pos = 0,-40
+scale = 2,2
+sprpriority = 2
+ownpal = 1
+removetime = -2
+
+[State 3881, Teleport snd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 42302, 1
+
+[State 3881, Hidden]
+type = AssertSpecial
+trigger1 = Time < 12
+flag = invisible
+
+[State 3881, Next to Haruhi]
+type = PosSet
+trigger1 = Time = 10
+x = root,Pos X + 45 * root,Facing
+y = 0
+
+[State 3881, Face Haruhi]
+type = Turn
+trigger1 = Time = 10
+trigger1 = Facing = root,Facing
+
+[State 3881, Arrive flash]
+type = Explod
+trigger1 = Time = 10
+anim = 81411
+postype = p1
+pos = 0,-50
+scale = 2,2
+sprpriority = 2
+ownpal = 1
+removetime = -2
+
+[State 3881, Arrive snd]
+type = PlaySnd
+trigger1 = Time = 10
+value = 42302, 2
+
+[State 3881, Time over pose]
+type = ChangeAnim
+trigger1 = Time = 12
+value = 80170
+
+;---------------------------------------------------------------------------
+; No KO: teleport away, music fades
+[Statedef 3882]
+type     = U
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = 81400
+velset   = 0,0
+sprpriority = 1
+
+[State 3882, Music]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3882, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3882, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3882, Aura off 1]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38730
+
+[State 3882, Aura off 2]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 38731
+
+[State 3882, Fade music]
+type = RootVarSet
+trigger1 = Time = 0
+trigger1 = root,var(16) = 0
+var(16) = 1
+ignorehitpause = 1
+
+[State 3882, Teleport snd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 42302, 0
+
+[State 3882, Gone]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 3883
+
+;---------------------------------------------------------------------------
+; Invisible until the karaoke has faded out, so the stage music doesn't cut in over it
+[Statedef 3883]
+type     = S
+movetype = I
+physics  = N
+ctrl     = 0
+velset   = 0,0
+sprpriority = 1
+
+[State 3883, Music]
+type = AssertSpecial
+trigger1 = 1
+flag = nomusic
+ignorehitpause = 1
+
+[State 3883, Hidden]
+type = AssertSpecial
+trigger1 = 1
+flag = invisible
+ignorehitpause = 1
+
+[State 3883, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+ignorehitpause = 1
+
+[State 3883, Screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+
+[State 3883, Done]
+type = DestroySelf
+trigger1 = Time > 10
+trigger1 = root,var(16) = 0
+trigger2 = Time >= 120
+trigger3 = RoundState >= 4

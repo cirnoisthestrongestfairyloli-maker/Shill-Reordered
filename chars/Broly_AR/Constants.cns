@@ -1,0 +1,105 @@
+; ________________________
+;| Broly by Mr.Ansatsuken |
+; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+;===================<CONSTANTS>================
+
+[Data]
+life = 1150
+power = 5000
+attack = 90
+defence = 100
+fall.defence_up = 50
+liedown.time = 60
+airjuggle = 15
+sparkno = s7010
+guard.sparkno = s7000
+KO.echo = 0
+volume = 0
+IntPersistIndex = 0
+FloatPersistIndex = 0
+
+[Size]
+xscale = 0.85
+yscale = 0.85
+ground.back = 15
+ground.front = 15
+air.back = 38		;Player width (back, air)
+air.front = 42		;Player width (front, air)
+height = 100		;Height of player (for opponent to jump over)
+attack.dist = 160		;Default attack distance
+proj.attack.dist = 90	;Default attack distance for projectiles
+proj.doscale = 0		;Set to 1 to scale projectiles too   
+head.pos = 0, -140	          ;Approximate position of head
+mid.pos = 3, -85		;Approximate position of midsection
+shadowoffset = 0		;Number of pixels to vertically offset the shadow
+draw.offset = 0,0		;Player drawing offset in pixels (x, y)
+
+[Velocity]
+walk.fwd = 1.1   ;Abstract Reordered: was 1.6
+walk.back = -1.25   ;Abstract Reordered: was -1.8
+run.fwd = 6.5, 0   ;Abstract Reordered: was 10
+run.back = -3.5, -3.5   ;Abstract Reordered: was -4.75, -4
+jump.neu = 0, -10
+jump.back = -3.3
+jump.fwd = 3.3
+runjump.back = -4.5, -10
+runjump.fwd = 4.5, -10 
+
+[Movement]
+airjump.num = 0
+airjump.height = 0
+yaccel = 0.5
+stand.friction = 0.85
+crouch.friction = 0.85
+stand.friction.threshold = 1.0
+crouch.friction.threshold = 1.0
+air.gethit.groundlevel = 25
+air.gethit.groundrecover.ground.threshold = -20
+air.gethit.groundrecover.groundlevel = 10
+air.gethit.airrecover.threshold = -1
+air.gethit.airrecover.yaccel = 0.35
+air.gethit.trip.groundlevel = 15
+down.bounce.offset = 0, 20
+down.bounce.yaccel = 0.4
+down.bounce.groundlevel = 12
+down.friction.threshold = 0.5
+
+[Quotes]
+victory0 = "Did you truly think you could defeat me with so little power?"
+victory1 = "Show me your fighting spirit... \nIIf you don't, I'll destroy this planet!"
+victory2 = "Ha ha ha... \nYou've done well to last this long, but your time is up."
+victory3 = "My power is rising... \nIt's overflowing!"
+victory4 = "A monster, you say? \nNo... I AM THE DEVIL!"
+victory5 = "You're finished! \nTrash will always be trash!"
+victory6 = "Ha ha! I just love a dramatic ending!"
+victory7 = "I do what needs to be done. \nWhat do you expect from a true freak?!"
+victory8 = "If you had just let me kill you before, \nyou wouldn't be dealing with this pain now!"
+victory9 = "What was THAT supposed to be, weakling?!"
+victory10 = "Ah! So it's true... \nYou ARE all talk and no action! \nA true piece of trash..."
+victory11 = "Ha ha ha ha! \nIf you wish not to fight back, I understand. \nBut I'm going to destroy this planet, no matter what!"
+victory12 = "You lasted longer than I expected, \nbut your final hour has arrived!"
+victory13 = "You're a complete and utter waste of human blood!"
+
+; Vs Goku-looking Saiyans
+victory15 = "KAKAROOOOOTTOOOO!!!"
+victory16 = "Get up, Kakarot, I'm not done breaking you!"
+
+[Es.Quotes]
+victory0 = "Realmente creiste que podrias derrotarme con tan poco poder?!"
+victory1 = "Muestrame tu espiritu de combate... \nSi no lo haces, destruire este planeta!"
+victory2 = "Ja ja ja... Lo haz hecho bien al durar tanto, pero tu tiempo se acabo."
+victory3 = "Mi poder esta creciendo... \nSe esta sobrecargando!"
+victory4 = "Que soy un monstruo infernal? \nNo... SOY EL MISMISIMO DEMONIO!"
+victory5 = "Estas acabado! \nLa basura siempre sera basura!"
+victory6 = "Ja ja! Me encantan los finales dramaticos!"
+victory7 = "Hago lo que hace falta hacer. \nQue mas esperas de un verdadero monstruo?"
+victory8 = "Si tan solo me hubieras dejado matarte antes, \nno estarias lidiando con este dolor ahora!"
+victory9 = "Y que se supone que fue ESO, debilucho?!"
+victory10 = "Ah! Asi que es verdad... \nTu ERES mucha lengua y poca accion! \nUn verdadero pedazo de basura..."
+victory11 = "Ja ja ja ja! \nSi deseas no luchar, lo entiendo. \nPero destruire este planeta, sin importar que!"
+victory12 = "Duraste mas de lo que esperaba, \npero tu hora final ha llegado."
+victory13 = "Eres un completo y total desperdicio de sangre humana!"
+
+; Vs Goku-looking Saiyans
+victory15 = "KAKAROOOOOTTOOOO!!!"
+victory16 = "Levantate Kakarotto, todavia no he terminado de romperte."

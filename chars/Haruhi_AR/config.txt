@@ -1,0 +1,83 @@
+[Statedef -3]
+
+[State -3:  Set AI Level]
+type           = VarSet
+triggerall     = var(59) = 0
+trigger1       = AILevel
+v              = 59
+value          = 2      ; AI Level (1 - N)
+;value          = AILevel
+ignorehitpause = 1
+
+;------------------------------------------------------------------------------
+
+;Stripping KO ON(1)/OFF(0)
+[State -1, setting]
+type = varset
+trigger1 = 1
+v = 20
+value = 0;off
+;value = 1;on
+
+;Urination ON(1)/OFF(0)
+[State -1, setting]
+type = varset
+trigger1 = 1
+v = 23
+value = 0;off
+;value = 1;on
+
+;use molester grab & Oshioki ON(1)/OFF(0)
+[State -1, setting]
+type = varset
+trigger1 = 1
+v = 24
+;value = 0;off
+value = 1;on
+
+;Ç±Ç±Ç©ÇÁâ∫ÇÕòMÇÁÇ»Ç¢ÇÊÇ§Ç…ÅI------------------------------------------------------------------------------
+
+[State -3, âπÇñ¬ÇÁÇ∑]
+type = PlaySnd
+triggerall = Time = 1
+trigger1 = stateno = 52
+trigger2 = stateno = 106
+value = 47, 0
+
+[State -3, çUåÇé„]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = movetype != H
+triggerall = Random < 450
+trigger1 = stateno = 200 || stateno = 210
+trigger2 = stateno = 400 || stateno = 410
+trigger3 = stateno = 600 || stateno = 610
+value = 200,ifelse(random < 333,0,3)
+channel = 0
+
+[State -3, çUåÇã≠]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = movetype != H
+trigger1 = stateno = 220 || stateno = 221
+trigger2 = stateno = 420
+trigger3 = stateno = 620
+value = 210,ifelse(random < 333,0,2)
+channel = 0
+
+[State -3, çUåÇïKéE1]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = movetype != H
+trigger1 = stateno = 1001 || stateno = 1011
+value = 1000,ifelse(random < 333,0,1)
+channel = 0
+
+[State -3, ï˙îAâπ]
+type = PlaySnd
+triggerall = var(23) = 1
+triggerall = NumExplod(25112) = 1
+trigger1 = time = 1
+persistent = 0
+value = 25120,0
+channel = 3

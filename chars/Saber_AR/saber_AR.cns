@@ -1,0 +1,456 @@
+;---------------------------------------------------------------------------
+; Abstract Reordered additions for Saber: parry (Z) and burst (A+B+C)
+;---------------------------------------------------------------------------
+
+[Statedef 7740]
+type     = U
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = ifelse(StateType = C, 131, ifelse(StateType = A, 132, 130)) + var(1)
+sprpriority = 2
+
+[State 7740, Air physics]
+type = StateTypeSet
+trigger1 = StateType = A
+physics = A
+ignorehitpause = 1
+persistent = 1
+
+[State 7740, Catch]
+type = ReversalDef
+trigger1 = Time = 0
+reversal.attr = SCA, NA, SA, HA, NP, SP, HP, AA, AP
+pausetime = 0, 13
+numhits = 0
+sparkno = -1
+sparkxy = 0, 0
+hitsound = -1, -1
+p1stateno = 7741
+
+[State 7740, Catch window]
+type = HitOverride
+trigger1 = Time = [3, 12]
+time = 1
+attr = SCA, NA, SA, HA, NP, SP, HP, AA, AP
+stateno = 7741
+ignorehitpause = 1
+
+[State 7740, Flash]
+type = PalFX
+trigger1 = Time = 3
+time = 9
+add = 60, 120, 200
+sinadd = 64, 32, 5, 31
+
+[State 7740, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 7740, Stay put]
+type = VelSet
+trigger1 = StateType != A
+x = 0
+y = 0
+
+[State 7740, Ground whiff]
+;window passed without catching anything
+type = ChangeState
+trigger1 = StateType != A
+trigger1 = Time >= 13
+value = 7748
+
+[State 7740, Air whiff]
+type = ChangeState
+trigger1 = StateType = A
+trigger1 = Time >= 20
+value = 7749
+
+;---------------------------------------------------------------------------
+; Parry success
+
+[Statedef 7741]
+type     = U
+movetype = I
+physics  = N
+ctrl     = 0
+velset   = 0, 0
+anim     = ifelse(StateType = C, 131, ifelse(StateType = A, 132, 130)) + var(1)
+
+[State 7741, Air physics]
+type = StateTypeSet
+trigger1 = StateType = A
+physics = A
+ignorehitpause = 1
+persistent = 1
+
+[State 7741, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = F6, 0
+
+[State 7741, Meter]
+type = PowerAdd
+trigger1 = Time = 0
+value = 40
+ignorehitpause = 1
+persistent = 1
+
+[State 7741, Life]
+type = LifeAdd
+trigger1 = Time = 0
+value = 4
+ignorehitpause = 1
+persistent = 1
+
+[State 7741, Safe]
+type = NotHitBy
+trigger1 = Time = 0
+value = SCA
+time = 18
+
+[State 7741, Freeze]
+type = Pause
+trigger1 = Time = 0
+time = 15
+movetime = 15
+ignorehitpause = 1
+persistent = 1
+
+[State 7741, Flash]
+type = EnvColor
+trigger1 = Time = 0
+value = 255, 230, 200
+time = 1
+
+[State 7741, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 7741, Stop in air]
+type = VelSet
+trigger1 = StateType = A
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 7741, Free to act]
+type = CtrlSet
+trigger1 = Time = 3
+value = 1
+
+[State 7741, Ground end]
+type = ChangeState
+trigger1 = StateType != A
+trigger1 = Time >= 15
+value = ifelse(StateType = C, 11, 0)
+ctrl = 1
+
+[State 7741, Air end]
+type = ChangeState
+trigger1 = StateType = A
+trigger1 = Time >= 20
+value = 50
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Parry whiffed on the ground: -80 meter, stuck for 18 frames (minus)
+
+[Statedef 7748]
+type     = U
+movetype = I
+physics  = U
+ctrl     = 0
+velset   = 0, 0
+
+[State 7748, Cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -80
+
+[State 7748, Failed]
+type = PalFX
+trigger1 = Time = 0
+time = 18
+add = -40, -40, -40
+mul = 200, 200, 200
+
+[State 7748, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 7748, Recover]
+type = ChangeState
+trigger1 = Time >= 18
+value = ifelse(StateType = C, 11, 0)
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Parry whiffed in the air: -80 meter, no control until he lands (landing goes to 52)
+
+[Statedef 7749]
+type     = A
+movetype = I
+physics  = A
+ctrl     = 0
+
+[State 7749, Cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -80
+
+[State 7749, Failed]
+type = PalFX
+trigger1 = Time = 0
+time = 18
+add = -40, -40, -40
+mul = 200, 200, 200
+
+[State 7749, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+;---------------------------------------------------------------------------
+; Burst (from Kamijo): A+B+C while being hit. Invincible, blows the opponent away, no damage.
+; Recharges in 75 seconds (fvar(30), counted down in State -1), fresh every round.
+
+[Statedef 7750]
+type     = S
+movetype = I
+physics  = N
+velset   = 0, 0
+ctrl     = 0
+facep2   = 1
+anim     = ifelse(StateType = A, 9605, 9604)
+sprpriority = 3
+
+[State 7750, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 7750, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 7750, Cooldown]
+type = VarSet
+trigger1 = Time = 0
+fvar(30) = 4500
+
+[State 7750, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = 9600, 0
+volume = 255
+channel = -1
+
+[State 7750, Voice]
+type = PlaySnd
+trigger1 = Time = 0
+value = 1, 0
+channel = 0
+
+[State 7750, Effect]
+type = Explod
+trigger1 = Time = 0
+anim = 9600
+ID = 9600
+pos = 0, -55
+postype = p1
+bindtime = -1
+removetime = -2
+supermovetime = 9999
+pausemovetime = 9999
+sprpriority = 6
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State 7750, Flash]
+type = PalFX
+trigger1 = Time = 0
+time = 12
+add = 120, 120, 120
+
+[State 7750, Shake]
+type = EnvShake
+trigger1 = Time = 0
+time = 12
+ampl = 4
+
+[State 7750, Attacking]
+type = StateTypeSet
+trigger1 = Time = 4
+movetype = A
+
+[State 7750, Done attacking]
+type = StateTypeSet
+trigger1 = Time = 10
+movetype = I
+
+[State 7750, Blow away]
+type = HitDef
+trigger1 = Time = [4, 9]
+trigger1 = !MoveContact
+attr = S, NA
+damage = 0
+animtype = Light
+guardflag =
+hitflag = MAF
+priority = 7, Hit
+pausetime = 0, 0
+sparkno = -1
+hitsound = -1
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 12
+ground.velocity = -18.4, -5
+air.type = High
+air.velocity = -18.4, -4
+air.hittime = 12
+airguard.velocity = -18.9, -0.8
+fall = 1
+fall.recover = 0
+;hard knockdown: no tech, no quick rise
+down.recover = 0
+down.recovertime = 50
+getpower = 0
+givepower = 0
+ground.cornerpush.veloff = 0
+
+[State 7750, End]
+type = ChangeState
+trigger1 = Time >= 32
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+[Statedef 7751]
+type     = A
+movetype = I
+physics  = N
+velset   = 0, 0
+ctrl     = 0
+facep2   = 1
+anim     = ifelse(StateType = A, 9605, 9604)
+sprpriority = 3
+
+[State 7751, Invincible]
+type = NotHitBy
+trigger1 = Time < 30
+value = SCA
+
+[State 7751, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 7751, Cooldown]
+type = VarSet
+trigger1 = Time = 0
+fvar(30) = 4500
+
+[State 7751, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = 9600, 0
+volume = 255
+channel = -1
+
+[State 7751, Voice]
+type = PlaySnd
+trigger1 = Time = 0
+value = 1, 0
+channel = 0
+
+[State 7751, Effect]
+type = Explod
+trigger1 = Time = 0
+anim = 9600
+ID = 9600
+pos = 0, -55
+postype = p1
+bindtime = -1
+removetime = -2
+supermovetime = 9999
+pausemovetime = 9999
+sprpriority = 6
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State 7751, Flash]
+type = PalFX
+trigger1 = Time = 0
+time = 12
+add = 120, 120, 120
+
+[State 7751, Shake]
+type = EnvShake
+trigger1 = Time = 0
+time = 12
+ampl = 4
+
+[State 7751, Attacking]
+type = StateTypeSet
+trigger1 = Time = 4
+movetype = A
+
+[State 7751, Done attacking]
+type = StateTypeSet
+trigger1 = Time = 10
+movetype = I
+
+[State 7751, Blow away]
+type = HitDef
+trigger1 = Time = [4, 9]
+trigger1 = !MoveContact
+attr = A, NA
+damage = 0
+animtype = Light
+guardflag =
+hitflag = MAF
+priority = 7, Hit
+pausetime = 0, 0
+sparkno = -1
+hitsound = -1
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 12
+ground.velocity = -18.4, -5
+air.type = High
+air.velocity = -18.4, -4
+air.hittime = 12
+airguard.velocity = -18.9, -0.8
+fall = 1
+fall.recover = 0
+;hard knockdown: no tech, no quick rise
+down.recover = 0
+down.recovertime = 50
+getpower = 0
+givepower = 0
+
+[State 7751, Fall]
+type = VelAdd
+trigger1 = Time >= 24
+y = 0.47
+
+[State 7751, Land]
+type = ChangeState
+trigger1 = Time >= 24
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y > 0
+value = 52
+ctrl = 1

@@ -1,0 +1,1941 @@
+﻿;-----------------------------------------------------------------------------
+; アーマー判定ヘルパー
+;-----------------------------------------------------------------------------
+[Statedef 9000]
+type     = A
+movetype = I
+physics  = N
+anim     = 9999
+sprpriority = -1
+
+[State 9000, 0/CHs]; 不具合対策
+type = ChangeState
+trigger1 = !IsHelper
+value = 0
+ctrl = 1
+
+[State 9000, AssertSpecial]
+type = AssertSpecial
+Trigger1 = 1
+flag = NoShadow
+flag2 = invisible
+
+[State 9000, 0/NHB]; 開始時だけ無敵（重複被弾防止）
+type = NotHitBy
+trigger1 = Time = 0
+value = SCA
+time = 1
+
+[State 9000, -1/Tra]; 透過処理
+type = Trans
+trigger1 = 1
+trans = addalpha
+alpha = 256,130
+
+[State 9000, -1/Ass]; 影消し
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 9000, -1/Pos]; 本体に追従
+type = BindToParent
+trigger1 = 1
+time = 1
+facing = 1
+pos = 0,0
+
+[State 9000, -1/CHa]; 判定を揃える
+type = ChangeAnim
+trigger1 = SelfAnimExist(Parent,Anim)
+value = Parent,Anim
+elem = Parent,AnimElemNo(0)
+
+[State 9000, 0]; 打撃／飛び道具を受けたらステートを繰り返す
+type = HitOverRide
+trigger1 = IsHelper(9000)
+attr = SCA,AA,AP
+stateno = 9000
+
+[State 9000, 0]; 本体がアーマーパートを過ぎたら消滅
+type = DestroySelf
+trigger1 = !Parent,var(39)
+trigger2 = Parent,MoveType = H
+
+;-----------------------------------------------------------------------------
+; 瞬歩・RFゲージ
+;-----------------------------------------------------------------------------
+[Statedef 10500]
+type = A
+movetype= I
+physics = N
+anim = 9999
+velset = 0,0
+ctrl = 0
+
+;---------------------------------------------------------------------------
+; RF/Shunpo Gauge, P1
+[State -2, P1 RF Stock 1,1]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 1
+anim = 10502
+ID = 10010
+pos = 2, 239+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 1,2]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10010
+pos = 3, 238+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 1,3]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10010
+pos = 4, 237+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 1,4]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10010
+pos = 5, 236+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 1,5]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10010
+pos = 6, 235+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 1,6]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 1
+anim = 10504
+ID = 10010
+pos = 7, 234+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 2,1]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 1
+anim = 10502
+ID = 10011
+pos = 34, 239+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 2,2]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10011
+pos = 35, 238+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 2,3]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10011
+pos = 36, 237+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 2,4]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10011
+pos = 37, 236+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 2,5]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10011
+pos = 38, 235+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 2,6]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 1
+anim = 10504
+ID = 10011
+pos = 39, 234+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 3,1]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 1
+anim = 10502
+ID = 10012
+pos = 66, 239+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 3,2]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10012
+pos = 67, 238+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 3,3]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10012
+pos = 68, 237+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 3,4]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10012
+pos = 69, 236+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 3,5]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 1
+anim = 10503
+ID = 10012
+pos = 70, 235+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock 3,6]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 1
+anim = 10504
+ID = 10012
+pos = 71, 234+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock Refill,1]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 1
+anim = 10505
+ID = 10013
+pos = (2+(32*root,var(11))), 239+(root,var(37)*-8)
+postype = left
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = (31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock Refill,2]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 1
+anim = 10506
+ID = 10013
+pos = (3+(32*root,var(11))), 238+(root,var(37)*-8)
+postype = left
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = (31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock Refill,3]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 1
+anim = 10506
+ID = 10013
+pos = (4+(32*root,var(11))), 237+(root,var(37)*-8)
+postype = left
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = (31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock Refill,4]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 1
+anim = 10506
+ID = 10013
+pos = (5+(32*root,var(11))), 236+(root,var(37)*-8)
+postype = left
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = (31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock Refill,5]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 1
+anim = 10506
+ID = 10013
+pos = (6+(32*root,var(11))), 235+(root,var(37)*-8)
+postype = left
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = (31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Stock Refill,6]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 1
+anim = 10507
+ID = 10013
+pos = (7+(32*root,var(11))), 234+(root,var(37)*-8)
+postype = left
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = (31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 RF Gauge]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 1
+anim = 10500
+ID = 10000
+pos = 0, 240+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 3
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 Shunpo Gauge BG,1]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 1
+anim = 10510
+ID = 10001
+pos = 0, GameHeight - (0)+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 Shunpo Gauge BG,2]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 1
+anim = 10510
+ID = 10001
+pos = 32, GameHeight - (0)+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 Shunpo Gauge BG,3]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 1
+anim = 10510
+ID = 10001
+pos = 64, GameHeight - (0)+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 Shunpo Stock 1]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = root,var(13) > 0
+trigger1 = TeamSide = 1
+anim = 10508
+ID = 10020
+pos = 7, GameHeight - (3)+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 26, 1
+sprpriority = 4
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 Shunpo Stock 2]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = root,var(13) > 1
+trigger1 = TeamSide = 1
+anim = 10508
+ID = 10021
+pos = 39, GameHeight - (3)+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 26, 1
+sprpriority = 4
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 Shunpo Stock 3]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = root,var(13) > 2
+trigger1 = TeamSide = 1
+anim = 10508
+ID = 10022
+pos = 71, GameHeight - (3)+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 26, 1
+sprpriority = 4
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 Shunpo Stock Refill]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = root,var(13) < 3
+trigger1 = TeamSide = 1
+anim = 10509
+ID = 10023
+pos = (7+(32*root,var(13))), GameHeight - (3)+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = (26*((root,fvar(14)))/420), 1
+sprpriority = 5;2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 Shunpo Gauge,1]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 1
+anim = 10501
+ID = 10001
+pos = 0, GameHeight - (0)+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 Shunpo Gauge,2]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 1
+anim = 10501
+ID = 10001
+pos = 32, GameHeight - (0)+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P1 Shunpo Gauge,3]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 1
+anim = 10501
+ID = 10001
+pos = 64, GameHeight - (0)+(root,var(37)*-8)
+postype = left
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+;---------------------------------------------------------------------------
+; RF/Shunpo Gauge, P2
+[State -2, P2 RF Stock 1,1]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 2
+anim = 10502
+ID = 10010
+pos = -33, 239+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 1,2]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10010
+pos = -34, 238+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 1,3]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10010
+pos = -35, 237+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 1,4]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10010
+pos = -36, 236+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 1,5]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10010
+pos = -37, 235+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 1,6]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 0
+trigger1 = TeamSide = 2
+anim = 10504
+ID = 10010
+pos = -38, 234+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 2,1]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 2
+anim = 10502
+ID = 10011
+pos = -65, 239+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 2,2]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10011
+pos = -66, 238+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 2,3]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10011
+pos = -67, 237+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 2,4]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10011
+pos = -68, 236+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 2,5]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10011
+pos = -69, 235+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 2,6]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 1
+trigger1 = TeamSide = 2
+anim = 10504
+ID = 10011
+pos = -70, 234+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 3,1]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 2
+anim = 10502
+ID = 10012
+pos = -97, 239+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 3,2]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10012
+pos = -98, 238+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 3,3]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10012
+pos = -99, 237+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 3,4]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10012
+pos = -100, 236+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 3,5]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 2
+anim = 10503
+ID = 10012
+pos = -101, 235+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock 3,6]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) > 2
+trigger1 = TeamSide = 2
+anim = 10504
+ID = 10012
+pos = -102, 234+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 31, 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock Refill,1]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 2
+anim = 10511
+ID = 10013
+pos = -(2+(32*root,var(11))), 239+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = -(31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock Refill,2]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 2
+anim = 10512
+ID = 10013
+pos = -(3+(32*root,var(11))), 238+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = -(31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock Refill,3]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 2
+anim = 10512
+ID = 10013
+pos = -(4+(32*root,var(11))), 237+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = -(31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock Refill,4]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 2
+anim = 10512
+ID = 10013
+pos = -(5+(32*root,var(11))), 236+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = -(31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock Refill,5]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 2
+anim = 10512
+ID = 10013
+pos = -(6+(32*root,var(11))), 235+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = -(31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Stock Refill,6]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = root,var(11) < 3
+trigger1 = TeamSide = 2
+anim = 10513
+ID = 10013
+pos = -(7+(32*root,var(11))), 234+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = -(31*((root,var(10)))/600), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 RF Gauge]
+type = Null
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 2
+anim = 10500
+ID = 10000
+pos = -1, 240+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 3
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 Shunpo Gauge BG,1]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 2
+anim = 10510
+ID = 10001
+pos = -1, GameHeight - (0)+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 Shunpo Gauge BG,2]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 2
+anim = 10510
+ID = 10001
+pos = -33, GameHeight - (0)+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 Shunpo Gauge BG,3]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 2
+anim = 10510
+ID = 10001
+pos = -65, GameHeight - (0)+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 Shunpo Stock 1]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = root,var(13) > 0
+trigger1 = TeamSide = 2
+anim = 10508
+ID = 10020
+pos = -33, GameHeight - (3)+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 26, 1
+sprpriority = 4
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 Shunpo Stock 2]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = root,var(13) > 1
+trigger1 = TeamSide = 2
+anim = 10508
+ID = 10021
+pos = -65, GameHeight - (3)+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 26, 1
+sprpriority = 4
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 Shunpo Stock 3]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = root,var(13) > 2
+trigger1 = TeamSide = 2
+anim = 10508
+ID = 10022
+pos = -97, GameHeight - (3)+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 26, 1
+sprpriority = 4
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 Shunpo Stock Refill]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = root,var(13) < 3
+trigger1 = TeamSide = 2
+anim = 10514
+ID = 10023
+pos = -(7+(32*root,var(13))), GameHeight - (3)+(root,var(37)*-8)
+postype = right
+facing = 1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = (26*((root,fvar(14)))/420), 1
+sprpriority = 2
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 Shunpo Gauge,1]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 2
+anim = 10501
+ID = 10001
+pos = -1, GameHeight - (0)+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 Shunpo Gauge,2]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 2
+anim = 10501
+ID = 10001
+pos = -33, GameHeight - (0)+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, P2 Shunpo Gauge,3]
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = TeamSide = 2
+anim = 10501
+ID = 10001
+pos = -65, GameHeight - (0)+(root,var(37)*-8)
+postype = right
+facing = -1
+bindtime = -1
+removetime = 1
+supermovetime = 0
+pausemovetime = 0
+scale = 1, 1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, RemoveExplod]
+type = RemoveExplod
+trigger1 = root,var(36)
+
+;-----------------------------------------------------------------------------
+; MAXゲージ
+;-----------------------------------------------------------------------------
+;(HELPER)MAXゲージ
+[Statedef 10520]
+type = A
+ctrl = 0
+anim = 10520
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 10
+
+;---------------------[]
+[state a]
+type = varset
+trigger1 = time = 0
+v = 1
+value = 0
+
+[state a]
+type = changestate
+triggerall = Root,movetype != H
+trigger1 = Root,var(40) = 900 || Root,var(40) = 2700
+value = 10521
+
+;---------------------------------------------------------------------------
+;(HELPER)MAXゲージ
+[Statedef 10521]
+type = A
+ctrl = 0
+anim = 10520
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 10
+
+;---------------------[]
+[state -2,a];ゲージ枠a
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = Facing = 1
+trigger1 = numexplod(10521) = 0
+anim = 10521
+id = 10521
+postype = back
+bindtime = -1
+pos = 36, GameHeight - (40)+(root,var(37)*-10)-ceil(root,fvar(39)/2.5);221
+sprpriority = 10
+removetime = -1
+ownpal = 1
+;ontop = 1
+
+[state -2,a];ゲージ枠a
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = Facing = -1
+trigger1 = numexplod(10521) = 0
+anim = 10522
+id = 10521
+postype = back
+bindtime = -1
+pos = 36, GameHeight - (40)+(root,var(37)*-10)-ceil(root,fvar(39)/2.5);221
+sprpriority = 10
+removetime = -1
+ownpal = 1
+facing = 1
+;ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = time <= 33
+ID = 10521
+scale = 1,var(2)*0.01
+
+;---------------------[]
+[state a]
+type = varset
+trigger1 = time = 0
+v = 2
+value = 0
+
+[state a]
+type = varadd
+trigger1 = time <= 4
+v = 2
+value = 20
+
+[state a]
+type = varset
+trigger1 = time = 5
+v = 2
+value = 100
+
+[state a]
+type = varadd
+trigger1 = time >= 27
+v = 2
+value = -20
+
+[state a]
+type = varset
+trigger1 = time = 32
+v = 2
+value = 100
+
+;---------------------[]
+[state a]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+flag2 = invisible
+
+;---------------------[ゲージ量]
+[state -2,a];ゲージ量
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = Facing = 1
+trigger1 = time >= 32
+anim = 10523
+id = 10523
+postype = left
+bindtime = -1
+pos = 36, GameHeight - (40)+(root,var(37)*-10)-ceil(root,fvar(39)/2.5);221
+sprpriority = 11
+;removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = root,var(36) = 0
+trigger1 = Facing = -1
+trigger1 = time >= 32
+anim = 10523
+id = 10523
+postype = right
+bindtime = -1
+pos = -36, GameHeight - (40)+(root,var(37)*-10)-ceil(root,fvar(39)/2.5);221
+sprpriority = 11
+;removetime = -1
+ownpal = 1
+facing = -1
+ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 10523
+scale = Root,var(40) * ifelse(Root,var(17) = 2700, 0.000371, 0.001112),1
+
+;---------------------[]
+[state a]
+type = removeexplod
+trigger1 = Root,var(36)
+trigger2 = Root,var(40) = 0
+id = 10521
+
+[state a]
+type = removeexplod
+trigger1 = Root,var(36)
+trigger2 = Root,var(40) = 0
+id = 10523
+
+[state a]
+type = changestate
+trigger1 = Root,var(40) = 0
+value = 10520
+
+;-----------------------------------------------------------------------------
+; MAX2演出用ヘルパー
+;-----------------------------------------------------------------------------
+; MAX2背景
+
+[Statedef 10600]
+type     = A
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = 9999
+sprpriority = -50
+
+[State 181, 特殊効果]
+type = AssertSpecial
+trigger1 = 1
+flag = noBG
+flag2 = noFG
+flag3 = noshadow
+ignorehitpause = 1
+
+[State 2000]
+type = Explod
+trigger1 = time = 0
+anim = 10600
+scale = GameWidth/320, 1   ;Abstract Reordered: widescreen
+ID = 10600
+pos = 0,0
+postype = back
+ownpal = 1
+bindtime = -1
+removetime = -1
+supermove = 1
+sprpriority = -100
+
+[State 2000]
+type = Explod
+trigger1 = time = 0
+anim = 10600
+scale = GameWidth/320, 1   ;Abstract Reordered: widescreen
+ID = 10600
+pos = -320,0
+postype = back
+ownpal = 1
+bindtime = -1
+removetime = -1
+supermove = 1
+sprpriority = -100
+
+[State 800, ステート変更]
+type = changestate
+trigger1 = root,stateno != [4500,4999]
+trigger2 = root,stateno = 4510
+trigger2 = root,AnimElem = 58
+value = 10605
+
+;---------------------------------------------------------------------------
+; MAX2背景
+; パリーン
+
+[Statedef 10605]
+type     = A
+movetype = I
+physics  = N
+juggle   = 0
+ctrl     = 0
+anim     = 9999
+sprpriority = -50
+
+[State 200,]
+type = Posset
+trigger1 = time = 0
+x = 0
+y = 0
+
+[State 181, 特殊効果]
+type = AssertSpecial
+trigger1 = time = [0,6]
+flag = noBG
+
+[State 181, 特殊効果]
+type = AssertSpecial
+trigger1 = 1
+flag = noFG
+flag2 = noshadow
+
+[State 2000]
+type = Explod
+trigger1 = time = 0
+anim = 10605
+scale = GameWidth/320, 1   ;Abstract Reordered: widescreen
+ID = 10605
+pos = 0,0
+postype = back
+ownpal = 1
+bindtime = -1
+supermove = 1
+sprpriority = -100
+
+[State 1000, 音を鳴らす]
+type = PlaySnd
+trigger1 = time = 7
+value = s9,5
+
+[State 1000,]
+type = RemoveExplod
+trigger1 = time = 0
+ID = 10600
+
+[State 4110, DestroySelf]
+type = DestroySelf
+trigger1 = time = 8
+
+;-----------------------------------------------------------------------------
+;ブリーチDSカットイン
+;-----------------------------------------------------------------------------
+[Statedef 10610]
+type    = S
+movetype= I
+physics = S
+anim = 9999
+velset = 0,0
+poweradd = 0
+ctrl = 0
+sprpriority = -2
+
+[State 40001, P1 PORTRAIT]
+type = Explod
+triggerall = !numexplod(10610)
+triggerall = teamside = 1
+trigger1 = !time
+anim = 10610
+ID = 10610
+pos = 0, GameHeight/2 + (-30)
+postype = left  ;p2,front,back,left,right
+pausemovetime = -1
+supermovetime = -1
+removetime = -2
+bindtime = -1
+scale = 1,1
+sprpriority = -19
+ownpal = 1
+ignorehitpause = 1
+
+[State 40001, P2 PORTRAIT]
+type = Explod
+triggerall = !numexplod(10610)
+triggerall = teamside = 2
+trigger1 = !time
+anim = 10610
+ID = 10610
+pos = 0, GameHeight/2 + (-30)
+postype = right  ;p2,front,back,left,right
+pausemovetime = -1
+supermovetime = -1
+removetime = -2
+bindtime = -1
+scale = 1,1
+facing = -1
+sprpriority = -19
+ownpal = 1
+ignorehitpause = 1
+
+[State 10610, ModifyExplod]
+type = ModifyExplod
+trigger1 = time = 2
+ID = 10610
+scale = 1,0.3
+[State 10610, ModifyExplod]
+type = ModifyExplod
+trigger1 = time = 4
+ID = 10610
+scale = 1,0.54
+[State 10610, ModifyExplod]
+type = ModifyExplod
+trigger1 = time = 6
+ID = 10610
+scale = 1,0.77
+[State 10610, ModifyExplod]
+type = ModifyExplod
+trigger1 = time = 8
+ID = 10610
+scale = 1,1
+[State 10610, ModifyExplod]
+type = ModifyExplod
+trigger1 = time = 56
+ID = 10610
+scale = 1,0.77
+[State 10610, ModifyExplod]
+type = ModifyExplod
+trigger1 = time = 57
+ID = 10610
+scale = 1,0.54
+[State 10610, ModifyExplod]
+type = ModifyExplod
+trigger1 = time = 58
+ID = 10610
+scale = 1,0.3
+[State 10610, ModifyExplod]
+type = ModifyExplod
+trigger1 = time = 59
+ID = 10610
+scale = 1,1
+
+[State 1]
+type = DestroySelf
+trigger1 = time = 60
+
+;-----------------------------------------------------------------------------
+; BBB演出用ヘルパー
+;-----------------------------------------------------------------------------
+;(HELPER)BBB背景用ヘルパー1
+[Statedef 10650]
+type = A
+movetype = I
+physics = N
+anim = 10650
+velset = 0,0
+ctrl = 0
+sprpriority = -60
+
+[state a]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[state a]
+type = posset
+trigger1 = 1
+x = pos x - screenpos x +160
+y = pos y - screenpos y +120
+
+[state a]
+type = varset
+trigger1 = time = 0
+v = 1
+value = 0
+
+[state a]
+type = varadd
+trigger1 = animelem = 8,>=0
+v = 1
+value = 10
+
+;---------------------[透過]
+[state a]
+type = Trans
+trigger1 = 1
+trans = addalpha
+alpha = 256-var(1),40+var(1)
+
+[state a]
+type = AngleDraw
+trigger1 = 1
+scale = 1.5+0.05*Time,1.5+0.05*Time
+
+[State 181, 特殊効果]
+type = AssertSpecial
+trigger1 = time = [6,75]
+flag = noBG
+flag2 = noFG
+flag3 = noshadow
+ignorehitpause = 1
+
+[state a]
+type = BGPalFX
+trigger1 = time = [76,96]
+time = 1
+mul = 12*(time-76),12*(time-76),12*(time-76)
+
+[state a]
+type = BGPalFX
+trigger1 = time > 96
+time = 1
+mul = 256,256,256
+
+;---------------------[エフェクト]
+[State explod];エフェクト
+type = Explod
+trigger1 = time = 14
+anim = 10651
+scale = GameWidth/320, 1   ;Abstract Reordered: widescreen
+id = 10650
+pos = 0,0
+postype = back
+bindtime = -1
+removetime = 60
+sprpriority = -999
+supermovetime = 2147483647
+pausemovetime = 2147483647
+ignorehitpause = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = Time >= 76
+trans = addalpha
+alpha = 256-12*(Time-76),12*(Time-76)
+
+;---------------------[]
+[state a]
+type = DestroySelf
+trigger1 = time >= 100
+
+;この下、一行以上空ける事。

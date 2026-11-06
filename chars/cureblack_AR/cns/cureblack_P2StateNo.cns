@@ -1,0 +1,934 @@
+;よろけ～2P
+[Statedef 262]
+type=S
+movetype=H
+physics=S
+ctrl=0
+
+[State ]
+type=Changeanim2
+trigger1=time=0
+value=ifelse(enemynear,var(24)=1||enemynear,var(24)=4,265,ifelse(enemynear,var(24)=2,266,ifelse(enemynear,var(24)=3,267,264)))
+
+[State ]
+type=Changeanim
+trigger1=time=0&&(SelfAnimExist(7696)||SelfAnimExist(9010))&&P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&(enemynear,var(24)=1||enemynear,var(24)=4)
+value=ifelse(SelfAnimExist(7696),7696,9010)
+
+[State ]
+type=Changeanim
+trigger1=time=0&&(SelfAnimExist(7697)||SelfAnimExist(9015))&&P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&enemynear,var(24)=2
+value=ifelse(SelfAnimExist(7697),7697,9015)
+
+[State ]
+type=Changeanim
+trigger1=time=0&&(SelfAnimExist(7698)||SelfAnimExist(7990)||SelfAnimExist(9016))&&P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&enemynear,var(24)=3
+value=ifelse(SelfAnimExist(7698),7698,ifelse(SelfAnimExist(7990),7990,9016))
+
+[State ]
+type=LifeAdd
+trigger1=P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&(enemynear,var(24)=[1,4])
+value=-30
+persistent=0
+
+[State ]
+type=PalFX
+trigger1=time%2=0&&anim=265
+time=1
+add=0,0,0
+mul=0,0,0
+sinadd=0,0,0,1
+invertall=0
+
+[State ]
+type=PalFX
+trigger1=anim=266
+time=1
+add=120,60,40
+mul=120,60,40
+sinadd=120,60,40,1
+invertall=0
+
+[State ]
+type=PalFX
+trigger1=anim=267
+time=1
+add=160,256,256
+mul=160,256,256
+sinadd=160,256,256,1
+invertall=0
+
+[State ]
+type=PosFreeze
+trigger1=HitShakeOver=0
+value=1
+
+[State ]
+type=Changeanim2
+trigger1=!selfanimexist(5003)&&((HitShakeOver=1&&anim!=267&&(anim!=[7696,7698])&&anim!=7990&&(anim!=[9010,9016]))||(time=45&&(anim=267||(anim=[7696,7698])||anim=7990||(anim=[9010,9016]))))
+value=ifelse(anim=265,271,ifelse(anim=266,272,ifelse(anim=267,273,263)))
+persistent=0
+
+[State ]
+type=Changeanim
+trigger1=selfanimexist(5003)&&((HitShakeOver=1&&(anim!=[7696,7698])&&anim!=7990&&(anim!=[9010,9016]))||(time=45&&((anim=[7696,7698])||anim=7990||(anim=[9010,9016]))))
+value=5003
+persistent=0
+
+[State ]
+type=VelSet
+trigger1=HitShakeOver=1
+x=-6
+persistent=0
+
+[State ] 
+type=SelfState
+trigger1=alive=0
+value=5020
+
+[State ]
+type=selfstate
+trigger1=enemy,name="CURE BLACK"&&enemy,authorname="YU-TOHARU"&&(time>=44||enemy,var(20)>=148)&&enemy,var(6)!=6&&enemy,var(7)!=6&&enemy,var(8)!=6&&enemy,palno!=12
+trigger2=enemy,name="CURE BLACK"&&enemy,authorname="YU-TOHARU"&&(time>=74||enemy,var(20)>=148)&&(enemy,var(6)=6||enemy,var(7)=6||enemy,var(8)=6||enemy,palno=12)
+trigger3=numenemy>=2
+trigger3=enemy(1),name="CURE BLACK"&&enemy(1),authorname="YU-TOHARU"&&(time>=44||enemy(1),var(20)>=148)&&enemy(1),var(6)!=6&&enemy(1),var(7)!=6&&enemy(1),var(8)!=6&&enemy(1),palno!=12
+trigger4=numenemy>=2
+trigger4=enemy(1),name="CURE BLACK"&&enemy(1),authorname="YU-TOHARU"&&(time>=74||enemy(1),var(20)>=148)&&(enemy(1),var(6)=6||enemy(1),var(7)=6||enemy(1),var(8)=6||enemy(1),palno=12)
+value=5000
+
+;よろけ（空中）～2P
+[Statedef 263]
+type=A
+movetype=H
+physics=N
+ctrl=0
+
+[State ]
+type=Changeanim2
+trigger1=time=0
+value=ifelse(enemynear,var(24)=1||enemynear,var(24)=4,268,ifelse(enemynear,var(24)=2,269,ifelse(enemynear,var(24)=3,270,5030)))
+
+[State ]
+type=Changeanim
+trigger1=time=0&&(SelfAnimExist(7696)||SelfAnimExist(9010))&&P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&(enemynear,var(24)=1||enemynear,var(24)=4)
+value=ifelse(SelfAnimExist(7696),7696,9010)
+
+[State ]
+type=Changeanim
+trigger1=time=0&&(SelfAnimExist(7697)||SelfAnimExist(9015))&&P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&enemynear,var(24)=2
+value=ifelse(SelfAnimExist(7697),7697,9015)
+
+[State ]
+type=Changeanim
+trigger1=time=0&&(SelfAnimExist(7698)||SelfAnimExist(7990)||SelfAnimExist(9016))&&P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&enemynear,var(24)=3
+value=ifelse(SelfAnimExist(7698),7698,ifelse(SelfAnimExist(7990),7990,9016))
+
+[State ]
+type=LifeAdd
+trigger1=P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&(enemynear,var(24)=[1,4])
+value=-30
+persistent=0
+
+[State ]
+type=PalFX
+trigger1=time%2=0&&anim=268
+time=1
+add=0,0,0
+mul=0,0,0
+sinadd=0,0,0,1
+invertall=0
+
+[State ]
+type=PalFX
+trigger1=anim=269
+time=1
+add=120,60,40
+mul=120,60,40
+sinadd=120,60,40,1
+invertall=0
+
+[State ]
+type=PalFX
+trigger1=anim=270
+time=1
+add=160,256,256
+mul=160,256,256
+sinadd=160,256,256,1
+invertall=0
+
+[State ]
+type=PosFreeze
+trigger1=HitShakeOver=0
+value=1
+
+[State ]
+type=Velset
+trigger1=time=0
+x=-9
+y=-3
+
+[State ]
+type=VelAdd
+trigger1=HitShakeOver=1
+y=.48
+
+[State ] 
+type=SelfState
+trigger1=pos y>=0&&HitShakeOver=1
+value=5100
+
+;壁吹っ飛び～2P固まり
+[Statedef 1201]
+type=A
+movetype=H
+physics=N
+ctrl=0
+
+[State ]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State ]
+type=Changeanim2
+trigger1=time=0
+value=ifelse(enemynear,var(24)=1||enemynear,var(24)=4,365,ifelse(enemynear,var(24)=2,366,ifelse(enemynear,var(24)=3,367,362)))
+
+[State ]
+type=Changeanim
+trigger1=time=0&&(SelfAnimExist(7696)||SelfAnimExist(9010))&&P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&(enemynear,var(24)=1||enemynear,var(24)=4)
+value=ifelse(SelfAnimExist(7696),7696,9010)
+
+[State ]
+type=Changeanim
+trigger1=time=0&&(SelfAnimExist(7697)||SelfAnimExist(9015))&&P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&enemynear,var(24)=2
+value=ifelse(SelfAnimExist(7697),7697,9015)
+
+[State ]
+type=Changeanim
+trigger1=time=0&&(SelfAnimExist(7698)||SelfAnimExist(7990)||SelfAnimExist(9016))&&P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&enemynear,var(24)=3
+value=ifelse(SelfAnimExist(7698),7698,ifelse(SelfAnimExist(7990),7990,9016))
+
+[State ]
+type=LifeAdd
+trigger1=P2name="CURE BLACK"&&enemynear,authorname="YU-TOHARU"&&(enemynear,var(24)=[1,4])
+value=-30
+persistent=0
+
+[State ]
+type=PalFX
+trigger1=time%2=0&&anim=365
+time=1
+add=0,0,0
+mul=0,0,0
+sinadd=0,0,0,1
+invertall=0
+
+[State ]
+type=PalFX
+trigger1=anim=366
+time=1
+add=120,60,40
+mul=120,60,40
+sinadd=120,60,40,1
+invertall=0
+
+[State ]
+type=PalFX
+trigger1=anim=367
+time=1
+add=160,256,256
+mul=160,256,256
+sinadd=160,256,256,1
+invertall=0
+
+[State ]
+type=VelAdd
+trigger1=1
+y=0
+
+[State ]
+type=VelSet
+trigger1=time=0
+x=0
+y=0
+
+[State ]
+type=changeState
+trigger1=time=12
+value=1202
+ctrl=0
+
+;壁吹っ飛び～2P吹っ飛び
+[Statedef 1202]
+type=A
+movetype=H
+physics=N
+ctrl=0
+
+[State ]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State ]
+type=VelSet
+trigger1=time=[0,1]
+y=ifelse(time=1,0,-10)
+
+[State ]
+type=VelSet
+trigger1=(anim=[5060,5061])||anim=5030||(anim=[4100,4199])||anim=5900||(anim=[7696,7698])||anim=7990||(anim=[9010,9016])||(anim=[365,367])
+x=-11
+
+[State ]
+type=Changeanim
+trigger1=(anim!=[4100,4199])&&BackEdgeBodyDist>11&&!SelfAnimExist(5061)&&SelfAnimExist(5060)&&!SelfAnimExist(5900)&&(anim!=[7696,7698])&&anim!=7990&&(anim!=[9010,9016])
+value=5060
+elem=1
+
+[State ]
+type=Changeanim
+trigger1=(anim!=[4100,4199])&&BackEdgeBodyDist>11&&SelfAnimExist(5061)&&!SelfAnimExist(5900)&&(anim!=[7696,7698])&&anim!=7990&&(anim!=[9010,9016])
+value=5061
+elem=1
+
+[State ]
+type=Changeanim2
+trigger1=(anim!=[4100,4199])&&BackEdgeBodyDist>11&&!SelfAnimExist(5060)&&!SelfAnimExist(5061)&&!SelfAnimExist(5900)&&(anim!=[7696,7698])&&anim!=7990&&(anim!=[9010,9016])
+value=5030
+elem=1
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&((authorname="Drowin hokuto"&&(name="KENSHIRO"||name="RAOH"||name="MOHIKAN"))||(name="KENSHIRO"&&authorname="Cameron"))
+value=4104
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&((authorname="Drowin hokuto"&&(name="Toki"||name="JAGI"))||(name="silver_of_saint"&&authorname="simotsuki"))
+value=4106
+persistent=0
+
+[State ]
+type=Changeanim2
+triggerall=BackEdgeBodyDist>11
+trigger1=(authorname="ahuron"&&(name="REI"||name="JAGI"||name="SHIN"||name="Keiji"))||(authorname="Neat Unsou"&&(name="Date Masamune"||name="Katakura Kojuro"||name="Mouri Motonari"))||(authorname="五右衛門"&&(name="Oda Nobunaga"||name="Takenaka Hambe"))
+trigger2=(authorname="syouga"&&(name="Sanada Yukimura"||name="Uesugi Kensin"||name="Maeda Keiji"))||(name="JUDA-(NERICYA)"&&authorname="NERICYA")||(name="Maeda Keiji"&&authorname="tukisuna")||(name="shin"&&authorname="konpeitou")
+value=4102
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&((name="THOUTHER"&&authorname="ahuron")||(name="RAOH"&&(authorname="shikkoku"||authorname="Bat")))
+value=4109
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="RAOH ATL"&&authorname="Ataru"
+value=4138
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&((name="TOKI-(NERICYA)"&&authorname="NERICYA")||(name="TOKI_S"&&authorname="shuu"))
+value=4111
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="Mr.HEART"&&authorname="rei"
+value=4113
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&(authorname="Ts"&&(name="Jagi"||name="Toki"||name="Amiba"))
+value=4116
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="amiba"&&(authorname="Drowin hokuto"||authorname="oki")
+value=4125
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&authorname="SAIKEI"&&(name="KENSHIRO-SAIKEI"||name="KENSHIRO")
+value=4154
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="THOUTHER"&&authorname="SAIKEI"
+value=4161
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="JUDA"&&authorname="SAIKEI"
+value=4163
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&authorname="simotsuki"&&(name="A-Rei"||name="saint-of-silver")
+value=4167
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="SHYU"&&authorname="Fixxxer"
+value=4156
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="Honda Tadakatsu"&&authorname="rei"
+value=4118
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&((name="Toyotomi Hideyoshi"&&authorname="rei")||(name="Chousokabe Motochika"&&authorname="Gal129"))
+value=4120
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="Oda Nobunaga"&&authorname="rei"
+value=4159
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&((name="Toyotomi Hideyoshi"&&authorname="kuri")||(name="Nobunaga"&&authorname="Ahuron"))
+value=4123
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="Ichigo"&&authorname="Alchemist"
+value=4127
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="Byakuya"&&authorname="BwdYeti"
+value=4129
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&authorname="BwdYeti"&&(name="Ukitake"||name="Ikkaku")
+value=4131
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&authorname="Lightmatt"&&(name="Kisuke Urahara"||name="Kyugohanin")
+value=4133
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="Kon"&&authorname="BwdYeti"
+value=4136
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="Orihime Inoue"&&authorname="Ashisukurou"
+value=4151
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&authorname="┌K´д`├┐"&&(name="Aizen Sousuke"||name="ogihcI ikasoruK")
+value=4152
+persistent=0
+
+[State ]
+type=Changeanim2
+triggerall=BackEdgeBodyDist>11&&(anim!=[7696,7698])&&anim!=7990&&(anim!=[9010,9016])
+trigger1=authorname="muteki"&&(name="sol"||name="ky"||name="may"||name="millia"||name="eddie"||name="potemkin"||name="chipp"||name="faust"||name="baiken"||name="jam"||name="johnny"||name="gg_venom"||name="testament"||name="dizzy"||name="SLAYER")
+trigger2=(authorname="muteki"&&(name="AXL"||name="I-NO"||name="bridget"||name="justice"||name="kliff"||name="robo-ky"||name="zappa"||name="anji"||name="osol"||name="chipp_arrange"))||(authorname="MIMI"&&(name="ROBO-Ky"||name="ROBO-KyⅡ"))
+trigger3=authorname="ukege"&&(name="ROBO-KY1"||name="ROBO-KY2"||name="ROBO-KY3"||name="OLD_ROBO-KY"||name="ROBO-JAM"||name="ROBO-SOL")
+value=4140
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="A.B.A"&&authorname="muteki"
+value=4141
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&((authorname="MEKA"&&(name="Anji Mito"||name="Ky Kiske"||name="May"||name="I-NO"||name="Chipp Zanuff"))||(authorname="高崎　舟"&&(name="anji mito"||name="BAIKEN"))||(name="SLAYER"&&authorname="Lupanda76"))
+value=4142
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&((authorname="EL"&&(name="ZAPPA"||name="DIZZY"||name="MAY"||name="BRIDGET"))||(name="kyko"&&authorname="beppu&panda"))
+value=4143
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&((authorname="Akutagawa"&&(name="order-Sol=Badguy"||name="Ky=kiske"))||(authorname="AOAO"&&(name="SOL BADGUY"||name="JAM KURADOBERI"))||(name="Sol=Badguy"&&authorname="Amachi")||(name="Ky=kiske"&&authorname="N.I.J"))
+value=4144
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&authorname="nana"&&(name="Millia_Rage"||name="Dizzy")
+value=4145
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="JAM KURADOBERI"&&authorname="AOAO"
+value=4146
+persistent=0
+
+[State ]
+type=Changeanim2
+triggerall=BackEdgeBodyDist>11&&(anim!=[7696,7698])&&anim!=7990&&(anim!=[9010,9016])
+trigger1=authorname="Ina"&&(name="Heart_Aino"||name="Saki_Tsuzura"||name="Kamui_Tokinomiya"||name="Lilica_Felchenerow"||name="Petra_Johanna_Lagerkvist"||name="Zenia_Valov"||name="Elsa_La_Conti"||name="Clarice_Di_Lanza"||name="Mildred_Avallone")
+trigger2=(authorname="uru"&&(name="SAKI-MVC"||name="KONOHA-SS"||name="YORIKO-MVC"))||(authorname="Ahuron"&&(name="Maori"||name="Konoha"||name="Lieselotte"||name="Akane Inuwaka"||name="Clarice Di Lanza"))||(name="Weiss"&&authorname="aki")
+trigger3=(authorname="unkoman"&&(name="Konoha"||name="Konoha_MVC"))|| (authorname="zecruss"&&(name="Meifan"||name="Lilica"))||(authorname="or2=3"&&(name="petora"||name="Angelia Avallone"))||(authorname="Ryo&Jo"&&(name="Mei-fang"||name="Lilica"))
+trigger4=(authorname="barai"&&(name="obachan"||name="Elsa"))||(authorname="bey"&&(name="Petra"||name="Zenia"))||(authorname="huton"&&(name="Nazuna_Inuwaka"||name="Yoriko_Yasuzumi"))||(name="Kira"&&authorname="sakuraka")
+trigger5=(authorname="ryun"&&(name="F_HEAT"||name="F_HEAT_2nd"||name="F_HEAT_ver3"||name="L_SAKI"||name="L_SAKI_2ND"||name="B_ZENIA"||name="T_MAORI"||name="I_LILICA"||name="K_Lieselotte"||name="F_Weiss"))||(name="Tsuzura_Saki"&&authorname="Hyperhiroro")
+trigger6=(name="Ming-Vase"&&authorname="aokmaniac13")||(authorname="HM"&&(name="Heart Aino"||name="BlackHeart"))||(authorname="M3"&&(name="Scharlachrot"||name="Angelia_Avallone"))||(name="Lieselotte_Achenbach"&&authorname="ミマァ")
+trigger7=(authorname="Drowin arcana"&&(name="Saki"||name="Kamui"||name="Fiona"||name="Ciel"||name="Miyako Arima"||name="Satsuki Yumiduka"))||(authorname="Nadagetsu"&&(name="ELSA_LA_CONTI"||name="HEART AINO"))
+trigger8=(authorname="flowrallia"&&(name="Scharlachrot"||name="Clone Weiss"||name="Heart Aino XIII"||name="Weiss"||name="Elsa_GG"))||(name="Captain_Heart"&&authorname="Felicity")
+value=4147
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&((name="kira"&&authorname="NHK")||(name="Zangief Steel"&&authorname="aokmaniac13"))
+value=4148
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=BackEdgeBodyDist>11&&name="CATHERINE-MVC"&&authorname="uru"
+value=4149
+persistent=0
+
+[State ]
+type=Changeanim2
+triggerall=BackEdgeBodyDist>11&&(anim!=[7696,7698])&&anim!=7990&&(anim!=[9010,9016])
+trigger1=authorname="Warusaki3"&&(name="cvshaohmaru"||name="cvshaohmaru_normal"||name="cvshaohmaru_ex"||name="cvsyamazaki"||name="cvsterry"||name="cvstodo"||name="cvsvice"||name="cvsrock"||name="cvsrolento"||name="cvsrugal"||name="cvsryo")
+trigger2=authorname="Warusaki3"&&(name="cvsguile"||name="cvsjill"||name="cvskim"||name="cvsking"||name="cvskyo"||name="cvskyo_normal"||name="cvskyo_ex"||name="cvsbenimaru"||name="cvscammy"||name="cvschunli"||name="cvsgeese"||name="cvsgeese_normal")
+trigger3=authorname="Warusaki3"&&(name="cvsgeese_ex"||name="cvsmika"||name="cvszangief"||name="cvszangief_normal"||name="cvszangief_ex"||name="cvshotaru"||name="svckarate"||name="cvssakura"||name="cvssakura_ex"||name="cvssakura_normal"||name="cvsathena")
+trigger4=authorname="Warusaki3"&&(name="cvsg_rugal"||name="cvsdan"||name="cvsgouki"||name="cvsgouki_normal"||name="cvsgouki_ex"||name="cvsguy"||name="cvsjuni"||name="cvskarin"||name="cvsingrid"||name="cvsken"||name="cvsken_normal"||name="cvsken_ex")
+trigger5=(authorname="Warusaki3"&&(name="cvshayato"||name="cvslilith"||name="cvskuroko"||name="cvsryu"||name="cvsryu_normal"||name="cvsryu_ex"||name="cvsvega"||name="cvsyuri"||name="cvsyun"||name="svcathena"))||(name="Guile"&&authorname="ahuron")
+trigger6=(authorname="Gal129"&&(name="cvsanakaris"||name="cvsblanka"||name="cvschang"||name="cvshonda"||name="cvsjoe"||name="cvskim"||name="cvsleo"||name="cvsnool"||name="cvssagat"))||(authorname="Mouser"&&(name="Hibiki Takane"||name="Sagat"))
+trigger7=(authorname="rei"&&(name="cvsbalrog"||name="cvsguile"||name="cvsmukuro"||name="cvsrolento"||name="cvsurien"||name="cvszangief"||name="cvstodo"))||(name="Clark Still"&&authorname="Men'sClub")||(name="CvS2 Guy"&&authorname=".\/.")
+trigger8=(authorname="H”"&&(name="cvsadon"||name="cvsmai"||name="cvssagat"||name="cvshonda"||name="SVCVEGA"||name="Genryusai Maki"||name="SVCKEN"))||(authorname="Tukemon"&&(name="Yuri_cvs"||name="Ryu_cvs"))||(name="CvS2Eagle"&&authorname="Byakko")
+trigger9=(name="Chun Li"&&authorname="Conversion World - J.Lee")||(name="svcgouki"&&authorname="Morisoba")||(name="Demitri"&&authorname="bad darkness")||(name="guile"&&authorname="hirohiro")||(name="SvCEarthQuake"&&authorname="ActJapan")
+value=4150
+persistent=0
+
+[State ]
+type=Changeanim
+trigger1=BackEdgeBodyDist>11&&SelfAnimExist(5900)&&(anim!=[7696,7698])&&anim!=7990&&(anim!=[9010,9016])
+value=5900
+persistent=0
+
+[State ]
+type=VelSet
+trigger1=BackEdgeBodyDist<10
+x=1.5
+
+[State ]
+type=VelSet
+trigger1=BackEdgeBodyDist<10
+y=-3
+
+[State ]
+type=Changeanim
+trigger1=BackEdgeBodyDist<10
+value=5070
+
+[State ]
+type=Changeanim
+trigger1=BackEdgeBodyDist<10&&SelfAnimExist(5902)
+value=5902
+
+[State ]
+type=changeState
+trigger1=BackEdgeBodyDist<10
+value=1204
+ctrl=0
+
+[State ]
+type=selfState
+trigger1=time>=5&&Pos Y>=0
+value=5100
+
+;壁吹っ飛び～2P壁バウンド
+[Statedef 1204]
+type=A
+movetype=H
+physics=N
+ctrl=0
+
+[State ]
+type=EnvShake
+trigger1=time=0
+time=10
+freq=160
+ampl=-4
+
+[State ]
+type=VelAdd
+trigger1=1
+y=.30
+
+[State ]
+type=Changeanim
+trigger1=Vel Y>0&&Pos Y>=ifelse((anim=[5051,5059])||(anim=[5061,5069]),0,25)&&SelfAnimExist(5061)
+value=5061
+
+[State ]
+type=Changeanim
+trigger1=Vel Y>0&&Pos Y>=ifelse((anim=[5051,5059])||(anim=[5061,5069]),0,25)&&SelfAnimExist(5051)&&anim!=5061
+value=5051
+
+[State ]
+type=selfState
+trigger1=Vel Y>0&&Pos Y>=ifelse((anim=[5051,5059])||(anim=[5061,5069]),0,25)
+value=5100
+
+;投げ　2P
+[Statedef 802]
+type=A
+movetype=H
+physics=N
+
+[State ]
+type=SprPriority
+trigger1=1
+value=ifelse(time<=8,1,2)
+
+[State ]
+type=ChangeAnim2
+Trigger1=Time=0
+value=801
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=1,1
+
+[State ]
+type=Angleset
+trigger1=animelemtime(1)=9
+value=-25
+
+[State ]
+type=Angleset
+trigger1=animelemtime(3)=1
+value=-65
+
+[State ]
+type=Angleset
+trigger1=animelem=4
+value=-110
+
+[State ]
+type=Angleset
+trigger1=animelem=5
+value=-160
+
+[State ]
+type=Angleset
+trigger1=animelem=6
+value=-230
+
+[State ]
+type=Angleset
+trigger1=animelem=7
+value=0
+
+[State ]
+type=VelSet
+trigger1=time>=15
+x=5
+
+[State ]
+type=VelSet
+trigger1=time=15
+y=-9
+
+[State ]
+type=VelAdd
+trigger1=time>=15
+y=.6
+
+[State ]
+type=SelfState
+trigger1=Vel Y>0&&Pos Y>=0
+value=5100 
+
+;ブーストダッシュ攻撃2P
+[Statedef 1634]
+type=A
+movetype=H
+physics=N
+ctrl=0
+
+[State ]
+type=PosFreeze
+trigger1=HitShakeOver=0
+value=1
+
+[State ]
+type=VelAdd
+trigger1=HitShakeOver=1
+y=GetHitVar(yaccel)
+
+[State ]
+type=HitVelSet
+trigger1=Time=0
+x=1
+y=1
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)!=[3,5])
+value=ifelse((GetHitVar(groundtype)=1),5000,5010)+GetHitVar(animtype)
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)=[3,5])
+value=5030
+
+[State ]
+type=ChangeAnim
+trigger1=Time=0&&(GetHitVar(animtype)=[4,5])&&(SelfAnimExist(5047+GetHitVar(animtype)))
+value=5047+GetHitVar(animtype)
+
+[State ]
+type=ChangeAnim
+trigger1=(AnimTime=0&&Anim=5035)||(Time=0&&Anim!=5035&&(Anim!=[5051,5059])&&(Anim!=[5061,5069])&&Anim!=5090)
+value=5050
+
+[State ]
+type=ChangeAnim
+trigger1=(anim=[5050,5059])&&Vel Y>=ifelse(anim=5050,1,-2)&&SelfAnimExist(anim+10)
+value=anim+10
+persistent=0
+
+[State ]
+type=ChangeAnim
+trigger1=SelfAnimExist(5052)
+value=5052
+persistent=0
+
+[State ]
+type=VelSet
+trigger1=BackEdgeBodyDist<10
+x=1.5
+
+[State ]
+type=VelSet
+trigger1=BackEdgeBodyDist<10
+y=-3
+
+[State ]
+type=Changeanim
+trigger1=BackEdgeBodyDist<10
+value=5070
+
+[State ]
+type=changeState
+trigger1=BackEdgeBodyDist<10
+value=1204
+ctrl=0
+
+[State ]
+type=selfState
+trigger1=time>=15&&Pos Y>=0
+value=5100
+
+;ルミナス・ハーティエル・アンクション2P
+[Statedef 4543]
+type=U
+movetype=H
+physics=N
+ctrl=0
+
+[State ]
+type=VelSet
+trigger1=time=0
+x=vel x*.05
+y=vel y*.05
+
+[State ]
+type=VelSet
+trigger1=pos y>=0
+y=0
+
+[State ]
+type=posset
+trigger1=pos y>=0
+y=0
+
+[State ]
+type=Changeanim2
+trigger1=time=0
+value=3147+ifelse(statetype=C,1,ifelse(statetype=A,2,ifelse(statetype=L,3,0)))
+
+[State ]
+type=Changeanim
+trigger1=time=0&&((statetype=S&&SelfAnimExist(20526))||(statetype=C&&SelfAnimExist(20527))||(statetype=A&&SelfAnimExist(20528))||(statetype=L&&SelfAnimExist(20529)))
+value=20526+ifelse(statetype=C,1,ifelse(statetype=A,2,ifelse(statetype=L,3,0)))
+
+[State ]
+type=PalFx
+trigger1=time=0||time=10||time=20||time=30||time=40||time=50
+sinadd=ifelse(time=0||time=20||time=30,255,200),ifelse(time=10||time=20||time=40,255,200),ifelse(time=0||time=10||time=50,255,200),156
+add=ifelse(time=10||time=40||time=50,200,0),ifelse(time=0||time=30||time=50,200,0),ifelse(time=20||time=30||time=40,200,0)
+time=10
+
+[State ]
+type=Changeanim
+trigger1=time=60
+value=5210
+
+[State ]
+type=selfState
+trigger1=time=60
+value=ifelse(statetype=S,0,ifelse(statetype=C,11,ifelse(statetype=A,51,5110)))
+ctrl=ifelse(statetype=L,0,1)
+
+;投げ～キュアホワイト　2P
+[Statedef 4043]
+type=A
+movetype=H
+physics=N
+
+[State ]
+type=SprPriority
+trigger1=1
+value=ifelse(time<=9,3,5)
+
+[State ]
+type=ChangeAnim2
+Trigger1=Time=0
+value=3043
+
+[State ]
+type=AngleDraw
+trigger1=1
+scale=1,1
+
+[State ]
+type=Angleset
+trigger1=animelemtime(1)=10
+value=-25
+
+[State ]
+type=Angleset
+trigger1=animelemtime(3)=1
+value=-65
+
+[State ]
+type=Angleset
+trigger1=animelem=4
+value=-110
+
+[State ]
+type=Angleset
+trigger1=animelem=5
+value=-160
+
+[State ]
+type=Angleset
+trigger1=animelem=6
+value=-230
+
+[State ]
+type=Angleset
+trigger1=animelem=7
+value=0
+
+[State ]
+type=VelSet
+trigger1=time>=15
+x=5
+
+[State ]
+type=VelSet
+trigger1=time=15
+y=-9
+
+[State ]
+type=VelAdd
+trigger1=time>=15
+y=.6
+
+[State ]
+type=SelfState
+trigger1=Vel Y>0&&Pos Y>=0
+value=5100 
+
+;ルミナス・ハーティエル・アンクション（ルミナスサポート付加）2P
+[Statedef 4544]
+type=U
+movetype=H
+physics=N
+ctrl=0
+
+[State ]
+type=VelSet
+trigger1=time=0
+x=vel x*.05
+y=vel y*.05
+
+[State ]
+type=VelSet
+trigger1=pos y>=0
+y=0
+
+[State ]
+type=posset
+trigger1=pos y>=0
+y=0
+
+[State ]
+type=Changeanim2
+trigger1=time=0
+value=3147+ifelse(statetype=C,1,ifelse(statetype=A,2,ifelse(statetype=L,3,0)))
+
+[State ]
+type=Changeanim
+trigger1=time=0&&((statetype=S&&SelfAnimExist(20526))||(statetype=C&&SelfAnimExist(20527))||(statetype=A&&SelfAnimExist(20528))||(statetype=L&&SelfAnimExist(20529)))
+value=20526+ifelse(statetype=C,1,ifelse(statetype=A,2,ifelse(statetype=L,3,0)))
+
+[State ]
+type=PalFx
+trigger1=time=0||time=10||time=20||time=30||time=40||time=50||time=60||time=70||time=80
+sinadd=ifelse(time=0||time=20||time=30||time=60||time=80,255,200),ifelse(time=10||time=20||time=40||time=70,255,200),ifelse(time=0||time=10||time=50||time=80,255,200),156
+add=ifelse(time=10||time=40||time=50||time=70,200,0),ifelse(time=0||time=30||time=50||time=60,200,0),ifelse(time=20||time=30||time=40||time=80,200,0)
+time=10
+
+[State ]
+type=Changeanim
+trigger1=time=90
+value=5210
+
+[State ]
+type=selfState
+trigger1=time=90
+value=ifelse(statetype=S,0,ifelse(statetype=C,11,ifelse(statetype=A,51,5110)))
+ctrl=ifelse(statetype=L,0,1)

@@ -1,0 +1,921 @@
+;---------------------------------------------------------------------------
+; Abstract Reordered: Orihime assist (art from Orihime Inoue by Ashisukurou)
+; 214+A Tsubaki projectile | 214+B Santen Kesshun barrier | 214+C Santen Kesshun floor trap
+; root var(27) = which assist, root var(29) = cooldown (5 s, counts down after she leaves)
+;---------------------------------------------------------------------------
+
+; Ichigo calls her
+[Statedef 74000]
+type     = S
+movetype = I
+physics  = S
+anim     = 0 + 6000 * var(39)
+velset   = 0, 0
+ctrl     = 0
+
+[State 74000, Orihime]
+type = Helper
+trigger1 = Time = 1
+helpertype = normal
+name = "Orihime"
+ID = 74100
+stateno = 74100
+pos = -35, 0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+
+[State 74000, Cooldown]
+type = VarSet
+trigger1 = Time = 1
+var(29) = 300
+
+[State 74000, Call flash]
+type = PalFX
+trigger1 = Time = 0
+time = 8
+add = 120, 80, 20
+
+[State 74000, Done]
+type = ChangeState
+trigger1 = Time >= 12
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Orihime herself
+[Statedef 74100]
+type     = S
+movetype = I
+physics  = N
+anim     = ifelse(root,var(27) = 1, 74000, ifelse(root,var(27) = 2, 76001, 135000))
+velset   = 0, 0
+ctrl     = 0
+sprpriority = 1
+
+[State 74100, Kind]
+type = VarSet
+trigger1 = Time = 0
+var(0) = root,var(27)
+
+[State 74100, Floor]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 74100, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74100, No push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 74100, Off screen ok]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0, 0
+
+[State 74100, Fade in]
+type = Trans
+trigger1 = Time < 6
+trans = addalpha
+alpha = Time * 42, 256 - Time * 42
+
+[State 74100, Throw]
+type = Helper
+trigger1 = var(0) = 1
+trigger1 = AnimElem = 6
+helpertype = normal
+name = "Tsubaki"
+ID = 74110
+stateno = 74110
+pos = 45, -36
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+
+[State 74100, Barrier]
+type = Helper
+trigger1 = var(0) = 2
+trigger1 = Time = 8
+trigger1 = NumHelper(74120) = 0
+helpertype = normal
+name = "Santen Kesshun"
+ID = 74120
+stateno = 74120
+pos = 0, 0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+
+[State 74100, Trap]
+type = Helper
+trigger1 = var(0) = 3
+trigger1 = Time = 50
+helpertype = normal
+name = "Santen Kesshun"
+ID = 74130
+stateno = 74130
+pos = 145, 0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = 0.3
+size.yscale = 0.3
+
+[State 74100, Run away (C)]
+type = ChangeState
+trigger1 = var(0) = 3 && Time >= 70
+value = 74102
+
+[State 74100, Leave]
+type = ChangeState
+trigger1 = var(0) = 1 && AnimTime = 0 && Time > 3
+trigger2 = var(0) = 2 && Time >= 47
+trigger3 = RoundState > 2
+value = 74101
+
+[Statedef 74101]
+type     = S
+movetype = I
+physics  = N
+ctrl     = 0
+
+[State 74101, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74101, Hold]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 74101, Fade]
+type = Trans
+trigger1 = 1
+trans = addalpha
+alpha = 256 - Time * 32, Time * 32
+
+[State 74101, Gone]
+type = DestroySelf
+trigger1 = Time >= 8
+
+;---------------------------------------------------------------------------
+; after the C trap: she turns and runs off screen - she can be hit while running
+[Statedef 74102]
+type     = S
+movetype = I
+physics  = N
+anim     = 70100
+ctrl     = 0
+sprpriority = 1
+
+[State 74102, Turn]
+type = Turn
+trigger1 = Time = 0
+
+[State 74102, Run]
+type = VelSet
+trigger1 = 1
+x = 5
+y = 0
+
+[State 74102, No push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 74102, Off screen ok]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0, 0
+
+[State 74102, Get hit]
+type = HitOverride
+trigger1 = 1
+attr = SCA, NA, SA, HA, NP, SP, HP, NT, ST, HT
+stateno = 74106
+time = 1
+
+[State 74102, Gone]
+type = DestroySelf
+trigger1 = FrontEdgeDist < -60
+trigger2 = Time >= 120
+trigger3 = RoundState > 2
+
+; hit while running away: knocked out of the fight
+[Statedef 74106]
+type     = S
+movetype = H
+physics  = N
+ctrl     = 0
+velset   = 0, 0
+
+[State 74106, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74106, Hold]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 74106, Flash]
+type = PalFX
+trigger1 = Time = 0
+time = 10
+add = 255, 255, 255
+
+[State 74106, Knocked back]
+type = VelSet
+trigger1 = Time = 0
+x = -3
+y = 0
+
+[State 74106, Fade]
+type = Trans
+trigger1 = 1
+trans = addalpha
+alpha = 256 - Time * 16, Time * 16
+
+[State 74106, Gone]
+type = DestroySelf
+trigger1 = Time >= 16
+
+;---------------------------------------------------------------------------
+; Ichigo calls her in the air
+[Statedef 74001]
+type     = A
+movetype = I
+physics  = A
+ctrl     = 0
+
+[State 74001, Orihime]
+type = Helper
+trigger1 = Time = 1
+helpertype = normal
+name = "Orihime"
+ID = 74100
+stateno = 74100
+pos = -35, 0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+
+[State 74001, Cooldown]
+type = VarSet
+trigger1 = Time = 1
+var(29) = 300
+
+[State 74001, Call flash]
+type = PalFX
+trigger1 = Time = 0
+time = 8
+add = 120, 80, 20
+
+[State 74001, Done]
+type = ChangeState
+trigger1 = Time >= 12
+value = 50
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; 214+A: Tsubaki flies forward
+[Statedef 74110]
+type     = A
+movetype = A
+physics  = N
+anim     = 71300
+velset   = 6, 0
+ctrl     = 0
+sprpriority = 3
+
+[State 74110, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74110, Size]
+;her original spawns this at 1/10 size
+type = AngleDraw
+trigger1 = 1
+scale = 0.1, 0.1
+
+[State 74110, Glow]
+;the orb sits on black: draw it additively so only the glow shows
+type = Trans
+trigger1 = 1
+trans = add
+
+[State 74110, Trail]
+type = Explod
+trigger1 = Time % 3 = 0
+anim = 71365
+ID = 74111
+pos = 0, 0
+postype = p1
+bindtime = 1
+removetime = -2
+scale = 0.1, 0.1
+sprpriority = 2
+ownpal = 1
+ignorehitpause = 1
+
+[State 74110, Hit]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SP
+animtype = Hard
+damage = 55, 6
+getpower = 0
+givepower = 20, 10
+hitflag = MAFD
+guardflag = MA
+priority = 4, Hit
+pausetime = 0, 14
+guard.pausetime = 0, 14
+sparkno = 2
+guard.sparkno = 40
+sparkxy = -10, 0
+hitsound = s1, 12
+guardsound = s2, 0
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -2.3, -5.5
+air.velocity = -2.3, -5.5
+air.hittime = 14
+guard.velocity = -7
+airguard.velocity = -3, 0
+fall = 1
+fall.recover = 0
+
+[State 74110, Done]
+type = DestroySelf
+trigger1 = MoveContact
+trigger2 = FrontEdgeBodyDist < -60
+trigger3 = Time > 150
+trigger4 = RoundState > 2
+ignorehitpause = 1
+
+;---------------------------------------------------------------------------
+; 214+B: Santen Kesshun barrier in front of Ichigo (3 s, takes 3 hits, gone if he's hit)
+[Statedef 74120]
+type     = A
+movetype = I
+physics  = N
+ctrl     = 0
+sprpriority = 4
+
+[State 74120, Start anim]
+type = ChangeAnim
+trigger1 = var(2) = 0
+value = 73800
+
+[State 74120, Hits it can take]
+type = VarSet
+trigger1 = var(2) = 0
+var(0) = 3
+
+[State 74120, Started]
+type = VarSet
+trigger1 = var(2) = 0
+var(2) = 1
+
+[State 74120, Age]
+type = VarAdd
+trigger1 = 1
+var(1) = 1
+
+[State 74120, Bind]
+type = BindToRoot
+trigger1 = 1
+time = 1
+facing = 1
+pos = 27, -117
+ignorehitpause = 1
+
+[State 74120, Look]
+type = Trans
+trigger1 = 1
+trans = addalpha
+alpha = 256, 256
+
+[State 74120, Shape]
+type = AngleDraw
+trigger1 = 1
+scale = 0.6, 1.0
+
+[State 74120, No push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 74120, Absorb]
+type = HitOverride
+trigger1 = 1
+attr = SCA, NA, SA, HA, NP, SP, HP
+stateno = 74121
+time = 1
+ignorehitpause = 1
+
+[State 74120, Expire]
+type = ChangeState
+trigger1 = var(1) >= 180
+trigger2 = root,MoveType = H
+trigger3 = RoundState > 2
+value = 74122
+
+[State 74120, Broken]
+type = ChangeState
+trigger1 = var(0) <= 0
+value = 74123
+
+[Statedef 74121]
+type     = A
+movetype = I
+physics  = N
+ctrl     = 0
+
+[State 74121, Absorb]
+type = HitOverride
+trigger1 = 1
+attr = SCA, NA, SA, HA, NP, SP, HP
+stateno = 74121
+time = 1
+ignorehitpause = 1
+
+[State 74121, Took a hit]
+type = VarAdd
+trigger1 = Time = 0
+var(0) = -1
+ignorehitpause = 1
+
+[State 74121, Flash]
+type = PalFX
+trigger1 = Time = 0
+time = 6
+add = 200, 200, 200
+ignorehitpause = 1
+
+[State 74121, Bind]
+type = BindToRoot
+trigger1 = 1
+time = 1
+facing = 1
+pos = 27, -117
+ignorehitpause = 1
+
+[State 74121, Look]
+type = Trans
+trigger1 = 1
+trans = addalpha
+alpha = 256, 256
+
+[State 74121, Shape]
+type = AngleDraw
+trigger1 = 1
+scale = 0.6, 1.0
+
+[State 74121, Back]
+type = ChangeState
+trigger1 = Time >= 1
+value = 74120
+
+[Statedef 74122]
+type     = A
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = 73890
+
+[State 74122, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74122, Bind]
+type = BindToRoot
+trigger1 = 1
+time = 1
+facing = 1
+pos = 27, -117
+
+[State 74122, Look]
+type = Trans
+trigger1 = 1
+trans = addalpha
+alpha = 256, 256
+
+[State 74122, Shape]
+type = AngleDraw
+trigger1 = 1
+scale = 0.6, 1.0
+
+[State 74122, Gone]
+type = DestroySelf
+trigger1 = AnimTime = 0
+trigger2 = Time >= 20
+
+[Statedef 74123]
+type     = A
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = 73890
+
+[State 74123, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74123, Shatter]
+type = Explod
+trigger1 = Time = 0
+anim = 80706
+ID = 74124
+pos = 10, 50
+postype = p1
+bindtime = 1
+removetime = -2
+sprpriority = 9
+ownpal = 1
+ignorehitpause = 1
+
+[State 74123, Gone]
+type = DestroySelf
+trigger1 = Time >= 2
+
+;---------------------------------------------------------------------------
+; 214+C: Santen Kesshun attack - a shield trap on the floor that hits anyone standing on it
+[Statedef 74130]
+type     = A
+movetype = I
+physics  = N
+anim     = 73660
+ctrl     = 0
+sprpriority = -3
+
+[State 74130, Slash]
+type = Explod
+trigger1 = Time = 0
+anim = 80200
+ID = 74135
+pos = 0, 0
+postype = p1
+bindtime = 1
+removetime = -2
+ownpal = 1
+
+[State 74130, Glow]
+type = Helper
+trigger1 = Time = 0
+helpertype = normal
+name = "Santen Kesshun"
+ID = 74131
+stateno = 74131
+pos = 0, 0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = 0.3
+size.yscale = 0.3
+
+[State 74130, Spikes]
+type = Helper
+trigger1 = Time = 0
+helpertype = normal
+name = "Santen Kesshun"
+ID = 74132
+stateno = 74132
+pos = 0, 0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = 0.3
+size.yscale = 0.3
+
+[State 74130, Hitbox]
+type = Helper
+trigger1 = Time = 0
+helpertype = normal
+name = "Santen Kesshun"
+ID = 74134
+stateno = 74134
+pos = 0, 0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+
+[State 74130, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74130, No push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 74130, Off screen ok]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0, 0
+
+[State 74130, Fade in]
+type = Trans
+trigger1 = Time <= 5
+trans = addalpha
+alpha = 0, 256
+
+[State 74130, Solid]
+type = Trans
+trigger1 = Time > 5 && Time <= 65
+trans = addalpha
+alpha = 256, 256
+
+[State 74130, Fade out]
+type = Trans
+trigger1 = Time > 65
+trans = addalpha
+alpha = var(20), 256
+
+[State 74130, Height]
+type = VarSet
+trigger1 = 1
+fvar(1) = 1.0
+
+[State 74130, Spread]
+type = VarAdd
+trigger1 = Time <= 14
+fvar(0) = 0.3
+
+[State 74130, Draw]
+type = AngleDraw
+trigger1 = 1
+scale = fvar(0), fvar(1)
+
+[State 74130, Fade value]
+type = VarSet
+trigger1 = Time = 0
+var(20) = 250
+
+[State 74130, Fading]
+type = VarAdd
+trigger1 = Time > 65
+var(20) = -10
+
+[State 74130, Gone]
+type = DestroySelf
+trigger1 = Time >= 65 && var(20) <= 0
+trigger2 = RoundState > 2
+
+[Statedef 74131]
+type     = A
+movetype = I
+physics  = N
+anim     = 73665
+ctrl     = 0
+sprpriority = -3
+
+[State 74131, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74131, No push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 74131, Look]
+type = Trans
+trigger1 = 1
+trans = addalpha
+alpha = 256, 256
+
+[State 74131, Height]
+type = VarSet
+trigger1 = 1
+fvar(1) = 1.0
+
+[State 74131, Spread]
+type = VarAdd
+trigger1 = Time <= 14
+fvar(0) = 0.3
+
+[State 74131, Draw]
+type = AngleDraw
+trigger1 = 1
+scale = fvar(0), fvar(1)
+
+[State 74131, Gone]
+type = DestroySelf
+trigger1 = root,NumHelper(74130) = 0
+
+[Statedef 74132]
+type     = A
+movetype = I
+physics  = N
+anim     = 73667
+ctrl     = 0
+sprpriority = -3
+
+[State 74132, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74132, No push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 74132, Fade in]
+type = Trans
+trigger1 = Time <= 5
+trans = addalpha
+alpha = 0, 256
+
+[State 74132, Solid]
+type = Trans
+trigger1 = Time > 5
+trans = addalpha
+alpha = 256, 256
+
+[State 74132, Height]
+type = VarSet
+trigger1 = 1
+fvar(1) = 1.0
+
+[State 74132, Spread]
+type = VarAdd
+trigger1 = Time <= 14
+fvar(0) = 0.3
+
+[State 74132, Draw]
+type = AngleDraw
+trigger1 = 1
+scale = fvar(0), fvar(1)
+
+[State 74132, Gone]
+type = DestroySelf
+trigger1 = Time >= 65
+
+[Statedef 74134]
+type     = A
+movetype = A
+physics  = N
+anim     = 73680
+ctrl     = 0
+
+[State 74134, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74134, No push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 74134, First hit (block low)]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SP
+animtype = Hard
+damage = 45, 5
+getpower = 0
+givepower = 20, 10
+hitflag = MAFD
+guardflag = L
+priority = 5, Hit
+pausetime = 0, 14
+guard.pausetime = 0, 14
+sparkno = 2
+guard.sparkno = 40
+sparkxy = -10, -20
+hitsound = s1, 12
+guardsound = s2, 0
+ground.type = Low
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -2.3, -5.5
+air.velocity = -2.3, -5.5
+air.hittime = 14
+guard.velocity = -7
+fall = 1
+fall.recover = 0
+
+[State 74134, Follow-up hits]
+type = HitDef
+trigger1 = Time > 0 && Time < 65
+trigger1 = Time % 20 = 0
+attr = S, SP
+animtype = Hard
+damage = 20, 3
+getpower = 0
+givepower = 10, 5
+hitflag = MAFD
+guardflag = MA
+priority = 5, Hit
+pausetime = 0, 10
+guard.pausetime = 0, 10
+sparkno = 2
+guard.sparkno = 40
+sparkxy = -10, -20
+hitsound = s1, 12
+guardsound = s2, 0
+ground.type = Low
+ground.slidetime = 12
+ground.hittime = 12
+ground.velocity = -2.3, -5.5
+air.velocity = -2.3, -5.5
+air.hittime = 12
+guard.velocity = -5
+fall = 1
+fall.recover = 0
+
+[State 74134, Gone]
+type = DestroySelf
+trigger1 = root,NumHelper(74130) = 0
+trigger2 = Time >= 65
+
+;---------------------------------------------------------------------------
+; Cooldown over: Orihime pops in behind Ichigo and does her taunt
+[Statedef 74150]
+type     = S
+movetype = I
+physics  = N
+anim     = 70192
+velset   = 0, 0
+ctrl     = 0
+sprpriority = -1
+
+[State 74150, Floor]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 74150, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 74150, No push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 74150, Off screen ok]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0, 0
+
+[State 74150, Fade in]
+type = Trans
+trigger1 = Time < 8
+trans = addalpha
+alpha = Time * 32, 256 - Time * 32
+
+[State 74150, Fade out]
+type = Trans
+trigger1 = Time >= 78
+trans = addalpha
+alpha = 256 - (Time - 78) * 32, (Time - 78) * 32
+
+[State 74150, Gone]
+type = DestroySelf
+trigger1 = Time >= 86
+trigger2 = RoundState > 2
+trigger3 = root,NumHelper(74100) > 0

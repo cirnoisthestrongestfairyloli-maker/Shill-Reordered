@@ -1,0 +1,2019 @@
+;-------------------------------------------------------------
+;P1 Dance Minigame Parent Helper
+[Statedef 44002]
+type = A
+movetype = I
+physics = N
+anim = 1
+velset = 0,0
+sprpriority = 10
+
+
+[state 44002, frame spawn]
+type = varset
+trigger1 = time = 127  || time = 144 || time = 160 || time = 185  || time = 197 || time = 222
+trigger2 = time = 252  || time = 262 || time = 282 || time = 301 || time = 318
+trigger3 = time = 361 || time = 390 || time = 420 || time = 485 || time = 495
+trigger4 = time = 543 || time = 573 || time = 615 || time = 629 
+trigger5 = time = 676 || time = 691 || time = 701 || time = 743
+;time = 190 || time = 141  || time = 153 unused times (too hard)
+var(1) = 1+random%6
+
+[state 44002, second frame spawn]
+type = varset
+trigger1 = time = 390 || time = 420 || time = 543 || time = 573 || time = 743
+;time = 190 || time = 141  || time = 153 unused times (too hard)
+var(4) = 1+random%6
+
+[state 44002, second frame cannot be the same as first]
+type = varset
+trigger1 = var(4) = var(1) 
+trigger1 = var(4) != 0
+;time = 190 || time = 141  || time = 153 unused times (too hard)
+var(4) = ifelse(var(1)+random%6 < 6, var(1)+random%6,1)
+
+[state 44002, button limit]
+type = varset
+trigger1 = 1
+var(2) = root, command = "x" + root, command = "y" + root, command = "z" + root, command = "a" + root, command = "b" + root, command = "c"
+
+[state 44002, subtract dance bar]
+type = varadd
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+trigger1 = root, command = "x" || root, command = "y" || root, command = "z"
+trigger1 = !NumHelper(44021)
+trigger2 = root, command = "a" || root, command = "b" || root, command = "c"
+trigger2 = !NumHelper(44025)
+var(3) = -35
+
+[state 44002, dance bar minimum]
+type = varset
+trigger1 = var(3) < 0
+var(3) = 0
+
+[state 44002, dance bar]
+type = varset
+trigger1 = var(3) > 600
+var(3) = 600
+
+[state 4402, lpunchicon]
+type = helper
+trigger1 = !time
+stateno = 44018
+id = 44018
+postype = p1
+pos = -75 + (50 * (facing = -1)),-175
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+[state 4402, mpunchicon]
+type = helper
+trigger1 = !time
+stateno = 44019
+id = 44019
+postype = p1
+pos = -50,-175
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+[state 4402, hpunchicon]
+type = helper
+trigger1 = !time
+stateno = 44020
+id = 44020
+postype = p1
+pos = -25 - (50 * (facing = -1)),-175
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+[state 4402, hpunch frame]
+type = helper
+trigger1 = var(1) = [1,3]
+stateno = 44021
+id = 44021
+postype = p1
+pos = (0 - (var(1) * 25)) - ((50 * (var(1) = 1)) * (-50 * (var(1) = 3)) * (facing = -1)),-175
+facing = facing 
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+[state 4402, hpunch secondframe]
+type = helper
+trigger1 = var(4) = [1,3]
+stateno = 44021
+id = 44021
+postype = p1
+pos = 0-(var(4)*25) - ((50 * (var(4) = 1)) * (-50 * (var(4) = 3)) * (facing = -1)),-175
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+
+
+
+
+[state 4402, lkickicon]
+type = helper
+trigger1 = !time
+stateno = 44022
+id = 44022
+postype = p1
+pos = -75 + (50 * (facing = -1)),-150
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+[state 4402, mkickicon]
+type = helper
+trigger1 = !time
+stateno = 44023
+id = 44023
+postype = p1
+pos = -50,-150
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+[state 4402, hkickicon]
+type = helper
+trigger1 = !time
+stateno = 44024
+id = 44024
+postype = p1
+pos = -25 - (50 * (facing = -1)),-150
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+[state 4402, hkick secondframe]
+type = helper
+trigger1 = var(1) = [4,6]
+stateno = 44025
+id = 44025
+postype = p1
+pos = 0-((var(1) - 3) * 25) - ((50*(var(1) - 3 = 1)) * (-50 * (var(1) - 3 = 3)) * (facing = -1)),-150
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+[state 4402, hkick secondframe]
+type = helper
+trigger1 = var(4) = [4,6]
+stateno = 44025
+id = 44025
+postype = p1
+pos = 0-((var(4) - 3) * 25) - ((50 * (var(4) - 3 = 1)) * (-50 * (var(4) - 3 = 3)) * (facing = -1)),-150
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+[state 4402, Dance Bar]
+type = helper
+trigger1 = !time
+stateno = 44030
+id = 44030
+postype = p1
+pos = -75,-190
+sprpriority = 9
+size.xscale = 1
+size.yscale = 2
+ownpal = 1
+
+
+[state 44002, varset]
+type = varset
+trigger1 = 1
+var(1) = 0
+
+[state 44002, varset]
+type = varset
+trigger1 = 1
+var(4) = 0
+
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;LP Icon
+[Statedef 44018]
+type = A
+movetype = I
+physics = N
+anim = 4418
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+trigger1 = root, command = "x"
+trigger1 = NumHelper(44002)
+trigger1 = Helper(44002), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = Helper(44002),var(3) > Helper(44003),var(3)
+trigger1 = gametime%6 = 0
+value = cond(anim = 4418,1,4418)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;MP Icon
+[Statedef 44019]
+type = A
+movetype = I
+physics = N
+anim = 4419
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+trigger1 = root, command = "y"
+trigger1 = NumHelper(44002)
+trigger1 = Helper(44002), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = Helper(44002),var(3) > Helper(44003),var(3)
+trigger1 = gametime%6 = 0
+value = cond(anim = 4419,1,4419)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;HP Icon
+[Statedef 44020]
+type = A
+movetype = I
+physics = N
+anim = 4420
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+trigger1 = root, command = "z"
+trigger1 = NumHelper(44002)
+trigger1 = Helper(44002), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = Helper(44002),var(3) > Helper(44003),var(3)
+trigger1 = gametime%6 = 0
+value = cond(anim = 4420,1,4420)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;Punch shrinking circle
+[Statedef 44021]
+type = A
+movetype = I
+physics = N
+anim = 4421
+velset = 0,0
+sprpriority = 10
+
+
+[state 44003, varset]
+type = varset
+trigger1 = !time
+fvar(1) = 3
+
+[state 44003, varadd]
+type = varadd
+trigger1 = fvar(1) <= 1
+var(1) = 1
+
+[state 44003, varset]
+type = varset
+triggerall = !AILEVEL
+triggerall = NumHelper(44002)
+triggerall = Helper(44002), var(2) <= 3
+triggerall = var(1) > 0
+trigger1 = root, command = "x"
+trigger1 = pos x = Helper(44018), pos x
+trigger2 = root, command = "y"
+trigger2 = pos x = Helper(44019), pos x
+trigger3 = root, command = "z"
+trigger3 = pos x = Helper(44020), pos x
+var(2) = 1
+persistent  = 0
+
+[state 44003, varset]
+type = varset
+triggerall = AILEVEL
+triggerall = NumHelper(44002)
+triggerall = var(1) > 0
+trigger1 = pos x = Helper(44018), pos x
+trigger1 = random < 40 * (AIlevel ** 2 / 64.0)
+trigger2 = pos x = Helper(44019), pos x
+trigger2 = random < 40 * (AIlevel ** 2 / 64.0)
+trigger3 = pos x = Helper(44020), pos x
+trigger3 = random < 40 * (AIlevel ** 2 / 64.0)
+var(2) = 1
+persistent  = 0
+
+
+[state 44001]
+type = palfx
+trigger1 = var(1) = [1,6]
+add = 255,255,255
+time = 1
+
+[state 44003, ]
+type = angledraw
+trigger1 = fvar(1) > 1
+trigger2 = var(1) > 6
+value = 0
+scale = fvar(1),fvar(1)
+
+[state 44003, ]
+type = varadd
+trigger1 = fvar(1) > 1
+trigger2 = var(1) > 6
+fvar(1) = -.0673 ;-.101
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = var(1) > 25
+
+[state 44002, add dance bar]
+type = parentvaradd
+trigger1 = var(2) = 1
+var(3) = ifelse(var(1) >= 1 && var(1) <= 6,35,ifelse(var(1) >= 7 && var(1) <= 16,25,20))
+persistent = 0
+
+[state 4402, timing]
+type = helper
+trigger1 = var(2) = 1
+stateno = 44028 - (var(1) = [7,16]) - (2*(var(1) = [17,24]))
+id = 44028 - (var(1) = [7,16]) - (2*(var(1) = [17,24]))
+postype = p1
+pos = -3,0
+sprpriority = 10
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+persistent = 0
+
+[state 44002, subtract dance bar]
+type = parentvaradd
+triggerall = NumHelper(44002)
+triggerall = Helper(44002), var(2) <= 3
+trigger1 = root, command = "x" || root, command = "y" || root, command = "z"
+trigger1 = var(1) = 0
+trigger2 = root, command = "x"
+trigger2 = !(pos x = Helper(44018), pos x)
+trigger3 = root, command = "y"
+trigger3 = !(pos x = Helper(44019), pos x)
+trigger4 = root, command = "z"
+trigger4 = !(pos x = Helper(44020), pos x)
+var(3) = -35
+persistent = 0
+
+
+[state 44002, changeanim]
+type = changeanim
+trigger1 = fvar(1) < .101
+value = 1
+
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+trigger2 = var(2) = 1 
+;---------------------------------------------------
+;LK Icon
+[Statedef 44022]
+type = A
+movetype = I
+physics = N
+anim = 4422
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+trigger1 = root, command = "a"
+trigger1 = NumHelper(44002)
+trigger1 = Helper(44002), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = Helper(44002),var(3) > Helper(44003),var(3)
+trigger1 = gametime%6 = 0
+value = cond(anim = 4422,1,4422)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;MK Icon
+[Statedef 44023]
+type = A
+movetype = I
+physics = N
+anim = 4423
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+trigger1 = root, command = "b"
+trigger1 = NumHelper(44002)
+trigger1 = Helper(44002), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = Helper(44002),var(3) > Helper(44003),var(3)
+trigger1 = gametime%6 = 0
+value = cond(anim = 4423,1,4423)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;HK Icon
+[Statedef 44024]
+type = A
+movetype = I
+physics = N
+anim = 4424
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+trigger1 = root, command = "c"
+trigger1 = NumHelper(44002)
+trigger1 = Helper(44002), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = Helper(44002),var(3) > Helper(44003),var(3)
+trigger1 = gametime%6 = 0
+value = cond(anim = 4424,1,4424)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+
+;----------------------------------------------------------
+;Kick shrinking circle
+[Statedef 44025]
+type = A
+movetype = I
+physics = N
+anim = 4425
+velset = 0,0
+sprpriority = 10
+
+[state 44003, timer]
+type = varset
+trigger1 = !time
+fvar(1) = 3
+
+[state 44003, input window]
+type = varadd
+trigger1 = fvar(1) <= 1
+var(1) = 1
+
+
+[state 44003, varset]
+type = varset
+triggerall = !AILEVEL
+triggerall = NumHelper(44002)
+triggerall = Helper(44002), var(2) <= 3
+triggerall = var(1) > 0
+trigger1 = root, command = "a"
+trigger1 = pos x = Helper(44022), pos x
+trigger2 = root, command = "b"
+trigger2 = pos x = Helper(44023), pos x
+trigger3 = root, command = "c"
+trigger3 = pos x = Helper(44024), pos x
+var(2) = 1
+persistent  = 0
+
+[state 44003, varset]
+type = varset
+triggerall = AILEVEL
+triggerall = NumHelper(44002)
+triggerall = Helper(44002), var(2) <= 3
+triggerall = var(1) > 0
+trigger1 = pos x = Helper(44022), pos x
+trigger1 = random < 40 * (AIlevel ** 2 / 64.0)
+trigger2 = pos x = Helper(44023), pos x
+trigger2 = random < 40 * (AIlevel ** 2 / 64.0)
+trigger3 = pos x = Helper(44024), pos x
+trigger3 = random < 40 * (AIlevel ** 2 / 64.0)
+var(2) = 1
+persistent = 0
+
+
+[state 44001]
+type = palfx
+trigger1 = var(1) = [1,6]
+add = 255,255,255
+time = 1
+
+[state 44003, ]
+type = angledraw
+trigger1 = fvar(1) > 1
+trigger2 = var(1) > 6
+value = 0
+scale = fvar(1),fvar(1)
+
+[state 44003, ]
+type = varadd
+trigger1 = fvar(1) > 1
+trigger2 = var(1) > 6
+fvar(1) = -.0673 ;-.101
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = fvar(1) < .01
+
+[state 44002, add dance bar]
+type = parentvaradd
+trigger1 = var(2) = 1
+var(3) = ifelse(var(1) >= 1 && var(1) <= 6,35,ifelse(var(1) >= 7 && var(1) <= 16,25,20))
+persistent = 0
+
+[state 4402, timing]
+type = helper
+trigger1 = var(2) = 1
+stateno = 44028 - (var(1) = [7,14]) - (2*(var(1) = [15,20]))
+id = 44028 - (var(1) = [7,14]) - (2*(var(1) = [15,20]))
+postype = p1
+pos = -3,0
+sprpriority = 8
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+persistent = 0
+
+
+[state 44002, subtract dance bar]
+type = parentvaradd
+triggerall = NumHelper(44002)
+triggerall = Helper(44002), var(2) <= 3
+trigger1 = root, command = "a" || root, command = "b" || root, command = "c"
+trigger1 = var(1) = 0
+trigger2 = root, command = "a"
+trigger2 = !(pos x = Helper(44022), pos x)
+trigger3 = root, command = "b"
+trigger3 = !(pos x = Helper(44023), pos x)
+trigger4 = root, command = "c"
+trigger4 = !(pos x = Helper(44024), pos x)
+var(3) = -35
+persistent = 0
+
+[state 44002, changeanim]
+type = changeanim
+trigger1 = fvar(1) < .101
+value = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = Helper(44002),var(3) > Helper(44003),var(3)
+trigger1 = gametime%6 = 0
+value = cond(anim = 4418,1,4418)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+trigger2 = var(2) = 1 
+;----------------------------------------------------------
+;Poor Timing FX
+[Statedef 44026]
+type = A
+movetype = I
+physics = N
+velset = 0,0
+sprpriority = 8
+anim = 1
+
+[state 44026]
+type = varset
+trigger1 = 1
+var(1) = time
+
+[State 44026, left vein]
+type = Explod
+trigger1 = !time 
+anim = 4434
+id = 4434
+pos = 0,0
+postype = p1
+removetime = -1
+vel = -.5,0
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, right vein]
+type = Explod
+trigger1 = !time
+anim = 4434
+id = 4434
+pos = 0,0
+postype = p1
+removetime = -1
+vel = .5,0
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[state 44026, disappear]
+type = modifyexplod
+trigger1 = 1
+trans = addalpha
+alpha = 255-var(1)*8,var(1)*8
+id = 4432
+
+[state 44030, removeexplod]
+type = removeexplod
+trigger1 = 255-var(1)*8 <= 0
+id = 4434
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = 255-var(1)*8 <= 0
+;----------------------------------------------------------
+;Good Timing FX
+[Statedef 44027]
+type = A
+movetype = I
+physics = N
+velset = 0,0
+sprpriority = 8
+anim = 1
+
+[state 44026]
+type = varset
+trigger1 = 1
+var(1) = time
+
+[State 44026, up vein]
+type = Explod
+trigger1 = !time 
+anim = 4434
+id = 4434
+pos = 0,0
+postype = p1
+removetime = -1
+vel = 0,-.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, downleft vein]
+type = Explod
+trigger1 = !time 
+anim = 4434
+id = 4434
+pos = 0,0
+postype = p1
+removetime = -1
+vel = -.5,.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, downright vein]
+type = Explod
+trigger1 = !time
+anim = 4434
+id = 4434
+pos = 0,0
+postype = p1
+removetime = -1
+vel = .5,.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[state 44026, disappear]
+type = modifyexplod
+trigger1 = 1
+trans = addalpha
+alpha = 255-var(1)*8,var(1)*8
+id = 4434
+
+[state 44030, removeexplod]
+type = removeexplod
+trigger1 = 255-var(1)*8 <= 0
+id = 4434
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = 255-var(1)*8 <= 0
+;----------------------------------------------------------
+;Perfect Timing FX
+[Statedef 44028]
+type = A
+movetype = I
+physics = N
+velset = 0,0
+sprpriority = 8
+anim = 1
+
+[state 44026]
+type = varset
+trigger1 = 1
+var(1) = time
+
+[State 44026, upleft vein]
+type = Explod
+trigger1 = !time
+anim = 4434
+id = 4434
+pos = 0,0
+postype = p1
+removetime = 40
+vel = -.5,-.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, upright vein]
+type = Explod
+trigger1 = !time
+anim = 4434
+id = 4434
+pos = 0,0
+postype = p1
+removetime = 40
+vel = .5,-.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, downleft vein]
+type = Explod
+trigger1 = !time 
+anim = 4434
+id = 4434
+pos = 0,0
+postype = p1
+removetime = 40
+vel = -.5,.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, downright vein]
+type = Explod
+trigger1 = !time
+anim = 4434
+id = 4434
+pos = 0,0
+postype = p1
+removetime = 40
+vel = .5,.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[state 44026, disappear]
+type = modifyexplod
+trigger1 = 1
+trans = addalpha
+alpha = 255-var(1)*8,var(1)*8
+id = 4434
+
+[state 44030, removeexplod]
+type = removeexplod
+trigger1 = 255-var(1)*8 <= 0
+id = 4434
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = 255-var(1)*8 <= 0
+;---------------------------------------------------
+;Dance Bar
+[Statedef 44030]
+type = A
+movetype = I
+physics = N
+anim = 1
+velset = 0,0
+sprpriority = 9
+
+[State -2, Bar Frame]
+type = Explod
+trigger1 = !time
+anim = 4431
+id = 4431
+pos = 0,0
+postype = p1
+removetime = -1
+scale = 1,1
+sprpriority = 9
+ownpal = 1
+persistent = 0
+
+[State -2, Angry Veins]
+type = Explod
+trigger1 = !time 
+anim = 4432
+id = 4432
+pos = 0,0
+postype = p1
+removetime = -1
+scale = 1,1
+sprpriority = 9
+ownpal = 1
+persistent = 0
+
+[State -2, Scalable Bar]
+type = Explod
+trigger1 = !time
+anim = 4433
+id = 4433
+pos = 0+(facing = -1),0
+postype = p1
+removetime = -1
+scale = 1,1
+sprpriority = 8
+ownpal = 0
+persistent  = 0
+
+[state 44030, scale]
+type = modifyexplod
+trigger1 = NumHelper(44002)
+;scale = 1,1
+scale = (Helper(44002),var(3))/600.0,1
+id = 4433
+
+
+[state 44030, white flash]
+type = palfx 
+trigger1 = NumHelper(44021)
+trigger1 = Helper(44021),var(2) = 1 && Helper(44021), anim != 1
+trigger2 = NumHelper(44025)
+trigger2 = Helper(44025),var(2) = 1 && Helper(44025), anim != 1
+add = 255,255,255
+mul = 255,255,255
+time = 1
+
+[state 44030, partially transparent]
+type = null 
+trigger1 = 1
+trans = addalpha
+alpha = 25
+
+[state 44030, removeexplod]
+type = removeexplod
+trigger1 = root, stateno != [4401,4402]
+id = 4431
+
+[state 44030, removeexplod]
+type = removeexplod
+trigger1 = root, stateno != [4401,4402]
+id = 4432
+
+[state 44030, removeexplod]
+type = removeexplod
+trigger1 = root, stateno != [4401,4402]
+id = 4433
+
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4402]
+;-------------------------------------------------------------
+;P2 Dance Minigame Parent Helper
+[Statedef 44003]
+type = A
+movetype = I
+physics = N
+anim = 1
+velset = 0,0
+sprpriority = 10
+
+
+[state 44002, frame spawn]
+type = varset
+trigger1 = time = 127  || time = 144 || time = 160 || time = 185  || time = 197 || time = 222
+trigger2 = time = 252  || time = 262 || time = 282 || time = 301 || time = 318
+trigger3 = time = 361 || time = 390 || time = 420 || time = 485 || time = 495
+trigger4 = time = 543 || time = 573 || time = 615 || time = 629 
+trigger5 = time = 676 || time = 691 || time = 701 || time = 743
+;time = 190 || time = 141  || time = 153 unused times (too hard)
+var(1) = 1+random%6
+
+[state 44002, second frame spawn]
+type = varset
+trigger1 = time = 390 || time = 420 || time = 543 || time = 573 || time = 743
+;time = 190 || time = 141  || time = 153 unused times (too hard)
+var(4) = 1+random%6
+
+[state 44002, second frame cannot be the same as first]
+type = varset
+trigger1 = var(4) = var(1) 
+trigger1 = var(4) != 0
+;time = 190 || time = 141  || time = 153 unused times (too hard)
+var(4) = ifelse(var(1) + 1 <= 6, var(1) + 1,1)
+
+[state 44002, button limit]
+type = varset
+trigger1 = enemy, stateno = 4451
+var(2) = enemy, command = "x" + enemy, command = "y" + enemy, command = "z" + enemy, command = "a" + enemy, command = "b" + enemy, command = "c"
+
+[state 44002, subtract dance bar]
+type = varadd
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+triggerall = enemy, stateno = 4451
+trigger1 = enemy, command = "x" || enemy, command = "y" || enemy, command = "z"
+trigger1 = !NumHelper(44041)
+trigger2 = enemy, command = "a" || enemy, command = "b" || enemy, command = "c"
+trigger2 = !NumHelper(44045)
+var(3) = -35
+
+[state 44002, dance bar minimum]
+type = varset
+trigger1 = var(3) < 0
+var(3) = 0
+
+[state 44002, dance bar]
+type = varset
+trigger1 = var(3) > 600
+var(3) = 600
+
+[state 4402, lpunchicon]
+type = helper
+trigger1 = !time
+stateno = 44038
+id = 44038
+postype = p1
+pos = -25 - (50 * (facing = 1)),-175
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+[state 4402, mpunchicon]
+type = helper
+trigger1 = !time
+stateno = 44039
+id = 44039
+postype = p1
+pos = -50,-175
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+[state 4402, hpunchicon]
+type = helper
+trigger1 = !time
+stateno = 44040
+id = 44040
+postype = p1
+pos = -75 + (50 * (facing = 1)),-175
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+[state 4402, hpunch frame]
+type = helper
+trigger1 = var(1) = [1,3]
+stateno = 44041
+id = 44041
+postype = p1
+pos = -100+(var(1)*25) + ((50 * (var(1) = 1)) * (-50 * (var(1) = 3)) * (facing = 1)),-175
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+[state 4402, hpunch secondframe]
+type = helper
+trigger1 = var(4) = [1,3]
+stateno = 44041
+id = 44041
+postype = p1
+pos = -100+(var(4)*25) - ((50 * (var(4) = 1)) * (-50 * (var(4) = 3)) * (facing = 1)),-175
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+
+
+
+
+[state 4402, lkickicon]
+type = helper
+trigger1 = !time
+stateno = 44042
+id = 44042
+postype = p1
+pos = -25 - (50 * (facing = 1)),-150
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+[state 4402, mkickicon]
+type = helper
+trigger1 = !time
+stateno = 44043
+id = 44043
+postype = p1
+pos = -50,-150
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+[state 4402, hkickicon]
+type = helper
+trigger1 = !time
+stateno = 44044
+id = 44044
+postype = p1
+pos = -75 + (50 * (facing = 1)),-150
+sprpriority = 9
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+
+[state 4402, hkick secondframe]
+type = helper
+trigger1 = var(1) = [4,6]
+stateno = 44045
+id = 44045
+postype = p1
+pos = -100+((var(1)-3)*25) + ((50 * (var(1) = 1)) * (-50 * (var(1) = 3)) * (facing = 1)),-150
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+[state 4402, hkick secondframe]
+type = helper
+trigger1 = var(4) = [4,6]
+stateno = 44045
+id = 44045
+postype = p1
+pos = -100+((var(4)-3)*25) + ((50 * (var(4) = 1)) * (-50 * (var(4) = 3)) * (facing = 1)),-150
+facing = facing
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+
+[state 4402, Dance Bar]
+type = helper
+trigger1 = !time
+stateno = 44050
+id = 44050
+postype = p1
+pos = -75,-190
+facing = -1
+sprpriority = 9
+size.xscale = 1
+size.yscale = 2
+ownpal = 1
+
+
+[state 44002, varset]
+type = varset
+trigger1 = 1
+var(1) = 0
+
+[state 44002, varset]
+type = varset
+trigger1 = 1
+var(4) = 0
+
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;LP Icon
+[Statedef 44038]
+type = A
+movetype = I
+physics = N
+anim = 4418
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+triggerall = enemy, stateno = 4451
+trigger1 = enemy, command = "x"
+trigger1 = NumHelper(44003)
+trigger1 = Helper(44003), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = !(Helper(44002),var(3) > Helper(44003),var(3))
+trigger1 = gametime%6 = 0
+value = cond(anim = 4418,1,4418)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+
+;---------------------------------------------------
+;MP Icon
+[Statedef 44039]
+type = A
+movetype = I
+physics = N
+anim = 4419
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+triggerall = enemy, stateno = 4451
+trigger1 = enemy, command = "y"
+trigger1 = NumHelper(44003)
+trigger1 = Helper(44003), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = !(Helper(44002),var(3) > Helper(44003),var(3))
+trigger1 = gametime%6 = 0
+value = cond(anim = 4419,1,4419)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;HP Icon
+[Statedef 44040]
+type = A
+movetype = I
+physics = N
+anim = 4420
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+triggerall = enemy, stateno = 4451
+trigger1 = enemy, command = "z"
+trigger1 = NumHelper(44003)
+trigger1 = Helper(44003), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = !(Helper(44002),var(3) > Helper(44003),var(3))
+trigger1 = gametime%6 = 0
+value = cond(anim = 4420,1,4420)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;Punch shrinking circle
+[Statedef 44041]
+type = A
+movetype = I
+physics = N
+anim = 4421
+velset = 0,0
+sprpriority = 10
+
+
+[state 44003, varset]
+type = varset
+trigger1 = !time
+fvar(1) = 3
+
+[state 44003, varadd]
+type = varadd
+trigger1 = fvar(1) <= 1
+var(1) = 1
+
+[state 44003, varadd]
+type = varset
+triggerall = !AILEVEL
+triggerall = NumHelper(44003)
+triggerall = Helper(44003), var(2) <= 3
+triggerall = var(1) > 0
+triggerall = enemy, stateno = 4451
+trigger1 = enemy, command = "x"
+trigger1 = pos x = Helper(44038), pos x
+trigger2 = enemy, command = "y"
+trigger2 = pos x = Helper(44039), pos x
+trigger3 = enemy, command = "z"
+trigger3 = pos x = Helper(44040), pos x
+var(2) = 1
+persistent  = 0
+
+[state 44003, varset]
+type = varset
+triggerall = enemynear, AILEVEL
+triggerall = NumHelper(44003)
+triggerall = Helper(44003), var(2) <= 3
+triggerall = var(1) > 0
+trigger1 = pos x = Helper(44038), pos x && (random < 50 * (enemynear, AIlevel ** 2 / 64.0))
+trigger2 = (pos x = Helper(44039), pos x) && random < 50 * (enemynear, AIlevel ** 2 / 64.0)
+trigger3 = pos x = Helper(44040), pos x && random < 50 * (enemynear, AIlevel ** 2 / 64.0)
+var(2) = 1
+persistent = 0
+
+
+[state 44003, success]
+type = projectile
+triggerall = enemynear, AILEVEL
+trigger1 = var(2) = 1
+projAnim = 1
+projremovetime = 1
+projID = cond(pos x = Helper(44038), pos x, 44060,cond((pos x = Helper(44039), pos x),44061,44062))
+
+[state 44001]
+type = palfx
+trigger1 = var(1) = [1,6]
+add = 255,255,255
+time = 1
+
+[state 44003, ]
+type = angledraw
+trigger1 = fvar(1) > 1
+trigger2 = var(1) > 6
+value = 0
+scale = fvar(1),fvar(1)
+
+[state 44003, ]
+type = varadd
+trigger1 = fvar(1) > 1
+trigger2 = var(1) > 6
+fvar(1) = -.0673 ;-.101
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = var(1) > 25
+
+[state 44002, varset]
+type = parentvaradd
+trigger1 = var(2) = 1
+var(3) = ifelse(var(1) >= 1 && var(1) <= 6,35,ifelse(var(1) >= 7 && var(1) <= 16,25,20))
+persistent = 0
+
+[state 4402, timing]
+type = helper
+trigger1 = var(2) = 1
+stateno = 44048 - (var(1) = [7,16]) - (2*(var(1) = [17,24]))
+id = 44048 - (var(1) = [7,16]) - (2*(var(1) = [17,24]))
+postype = p1
+pos = -3,0
+sprpriority = 10
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+persistent = 0
+
+[state 44002, subtract dance bar]
+type = parentvaradd
+triggerall = enemy, stateno = 4451
+trigger1 = enemy, command = "x" || enemy, command = "y" || enemy, command = "z"
+trigger1 = var(1) = 0
+var(3) = -35
+persistent = 0
+
+
+[state 44002, changeanim]
+type = changeanim
+trigger1 = fvar(1) < .101
+value = 1
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+trigger2 = var(2) = 1 
+;---------------------------------------------------
+;LK Icon
+[Statedef 44042]
+type = A
+movetype = I
+physics = N
+anim = 4422
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+triggerall = enemy, stateno = 4451
+trigger1 = enemy, command = "a"
+trigger1 = NumHelper(44003)
+trigger1 = Helper(44003), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = !(Helper(44002),var(3) > Helper(44003),var(3))
+trigger1 = gametime%6 = 0
+value = cond(anim = 4422,1,4422)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;MK Icon
+[Statedef 44043]
+type = A
+movetype = I
+physics = N
+anim = 4423
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+triggerall = enemy, stateno = 4451
+trigger1 = enemy, command = "b"
+trigger1 = NumHelper(44003)
+trigger1 = Helper(44003), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = !(Helper(44002),var(3) > Helper(44003),var(3))
+trigger1 = gametime%6 = 0
+value = cond(anim = 4423,1,4423)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+;---------------------------------------------------
+;HK Icon
+[Statedef 44044]
+type = A
+movetype = I
+physics = N
+anim = 4424
+velset = 0,0
+sprpriority = 9
+
+[state 44001]
+type = palfx
+triggerall = !(root, animelemtime(12) >= 0 && root, anim = 4417)
+triggerall = root, stateno != 4403
+triggerall = enemy, stateno = 4451
+trigger1 = enemy, command = "c"
+trigger1 = NumHelper(44003)
+trigger1 = Helper(44003), var(2) <= 3
+add = 255,255,255
+time = 1
+
+;-----------End----------------------
+[state 44002, blinking]
+type = changeanim
+trigger1 = root, animelemtime(12) >= 0
+trigger1 = root, anim = 4417
+trigger1 = !(Helper(44002),var(3) > Helper(44003),var(3))
+trigger1 = gametime%6 = 0
+value = cond(anim = 4424,1,4424)
+
+[state 44002, disappear]
+type = changeanim
+trigger1 = root, stateno = 4403
+value = 1
+persistent = 0
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+
+;----------------------------------------------------------
+;Kick shrinking circle
+[Statedef 44045]
+type = A
+movetype = I
+physics = N
+anim = 4425
+velset = 0,0
+sprpriority = 10
+
+[state 44003, varset]
+type = varset
+trigger1 = !time
+fvar(1) = 3
+
+[state 44003, varadd]
+type = varadd
+trigger1 = fvar(1) <= 1
+var(1) = 1
+
+[state 44003, varadd]
+type = varset
+triggerall = NumHelper(44003)
+triggerall = Helper(44003), var(2) <= 3
+triggerall = var(1) > 0
+trigger1 = enemy, command = "a"
+trigger1 = pos x = Helper(44042), pos x
+trigger2 = enemy, command = "b"
+trigger2 = pos x = Helper(44043), pos x
+trigger3 = enemy, command = "c"
+trigger3 = pos x = Helper(44044), pos x
+var(2) = 1
+persistent  = 0
+
+[state 44003, varset]
+type = varset
+triggerall = enemynear, AILEVEL
+triggerall = NumHelper(44003)
+triggerall = Helper(44003), var(2) <= 3
+triggerall = var(1) > 0
+trigger1 = pos x = Helper(44042), pos x
+trigger1 = random < 50 * (enemynear, AIlevel ** 2 / 64.0)
+trigger2 = pos x = Helper(44043), pos x
+trigger2 = random < 50 * (enemynear, AIlevel ** 2 / 64.0)
+trigger3 = pos x = Helper(44044), pos x
+trigger3 = random < 50 * (enemynear, AIlevel ** 2 / 64.0)
+var(2) = 1
+persistent = 0
+
+[state 44003, success]
+type = projectile
+triggerall = enemynear, AILEVEL
+trigger1 = var(2) = 1
+projAnim = 1
+projremovetime = 1
+projID = cond(pos x = Helper(44042), pos x, 44063,cond((pos x = Helper(44043), pos x),44064,44065))
+
+[state 44001]
+type = palfx
+trigger1 = var(1) = [1,6]
+add = 255,255,255
+time = 1
+
+[state 44003, ]
+type = angledraw
+trigger1 = fvar(1) > 1
+trigger2 = var(1) > 6
+value = 0
+scale = fvar(1),fvar(1)
+
+[state 44003, ]
+type = varadd
+trigger1 = fvar(1) > 1
+trigger2 = var(1) > 6
+fvar(1) = -.0673 ;-.101
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = var(1) > 25
+
+[state 44002, varset]
+type = parentvaradd
+trigger1 = var(2) = 1
+var(3) = ifelse(var(1) >= 1 && var(1) <= 6,35,ifelse(var(1) >= 7 && var(1) <= 16,25,20))
+persistent = 0
+
+[state 4402, timing]
+type = helper
+trigger1 = var(2) = 1
+stateno = 44048 - (var(1) = [7,16]) - (2*(var(1) = [17,24]))
+id = 44048 - (var(1) = [7,16]) - (2*(var(1) = [17,24]))
+postype = p1
+pos = -3,0
+sprpriority = 10
+size.xscale = .5
+size.yscale = .5
+ownpal = 1
+persistent = 0
+
+[state 44002, subtract dance bar]
+type = parentvaradd
+triggerall = enemy, stateno = 4451
+trigger1 = enemy, command = "a" || enemy, command = "b" || enemy, command = "c"
+trigger1 = var(1) = 0
+var(3) = -35
+persistent = 0
+
+
+[state 44002, changeanim]
+type = changeanim
+trigger1 = fvar(1) < .101
+value = 1
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+trigger2 = var(2) = 1 
+;----------------------------------------------------------
+;Poor Timing FX
+[Statedef 44046]
+type = A
+movetype = I
+physics = N
+velset = 0,0
+sprpriority = 8
+anim = 1
+
+[state 44026]
+type = varset
+trigger1 = 1
+var(1) = time
+
+[State 44026, left vein]
+type = Explod
+trigger1 = !time 
+anim = 4444
+id = 4444
+pos = 0,0
+postype = p1
+removetime = -1
+vel = -.5,0
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, right vein]
+type = Explod
+trigger1 = !time
+anim = 4444
+id = 4444
+pos = 0,0
+postype = p1
+removetime = -1
+vel = .5,0
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[state 44026, disappear]
+type = modifyexplod
+trigger1 = 1
+trans = addalpha
+alpha = 255-var(1)*8,var(1)*8
+id = 4444
+
+[state 44030, removeexplod]
+type = removeexplod
+trigger1 = 255-var(1)*8 <= 0
+id = 4444
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = 255-var(1)*8 <= 0
+;----------------------------------------------------------
+;Good Timing FX
+[Statedef 44047]
+type = A
+movetype = I
+physics = N
+velset = 0,0
+sprpriority = 8
+anim = 1
+
+[state 44026]
+type = varset
+trigger1 = 1
+var(1) = time
+
+[State 44026, up vein]
+type = Explod
+trigger1 = !time 
+anim = 4444
+id = 4444
+pos = 0,0
+postype = p1
+removetime = -1
+vel = 0,-.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, downleft vein]
+type = Explod
+trigger1 = !time 
+anim = 4444
+id = 4444
+pos = 0,0
+postype = p1
+removetime = -1
+vel = -.5,.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, downright vein]
+type = Explod
+trigger1 = !time
+anim = 4444
+id = 4444
+pos = 0,0
+postype = p1
+removetime = -1
+vel = .5,.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[state 44026, disappear]
+type = modifyexplod
+trigger1 = 1
+trans = addalpha
+alpha = 255-var(1)*8,var(1)*8
+id = 4444
+
+[state 44030, removeexplod]
+type = removeexplod
+trigger1 = 255-var(1)*8 <= 0
+id = 4444
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = 255-var(1)*8 <= 0
+;----------------------------------------------------------
+;Perfect Timing FX
+[Statedef 44048]
+type = A
+movetype = I
+physics = N
+velset = 0,0
+sprpriority = 8
+anim = 1
+
+[state 44026]
+type = varset
+trigger1 = 1
+var(1) = time
+
+[State 44026, upleft vein]
+type = Explod
+trigger1 = !time
+anim = 4444
+id = 4444
+pos = 0,0
+postype = p1
+removetime = 40
+vel = -.5,-.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, upright vein]
+type = Explod
+trigger1 = !time
+anim = 4444
+id = 4444
+pos = 0,0
+postype = p1
+removetime = 40
+vel = .5,-.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, downleft vein]
+type = Explod
+trigger1 = !time 
+anim = 4444
+id = 4444
+pos = 0,0
+postype = p1
+removetime = 40
+vel = -.5,.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[State 44026, downright vein]
+type = Explod
+trigger1 = !time
+anim = 4444
+id = 4444
+pos = 0,0
+postype = p1
+removetime = 40
+vel = .5,.5
+scale = .5,.5
+sprpriority = 8
+ownpal = 1
+persistent = 0
+
+[state 44026, disappear]
+type = modifyexplod
+trigger1 = 1
+trans = addalpha
+alpha = 255-var(1)*8,var(1)*8
+id = 4444
+
+[state 44030, removeexplod]
+type = removeexplod
+trigger1 = 255-var(1)*8 <= 0
+id = 4444
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = 255-var(1)*8 <= 0
+;---------------------------------------------------
+;Dance Bar
+[Statedef 44050]
+type = A
+movetype = I
+physics = N
+anim = 1
+velset = 0,0 
+sprpriority = 8
+
+[State -2, Bar Frame]
+type = Explod
+trigger1 = !time
+anim = 4440
+id = 4451
+pos = 0,0
+postype = p1
+removetime = -1
+scale = 1,1
+sprpriority = 9
+ownpal = 1
+persistent = 0
+
+[State -2, Angry Veins]
+type = Explod
+trigger1 = !time
+anim = 4442
+id = 4452
+pos = 0,0
+postype = p1
+removetime = -1
+scale = 1,1
+sprpriority = 9
+ownpal = 1
+persistent = 0
+
+[State -2, Scalable Bar]
+type = Explod
+trigger1 = !time
+anim = 4441
+id = 4453
+pos = 0,0
+postype = p1
+removetime = -1
+scale = 1,1
+sprpriority = 8
+ownpal = 0
+persistent  = 0
+
+[state 44030, scale]
+type = modifyexplod
+trigger1 = NumHelper(44003)
+;scale = 1,1
+scale = (Helper(44003),var(3))/600.0,1
+id = 4453
+
+
+[state 44030, white flash]
+type = palfx 
+trigger1 = NumHelper(44041)
+trigger1 = Helper(44041),var(2) = 1 && Helper(44041), anim != 1
+trigger2 = NumHelper(44045)
+trigger2 = Helper(44045),var(2) = 1 && Helper(44045), anim != 1
+add = 255,255,255
+mul = 255,255,255
+time = 1
+
+[state 44030, partially transparent]
+type = null 
+trigger1 = 1
+trans = addalpha
+alpha = 25
+
+[state 44030, remove frame]
+type = removeexplod
+trigger1 = root, stateno != [4401,4402]
+id = 4451
+
+[state 44030, remove veins]
+type = removeexplod
+trigger1 = root, stateno != [4401,4402]
+id = 4452
+
+[state 44030, remove bar]
+type = removeexplod
+trigger1 = root, stateno != [4401,4402]
+id = 4453
+
+
+[state 44000, destroyself]
+type = destroyself
+trigger1 = root, stateno != [4401,4403]
+

@@ -1,0 +1,724 @@
+;---------------------------------------------------------------------------
+; Abstract Reordered additions for Ichigo
+; Parry on Z (ported from Haruhi's): a short window that catches any attack.
+;   success: brief freeze, +40 meter, a little life back, he can act right away
+;   whiff:   -80 meter and he's stuck for 18 frames (minus); in the air he falls with no control
+; Uses his guard poses (130 stand, 131 crouch, 132 air) and his guard sound.
+;---------------------------------------------------------------------------
+
+[Statedef 700]
+type     = U
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = ifelse(StateType = C, 131, ifelse(StateType = A, 132, 130))
+sprpriority = 2
+
+[State 700, Air physics]
+type = StateTypeSet
+trigger1 = StateType = A
+physics = A
+ignorehitpause = 1
+persistent = 1
+
+[State 700, Catch]
+type = ReversalDef
+trigger1 = Time = 0
+reversal.attr = SCA, NA, SA, HA, NP, SP, HP, AA, AP
+pausetime = 0, 13
+numhits = 0
+sparkno = -1
+sparkxy = 0, 0
+hitsound = -1, -1
+p1stateno = 701
+
+[State 700, Catch window]
+type = HitOverride
+trigger1 = Time = [3, 12]
+time = 1
+attr = SCA, NA, SA, HA, NP, SP, HP, AA, AP
+stateno = 701
+ignorehitpause = 1
+
+[State 700, Flash]
+type = PalFX
+trigger1 = Time = 3
+time = 9
+add = 150, 70, 10
+sinadd = 64, 32, 5, 31
+
+[State 700, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 700, Stay put]
+type = VelSet
+trigger1 = StateType != A
+x = 0
+y = 0
+
+[State 700, Ground whiff]
+;window passed without catching anything
+type = ChangeState
+trigger1 = StateType != A
+trigger1 = Time >= 13
+value = 708
+
+[State 700, Air whiff]
+type = ChangeState
+trigger1 = StateType = A
+trigger1 = Time >= 20
+value = 709
+
+;---------------------------------------------------------------------------
+; Parry success
+
+[Statedef 701]
+type     = U
+movetype = I
+physics  = N
+ctrl     = 0
+velset   = 0, 0
+anim     = ifelse(StateType = C, 131, ifelse(StateType = A, 132, 130))
+
+[State 701, Air physics]
+type = StateTypeSet
+trigger1 = StateType = A
+physics = A
+ignorehitpause = 1
+persistent = 1
+
+[State 701, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = s2, 0
+
+[State 701, Meter]
+type = PowerAdd
+trigger1 = Time = 0
+value = 40
+ignorehitpause = 1
+persistent = 1
+
+[State 701, Life]
+type = LifeAdd
+trigger1 = Time = 0
+value = 4
+ignorehitpause = 1
+persistent = 1
+
+[State 701, Safe]
+type = NotHitBy
+trigger1 = Time = 0
+value = SCA
+time = 18
+
+[State 701, Freeze]
+type = Pause
+trigger1 = Time = 0
+time = 15
+movetime = 15
+ignorehitpause = 1
+persistent = 1
+
+[State 701, Flash]
+type = EnvColor
+trigger1 = Time = 0
+value = 255, 230, 200
+time = 1
+
+[State 701, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 701, Stop in air]
+type = VelSet
+trigger1 = StateType = A
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 701, Free to act]
+type = CtrlSet
+trigger1 = Time = 3
+value = 1
+
+[State 701, Ground end]
+type = ChangeState
+trigger1 = StateType != A
+trigger1 = Time >= 15
+value = ifelse(StateType = C, 11, 0)
+ctrl = 1
+
+[State 701, Air end]
+type = ChangeState
+trigger1 = StateType = A
+trigger1 = Time >= 20
+value = 50
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Parry whiffed on the ground: -80 meter, stuck for 18 frames (minus)
+
+[Statedef 708]
+type     = U
+movetype = I
+physics  = U
+ctrl     = 0
+velset   = 0, 0
+
+[State 708, Cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -80
+
+[State 708, Failed]
+type = PalFX
+trigger1 = Time = 0
+time = 18
+add = -40, -40, -40
+mul = 200, 200, 200
+
+[State 708, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 708, Recover]
+type = ChangeState
+trigger1 = Time >= 18
+value = ifelse(StateType = C, 11, 0)
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Parry whiffed in the air: -80 meter, no control until he lands (landing goes to 52)
+
+[Statedef 709]
+type     = A
+movetype = I
+physics  = A
+ctrl     = 0
+
+[State 709, Cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -80
+
+[State 709, Failed]
+type = PalFX
+trigger1 = Time = 0
+time = 18
+add = -40, -40, -40
+mul = 200, 200, 200
+
+[State 709, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+;---------------------------------------------------------------------------
+; Charged air heavy (hold C during j.C; same in Bankai)
+;   released early: normal j.C
+;   full charge (25 frames): auto-release into a heavier spike with a ground bounce (states 715/716),
+;   then a little hop with control so he can chase the bounce. Once per combo (var(9)).
+
+[Statedef 625]
+type     = A
+movetype = A
+physics  = N
+juggle   = 4
+poweradd = 0
+ctrl     = 0
+anim     = 620 + 6000 * var(39)
+sprpriority = 2
+
+[State 625, Windup pose]
+type = ChangeAnim
+trigger1 = 1
+value = 620 + 6000 * var(39)
+elem = 1
+
+[State 625, Hover]
+type = VelSet
+trigger1 = Time = 0
+x = vel x * 0.3
+y = 0
+
+[State 625, Drift]
+type = VelAdd
+trigger1 = 1
+y = 0.05
+
+[State 625, Charging flash]
+type = PalFX
+trigger1 = Time % 8 = 0
+trigger1 = Time < 25
+time = 4
+add = 120, 60, 10
+
+[State 625, Fully charged]
+type = PalFX
+trigger1 = Time = 25
+time = 8
+add = 255, 160, 60
+
+[State 625, Land]
+type = ChangeState
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y > 0
+value = 52
+
+[State 625, Early release]
+type = ChangeState
+trigger1 = command != "hold_b"
+trigger1 = Time < 25
+value = 620 + 6000 * var(39)
+
+[State 625, Release]
+type = ChangeState
+trigger1 = Time >= 25
+value = 626
+
+[Statedef 626]
+type     = A
+movetype = A
+physics  = A
+juggle   = 4
+poweradd = 0
+ctrl     = 0
+anim     = 620 + 6000 * var(39)
+sprpriority = 2
+
+[State 626, Skip windup]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 620 + 6000 * var(39)
+elem = 2
+
+[State 626, Vel]
+type = VelSet
+trigger1 = Time = 0
+x = 2
+y = -1.5
+
+[State 626, Blade]
+type = Explod
+trigger1 = Time = 0
+anim = ifelse(var(39), 6611, 621)
+ID = 620
+postype = P1
+pos = 0, 0
+sprpriority = 10
+bindtime = -1
+scale = Const(size.xscale), Const(size.yscale)
+
+[State 626, Swing]
+type = PlaySnd
+trigger1 = Time = 0
+value = s10 + (var(15) * 10), 8
+channel = 10
+
+[State 626, Swing fx]
+type = PlaySnd
+trigger1 = Time = 0
+value = s0, 12
+
+[State 626, HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = A, HA
+damage = ceil(ifelse(var(15), 25, 21) * var(8) * 1.6), 4
+getpower = 90, 70
+givepower = 20, 20
+guardflag = HA
+hitflag = MAF
+priority = 5, Hit
+pausetime = 14, 15
+guard.pausetime = 20, 0
+sparkno = s20120 + random % 4
+guard.sparkno = s10040
+sparkxy = -10, -ceil(60 * Const(size.yscale))
+hitsound = s1, 12
+guardsound = s2, 0
+animtype = Hard
+ground.type = High
+air.type = Low
+ground.velocity = -2, 6
+air.velocity = -2, 8
+p2stateno = 715
+airguard.velocity = -4, 0
+airguard.ctrltime = 18
+guard.velocity = -6
+fall = 1
+air.fall = 1
+fall.recover = 0
+id = 626
+
+[State 626, Hit shake]
+type = EnvShake
+trigger1 = MoveHit = 1
+time = 10
+ampl = 4
+
+[State 626, Used this combo]
+type = VarSet
+trigger1 = MoveHit
+var(9) = 1
+ignorehitpause = 1
+
+[State 626, Hop]
+;after the hit: little hop and control back, to catch the bounce
+type = VelSet
+trigger1 = MoveHit
+trigger1 = Time >= 16
+y = -4
+
+[State 626, Follow up]
+type = ChangeState
+trigger1 = MoveHit
+trigger1 = Time >= 16
+value = 50
+ctrl = 1
+
+[State 626, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 50
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Ground bounce (used by the fully charged air heavy and RF Gazan's last hit)
+; The opponent runs these states with their own hit animations: spiked into the floor,
+; bounces back up high, then falls in their own fall state so they can be juggled again.
+; No tech (fall.recover = 0 on the hits).
+
+[Statedef 715]
+type     = A
+movetype = H
+physics  = N
+ctrl     = 0
+velset   = 0, 0
+
+[State 715, Anim]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5060), 5060, 5050)
+
+[State 715, Spike]
+type = VelSet
+trigger1 = Time = 0
+x = -2
+y = 10
+
+[State 715, Hit the floor]
+type = ChangeState
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y > 0
+value = 716
+
+[State 715, Safety]
+type = SelfState
+trigger1 = Time >= 60
+value = 5050
+
+[Statedef 716]
+type     = A
+movetype = H
+physics  = N
+ctrl     = 0
+
+[State 716, Floor]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 716, Bounce]
+type = VelSet
+trigger1 = Time = 0
+x = -1.5
+y = -9
+
+[State 716, Anim]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5160), 5160, 5050)
+
+[State 716, Shake]
+type = EnvShake
+trigger1 = Time = 0
+time = 12
+ampl = 5
+
+[State 716, Thud]
+type = PlaySnd
+trigger1 = Time = 0
+value = F7, 0
+
+[State 716, Back to their own fall]
+;their own fall state keeps the bounce velocity; they can be hit again (juggled) on the way up and down
+type = SelfState
+trigger1 = Time >= 1
+value = 5050
+
+;---------------------------------------------------------------------------
+; Burst (from Kamijo): A+B+C while being hit. Invincible, blows the opponent away, no damage.
+; Recharges in 75 seconds (var(21), counted down in State -1), fresh every round.
+
+[Statedef 720]
+type     = S
+movetype = I
+physics  = N
+velset   = 0, 0
+ctrl     = 0
+facep2   = 1
+anim     = ifelse(StateType = A, 9605, 9604)
+sprpriority = 3
+
+[State 720, Invincible]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 720, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 720, Cooldown]
+type = VarSet
+trigger1 = Time = 0
+var(21) = 4500
+
+[State 720, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = 9600, 0
+volume = 255
+channel = -1
+
+[State 720, Voice]
+type = PlaySnd
+trigger1 = Time = 0
+value = s10 + (var(15) * 10), 22
+channel = 0
+
+[State 720, Effect]
+type = Explod
+trigger1 = Time = 0
+anim = 9600
+ID = 9600
+pos = 0, -55
+postype = p1
+bindtime = -1
+removetime = -2
+supermovetime = 9999
+pausemovetime = 9999
+sprpriority = 6
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State 720, Flash]
+type = PalFX
+trigger1 = Time = 0
+time = 12
+add = 120, 120, 120
+
+[State 720, Shake]
+type = EnvShake
+trigger1 = Time = 0
+time = 12
+ampl = 4
+
+[State 720, Attacking]
+type = StateTypeSet
+trigger1 = Time = 4
+movetype = A
+
+[State 720, Done attacking]
+type = StateTypeSet
+trigger1 = Time = 10
+movetype = I
+
+[State 720, Blow away]
+type = HitDef
+trigger1 = Time = [4, 9]
+trigger1 = !MoveContact
+attr = S, NA
+damage = 0
+animtype = Light
+guardflag =
+hitflag = MAF
+priority = 7, Hit
+pausetime = 0, 0
+sparkno = -1
+hitsound = -1
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 12
+ground.velocity = -18.4, -5
+air.type = High
+air.velocity = -18.4, -4
+air.hittime = 12
+airguard.velocity = -18.9, -0.8
+fall = 1
+fall.recover = 0
+;hard knockdown: no tech, no quick rise
+down.recover = 0
+down.recovertime = 50
+getpower = 0
+givepower = 0
+ground.cornerpush.veloff = 0
+
+[State 720, End]
+type = ChangeState
+trigger1 = Time >= 32
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+[Statedef 721]
+type     = A
+movetype = I
+physics  = N
+velset   = 0, 0
+ctrl     = 0
+facep2   = 1
+anim     = ifelse(StateType = A, 9605, 9604)
+sprpriority = 3
+
+[State 721, Invincible]
+type = NotHitBy
+trigger1 = Time < 30
+value = SCA
+
+[State 721, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 721, Cooldown]
+type = VarSet
+trigger1 = Time = 0
+var(21) = 4500
+
+[State 721, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = 9600, 0
+volume = 255
+channel = -1
+
+[State 721, Voice]
+type = PlaySnd
+trigger1 = Time = 0
+value = s10 + (var(15) * 10), 22
+channel = 0
+
+[State 721, Effect]
+type = Explod
+trigger1 = Time = 0
+anim = 9600
+ID = 9600
+pos = 0, -55
+postype = p1
+bindtime = -1
+removetime = -2
+supermovetime = 9999
+pausemovetime = 9999
+sprpriority = 6
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State 721, Flash]
+type = PalFX
+trigger1 = Time = 0
+time = 12
+add = 120, 120, 120
+
+[State 721, Shake]
+type = EnvShake
+trigger1 = Time = 0
+time = 12
+ampl = 4
+
+[State 721, Attacking]
+type = StateTypeSet
+trigger1 = Time = 4
+movetype = A
+
+[State 721, Done attacking]
+type = StateTypeSet
+trigger1 = Time = 10
+movetype = I
+
+[State 721, Blow away]
+type = HitDef
+trigger1 = Time = [4, 9]
+trigger1 = !MoveContact
+attr = A, NA
+damage = 0
+animtype = Light
+guardflag =
+hitflag = MAF
+priority = 7, Hit
+pausetime = 0, 0
+sparkno = -1
+hitsound = -1
+ground.type = High
+ground.slidetime = 5
+ground.hittime = 12
+ground.velocity = -18.4, -5
+air.type = High
+air.velocity = -18.4, -4
+air.hittime = 12
+airguard.velocity = -18.9, -0.8
+fall = 1
+fall.recover = 0
+;hard knockdown: no tech, no quick rise
+down.recover = 0
+down.recovertime = 50
+getpower = 0
+givepower = 0
+
+[State 721, Fall]
+type = VelAdd
+trigger1 = Time >= 24
+y = 0.47
+
+[State 721, Land]
+type = ChangeState
+trigger1 = Time >= 24
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y > 0
+value = 52
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Third blocked standing light in a row: 12 extra recovery frames (minus)
+[Statedef 7300]
+type     = S
+movetype = I
+physics  = S
+ctrl     = 0
+
+[State 7300, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 7300, Recover]
+type = ChangeState
+trigger1 = Time >= 12
+value = 0
+ctrl = 1

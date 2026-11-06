@@ -1,0 +1,8146 @@
+;立ち　弱
+[Statedef 200]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=200
+sprpriority=2
+poweradd=5
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=5
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(5*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=[100,101])
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&(prevstateno=[100,101])
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&(prevstateno=[100,101])
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(2)>=0
+attr=S,NA
+damage=ceil(32*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+guardflag=M
+hitflag=MAFD
+pausetime=10,10
+priority=4,Hit
+sparkno=-1
+hitsound=s100,45
+guardsound=s100,15
+ground.slidetime=8
+ground.hittime=8
+ground.velocity=-5
+air.velocity=-2.8,-5
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=10
+ground.cornerpush.veloff=-7
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=200
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(2)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=58,-69
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(200)>=1&&movehit
+helpertype=normal
+name="hitS"
+ID=7102
+pos=0,-65
+postype=p2
+stateno=7102
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(200)>=1&&moveguarded
+helpertype=normal
+name="guardS"
+ID=7300
+pos=0,-65
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(200)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(200)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(200)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(200)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(200)>=1&&movehit
+value=ceil(35*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(200)>=1&&MoveGuarded
+value=ceil(17.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(200)>=1&&movehit&&var(36)=0
+var(41)=ceil(40*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(200)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(20*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(200)>=1&&movehit
+var(38)=ceil(50*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(200)>=1&&MoveGuarded
+var(38)=ceil(25*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,14
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1&&var(0)=1
+value=s0,10
+channel=0
+
+[State ]
+type=Helper
+trigger1=numtarget(200)>=1&&movecontact&&hitpausetime>=1&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=300&&command!="holdfwd")||(var(10)=1000&&var(40)>=300&&command="holdfwd")))&&command!="pms"&&command!="pmsm"&&command!="el"
+helpertype=normal
+name="precure attack"
+ID=4000+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+pos=-320,-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+ignorehitpause=1
+persistent=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(200)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=velset
+trigger1=fvar(11)=1
+x=0
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=0
+ctrl=1
+
+[State ]
+type=Varset
+trigger1=(!movehit&&!movereversed)&&enemynear,statetype=A&&fvar(12)=0
+fvar(12)=1
+
+[State ]
+type=varset
+trigger1=numtarget(200)>=1&&var(12)!=1&&fvar(12)=1&&command="Hijump"&&movecontact&&HitPauseTime>=1
+var(11)=1
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=numtarget(200)>=1&&fvar(12)=1&&command="jump"&&movecontact&&HitPauseTime>=1
+value=40
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=(movecontact||movereversed||enemynear,statetype!=A)&&fvar(12)=1
+fvar(12)=0
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;立ち　中
+[Statedef 210]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=210
+sprpriority=2
+poweradd=10
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=10
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(8*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=[100,101])
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&(prevstateno=[100,101])
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&(prevstateno=[100,101])
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(2)>=0
+attr=S,NA
+damage=ceil(52*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=medium
+guardflag=M
+hitflag=MAFD
+pausetime=10,11
+priority=4,Hit
+sparkno=-1
+hitsound=s100,53
+guardsound=s100,57
+ground.type=low
+ground.slidetime=11
+ground.hittime=14
+ground.velocity=-5
+air.type=High
+air.velocity=-2.8,-5
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=12
+ground.cornerpush.veloff=-7
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=210
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(2)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=58,-69
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(210)>=1&&movehit
+helpertype=normal
+name="hitM"
+ID=17105
+pos=0,-65
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(210)>=1&&moveguarded
+helpertype=normal
+name="guardM"
+ID=17300
+pos=0,-65
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(210)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(210)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(210)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(210)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(210)>=1&&movehit
+value=ceil(47.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(210)>=1&&MoveGuarded
+value=ceil(23.75*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(210)>=1&&movehit&&var(36)=0
+var(41)=ceil(50*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(210)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(25*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(210)>=1&&movehit
+var(38)=ceil(65*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(210)>=1&&MoveGuarded
+var(38)=ceil(32.5*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,54
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1&&var(0)=1
+value=s0,11
+channel=0
+
+[State ]
+type=Helper
+trigger1=numtarget(210)>=1&&movecontact&&hitpausetime>=1&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=300&&command!="holdfwd")||(var(10)=1000&&var(40)>=300&&command="holdfwd")))&&command!="pms"&&command!="pmsm"&&command!="el"
+helpertype=normal
+name="precure attack"
+ID=4000+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+pos=-320,-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+ignorehitpause=1
+persistent=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(210)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=velset
+trigger1=fvar(11)=1
+x=0
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=0
+ctrl=1
+
+[State ]
+type=Varset
+trigger1=(!movehit&&!movereversed)&&enemynear,statetype=A&&fvar(12)=0
+fvar(12)=1
+
+[State ]
+type=varset
+trigger1=numtarget(210)>=1&&var(12)!=1&&fvar(12)=1&&command="Hijump"&&movecontact&&HitPauseTime>=1
+var(11)=1
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=numtarget(210)>=1&&fvar(12)=1&&command="jump"&&movecontact&&HitPauseTime>=1
+value=40
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=(movecontact||movereversed||enemynear,statetype!=A)&&fvar(12)=1
+fvar(12)=0
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;立ち　強
+[Statedef 220]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=220
+sprpriority=2
+poweradd=15
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=15
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(14*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=[100,101])
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&(prevstateno=[100,101])
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&(prevstateno=[100,101])
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(4)>=0
+attr=S,NA
+damage=ceil(70*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=hard
+guardflag=M
+hitflag=MAFD
+pausetime=13,14
+priority=5,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,38
+ground.slidetime=14
+ground.hittime=14
+ground.velocity=-5
+air.velocity=-2.8,-5
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=12
+ground.cornerpush.veloff=-7
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=220
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(4)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=67,-75
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(220)>=1&&movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-70
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(220)>=1&&moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-70
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(220)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(220)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(220)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(220)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(220)>=1&&movehit
+value=ceil(60*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(220)>=1&&MoveGuarded
+value=ceil(30*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(220)>=1&&movehit&&var(36)=0
+var(41)=ceil(60*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(220)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(30*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(220)>=1&&movehit
+var(38)=ceil(80*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(220)>=1&&MoveGuarded
+var(38)=ceil(40*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=4
+value=s100,55
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3&&var(0)=1
+value=s0,14
+channel=0
+
+[State ]
+type=Helper
+trigger1=numtarget(220)>=1&&movecontact&&hitpausetime>=1&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=300&&command!="holdfwd")||(var(10)=1000&&var(40)>=300&&command="holdfwd")))&&command!="pms"&&command!="pmsm"&&command!="el"
+helpertype=normal
+name="precure attack"
+ID=4000+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+pos=-320,-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=ChangeState
+trigger1=numtarget(220)>=1&&command="FF"&&movecontact&&hitpausetime>=1&&var(27)>=1000
+value=100
+ignorehitpause=1
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(220)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=velset
+trigger1=fvar(11)=1
+x=0
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=0
+ctrl=1
+
+[State ]
+type=Varset
+trigger1=(!movehit&&!movereversed)&&enemynear,statetype=A&&fvar(12)=0
+fvar(12)=1
+
+[State ]
+type=varset
+trigger1=numtarget(220)>=1&&var(12)!=1&&fvar(12)=1&&command="Hijump"&&movecontact&&HitPauseTime>=1
+var(11)=1
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=numtarget(220)>=1&&fvar(12)=1&&command="jump"&&movecontact&&HitPauseTime>=1
+value=40
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=(movecontact||movereversed||enemynear,statetype!=A)&&fvar(12)=1
+fvar(12)=0
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;特殊技
+[Statedef 230]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=230
+sprpriority=2
+poweradd=20
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=20
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(16*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=[100,101])
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&(prevstateno=[100,101])
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&(prevstateno=[100,101])
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(5)>=0
+attr=S,NA
+damage=ceil(80*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),5
+animtype=hard
+guardflag=H
+hitflag=MAFD
+pausetime=14,14
+priority=5,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,38
+ground.type=low
+ground.slidetime=14
+ground.hittime=14
+ground.velocity=-5
+air.type=High
+air.velocity=-2.8,-5
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=12
+ground.cornerpush.veloff=-7
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=230
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(5)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=80,-61
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(230)>=1&&movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-55
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(230)>=1&&moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-55
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(230)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(230)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(230)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(230)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(230)>=1&&movehit
+value=ceil(70*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(230)>=1&&MoveGuarded
+value=ceil(35*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(230)>=1&&movehit&&var(36)=0
+var(41)=ceil(70*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(230)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(35*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(230)>=1&&movehit
+var(38)=ceil(90*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(230)>=1&&MoveGuarded
+var(38)=ceil(45*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3
+value=s100,58
+
+[State ]
+type=PlaySnd
+trigger1=animelem=4
+value=s0,15
+channel=0
+
+[State ]
+type=Helper
+trigger1=numtarget(230)>=1&&movecontact&&hitpausetime>=1&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=300&&command!="holdfwd")||(var(10)=1000&&var(40)>=300&&command="holdfwd")))&&command!="pms"&&command!="pmsm"&&command!="el"
+helpertype=normal
+name="precure attack"
+ID=4000+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+pos=-320,-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=ChangeState
+trigger1=numtarget(230)>=1&&command="FF"&&movecontact&&hitpausetime>=1&&var(27)>=1000
+value=100
+ignorehitpause=1
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(230)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=velset
+trigger1=fvar(11)=1
+x=0
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=0
+ctrl=1
+
+[State ]
+type=Varset
+trigger1=(!movehit&&!movereversed)&&enemynear,statetype=A&&fvar(12)=0
+fvar(12)=1
+
+[State ]
+type=varset
+trigger1=numtarget(230)>=1&&var(12)!=1&&fvar(12)=1&&command="Hijump"&&movecontact&&HitPauseTime>=1
+var(11)=1
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=numtarget(230)>=1&&fvar(12)=1&&command="jump"&&movecontact&&HitPauseTime>=1
+value=40
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=(movecontact||movereversed||enemynear,statetype!=A)&&fvar(12)=1
+fvar(12)=0
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;特殊技　スライディング
+[Statedef 240]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=240
+sprpriority=2
+poweradd=20
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=20
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(18*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Explod
+trigger1=time%10=0&&animelemtime(4)<=1
+anim=6002
+postype=p1
+pos=floor(40*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01
+x=5-(time*.1)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(3)>=0
+attr=C,NA
+damage=ceil(76*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),5
+animtype=hard
+guardflag=L
+hitflag=MAFD
+pausetime=13,14
+priority=5,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,38
+ground.type=trip
+ground.slidetime=14
+ground.hittime=14
+ground.velocity=-2,-9
+air.type=High
+air.velocity=-2,-6
+guard.sparkno=-1
+yaccel=.48
+fall=1
+fall.recover=0
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+
+[State ]
+type=Helper
+trigger1=movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-8
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-8
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=movehit
+value=ceil(65*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=MoveGuarded
+value=ceil(32.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=movehit&&var(36)=0
+var(41)=ceil(55*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=MoveGuarded&&var(36)=0
+var(41)=ceil(27.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&movehit
+var(38)=ceil(80*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&MoveGuarded
+var(38)=ceil(42.5*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,62
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3
+value=s0,16
+channel=0
+
+[State ]
+type=StateTypeSet
+trigger1=animelemtime(2)>=0&&animelemtime(5)<=5
+statetype=C
+
+[State ]
+type=StateTypeSet
+trigger1=animelemtime(6)>=1
+statetype=S
+
+[State ]
+type=Helper
+trigger1=movecontact&&hitpausetime>=1&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=300&&command!="holdfwd")||(var(10)=1000&&var(40)>=300&&command="holdfwd")))
+helpertype=normal
+name="precure attack"
+ID=4000+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+pos=-320,-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+ignorehitpause=1
+persistent=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=velset
+trigger1=fvar(11)=1
+x=0
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1||(animelem=6&&command="holddown")
+value=11
+ctrl=1
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;スマッシュアッパー～ため
+[Statedef 250]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=250
+sprpriority=2
+poweradd=5
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=5
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(20*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=[100,101])
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&(prevstateno=[100,101])
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&(prevstateno=[100,101])
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1&&var(0)=1
+value=s0,10
+channel=0
+
+[State ]
+type=Explod
+trigger1=time=10||time=19||time=28
+anim=6080
+postype=p1
+pos=floor(ifelse(time=10,-30,0)+ifelse(time=19,-15,0)+ifelse(time=28,0,0)*fvar(32)),0
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=3
+facing=-1
+
+[State ]
+type=Explod
+trigger1=time=10||time=19||time=28
+anim=6080
+postype=p1
+pos=floor(ifelse(time=10,40,0)+ifelse(time=19,25,0)+ifelse(time=28,10,0)*fvar(32)),0
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=3
+
+[State ]
+type=Explod
+trigger1=time=10
+anim=6079
+ID=6079
+postype=p1
+pos=floor(5*fvar(32)),0
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=-1
+
+[State ]
+type=varset
+trigger1=time=0
+fvar(7)=0
+
+[State ]
+type=varadd
+trigger1=command="holda"&&command="holdb"
+fvar(7)=1
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6079)=1&&(time=[14,33])&&(command!="holda"||command!="holdb")
+ID=6079
+
+[State ]
+type=ChangeState
+trigger1=((time=[14,33])&&(command!="holda"||command!="holdb"))||time=34
+value=251
+
+;スマッシュアッパー～攻撃
+[Statedef 251]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=251
+sprpriority=2
+poweradd=20
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=20
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=AssertSpecial
+trigger1=fvar(7)>=34
+flag=unguardable
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(3)>=0
+attr=S,NA
+damage=ceil((74+ifelse(fvar(7)=34,10,0))*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),5
+animtype=diagup
+guardflag=M
+hitflag=MAFD
+pausetime=14,14
+priority=5,Hit
+sparkno=-1
+hitsound=s100,ifelse(fvar(7)>=34,64,63)
+guardsound=s100,38
+ground.type=low
+ground.slidetime=14
+ground.hittime=14
+ground.velocity=0,ifelse(fvar(7)>=34,-17,-15)
+air.type=High
+air.velocity=(ifelse(fvar(15)=1,-16,0)),ifelse(fvar(7)>=34,-17,-15)+(ifelse(fvar(15),14,0))
+guard.sparkno=-1
+yaccel=.60+(var(30)*.1)+ifelse(fvar(7)>=34,.1,0)
+down.velocity=-16,-.5
+fall=1
+fall.recovertime=ifelse(fvar(7)>=34,35,25)
+ground.cornerpush.veloff=-8
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+p2facing=1
+ID=250
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(3)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=58,-69
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(250)>=1&&movehit&&fvar(7)<=33
+helpertype=normal
+name="hitM"
+ID=17105
+pos=0,-55
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(250)>=1&&moveguarded&&fvar(7)<=33
+helpertype=normal
+name="guardM"
+ID=17300
+pos=0,-55
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(250)>=1&&movehit&&fvar(7)>=34
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-55
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(250)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(250)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(250)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(250)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(250)>=1&&movehit
+value=ceil((68+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(250)>=1&&MoveGuarded
+value=ceil((34+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(250)>=1&&movehit&&var(36)=0
+var(41)=ceil((68+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(250)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil((34+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(250)>=1&&movehit
+var(38)=ceil((88+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(250)>=1&&MoveGuarded
+var(38)=ceil((44+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1
+value=s100,58
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1&&var(0)=1
+value=s0,15
+channel=0
+
+[State ]
+type=Helper
+trigger1=numtarget(250)>=1&&movecontact&&hitpausetime>=1&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=300&&command!="holdfwd")||(var(10)=1000&&var(40)>=300&&command="holdfwd")))
+helpertype=normal
+name="precure attack"
+ID=4000+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+pos=-320,-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+ignorehitpause=1
+persistent=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(250)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=velset
+trigger1=fvar(11)=1
+x=0
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=0
+ctrl=1
+
+[State ]
+type=varset
+trigger1=movecontact&&!movereversed&&command="holdup"
+fvar(16)=1
+ignorehitpause=1
+
+[State ]
+type=varset
+trigger1=movecontact&&!movereversed&&command="holdup"
+var(11)=1
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=numhelper(3000)=1
+trigger1=helper(3000),var(35)=0&&movecontact&&!movereversed&&command="holdup"
+value=40
+ctrl=0
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;スマッシュアタック～ため
+[Statedef 260]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=260
+sprpriority=2
+poweradd=5
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=5
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(22*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=[100,101])
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&(prevstateno=[100,101])
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&(prevstateno=[100,101])
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1&&var(0)=1
+value=s0,10
+channel=0
+
+[State ]
+type=Explod
+trigger1=time=10||time=19||time=28
+anim=6080
+postype=p1
+pos=floor(ifelse(time=10,-40,0)+ifelse(time=19,-25,0)+ifelse(time=28,-10,0)*fvar(32)),0
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=3
+facing=-1
+
+[State ]
+type=Explod
+trigger1=time=10||time=19||time=28
+anim=6080
+postype=p1
+pos=floor(ifelse(time=10,30,0)+ifelse(time=19,15,0)+ifelse(time=28,0,0)*fvar(32)),0
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=3
+
+[State ]
+type=Explod
+trigger1=time=10
+anim=6079
+ID=6079
+postype=p1
+pos=floor(-5*fvar(32)),0
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=-1
+
+[State ]
+type=varset
+trigger1=time=0
+fvar(7)=0
+
+[State ]
+type=varadd
+trigger1=command="holdb"&&command="holdc"
+fvar(7)=1
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6079)=1&&(time=[14,33])&&(command!="holdb"||command!="holdc")
+ID=6079
+
+[State ]
+type=ChangeState
+trigger1=((time=[14,33])&&(command!="holdb"||command!="holdc"))||time=34
+value=261
+
+;スマッシュアタック～攻撃
+[Statedef 261]
+type=S                      
+movetype=A                      
+physics=S                      
+ctrl=0
+anim=261
+sprpriority=2
+poweradd=20
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=20
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ] 
+type=Explod
+trigger1=time=0
+anim=6082
+postype=p1
+pos=floor(10*fvar(32)),0
+scale=.5*fvar(32),.5*fvar(33)
+ID=6082
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=AssertSpecial
+trigger1=fvar(7)>=34
+flag=unguardable
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(3)>=0&&(!(enemy,teammode=simul)||(enemynear,teammode=simul &&enemynear,statetype=A&&var(24)=0)||var(20)!=0)
+attr=S,NA
+damage=ceil((85+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),5
+animtype=hard
+guardflag=M
+hitflag=MAF
+pausetime=14,14
+priority=5,Hit
+sparkno=-1
+hitsound=s100,ifelse(fvar(7)>=34,64,63)
+guardsound=s100,38
+ground.type=low
+ground.slidetime=14
+ground.hittime=14
+ground.velocity=-9,ifelse(var(20)>=1,-3,0)
+air.type=High
+air.velocity=-9,-3
+guard.sparkno=-1
+yaccel=.48
+air.fall=1
+fall=ifelse(fvar(7)>=34,1,ifelse(var(20)>=1,1,0))
+fall.recovertime=25
+ground.cornerpush.veloff=-8
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+p2facing=1
+ID=260
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(3)>=0&&var(20)=0&&enemynear,teammode=simul &&fvar(7)>=34
+attr=S,NA
+damage=ceil((85+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),5
+animtype=hard
+guardflag=M
+hitflag=MAF
+pausetime=14,14
+priority=5,Hit
+sparkno=-1
+hitsound=s100,ifelse(fvar(7)>=34,64,63)
+guardsound=s100,38
+ground.type=low
+ground.slidetime=14
+ground.hittime=14
+ground.velocity=-9,ifelse(var(20)>=1,-3,0)
+air.type=High
+air.velocity=-9,-3
+guard.sparkno=-1
+yaccel=.48
+air.fall=1
+fall=ifelse(fvar(7)>=34,1,ifelse(var(20)>=1,1,0))
+fall.recovertime=25
+ground.cornerpush.veloff=-8
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+p2facing=1
+hitonce=1
+p2stateno=1201
+ID=260
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(3)>=0&&var(20)=0&&enemynear,teammode=simul &&fvar(7)<=33&&(enemynear,statetype!=A||(enemynear,statetype=A&&(var(24)=[1,4])))
+attr=S,NA
+damage=ceil((85+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),5
+animtype=hard
+guardflag=M
+hitflag=MAF
+pausetime=14,14
+priority=5,Hit
+sparkno=-1
+hitsound=s100,ifelse(fvar(7)>=34,64,63)
+guardsound=s100,38
+ground.type=low
+ground.slidetime=14
+ground.hittime=14
+ground.velocity=-9,ifelse(var(20)>=1,-3,0)
+air.type=High
+air.velocity=-9,-3
+guard.sparkno=-1
+yaccel=.48
+air.fall=1
+fall=ifelse(fvar(7)>=34,1,ifelse(var(20)>=1,1,0))
+fall.recovertime=25
+ground.cornerpush.veloff=-8
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+p2facing=1
+hitonce=1
+p2stateno=ifelse(enemynear,statetype=A&&(var(24)=[1,4]),263,262)
+ID=260
+
+[State ]
+type=Helper
+trigger1=movehit&&enemy,movetype=H&&enemy,stateno=1201&&fvar(7)>=34
+helpertype=normal
+name="Wall bound1P"
+ID=1205
+postype=p2
+stateno=1205
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=movehit&&numenemy>=2&&fvar(7)>=34
+trigger1=enemy(1),movetype=H&&enemy(1),stateno=1201
+helpertype=normal
+name="Wall bound2P"
+ID=1206
+postype=p2
+stateno=1205
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=TargetState
+trigger1=movehit=1&&!MoveGuarded&&numtarget&&(enemynear,TeamMode=single ||enemynear,TeamMode=turns)&&fvar(7)<=33&&(enemynear,statetype!=A||(enemynear,statetype=A&&(var(24)=[1,4])))
+value=ifelse(enemynear,statetype!=A,262,263)
+ID=260
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetState
+trigger1=movehit=1&&!MoveGuarded&&numtarget&&(enemynear,TeamMode=single ||enemynear,TeamMode=turns)&&fvar(7)>=34
+value=1201
+ID=260
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget
+trigger1=target,stateno=1204
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(3)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=58,-69
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=numtarget(260)>=1&&movehit&&fvar(7)<=33&&(var(6)=6||var(7)=6||var(8)=6||palno=12)
+value=s100,79
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(260)>=1&&movehit&&fvar(7)<=33&&(var(6)=6||var(7)=6||var(8)=6||palno=12)
+anim=6120
+postype=p2
+pos=-10,-55
+scale=.85,.85
+sprpriority=25
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+facing=-1
+
+[State ]
+type=Helper
+trigger1=numtarget(260)>=1&&movehit&&fvar(7)<=33
+helpertype=normal
+name="hitM"
+ID=17105
+pos=0,-55
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(260)>=1&&moveguarded&&fvar(7)<=33
+helpertype=normal
+name="guardM"
+ID=17300
+pos=0,-55
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(260)>=1&&movehit&&fvar(7)>=34
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-55
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Explod
+trigger1=numtarget(260)>=1&&movehit&&(var(24)=[1,4])
+anim=6129+ifelse(var(24)=2,1,ifelse(var(24)=3,2,0))
+postype=p2
+pos=0,-55
+ownpal=1
+sprpriority=18
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+scale=1.75-ifelse(var(24)=3,.75,0),1.75-ifelse(var(24)=3,.75,0)
+
+[State ]
+type=Explod
+trigger1=numtarget(260)>=1&&movehit&&(var(24)=[1,4])
+anim=6125+ifelse(var(24)=2,1,ifelse(var(24)=3,2,0))
+postype=p2
+pos=0,-55
+ownpal=1
+sprpriority=18
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+scale=.5-ifelse(var(24)=3,.75,0),.5-ifelse(var(24)=3,.75,0)
+vel=-.6,-.7
+
+[State ]
+type=Explod
+trigger1=numtarget(260)>=1&&movehit=1&&var(24)=2
+anim=6132
+postype=p2
+ownpal=1
+sprpriority=18
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+bindtime=-1
+scale=1,1
+
+[State ]
+type=PlaySnd
+trigger1=numtarget(260)>=1&&movehit&&(var(24)=[1,4])
+value=s100,ifelse(var(24)=2,82,ifelse(var(24)=3,83,81))
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(260)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(260)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(260)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(260)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(260)>=1&&movehit
+value=ceil((70+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(260)>=1&&MoveGuarded
+value=ceil((35+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(260)>=1&&movehit&&var(36)=0
+var(41)=ceil((70+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(260)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil((35+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(260)>=1&&movehit
+var(38)=ceil((90+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(260)>=1&&MoveGuarded
+var(38)=ceil((45+ifelse(fvar(7)>=34,10,0))*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1
+value=s100,69
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1&&var(0)=1
+value=s0,14
+channel=0
+
+[State ]
+type=Helper
+trigger1=numtarget(260)>=1&&movecontact&&hitpausetime>=1&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=300&&command!="holdfwd")||(var(10)=1000&&var(40)>=300&&command="holdfwd")))
+helpertype=normal
+name="precure attack"
+ID=4000+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+pos=-320,-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=ChangeState
+trigger1=numtarget(260)>=1&&command="FF"&&movecontact&&hitpausetime>=1&&var(27)>=1000
+value=100
+ignorehitpause=1
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(260)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=velset
+trigger1=fvar(11)=1
+x=0
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=0
+ctrl=1
+
+[State ]
+type=VelSet
+trigger1=time=0
+x=ifelse(fvar(7)<=33,5,7)*ifelse(helper(3000),var(35),.5,1)
+
+[State ]
+type=ChangeState
+trigger1=numhelper(3000)
+trigger1=numtarget(260)>=1&&movecontact&&!movereversed&&(command="holdfwd"||command="z")&&fvar(7)>=34&&var(27)>=1000&&helper(3000),var(35)=0
+value=1630
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;しゃがみ　弱
+[Statedef 400]
+type=C
+movetype=A
+physics=C
+ctrl=0
+anim=400
+sprpriority=2
+poweradd=5
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=5
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(3*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Explod
+trigger1=time=0&&((prevstateno=[100,101])||(prevstateno=10&&fvar(13)=1))
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&((prevstateno=[100,101])||(prevstateno=10&&fvar(13)=1))
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&((prevstateno=[100,101])||(prevstateno=10&&fvar(13)=1))
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(2)>=0
+attr=C,NA
+damage=ceil(30*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+guardflag=L
+hitflag=MAFD
+pausetime=9,10
+priority=4,Hit
+sparkno=-1
+hitsound=s100,60
+guardsound=s100,15
+ground.type=low
+ground.slidetime=8
+ground.hittime=8
+ground.velocity=-5.8
+air.type=High
+air.velocity=-3,-2
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=10
+ground.cornerpush.veloff=-8
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=400
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(2)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=59,-7
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(400)>=1&&movehit
+helpertype=normal
+name="hitS"
+ID=7102
+pos=0,-6
+postype=p2
+stateno=7102
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(400)>=1&&moveguarded
+helpertype=normal
+name="guardS"
+ID=7300
+pos=0,-6
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(400)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(400)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(400)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(400)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(400)>=1&&movehit
+value=ceil(33*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(400)>=1&&MoveGuarded
+value=ceil(16.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(400)>=1&&movehit&&var(36)=0
+var(41)=ceil(38*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(400)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(19*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(400)>=1&&movehit
+var(38)=ceil(48*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(400)>=1&&MoveGuarded
+var(38)=ceil(24*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,59
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1&&var(0)=1
+value=s0,10
+channel=0
+
+[State ]
+type=Helper
+trigger1=numtarget(400)>=1&&movecontact&&hitpausetime>=1&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=300&&command!="holdfwd")||(var(10)=1000&&var(40)>=300&&command="holdfwd")))&&command!="pms"&&command!="pmsm"&&command!="el"
+helpertype=normal
+name="precure attack"
+ID=4000+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+pos=-320,-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+ignorehitpause=1
+persistent=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(400)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=velset
+trigger1=fvar(11)=1
+x=0
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=11
+ctrl=1
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=11
+ctrl=1
+
+;しゃがみ　中
+[Statedef 410]
+type=C
+movetype=A
+physics=C
+ctrl=0
+anim=410
+sprpriority=2
+poweradd=10
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=10
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(6*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Explod
+trigger1=time=0&&((prevstateno=[100,101])||(prevstateno=10&&fvar(13)=1))
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&((prevstateno=[100,101])||(prevstateno=10&&fvar(13)=1))
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&((prevstateno=[100,101])||(prevstateno=10&&fvar(13)=1))
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(3)>=0
+attr=C,NA
+damage=ceil(50*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=medium
+guardflag=L
+hitflag=MAFD
+pausetime=11,12
+priority=4,Hit
+sparkno=-1
+hitsound=s100,53
+guardsound=s100,57
+ground.type=low
+ground.slidetime=11
+ground.hittime=14
+ground.velocity=-5.5
+air.type=High
+air.velocity=-3,-5
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=12
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=410
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(2)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=58,-55
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(410)>=1&&movehit
+helpertype=normal
+name="hitM"
+ID=17105
+pos=0,-50
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(410)>=1&&moveguarded
+helpertype=normal
+name="guardM"
+ID=17300
+pos=0,-50
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(410)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(410)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(410)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(410)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(410)>=1&&movehit
+value=ceil(45.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(410)>=1&&MoveGuarded
+value=ceil(22.75*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(410)>=1&&movehit&&var(36)=0
+var(41)=ceil(48*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(410)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(24*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(410)>=1&&movehit
+var(38)=ceil(63*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(410)>=1&&MoveGuarded
+var(38)=ceil(31.5*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3
+value=s100,55
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2&&var(0)=1
+value=s0,11
+channel=0
+
+[State ]
+type=Helper
+trigger1=numtarget(410)>=1&&movecontact&&hitpausetime>=1&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=300&&command!="holdfwd")||(var(10)=1000&&var(40)>=300&&command="holdfwd")))&&command!="pms"&&command!="pmsm"&&command!="el"
+helpertype=normal
+name="precure attack"
+ID=4000+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+pos=-320,-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+ignorehitpause=1
+persistent=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(410)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=velset
+trigger1=fvar(11)=1
+x=0
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=11
+ctrl=1
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=11
+ctrl=1
+
+;しゃがみ　強
+[Statedef 420]
+type=C
+movetype=A
+physics=C
+ctrl=0
+anim=420
+sprpriority=2
+poweradd=15
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=15
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(12*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Explod
+trigger1=time=0&&((prevstateno=[100,101])||(prevstateno=10&&fvar(13)=1))
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&((prevstateno=[100,101])||(prevstateno=10&&fvar(13)=1))
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&((prevstateno=[100,101])||(prevstateno=10&&fvar(13)=1))
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(4)>=0
+attr=C,NA
+damage=ceil(68*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=hard
+guardflag=L
+hitflag=MAFD
+pausetime=13,14
+priority=5,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,38
+ground.type=trip
+ground.slidetime=14
+ground.hittime=14
+ground.velocity=-1.5,-9
+air.type=High
+air.velocity=-1.5,-6
+guard.sparkno=-1
+yaccel=.65
+fall=1
+fall.recover=0
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=420
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(4)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=80,-23
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(420)>=1&&movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-13
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(420)>=1&&moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-13
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(420)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(420)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(420)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(420)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(420)>=1&&movehit
+value=ceil(58*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(420)>=1&&MoveGuarded
+value=ceil(29*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(420)>=1&&movehit&&var(36)=0
+var(41)=ceil(58*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(420)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(29*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(420)>=1&&movehit
+var(38)=ceil(78*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(420)>=1&&MoveGuarded
+var(38)=ceil(39*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3
+value=s100,58
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3&&var(0)=1
+value=s0,14
+channel=0
+
+[State ]
+type=Helper
+trigger1=numtarget(420)>=1&&movecontact&&hitpausetime>=1&&(numhelper(4000)=0&&numhelper(4500)=0&&command="x"&&((var(9)=1000&&var(39)>=300&&command!="holdfwd")||(var(10)=1000&&var(40)>=300&&command="holdfwd")))&&command!="pms"&&command!="pmsm"&&command!="el"
+helpertype=normal
+name="precure attack"
+ID=4000+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+pos=-320,-110
+postype=p1
+stateno=4027+ifelse(var(10)=1000&&var(40)>=300&&command="holdfwd",500,0)
+ignorehitpause=1
+persistent=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(420)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=velset
+trigger1=fvar(11)=1
+x=0
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=11
+ctrl=1
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=11
+ctrl=1
+
+;空中　弱
+[Statedef 600]
+type=A
+movetype=A
+physics=A
+ctrl=0
+anim=600
+sprpriority=2
+poweradd=5
+
+[State ]
+type=Veladd
+trigger1=prevstateno=1630
+y=.6
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=5
+
+[State ]
+type=Velset
+trigger1=fvar(16)=1&&(command="holdfwd"||command="holdback")&&animelemtime(5)>=0
+x=ifelse(command="holdfwd",3,-3)
+
+[State ]
+type=VelSet
+trigger1=fvar(16)=1&&movehit
+y=-6+ifelse(vel y<=-.1,var(30)*.1,0)
+persistent=0
+
+[State ]
+type=VelSet
+trigger1=time=0&&fvar(17)=1&&(prevstateno=[610,630])
+y=-4+ifelse(vel y<=-.1,var(30)*.1,0)
+persistent=0
+
+[State ];チェイスジャンプ判定2
+type=varset
+trigger1=fvar(16)=1&&fvar(17)=0&&hitpausetime>=1
+fvar(17)=1
+ignorehitpause=1
+
+[State ]
+type=varset
+trigger1=fvar(17)=1&&hitpausetime=0
+fvar(17)=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(7*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(2)>=0
+attr=A,NA
+damage=ceil(34*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+guardflag=HA
+hitflag=MAF
+pausetime=8,10
+priority=4,Hit
+sparkno=-1
+hitsound=s100,45
+guardsound=s100,15
+ground.type=low
+ground.slidetime=8
+ground.hittime=8
+ground.velocity=-5
+air.type=High
+air.velocity=-3,-5
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=10
+ground.cornerpush.veloff=-7
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=600
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(2)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=48,-12
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(600)>=1&&movehit
+helpertype=normal
+name="hitS"
+ID=7102
+pos=0,-88
+postype=p2
+stateno=7102
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(600)>=1&&moveguarded
+helpertype=normal
+name="guardS"
+ID=7300
+pos=0,-88
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(600)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(600)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(600)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(600)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(600)>=1&&movehit
+value=ceil(37*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(600)>=1&&MoveGuarded
+value=ceil(18.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(600)>=1&&movehit&&var(36)=0
+var(41)=ceil(42*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(600)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(21*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(600)>=1&&movehit
+var(38)=ceil(52*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(600)>=1&&MoveGuarded
+var(38)=ceil(26*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,14
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1&&var(0)=1
+value=s0,10
+channel=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(600)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=changeanim
+trigger1=fvar(11)=1
+value=650
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=51
+ctrl=1
+
+[State ]
+type=CtrlSet
+trigger1=var(59)!=1&&movecontact&&!movereversed 
+value=1
+ignorehitpause=1
+
+;空中　中
+[Statedef 610]
+type=A
+movetype=A
+physics=A
+ctrl=0
+anim=610
+sprpriority=2
+poweradd=10
+
+[State ]
+type=Veladd
+trigger1=prevstateno=1630
+y=.6
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=10
+
+[State ]
+type=Velset
+trigger1=fvar(16)=1&&(command="holdfwd"||command="holdback")&&animelemtime(5)>=0
+x=ifelse(command="holdfwd",3,-3)
+
+[State ]
+type=VelSet
+trigger1=fvar(16)=1&&movehit
+y=-6+ifelse(vel y<=-.1,var(30)*.1,0)
+persistent=0
+
+[State ]
+type=VelSet
+trigger1=time=0&&fvar(17)=1&&(prevstateno=600||(prevstateno=[620,630]))
+y=-4+ifelse(vel y<=-.1,var(30)*.1,0)
+persistent=0
+
+[State ];チェイスジャンプ判定2
+type=varset
+trigger1=fvar(16)=1&&fvar(17)=0&&hitpausetime>=1
+fvar(17)=1
+ignorehitpause=1
+
+[State ]
+type=varset
+trigger1=fvar(17)=1&&hitpausetime=0
+fvar(17)=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(10*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(4)>=0
+attr=A,NA
+damage=ceil(54*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=medium
+guardflag=HA
+hitflag=MAF
+pausetime=11,12
+priority=4,Hit
+sparkno=-1
+hitsound=s100,53
+guardsound=s100,57
+ground.type=low
+ground.slidetime=11
+ground.hittime=14
+ground.velocity=-5.5
+air.type=High
+air.velocity=-3,-5
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=10
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=610
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(4)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=60,-67
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(610)>=1&&movehit
+helpertype=normal
+name="hitM"
+ID=17105
+pos=0,-88
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(610)>=1&&moveguarded
+helpertype=normal
+name="guardM"
+ID=17300
+pos=0,-88
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(610)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(610)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(610)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(610)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(610)>=1&&movehit
+value=ceil(49.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(610)>=1&&MoveGuarded
+value=ceil(24.75*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(610)>=1&&movehit&&var(36)=0
+var(41)=ceil(52*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(610)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(26*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(610)>=1&&movehit
+var(38)=ceil(67*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(610)>=1&&MoveGuarded
+var(38)=ceil(33.5*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3
+value=s100,55
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3&&var(0)=1
+value=s0,11
+channel=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(610)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=changeanim
+trigger1=fvar(11)=1
+value=650
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=51
+ctrl=1
+
+[State ]
+type=CtrlSet
+trigger1=var(59)!=1&&movecontact&&!movereversed 
+value=1
+ignorehitpause=1
+
+;空中　強
+[Statedef 620]
+type=A
+movetype=A
+physics=A
+ctrl=0
+anim=620
+sprpriority=2
+poweradd=15
+
+[State ]
+type=Veladd
+trigger1=prevstateno=1630
+y=.6
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=15
+
+[State ]
+type=Velset
+trigger1=fvar(16)=1&&(command="holdfwd"||command="holdback")&&animelemtime(5)>=0
+x=ifelse(command="holdfwd",3,-3)
+
+[State ]
+type=VelSet
+trigger1=fvar(16)=1&&movehit
+y=-6+ifelse(vel y<=-.1,var(30)*.1,0)
+persistent=0
+
+[State ]
+type=VelSet
+trigger1=time=0&&fvar(17)=1&&(prevstateno=630||(prevstateno=[600,610]))
+y=-4+ifelse(vel y<=-.1,var(30)*.1,0)
+persistent=0
+
+[State ];チェイスジャンプ判定2
+type=varset
+trigger1=fvar(16)=1&&fvar(17)=0&&hitpausetime>=1
+fvar(17)=1
+ignorehitpause=1
+
+[State ]
+type=varset
+trigger1=fvar(17)=1&&hitpausetime=0
+fvar(17)=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(16*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(6)>=0
+attr=A,NA
+damage=ceil(72*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=hard
+guardflag=HA
+hitflag=MAF
+pausetime=12,12
+priority=5,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,38
+ground.slidetime=11
+ground.hittime=14
+ground.velocity=-6.5
+air.velocity=-3,-5
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=10
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=620
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(6)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=63,-15
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(620)>=1&&movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-88
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(620)>=1&&moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-88
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(620)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(620)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(620)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(620)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(620)>=1&&movehit
+value=ceil(62*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(620)>=1&&MoveGuarded
+value=ceil(31*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(620)>=1&&movehit&&var(36)=0
+var(41)=ceil(62*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(620)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(31*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(620)>=1&&movehit
+var(38)=ceil(82*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(620)>=1&&MoveGuarded
+var(38)=ceil(41*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=5
+value=s100,58
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=5&&var(0)=1
+value=s0,14
+channel=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(620)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=changeanim
+trigger1=fvar(11)=1
+value=650
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=51
+ctrl=1
+
+[State ]
+type=CtrlSet
+trigger1=var(59)!=1&&movecontact&&!movereversed 
+value=1
+ignorehitpause=1
+
+;特殊技　空中　中
+[Statedef 630]
+type=A
+movetype=A
+physics=A
+ctrl=0
+anim=630
+sprpriority=2
+poweradd=10
+
+[State ]
+type=Veladd
+trigger1=prevstateno=1630
+y=.6
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=10
+
+[State ]
+type=Velset
+trigger1=fvar(16)=1&&(command="holdfwd"||command="holdback")&&animelemtime(5)>=0
+x=ifelse(command="holdfwd",3,-3)
+
+[State ]
+type=VelSet
+trigger1=fvar(16)=1&&movehit
+y=-6+ifelse(vel y<=-.1,var(30)*.1,0)
+persistent=0
+
+[State ]
+type=VelSet
+trigger1=time=0&&fvar(17)=1&&(prevstateno=[600,620])
+y=-4+ifelse(vel y<=-.1,var(30)*.1,0)
+persistent=0
+
+[State ];チェイスジャンプ判定2
+type=varset
+trigger1=fvar(16)=1&&fvar(17)=0&&hitpausetime>=1
+fvar(17)=1
+ignorehitpause=1
+
+[State ]
+type=varset
+trigger1=fvar(17)=1&&hitpausetime=0
+fvar(17)=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(7*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(3)>=0
+attr=A,NA
+damage=ceil(55*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=medium
+guardflag=HA
+hitflag=MAF
+pausetime=11,12
+priority=4,Hit
+sparkno=-1
+hitsound=s100,53
+guardsound=s100,57
+ground.type=low
+ground.slidetime=11
+ground.hittime=14
+ground.velocity=-5.5
+air.type=High
+air.velocity=-3,-5
+guard.sparkno=-1
+yaccel=.48
+fall.recovertime=10
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=630
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(3)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=61,-20
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(630)>=1&&movehit
+helpertype=normal
+name="hitM"
+ID=17105
+pos=0,-88
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(630)>=1&&moveguarded
+helpertype=normal
+name="guardM"
+ID=17300
+pos=0,-88
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(630)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(630)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(630)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(630)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(630)>=1&&movehit
+value=ceil(48.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(630)>=1&&MoveGuarded
+value=ceil(24.25*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(630)>=1&&movehit&&var(36)=0
+var(41)=ceil(51*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(630)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(25.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(630)>=1&&movehit
+var(38)=ceil(66*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(630)>=1&&MoveGuarded
+var(38)=ceil(33*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,55
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2&&var(0)=1
+value=s0,11
+channel=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(630)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=changeanim
+trigger1=fvar(11)=1
+value=650
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=51
+ctrl=1
+
+[State ]
+type=CtrlSet
+trigger1=var(59)!=1&&movecontact&&!movereversed 
+value=1
+ignorehitpause=1
+
+;特殊技　空中　強
+[Statedef 640]
+type=A
+movetype=A
+physics=N
+ctrl=0
+anim=2401
+sprpriority=2
+poweradd=15
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=0
+
+[State ]
+type=Varadd
+trigger1=vel y>=-1
+var(0)=1
+
+[State ]
+type=Veladd
+trigger1=vel x>=.1||vel x<=-.1
+x=ifelse(vel x>=.1,-.1,.1)
+
+[State ]
+type=Velset
+trigger1=vel x=[-.1,.1]
+x=0
+
+[State ]
+type=Veladd
+trigger1=1
+y=.9
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=15
+
+[State ]
+type=Velset
+trigger1=fvar(16)=1&&(command="holdfwd"||command="holdback")&&animelemtime(5)>=0
+x=ifelse(command="holdfwd",3,-3)
+
+[State ]
+type=VelSet
+trigger1=fvar(16)=1&&movehit
+y=-6+ifelse(vel y<=-.1,var(30)*.1,0)
+persistent=0
+
+[State ]
+type=VelSet
+trigger1=time=0&&fvar(17)=1&&(prevstateno=630||(prevstateno=[600,610]))
+y=-4+ifelse(vel y<=-.1,var(30)*.1,0)
+persistent=0
+
+[State ];チェイスジャンプ判定2
+type=varset
+trigger1=fvar(16)=1&&fvar(17)=0&&hitpausetime>=1
+fvar(17)=1
+ignorehitpause=1
+
+[State ]
+type=varset
+trigger1=fvar(17)=1&&hitpausetime=0
+fvar(17)=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(16*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(4)>=0
+attr=A,NA
+damage=ceil((72+(var(0)/3)+ifelse(var(0)>=20,30,0))*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=hard
+guardflag=HA
+hitflag=MAF
+pausetime=12,12
+priority=5,Hit
+sparkno=-1
+hitsound=s100,ifelse(var(0)>=20,56,53)
+guardsound=s100,38
+ground.slidetime=11
+ground.hittime=14
+ground.velocity=-3.5-(var(0)*.1)
+air.velocity=-3.5-(var(0)*.1),-5
+guard.sparkno=-1
+yaccel=.48
+air.fall=1
+fall.recovertime=10+var(0)
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=640
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(4)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=63,-15
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(640)>=1&&movehit
+helpertype=normal
+name="hitL"
+ID=7105+ifelse(var(0)>=20,0,10000)
+pos=0,-88
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(640)>=1&&moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-88
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(640)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(640)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(640)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(640)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(640)>=1&&movehit
+value=ceil(62*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(640)>=1&&MoveGuarded
+value=ceil(31*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(640)>=1&&movehit&&var(36)=0
+var(41)=ceil(62*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(640)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(31*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(640)>=1&&movehit
+var(38)=ceil(82*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(640)>=1&&MoveGuarded
+var(38)=ceil(41*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3
+value=s100,58
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s0,11
+channel=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(640)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=changeanim
+trigger1=fvar(11)=1
+value=650
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=51
+ctrl=1
+
+[State ]
+type=ChangeState
+trigger1=pos y>=0
+value=641
+
+;特殊技　空中　強着地
+[Statedef 641]
+type=S
+movetype=A
+physics=N
+ctrl=0
+anim=2403
+sprpriority=2
+velset=0,0
+
+[State ]
+type=PosSet
+trigger1=time=0
+y=0
+
+[State ]
+type=PlaySnd
+trigger1=Time=0
+value=s100,2
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6001
+postype=p1
+pos=floor(-5*fvar(33)),0
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=3
+vel=-2.2*fvar(32),0
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6001
+postype=p1
+pos=floor(5*fvar(33)),0
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=3
+vel=2.2*fvar(32),0
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=ChangeState
+trigger1=animtime=0
+value=0
+ctrl=1
+
+;ブーストダッシュ攻撃　弱
+[Statedef 1631]
+type=U
+movetype=A
+physics=N
+ctrl=0
+anim=1580
+sprpriority=2
+poweradd=10
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=10
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(14*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=Varrandom
+trigger1=(time=0||animelem=3||animelem=6||animelem=8||animelem=11||animelem=13||animelem=16||animelem=18)&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ]
+type=Varrandom
+trigger1=(time=0||animelem=3||animelem=6||animelem=8||animelem=11||animelem=13||animelem=16||animelem=18)&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=animelem=2||animelem=4||animelem=7||animelem=9||animelem=12||animelem=14||animelem=17||animelem=19
+attr=A,NA
+damage=ceil(25*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+guardflag=MA
+hitflag=MAF
+pausetime=4,5
+priority=4,Hit
+sparkno=-1
+hitsound=s100,45
+guardsound=s100,15
+ground.type=low
+ground.slidetime=20
+ground.hittime=20
+ground.velocity=-8
+air.type=High
+air.velocity=-8,-5
+guard.sparkno=-1
+yaccel=.48
+air.fall=1
+fall.recovertime=20
+ground.cornerpush.veloff=-7
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=1361
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A
+trigger1=(animelemtime(2)=[1,5])||(animelemtime(4)=[1,5])||(animelemtime(7)=[1,5])||(animelemtime(9)=[1,5])||(animelemtime(12)=[1,5])||(animelemtime(14)=[1,5])||(animelemtime(17)=[1,5])||(animelemtime(19)=[1,5])
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=48,-12
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(1361)>=1&&movehit
+helpertype=normal
+name="hitS"
+ID=7102
+pos=-10,-55
+postype=p2
+stateno=7102
+supermovetime=100
+pausemovetime=100
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(1361)>=1&&moveguarded
+helpertype=normal
+name="guardS"
+ID=7300
+pos=-10,-55
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(1361)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(1361)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(1361)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(1361)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+
+[State ]
+type=powerAdd
+trigger1=numtarget(1361)>=1&&movehit
+value=ceil(37*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=powerAdd
+trigger1=numtarget(1361)>=1&&MoveGuarded
+value=ceil(18.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(1361)>=1&&movehit&&var(36)=0
+var(41)=ceil(42*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(1361)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(21*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(1361)>=1&&movehit
+var(38)=ceil(52*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(1361)>=1&&MoveGuarded
+var(38)=ceil(26*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2||animelem=4||animelem=7||animelem=9||animelem=12||animelem=14||animelem=17||animelem=19
+value=s100,14
+
+[State ]
+type=varrandom
+trigger1=time=0
+v=0
+range=0,1
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s0,16
+channel=0
+
+[State ]
+type=varset
+trigger1=time=0
+var(21)=0
+
+[State ]
+type=varset
+trigger1=time=0
+var(22)=0
+
+[State ]
+type=varadd
+trigger1=time>=1&&command="a"
+var(21)=20
+ignorehitpause=1
+
+[State ]
+type=varadd
+trigger1=time>=1
+var(21)=-1
+ignorehitpause=1
+
+[State ]
+type=varset
+trigger1=movecontact
+var(22)=1
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=numtarget(1361)>=1&&var(22)=1&&(command="b"||command="c")
+value=1630+ifelse(command="b",2,3)
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(1361)>=1&&var(22)=1&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=changeanim
+trigger1=fvar(11)=1
+value=650
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=ifelse(statetype=A,51,0)
+ctrl=ifelse(statetype=A,0,1)
+
+[State ]
+type=varset
+trigger1=animelem=3||animelem=5||animelem=8||animelem=10||animelem=13||animelem=15||animelem=18||animelem=20
+var(22)=0
+
+[State ]
+type=MoveHitReset
+trigger1=movecontact
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=animtime=0||(animelem=16&&var(21)<=119)||(animelem=11&&var(21)<=79)||(animelem=6&&var(21)<=39)
+value=ifelse(statetype=A,51,101)
+
+;ブーストダッシュ攻撃　中
+[Statedef 1632]
+type=A
+movetype=A
+physics=N
+ctrl=0
+anim=1581
+sprpriority=2
+poweradd=20
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=20
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(20*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(2)>=0
+attr=A,NA
+damage=ceil(96*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=medium
+guardflag=MA
+hitflag=MAF
+pausetime=11,12
+priority=4,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,38
+ground.type=low
+ground.slidetime=18
+ground.hittime=18
+ground.velocity=-8,-10
+air.type=High
+air.velocity=-8,-10
+guard.sparkno=-1
+yaccel=.48
+fall=1
+fall.recovertime=30
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=1632
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(2)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=60,-67
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=movehit&&enemy,movetype=H&&enemy,stateno=1634
+helpertype=normal
+name="Wall bound1P"
+ID=11205
+postype=p2
+stateno=1205
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=movehit&&numenemy>=2
+trigger1=enemy(1),movetype=H&&enemy(1),stateno=1634
+helpertype=normal
+name="Wall bound2P"
+ID=11206
+postype=p2
+stateno=1205
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=TargetState
+trigger1=movehit=1&&!MoveGuarded&&numtarget
+value=1634
+ID=1632
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(1632)>=1&&movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=-10,-55
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(1632)>=1&&moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=-10,-55
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(1632)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(1632)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(1632)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(1632)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(1632)>=1&&movehit
+value=ceil(99*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(1632)>=1&&MoveGuarded
+value=ceil(49.5*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(1632)>=1&&movehit&&var(36)=0
+var(41)=ceil(104*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(1632)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(52*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(1632)>=1&&movehit
+var(38)=ceil(134*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(1632)>=1&&MoveGuarded
+var(38)=ceil(67*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=2
+value=s100,55
+
+[State ]
+type=PlaySnd
+trigger1=animelem=1
+value=s0,45
+channel=0
+
+[State ]
+type=ChangeState
+trigger1=numtarget(1632)>=1&&movecontact&&!movereversed&&command="c"
+value=1633
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(1632)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=changeanim
+trigger1=fvar(11)=1
+value=650
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=ifelse(statetype=A,51,0)
+ctrl=ifelse(statetype=A,0,1)
+
+[State ]
+type=ChangeState
+trigger1=animtime=0
+value=ifelse(statetype=A,51,101)
+
+;ブーストダッシュ攻撃　強
+[Statedef 1633]
+type=A
+movetype=A
+physics=N
+ctrl=0
+anim=1582
+sprpriority=2
+poweradd=30
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=30
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(32*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(2)>=0
+attr=A,NA
+damage=ceil(112*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=medium
+guardflag=MA
+hitflag=MAF
+pausetime=12,13
+priority=4,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,38
+ground.type=low
+ground.slidetime=18
+ground.hittime=18
+ground.velocity=-10,-8
+air.type=High
+air.velocity=-10,-8
+guard.sparkno=-1
+yaccel=.48
+fall=1
+fall.recovertime=30
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=1633
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(2)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=60,-67
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=movehit&&enemy,movetype=H&&enemy,stateno=1634
+helpertype=normal
+name="Wall bound1P"
+ID=11205
+postype=p2
+stateno=1205
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=movehit&&numenemy>=2
+trigger1=enemy(1),movetype=H&&enemy(1),stateno=1634
+helpertype=normal
+name="Wall bound2P"
+ID=11206
+postype=p2
+stateno=1205
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=TargetState
+trigger1=movehit=1&&!MoveGuarded&&numtarget
+value=1634
+ID=1633
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(1633)>=1&&movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=-10,-55
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(1633)>=1&&moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=-10,-55
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(1633)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(1633)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(1633)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(1633)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(1633)>=1&&movehit
+value=ceil(124*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(1633)>=1&&MoveGuarded
+value=ceil(62*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(1633)>=1&&movehit&&var(36)=0
+var(41)=ceil(124*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(1633)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil(62*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(1633)>=1&&movehit
+var(38)=ceil(164*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(1633)>=1&&MoveGuarded
+var(38)=ceil(82*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=5
+value=s100,55
+
+[State ]
+type=PlaySnd
+trigger1=animelem=5
+value=s0,16
+channel=0
+
+[State ];SPECIAL CANCEL
+type=varset
+trigger1=numtarget(1633)>=1&&movecontact&&!movereversed&&power>=1000&&command="z"&&(var(6)=27||var(7)=27||var(8)=27)
+fvar(11)=1
+
+[State ]
+type=changeanim
+trigger1=fvar(11)=1
+value=650
+
+[State ]
+type=ChangeState
+trigger1=fvar(11)=1
+value=ifelse(statetype=A,51,0)
+ctrl=ifelse(statetype=A,0,1)
+
+[State ]
+type=ChangeState
+trigger1=animtime=0
+value=ifelse(statetype=A,51,101)
+
+;跳びかかって地面をパンチ　跳びかかる
+[Statedef 2000]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=40
+sprpriority=2
+poweradd=ifelse(command="a",120,ifelse(command="b",130,140))
+
+[State ]
+type=Varset
+trigger1=var(23)=1||prevstateno=151||prevstateno=153||prevstateno=155||prevstateno=5120
+var(13)=8
+persistent=0
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=[100,101])
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&(prevstateno=[100,101])
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&(prevstateno=[100,101])
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=PalFX
+trigger1=time=0
+time=0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=0
+
+[State ]
+type=Varset
+trigger1=time=0&&(command="b"||command="c")
+var(0)=ifelse(command="b",10,20)
+
+[State ]
+type=changeanim
+trigger1=anim=40&&animtime=0
+value=1620
+
+[State ]
+type=StateTypeSet
+trigger1=anim=1620
+statetype=A
+
+[State ]
+type=Helper
+trigger1=anim=1620
+helpertype=normal
+name="jump effect"
+ID=7001
+pos=floor(-30*fvar(32)),0
+postype=p1
+stateno=7000
+persistent=0
+
+[State ]
+type=Explod
+trigger1=anim=1620
+anim=6004
+postype=p1
+pos=floor(-40*fvar(32)),floor(20*fvar(33))
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=4
+removeongethit=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=anim=1620
+value=s0,11
+channel=0
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=anim=1620
+value=s100,0
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=120+var(0)
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil((120+var(0))*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=velset
+trigger1=anim=1620
+x=ifelse(var(0)=0,3.5,ifelse(var(0)=10,4.5,5.5))
+
+[State ]
+type=velset
+trigger1=anim=1620
+y=-11
+persistent=0
+
+[State ]
+type=veladd
+trigger1=anim=1620
+y=.6
+
+[State ]
+type=ChangeState
+trigger1=time=15
+value=2001
+
+;跳びかかって地面をパンチEX　跳びかかる
+[Statedef 2050]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=2414
+sprpriority=2
+poweradd=ifelse(fvar(4)=1,0,-1000)
+
+[State ]
+type=Varset
+trigger1=var(23)=1||prevstateno=151||prevstateno=153||prevstateno=155||prevstateno=5120
+var(13)=8
+persistent=0
+
+[State ]
+type=Varset
+trigger1=fvar(3)=1&&(prevstateno=2002||prevstateno=2100)
+var(13)=25
+persistent=0
+
+[State ]
+type=Varset
+trigger1=(var(13)=0||time=5)&&fvar(3)=1&&(prevstateno=2002||prevstateno=2100)
+fvar(3)=2
+persistent=0
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=[100,101])
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&(prevstateno=[100,101])&&anim=2414
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&(prevstateno=[100,101])&&anim=2414
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=PalFX
+trigger1=time=0
+time=0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=60
+
+[State ]
+type=Varset
+trigger1=fvar(4)=1&&var(13)=0
+var(13)=27
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&fvar(4)=1
+value=s100,80
+
+[State ]
+type=Explod
+trigger1=time=0&&fvar(4)=1
+anim=6128
+ID=6128
+postype=p1
+pos=8,floor(-60*fvar(33))
+scale=1*fvar(32),1*fvar(33)
+sprpriority=3
+bindtime=-1
+removeongethit=1
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Varset
+trigger1=(var(13)=0||time=5)&&fvar(4)=1
+fvar(4)=2
+persistent=0
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6013
+ID=6013
+postype=p1
+pos=0,5
+scale=1920,.5
+sprpriority=-9000
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6018
+postype=left
+scale=.5,.5
+sprpriority=-9001
+vel=0,-5
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6018
+postype=right
+scale=.5,.5
+sprpriority=-9001
+vel=0,-5
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6086
+postype=p1
+pos=8,floor(-60*fvar(33))
+scale=1*fvar(32),1*fvar(33)
+sprpriority=15
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&facing=1
+helpertype=normal
+name="catin"
+ID=7600
+pos=-260,0
+postype=left
+stateno=7600
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&facing=-1
+helpertype=normal
+name="catin"
+ID=7600
+pos=260,0
+postype=right
+stateno=7600
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=Varset
+trigger1=time=0
+var(21)=0
+
+[State ]
+type=Varadd
+trigger1=time=[26,35]
+var(21)=25
+
+[State ]
+type=BGPalFX
+trigger1=time<=35
+time=1
+mul=0+var(21),0+var(21),0+var(21)
+invertall=0
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s0,21
+channel=0
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,20
+
+[State ]
+type=AssertSpecial
+triggerall=time<=35
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)!=3&&helper(3003),var(5)!=2
+trigger2=!numhelper(3003)
+flag=nofg
+
+[State ]
+type=AssertSpecial
+triggerall=time<=35
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)=3||helper(3003),var(5)=2
+flag=nomusic
+flag2=nofg
+
+[State ]
+type=NotHitBy
+trigger1=time<=35
+value=SCA
+time=1
+
+[State ]
+type=changeanim
+trigger1=anim=2414&&animtime=0
+value=1620
+
+[State ]
+type=StateTypeSet
+trigger1=anim=1620
+statetype=A
+
+[State ]
+type=Helper
+trigger1=anim=1620
+helpertype=normal
+name="jump effect"
+ID=7001
+pos=floor(-30*fvar(32)),0
+postype=p1
+stateno=7000
+persistent=0
+
+[State ]
+type=Explod
+trigger1=anim=1620
+anim=6004
+postype=p1
+pos=floor(-40*fvar(32)),floor(20*fvar(33))
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=4
+removeongethit=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=anim=1620
+value=s0,11
+channel=0
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=anim=1620
+value=s100,6
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=180
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(180*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=Varset
+trigger1=time=0
+fvar(7)=0
+
+[State ]
+type=Varset
+trigger1=anim=1620
+fvar(7)=P2BodyDist X*.035
+persistent=0
+
+[State ]
+type=Velset
+trigger1=anim=1620
+x=fvar(7)
+
+[State ]
+type=velset
+trigger1=anim=1620
+y=-13
+persistent=0
+
+[State ]
+type=veladd
+trigger1=anim=1620
+y=.6
+
+[State ]
+type=Varset
+trigger1=time=0||time=35
+fvar(27)=ifelse(time=35,0,1)
+
+[State ]
+type=Pause
+trigger1=time=0
+time=35
+movetime=35
+
+[State ]
+type=ChangeState
+trigger1=time=55
+value=2001
+
+;跳びかかって地面をパンチ　攻撃
+[Statedef 2001]
+type=A
+movetype=A
+physics=N
+ctrl=0
+anim=2401
+sprpriority=2
+
+[State ]
+type=Veladd
+trigger1=1
+y=.9
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(4)>=0&&var(0)!=60
+attr=A,SA
+damage=ceil((55+(var(0)/2))*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),ceil(5+(var(0)/20))
+animtype=hard
+guardflag=HA
+hitflag=MAF
+pausetime=12,12
+priority=6,Hit
+sparkno=-1
+hitsound=s100,53
+guardsound=s100,38
+ground.slidetime=11
+ground.hittime=14
+ground.velocity=-6.5-(var(0)*.05)
+air.velocity=-6.5-(var(0)*.05),-5
+guard.sparkno=-1
+yaccel=.48
+air.fall=1
+fall.recovertime=10+var(0)
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=2001
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&animelemtime(4)>=0&&var(0)=60
+attr=A,HA
+damage=ceil(85*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),8
+animtype=hard
+guardflag=HA
+hitflag=MAF
+pausetime=12,12
+priority=7,Hit
+sparkno=-1
+hitsound=s100,53
+guardsound=s100,38
+ground.slidetime=11
+ground.hittime=14
+ground.velocity=-8
+air.velocity=-8,-5
+guard.sparkno=-1
+yaccel=.48
+air.fall=1
+fall.recovertime=60
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=2001
+getpower=0,0
+
+[State ];相殺
+type=ReversalDef
+trigger1=!movecontact&&!movereversed&&p2movetype=A&&animelemtime(4)>=1
+attr=S,NA
+reversal.attr=SCA,SA,NA
+pausetime=20,20
+sparkno=-1
+hitsound=S100,43
+NumHits=0
+ID=20000
+persistent=0
+hitonce=1
+
+[State ]
+type=Varset
+trigger1=numtarget(20000)=1
+var(13)=10
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=numtarget(20000)=1
+anim=6063
+postype=p1
+pos=63,-15
+scale=1,1
+sprpriority=10
+pausemovetime=100
+supermovetime=100
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=EnvShake
+trigger1=numtarget(20000)=1
+time=20
+freq=160
+ampl=-4
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=movehitreset
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=TargetDrop
+trigger1=numtarget(20000)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=numtarget(2001)>=1&&movehit
+helpertype=normal
+name="hitL"
+ID=7105+ifelse(var(0)<=30,10000,0)
+pos=0,-88
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=numtarget(2001)>=1&&moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-88
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=numtarget(2001)>=1&&var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(2001)>=1&&var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=numtarget(2001)>=1&&var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numtarget(2001)>=1&&movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(2001)>=1&&movehit&&var(0)!=60
+value=ceil((62+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=numtarget(2001)>=1&&MoveGuarded&&var(0)!=60
+value=ceil((31+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(2001)>=1&&movehit&&var(36)=0
+var(41)=ceil((62+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numtarget(2001)>=1&&MoveGuarded&&var(36)=0
+var(41)=ceil((31+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(2001)>=1&&movehit
+var(38)=ceil((82+var(0))*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&numtarget(2001)>=1&&MoveGuarded
+var(38)=ceil((41+var(0))*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3
+value=s100,58
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3
+value=s0,45
+channel=0
+
+[State ]
+type=ChangeState
+trigger1=pos y>=0
+value=2002
+
+;飛びかかって地面をパンチ着地
+[Statedef 2002]
+type=A
+movetype=A
+physics=S
+ctrl=0
+anim=2402
+sprpriority=2
+velset=0,0
+
+[State ]
+type=StateTypeSet
+trigger1=animelemtime(2)>=0
+statetype=S
+
+[State ]
+type=PosSet
+trigger1=time=0
+y=0
+
+[State ]
+type=EnvShake
+trigger1=time=0
+time=15
+freq=100
+ampl=-4
+
+[state ]
+type=Explod
+trigger1=time=0
+anim=6007
+postype=p1
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=4
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,89
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&var(0)!=60
+attr=S,SA
+damage=ceil((72+(var(0)/2))*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),ceil(7+(var(0)/2))
+animtype=hard
+guardflag=L
+hitflag=MFD
+pausetime=13,14
+priority=6,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,38
+ground.type=trip
+ground.slidetime=14
+ground.hittime=14
+ground.velocity=-1.5,-9
+air.type=High
+air.velocity=-1.5,-6
+guard.sparkno=-1
+yaccel=.65
+fall=1
+fall.recover=0
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=2002
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&var(0)=60
+attr=S,HA
+damage=ceil(102*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),10
+animtype=hard
+guardflag=L
+hitflag=MFD
+pausetime=13,14
+priority=7,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,38
+ground.type=trip
+ground.slidetime=14
+ground.hittime=14
+ground.velocity=-1.5,-9
+air.type=High
+air.velocity=-1.5,-6
+guard.sparkno=-1
+yaccel=.65
+fall=1
+fall.recover=0
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=2002
+getpower=0,0
+
+[State ]
+type=Helper
+trigger1=movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-13
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-13
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=movehit&&var(0)!=60
+value=ceil((58+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=MoveGuarded&&var(0)!=60
+value=ceil((29+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=movehit&&var(36)=0
+var(41)=ceil((58+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=MoveGuarded&&var(36)=0
+var(41)=ceil((29+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&movehit
+var(38)=ceil((78+var(0))*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&MoveGuarded
+var(38)=ceil((39+var(0))*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+triggerall=(animelemtime(1)>=5||movecontact)&&numhelper(3000)&&roundstate=2&&fvar(3)=1
+trigger1=helper(3000),var(35)=0&&command="tzpex"&&power>=1000
+trigger2=power>=1000&&(command="jgex"||(command="pms"&&!numhelper(4000)))
+trigger3=numhelper(4000)&&power>=1000&&var(39)>=300&&command="pms"
+trigger3=helper(4000),stateno=4002||(helper(4000),stateno=[4017,4019])||(helper(4000),movecontact&&((helper(4000),stateno=[4006,4007])||(helper(4000),stateno=4008&&helper(4000),animelemtime(8)>=0)))
+helpertype=normal
+name="FINISHER CANCEL"
+ID=7404
+pos=0,floor(-45*fvar(33))
+postype=p1
+stateno=7404
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=ChangeState
+triggerall=(animelemtime(1)>=5||movecontact)&&numhelper(3000)&&roundstate=2&&fvar(3)=1
+trigger1=helper(3000),var(35)=0&&command="tzpex"&&power>=1000
+trigger2=power>=1000&&(command="jgex"||(command="pms"&&!numhelper(4000)))
+trigger3=numhelper(4000)&&power>=1000&&var(39)>=300&&command="pms"
+trigger3=helper(4000),stateno=4002||(helper(4000),stateno=[4017,4019])||(helper(4000),movecontact&&((helper(4000),stateno=[4006,4007])||(helper(4000),stateno=4008&&helper(4000),animelemtime(8)>=0)))
+value=2050+ifelse(command="jgex",100,ifelse(command="pms",450,0))
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;地盤激震
+[Statedef 2100]
+type=S
+movetype=A
+physics=S
+ctrl=0
+sprpriority=2
+poweradd=ifelse(command="a",100,ifelse(command="b",110,120))
+
+[State ]
+type=Varset
+trigger1=var(23)=1||prevstateno=151||prevstateno=153||prevstateno=155||prevstateno=5120
+var(13)=8
+persistent=0
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=[100,101])
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&(prevstateno=[100,101])
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&(prevstateno=[100,101])
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=PalFX
+trigger1=time=0
+time=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3
+value=s0,14
+channel=0
+
+[State ]
+type=PlaySnd
+trigger1=animelem=3
+value=s100,58
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=0
+
+[State ]
+type=Varset
+trigger1=time=0&&(command="b"||command="c")
+var(0)=ifelse(command="b",10,20)
+
+[State ]
+type=changeanim
+trigger1=time=0
+value=2410+ifelse(var(0)=10,1,ifelse(var(0)=20,2,0))
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=100+var(0)
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil((100+var(0))*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=EnvShake
+trigger1=animelem=5
+time=15
+freq=100
+ampl=-4
+
+[state ]
+type=Explod
+trigger1=animelem=5
+anim=6007
+postype=p1
+scale=(.5+ifelse(var(0)=10,.1,ifelse(var(0)=20,.2,0)))*fvar(32),.5*fvar(33)
+sprpriority=4
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=animelem=5
+value=s100,89
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed
+attr=S,SA
+damage=ceil((110+var(0))*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=hard
+guardflag=L
+hitflag=MFD
+pausetime=13,14
+priority=5,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,65
+ground.type=trip
+ground.slidetime=18
+ground.hittime=18
+ground.velocity=-1.5,-9
+air.velocity=-1.5,-6
+air.type=High
+guard.sparkno=-1
+yaccel=.65
+fall=1
+fall.recover=0
+ground.cornerpush.veloff=-10
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=2100
+
+[State ]
+type=Helper
+trigger1=movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-13
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-13
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=movehit
+value=ceil((58+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=MoveGuarded
+value=ceil((29+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=movehit&&var(36)=0
+var(41)=ceil((58+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=MoveGuarded&&var(36)=0
+var(41)=ceil((29+var(0))*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&movehit
+var(38)=ceil((78+var(0))*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&MoveGuarded
+var(38)=ceil((39+var(0))*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+triggerall=(animelemtime(5)>=5||movecontact)&&numhelper(3000)&&roundstate=2&&fvar(3)=1
+trigger1=helper(3000),var(35)=0&&command="tzpex"&&power>=1000
+trigger2=power>=1000&&(command="jgex"||(command="pms"&&!numhelper(4000)))
+trigger3=numhelper(4000)&&power>=1000&&var(39)>=300&&command="pms"
+trigger3=helper(4000),stateno=4002||(helper(4000),stateno=[4017,4019])||(helper(4000),movecontact&&((helper(4000),stateno=[4006,4007])||(helper(4000),stateno=4008&&helper(4000),animelemtime(8)>=0)))
+helpertype=normal
+name="FINISHER CANCEL"
+ID=7404
+pos=0,floor(-45*fvar(33))
+postype=p1
+stateno=7404
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=ChangeState
+triggerall=(animelemtime(5)>=5||movecontact)&&numhelper(3000)&&roundstate=2&&fvar(3)=1
+trigger1=helper(3000),var(35)=0&&command="tzpex"&&power>=1000
+trigger2=power>=1000&&(command="jgex"||(command="pms"&&!numhelper(4000)))
+trigger3=numhelper(4000)&&power>=1000&&var(39)>=300&&command="pms"
+trigger3=helper(4000),stateno=4002||(helper(4000),stateno=[4017,4019])||(helper(4000),movecontact&&((helper(4000),stateno=[4006,4007])||(helper(4000),stateno=4008&&helper(4000),animelemtime(8)>=0)))
+value=2050+ifelse(command="jgex",100,ifelse(command="pms",450,0))
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;地盤激震EX
+[Statedef 2150]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=2413
+sprpriority=2
+poweradd=ifelse(fvar(4)=1,0,-1000)
+
+[State ]
+type=Varset
+trigger1=var(23)=1||prevstateno=151||prevstateno=153||prevstateno=155||prevstateno=5120
+var(13)=8
+persistent=0
+
+[State ]
+type=Varset
+trigger1=fvar(3)=1&&(prevstateno=2002||prevstateno=2100)
+var(13)=25
+persistent=0
+
+[State ]
+type=Varset
+trigger1=(var(13)=0||time=5)&&fvar(3)=1&&(prevstateno=2002||prevstateno=2100)
+fvar(3)=2
+persistent=0
+
+[State ]
+type=Explod
+trigger1=time=0&&(prevstateno=[100,101])
+anim=6002
+postype=p1
+pos=floor(30*fvar(32)),floor(5*fvar(33))
+scale=.4*fvar(32),.4*fvar(33)
+ID=6002
+sprpriority=3
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=VelSet
+trigger1=vel x>=.01&&(prevstateno=[100,101])
+x=fvar(18)-(time*.26)
+
+[State ]
+type=VelSet
+trigger1=vel x<=.009&&(prevstateno=[100,101])
+x=0
+
+[State ]
+type=Varset
+trigger1=vel x=0
+fvar(18)=0
+
+[State ]
+type=PalFX
+trigger1=time=0
+time=0
+
+[State ]
+type=Varset
+trigger1=fvar(4)=1&&var(13)=0
+var(13)=27
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&fvar(4)=1
+value=s100,80
+
+[State ]
+type=Explod
+trigger1=time=0&&fvar(4)=1
+anim=6128
+ID=6128
+postype=p1
+pos=0,floor(-45*fvar(33))
+scale=1*fvar(32),1*fvar(33)
+sprpriority=3
+bindtime=-1
+removeongethit=1
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Varset
+trigger1=(var(13)=0||time=5)&&fvar(4)=1
+fvar(4)=2
+persistent=0
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6013
+ID=6013
+postype=p1
+pos=0,5
+scale=1920,.5
+sprpriority=-9000
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6018
+postype=left
+scale=.5,.5
+sprpriority=-9001
+vel=0,-5
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6018
+postype=right
+scale=.5,.5
+sprpriority=-9001
+vel=0,-5
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6086
+postype=p1
+pos=0,floor(-45*fvar(33))
+scale=1*fvar(32),1*fvar(33)
+sprpriority=15
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&facing=1
+helpertype=normal
+name="catin"
+ID=7600
+pos=-260,0
+postype=left
+stateno=7600
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&facing=-1
+helpertype=normal
+name="catin"
+ID=7600
+pos=260,0
+postype=right
+stateno=7600
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=0
+
+[State ]
+type=Varadd
+trigger1=time=[26,35]
+var(0)=25
+
+[State ]
+type=BGPalFX
+trigger1=time<=35
+time=1
+mul=0+var(0),0+var(0),0+var(0)
+invertall=0
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s0,51
+channel=0
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,20
+
+[State ]
+type=AssertSpecial
+triggerall=time<=35
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)!=3&&helper(3003),var(5)!=2
+trigger2=!numhelper(3003)
+flag=nofg
+
+[State ]
+type=AssertSpecial
+triggerall=time<=35
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)=3||helper(3003),var(5)=2
+flag=nomusic
+flag2=nofg
+
+[State ]
+type=NotHitBy
+trigger1=time<=35
+value=SCA
+time=1
+
+[State ]
+type=Varadd
+trigger1=time=0&&var(36)=0
+var(41)=140
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1
+trigger1=helper(3001),fvar(0)>=120&&fvar(1)=0&&time=0
+var(38)=ceil(140*ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,1.5,1))
+
+[State ]
+type=EnvShake
+trigger1=animelem=5
+time=15
+freq=100
+ampl=-8
+
+[state ]
+type=Explod
+trigger1=animelem=5
+anim=6007
+postype=p1
+scale=5*fvar(32),1*fvar(33)
+sprpriority=4
+
+[State ]
+type=PlaySnd
+trigger1=animelem=5
+value=s100,88
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=time=0&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=time=0&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed
+attr=S,HA
+damage=ceil(150*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),0
+animtype=hard
+guardflag=L
+hitflag=MFD
+pausetime=13,14
+priority=7,Hit
+sparkno=-1
+hitsound=s100,56
+guardsound=s100,65
+ground.type=trip
+ground.slidetime=18
+ground.hittime=18
+ground.velocity=-1.5,-13
+air.velocity=-1.5,-10
+air.type=High
+guard.sparkno=-1
+yaccel=.65
+fall=1
+fall.recover=0
+ground.cornerpush.veloff=0
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=2150
+getpower=0,0
+
+[State ]
+type=Helper
+trigger1=movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-13
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-13
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(18)=1&&var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=movehit&&var(36)=0
+var(41)=ceil(100*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=MoveGuarded&&var(36)=0
+var(41)=ceil(50*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&movehit
+var(38)=ceil(130*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&MoveGuarded
+var(38)=ceil(65*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=time=0||time=35
+fvar(27)=ifelse(time=35,0,1)
+
+[State ]
+type=Pause
+trigger1=time=0
+time=35
+movetime=35
+
+[State ]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+;プリキュアマーブルスクリュー
+[Statedef 2500]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=2300
+sprpriority=2
+poweradd=ifelse(fvar(4)=1,0,-1000)
+
+[State ]
+type=Varset
+trigger1=var(23)=1||prevstateno=151||prevstateno=153||prevstateno=155||prevstateno=5120
+var(13)=8
+persistent=0
+
+[State ]
+type=Varset
+trigger1=fvar(3)=1&&(prevstateno=2002||prevstateno=2100)
+var(13)=25
+persistent=0
+
+[State ]
+type=Varset
+trigger1=(var(13)=0||time=5)&&fvar(3)=1&&(prevstateno=2002||prevstateno=2100)
+fvar(3)=2
+persistent=0
+
+[State ]
+type=Varset
+trigger1=fvar(4)=1&&var(13)=0
+var(13)=27
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&fvar(4)=1
+value=s100,80
+
+[State ]
+type=Explod
+trigger1=time=0&&fvar(4)=1
+anim=6128
+ID=6128
+postype=p1
+pos=0,floor(-50*fvar(33))
+scale=1*fvar(32),1*fvar(33)
+sprpriority=3
+bindtime=-1
+removeongethit=1
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Varset
+trigger1=(var(13)=0||time=5)&&fvar(4)=1
+fvar(4)=2
+persistent=0
+
+[State ]
+type=Varset
+trigger1=time=5
+var(9)=0
+
+[State ]
+type=Varset
+trigger1=time=5
+var(9)=0
+
+[State ]
+type=PalFX
+trigger1=time=0
+time=0
+
+[State ]
+type=PlaySnd
+trigger1=time=5
+value=s100,20
+
+[State ]
+type=NotHitBy
+trigger1=(anim=2300&&animelemtime(2)>=0)||(anim=2310&&animelemtime(10)<=5)
+value=SCA
+time=1
+
+[State ]
+type=Varset
+trigger1=time>=5&&var(13)=0
+var(13)=21
+persistent=0
+
+[State ]
+type=Explod
+trigger1=time=5
+anim=6089
+ID=6089
+postype=left
+scale=1280,1.25
+sprpriority=-12000
+bindtime=-1
+removetime=-1
+removeongethit=1
+
+[State ]
+type=Explod
+trigger1=time=5
+anim=6087
+postype=p1
+pos=0,floor(-60*fvar(33))
+scale=1*fvar(32),1*fvar(33)
+sprpriority=3
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+removeongethit=1
+
+[State ]
+type=Helper
+trigger1=time=5&&!numhelper(4000)
+helpertype=normal
+name="cure white"
+ID=4000
+pos=-290,-100
+postype=p1
+stateno=4024
+supermovetime=1000
+pausemovetime=1000
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s0,33
+channel=0
+
+[State ]
+type=ChangeAnim
+trigger1=numhelper(4000)
+trigger1=helper(4000),anim=3014&&helper(4000),animelem=2
+value=2310
+
+[State ]
+type=AssertSpecial
+triggerall=time>=4
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)!=3&&helper(3003),var(5)!=2
+trigger2=!numhelper(3003)
+flag=nofg
+
+[State ]
+type=AssertSpecial
+triggerall=time>=4
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)=3||helper(3003),var(5)=2
+flag=nomusic
+flag2=nofg
+
+[State ]
+type=Varset
+trigger1=animelemtime(1)=0||animelemtime(3)=17
+fvar(27)=ifelse(animelemtime(3)=17,0,1)
+
+[State ]
+type=Pause
+trigger1=anim=2310
+time=54
+movetime=54
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=anim=2310
+value=s0,37
+persistent=0
+
+[State ]
+type=PlaySnd
+trigger1=anim=2310&&animelem=4
+value=s100,70
+
+[State ]
+type=RemoveExplod
+trigger1=(anim=2310&&animelem=3)||animtime=0
+ID=6089
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=3&&facing=1
+anim=6090
+ID=6090
+postype=left
+scale=1,1
+sprpriority=-12000
+bindtime=-1
+removetime=-1
+supermovetime=1000
+pausemovetime=1000
+removeongethit=1
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=3&&facing=-1
+anim=6090
+ID=6090
+postype=right
+scale=1,1
+sprpriority=-12000
+bindtime=-1
+removetime=-1
+supermovetime=1000
+pausemovetime=1000
+facing=-1
+removeongethit=1
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=3&&facing=1
+anim=6090
+ID=6090
+postype=left
+pos=640,0
+scale=1,1
+sprpriority=-12000
+bindtime=-1
+removetime=-1
+supermovetime=1000
+pausemovetime=1000
+removeongethit=1
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=3&&facing=-1
+anim=6090
+ID=6090
+postype=right
+pos=-640,0
+scale=1,1
+sprpriority=-12000
+bindtime=-1
+removetime=-1
+supermovetime=1000
+pausemovetime=1000
+facing=-1
+removeongethit=1
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=4
+anim=6084
+ID=6084
+postype=p1
+pos=floor(70*fvar(32)),floor(-60*fvar(33))
+sprpriority=3
+bindtime=-1
+removetime=-1
+supermovetime=1000
+pausemovetime=1000
+removeongethit=1
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=4
+anim=6083
+ID=6084
+postype=p1
+pos=floor(80*fvar(32)),floor(-60*fvar(33))
+sprpriority=4
+bindtime=-1
+removetime=-1
+supermovetime=1000
+pausemovetime=1000
+removeongethit=1
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=2&&facing=1
+anim=6091
+postype=left
+pos=0, GameHeight - (0)
+scale=.5,.5
+sprpriority=310
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=2&&facing=-1
+anim=6091
+postype=right
+pos=0, GameHeight - (0)
+scale=.5,.5
+sprpriority=310
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+facing=-1
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=2&&facing=1
+anim=6092
+postype=right
+pos=0, GameHeight - (0)
+scale=.5,.5
+sprpriority=309
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=2&&facing=-1
+anim=6092
+postype=left
+pos=0, GameHeight - (0)
+scale=.5,.5
+sprpriority=309
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+facing=-1
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=2&&facing=1
+anim=6093
+postype=right
+pos=0, GameHeight - (0)
+scale=.5,.5
+sprpriority=311
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelem=2&&facing=-1
+anim=6093
+postype=left
+pos=0, GameHeight - (0)
+scale=.5,.5
+sprpriority=311
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+facing=-1
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(6084)
+ID=6084
+scale=1,.1+fvar(9)
+
+[State ]
+type=Varadd
+trigger1=numexplod(6084)
+fvar(9)=ifelse(animelemtime(4)>=1&&animelemtime(7)<=1,.2,ifelse(animelemtime(10)>=0,-.2,0))
+
+[State ]
+type=Varset
+trigger1=numexplod(6084)&&animelem=8
+fvar(9)=.9
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6084)&&animelem=11
+ID=6084
+
+[State ]
+type=RemoveExplod
+trigger1=anim=2310&&animtime=0
+ID=6090
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelemtime(4)>=4&&animelemtime(9)<=30&&time%10=0
+anim=6097
+postype=p1
+pos=70,20
+scale=.5,.5
+sprpriority=50
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+random=70,0
+
+[State ]
+type=Explod
+trigger1=anim=2310&&animelemtime(4)>=4&&animelemtime(9)<=30&&time%9=0
+anim=6097
+postype=p1
+pos=160,20
+scale=.5,.5
+sprpriority=50
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+random=80,0
+
+[State ];クリティカルヒット乱数
+type=Varrandom
+trigger1=(time=0||movehit=1)&&var(6)!=24&&var(7)!=24&&var(8)!=24&&palno!=12
+v=18
+range=1,12
+ignorehitpause=1
+
+[State ];クリティカルヒット乱数（CRITICAL RATE）
+type=Varrandom
+trigger1=(time=0||movehit=1)&&(var(6)=24||var(7)=24||var(8)=24||palno=12)
+v=18
+range=1,3
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=p2movetype=A||(var(30)=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=animelem=4||(animelemtime(4)>=0&&(movehit=4||moveguarded=4))
+damage=ceil(40*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(var(6)=8||var(7)=8||var(8)=8||palno=12),.35,0))),5
+attr=S,HP
+animtype=hard
+guardflag=M
+hitflag=MAFD
+pausetime=0,0
+priority=7,Hit
+sparkno=-1
+hitsound=-1
+guardsound=-1
+ground.slidetime=24
+ground.hittime=24
+ground.velocity=-2.5,-3
+air.velocity=-2.5,-2
+guard.sparkno=-1
+yaccel=.48
+fall=1
+fall.recover=0
+ground.cornerpush.veloff=0
+getpower=0,0
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+
+[State ]
+type=Varset
+trigger1=var(25)=0&&movehit=1
+var(13)=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&movehit=1
+var(13)=2
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=var(18)=1&&var(13)=0&&movehit=1
+var(13)=3
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&var(13)=0&&(movecontact=1||movereversed=1||(p2movetype!=A&&var(6)!=9&&var(7)!=9&&var(8)!=9&&palno!=12)||(var(30)!=0&&(var(6)=9||var(7)=9||var(8)=9||palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=movehit=1
+var(30)=1
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=movehit=1&&var(36)=0
+var(41)=ceil(30*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=MoveGuarded=1&&var(36)=0
+var(41)=ceil(15*(1+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&movehit=1
+var(38)=ceil(30*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=Varadd
+trigger1=numhelper(3001)=1&&helper(3001),fvar(0)>=120&&MoveGuarded=1
+var(38)=ceil(15*(1+ifelse(var(6)=10||var(7)=10||var(8)=10||palno=12,.5,0)+ifelse(var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+
+[State ]
+type=StopSnd
+trigger1=movehit=1
+channel=5
+
+[State ]
+type=PlaySnd
+trigger1=movehit=1
+value=s100,43
+channel=5
+
+[State ]
+type=StopSnd
+trigger1=moveguarded=1
+channel=6
+
+[State ]
+type=PlaySnd
+trigger1=moveguarded=1
+value=s100,66
+channel=6
+
+[State ]
+type=Helper
+trigger1=movehit=1
+helpertype=normal
+name="hitSP1"
+ID=27107
+pos=0,-65
+postype=p2
+stateno=7102
+supermovetime=100
+pausemovetime=100
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=moveguarded=1
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-65
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=animtime=0
+value=0
+ctrl=1
+

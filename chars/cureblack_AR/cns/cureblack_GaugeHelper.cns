@@ -1,0 +1,5205 @@
+;特殊ゲージ用（ヘルパー）v=44,fv=23
+[Statedef 3001]
+type=A
+movetype=I
+physics=S
+anim=1860
+ctrl=0
+sprpriority=-100
+
+;------------------------------------------------------------
+;各種ゲージ表示位置設定
+;各項目 var(○)=? の?部分 をお好みの数字に変えてください。
+;正数だと下に下がって、負数（-）をつけると上に上がります。
+;あまり大きい数字を入れると画面外にはみ出てしまいます。
+;デフォルト（初期位置）に戻す場合は 0（初期値 ○○）の数値を入力してください。
+
+;↓ここから変更可能です。
+
+[State ];プリキュアパワーゲージ　x座標
+type=Varset
+trigger1=time=0
+var(11)=0
+
+[State ];プリキュアパワーゲージ　y座標
+type=Varset
+trigger1=time=0
+var(12)=0
+
+[State ];プリキュアサポートゲージ　x座標
+type=Varset
+trigger1=time=0
+var(13)=0
+
+[State ];プリキュアサポートゲージ　y座標
+type=Varset
+trigger1=time=0
+var(14)=0
+
+[State ];プリキュアストライカーゲージ　x座標
+type=Varset
+trigger1=time=0
+var(15)=-24
+
+[State ];プリキュアストライカーゲージ　y座標
+type=Varset
+trigger1=time=0
+var(16)=170
+
+[State ];ガードゲージ　x座標
+type=Varset
+trigger1=time=0
+var(17)=0
+
+[State ];ガードゲージ　y座標
+type=Varset
+trigger1=time=0
+var(18)=0
+
+[State ];プリキュアバーストアイコン　x座標
+type=Varset
+trigger1=time=0
+var(19)=0
+
+[State ];プリキュアバーストアイコン　y座標
+type=Varset
+trigger1=time=0
+var(20)=0
+
+[State ];ブーストゲージ　x座標
+type=Varset
+trigger1=time=0
+var(21)=0
+
+[State ];ブーストゲージ　y座標
+type=Varset
+trigger1=time=0
+var(22)=0
+
+[State ];テンションゲージ　x座標
+type=Varset
+trigger1=time=0
+var(23)=0
+
+[State ];テンションゲージ　y座標
+type=Varset
+trigger1=time=0
+var(24)=0
+
+[State ];絶対に負けない！モードアイコン　x座標
+type=Varset
+trigger1=time=0
+var(25)=0
+
+[State ];絶対に負けない！モードアイコン　y座標
+type=Varset
+trigger1=time=0
+var(26)=0
+
+;↑変更可能箇所はここまでです。
+;------------------------------------------------------------
+
+[State ];パートナーキュアブラック判定
+type=Varset
+trigger1=NumPartner
+trigger1=p3name="CURE BLACK"&&partner,Authorname="YU-TOHARU"
+var(49)=1
+persistent=0
+
+[State ];タッグパートナー判定
+type=Varset
+trigger1=NumPartner
+trigger1=root,ID>Partner,ID
+var(50)=1
+persistent=0
+
+[State ];キュアブラック1P判定
+type=Varset
+trigger1=numenemy
+trigger1=enemy,name="CURE BLACK"&&enemy,authorname="YU-TOHARU"&&enemy,RoundsExisted=0
+var(51)=1
+persistent=0
+
+[State ];キュアブラック2P判定
+type=Varset
+trigger1=numenemy>=2
+trigger1=enemy(1),name="CURE BLACK"&&enemy(1),authorname="YU-TOHARU"&&enemy(1),RoundsExisted=0
+var(52)=1
+persistent=0
+
+[State ];キュアブラック同キャラタッグ＆パートナー判定
+type=Varset
+trigger1=NumPartner
+trigger1=p3name="CURE BLACK"&&partner,Authorname="YU-TOHARU"&&root,ID>Partner,ID
+var(53)=1
+persistent=0
+
+[State ]
+type=Varadd
+trigger1=roundstate=2||fvar(0)>=1
+fvar(0)=1
+
+[State ];プリキュアサポートチームカラー判定ひとりめ～ピンク
+type=Varset
+trigger1=fvar(0)=1&&(root,var(52)=1||root,var(52)=4||root,var(52)=10||root,var(52)=12||root,var(52)=16||root,var(52)=20||root,var(52)=24||root,var(52)=29)
+var(1)=1
+
+[State ];プリキュアサポートチームカラー判定ひとりめ～ブルー
+type=Varset
+trigger1=fvar(0)=1&&(root,var(52)=2||root,var(52)=7||root,var(52)=8||root,var(52)=11||root,var(52)=13||root,var(52)=17||root,var(52)=21||root,var(52)=27||root,var(52)=28)
+var(1)=2
+
+[State ];プリキュアサポートチームカラー判定ひとりめ～イエロー
+type=Varset
+triggerall=fvar(0)=1
+trigger1=root,var(52)=3||root,var(52)=5||root,var(52)=6||root,var(52)=9||root,var(52)=14||root,var(52)=15||root,var(52)=18||root,var(52)=19
+trigger2=root,var(52)=22||root,var(52)=23||root,var(52)=25||root,var(52)=26
+var(1)=3
+
+[State ];プリキュアサポートチームカラー判定ふたりめ～ピンク
+type=Varset
+trigger1=fvar(0)=1&&(root,var(53)=1||root,var(53)=4||root,var(53)=10||root,var(53)=12||root,var(53)=16||root,var(53)=20||root,var(53)=24||root,var(53)=29)
+var(2)=1
+
+[State ];プリキュアサポートチームカラー判定ふたりめ～ブルー
+type=Varset
+trigger1=fvar(0)=1&&(root,var(53)=2||root,var(53)=7||root,var(53)=8||root,var(53)=11||root,var(53)=13||root,var(53)=17||root,var(53)=21||root,var(53)=27||root,var(53)=28)
+var(2)=2
+
+[State ];プリキュアサポートチームカラー判定ふたりめ～イエロー
+type=Varset
+triggerall=fvar(0)=1
+trigger1=root,var(53)=3||root,var(53)=5||root,var(53)=6||root,var(53)=9||root,var(53)=14||root,var(53)=15||root,var(53)=18||root,var(53)=19
+trigger2=root,var(53)=22||root,var(53)=23||root,var(53)=25||root,var(53)=26
+var(2)=3
+
+[State ];プリキュアサポートチームカラー判定さんにんめ～ピンク
+type=Varset
+trigger1=fvar(0)=1&&(root,var(54)=1||root,var(54)=4||root,var(54)=10||root,var(54)=12||root,var(54)=16||root,var(54)=20||root,var(54)=24||root,var(54)=29)
+var(3)=1
+
+[State ];プリキュアサポートチームカラー判定さんにんめ～ブルー
+type=Varset
+trigger1=fvar(0)=1&&(root,var(54)=2||root,var(54)=7||root,var(54)=8||root,var(54)=11||root,var(54)=13||root,var(54)=17||root,var(54)=21||root,var(54)=27||root,var(54)=28)
+var(3)=2
+
+[State ];プリキュアサポートチームカラー判定さんにんめ～イエロー
+type=Varset
+triggerall=fvar(0)=1
+trigger1=root,var(54)=3||root,var(54)=5||root,var(54)=6||root,var(54)=9||root,var(54)=14||root,var(54)=15||root,var(54)=18||root,var(54)=19
+trigger2=root,var(54)=22||root,var(54)=23||root,var(54)=25||root,var(54)=26
+var(3)=3
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6664)&&power<=999
+ID=6664
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6526)&&power>=2000
+ID=6526
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6527)&&(power<=999||power>=3000)
+ID=6527
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6528)&&(power<=1999||power>=4000)
+ID=6528
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6529)&&(power<=2999||power>=5000)
+ID=6529
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6530)&&power<=3999
+ID=6530
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6539)&&power>=1000
+ID=6539
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6540)&&(power<=999||power>=2000)
+ID=6540
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6541)&&(power<=1999||power>=3000)
+ID=6541
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6542)&&(power<=2999||power>=4000)
+ID=6542
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6543)&&(power<=3999||power>=5000)
+ID=6543
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6544)&&power<=4999
+ID=6544
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6545)&&power>=1000
+ID=6545
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6546)&&(power<=999||power>=2000)
+ID=6546
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6547)&&(power<=1999||power>=3000)
+ID=6547
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6548)&&(power<=2999||power>=4000)
+ID=6548
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6549)&&(power<=3999||power>=5000)
+ID=6549
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6550)&&power<=4999
+ID=6550
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6666)&&root,var(41)<=999
+ID=6666
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6667)&&root,var(41)<=1999
+ID=6667
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6668)&&root,var(41)<=2999
+ID=6668
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6624)&&root,var(14)>=334
+ID=6624
+
+[State ]
+type=RemoveExplod
+triggerall=numexplod(6625)
+trigger1=root,var(14)!=[334,666]
+ID=6625
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6626)&&root,var(14)<=666
+ID=6626
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6622)&&root,var(14)<=666
+ID=6622
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6638)&&root,var(38)>=715
+ID=6638
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6639)&&(root,var(38)!=[715,1428])
+ID=6639
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6640)&&(root,var(38)!=[1429,2142])
+ID=6640
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6641)&&(root,var(38)!=[2143,2856])
+ID=6641
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6642)&&(root,var(38)!=[2857,3570])
+ID=6642
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6643)&&(root,var(38)!=[3571,4284])
+ID=6643
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6644)&&(root,var(38)!=[4285,4998])
+ID=6644
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6645)&&(root,var(38)!=[4999,5712])
+ID=6645
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6646)&&(root,var(38)!=[5713,6426])
+ID=6646
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6647)&&(root,var(38)!=[6427,7140])
+ID=6647
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6648)&&(root,var(38)!=[7141,7854])
+ID=6648
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6649)&&(root,var(38)!=[7855,8568])
+ID=6649
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6650)&&(root,var(38)!=[8569,9282])
+ID=6650
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6651)&&root,var(38)<=9282
+ID=6651
+
+[State ];テンションゲージMAX消える
+type=null
+trigger1=fvar(0)>=5&&teamside=1&&numexplod(6673)&&!numexplod(6674)&&root,var(38)<=9999
+anim=6674
+ID=6674
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=121+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10520
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2&&numexplod(6673)&&!numexplod(6674)&&root,var(38)<=9999
+anim=6674
+ID=6674
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10520
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6673)&&root,var(38)<=9999
+ID=6673
+
+[State ];プリキュアサポートゲージ文字（ドリーム専用）点滅1～ひとりめ
+type=null
+trigger1=!numexplod(71004)&&teamside=1&&root,fvar(2)=1&&root,var(6)=4
+anim=71004
+ID=71004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=18+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(71004)&&teamside=2&&root,fvar(2)=1&&root,var(6)=4
+anim=71004
+ID=71004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-18-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ドリーム専用）点滅2～ひとりめ
+type=null
+trigger1=!numexplod(72004)&&teamside=1&&root,fvar(2)=1&&root,var(6)=4
+anim=72004
+ID=72004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=18+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(72004)&&teamside=2&&root,fvar(2)=1&&root,var(6)=4
+anim=72004
+ID=72004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-18-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ドリーム専用）点滅1～ふたりめ
+type=null
+trigger1=!numexplod(71004)&&teamside=1&&root,fvar(2)=1&&root,var(7)=4
+anim=71004
+ID=71004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(71004)&&teamside=2&&root,fvar(2)=1&&root,var(7)=4
+anim=71004
+ID=71004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ドリーム専用）点滅2～ふたりめ
+type=null
+trigger1=!numexplod(72004)&&teamside=1&&root,fvar(2)=1&&root,var(7)=4
+anim=72004
+ID=72004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(72004)&&teamside=2&&root,fvar(2)=1&&root,var(7)=4
+anim=72004
+ID=72004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ドリーム専用）点滅1～さんにんめ
+type=null
+trigger1=!numexplod(71004)&&teamside=1&&root,fvar(2)=1&&root,var(8)=4
+anim=71004
+ID=71004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=73+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(71004)&&teamside=2&&root,fvar(2)=1&&root,var(8)=4
+anim=71004
+ID=71004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-73-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ドリーム専用）点滅2～さんにんめ
+type=null
+trigger1=!numexplod(72004)&&teamside=1&&root,fvar(2)=1&&root,var(8)=4
+anim=72004
+ID=72004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=73+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(72004)&&teamside=2&&root,fvar(2)=1&&root,var(8)=4
+anim=72004
+ID=72004
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-73-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ブロッサム専用）点滅1～ひとりめ
+type=null
+trigger1=!numexplod(71016)&&teamside=1&&root,fvar(0)=1&&root,var(6)=16
+anim=71016
+ID=71016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=18+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(71016)&&teamside=2&&root,fvar(0)=1&&root,var(6)=16
+anim=71016
+ID=71016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-18-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ブロッサム専用）点滅2～ひとりめ
+type=null
+trigger1=!numexplod(72016)&&teamside=1&&root,fvar(0)=1&&root,var(6)=16
+anim=72016
+ID=72016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=18+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(72016)&&teamside=2&&root,fvar(0)=1&&root,var(6)=16
+anim=72016
+ID=72016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-18-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ブロッサム専用）点滅1～ふたりめ
+type=null
+trigger1=!numexplod(71016)&&teamside=1&&root,fvar(0)=1&&root,var(7)=16
+anim=71016
+ID=71016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(71016)&&teamside=2&&root,fvar(0)=1&&root,var(7)=16
+anim=71016
+ID=71016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ブロッサム専用）点滅2～ふたりめ
+type=null
+trigger1=!numexplod(72016)&&teamside=1&&root,fvar(0)=1&&root,var(7)=16
+anim=72016
+ID=72016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(72016)&&teamside=2&&root,fvar(0)=1&&root,var(7)=16
+anim=72016
+ID=72016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ブロッサム専用）点滅1～さんにんめ
+type=null
+trigger1=!numexplod(71016)&&teamside=1&&root,fvar(0)=1&&root,var(8)=16
+anim=71016
+ID=71016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=73+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(71016)&&teamside=2&&root,fvar(0)=1&&root,var(8)=16
+anim=71016
+ID=71016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-73-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字（ブロッサム専用）点滅2～さんにんめ
+type=null
+trigger1=!numexplod(72016)&&teamside=1&&root,fvar(0)=1&&root,var(8)=16
+anim=72016
+ID=72016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=73+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(72016)&&teamside=2&&root,fvar(0)=1&&root,var(8)=16
+anim=72016
+ID=72016
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-73-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字消える～ひとりめ
+type=null
+triggerall=!numexplod(72001)&&teamside=1
+trigger1=(numexplod(71001)||numexplod(71004))&&root,var(52)=4&&root,var(36)=0
+trigger2=(numexplod(71001)||numexplod(71016))&&root,var(52)=16&&root,var(36)=0
+trigger3=numexplod(71001)&&root,var(52)=19&&(root,var(36)=0||root,fvar(3)=2)
+trigger4=numexplod(71001)&&root,var(52)=27&&(root,var(36)=0||power<=999)
+trigger5=numexplod(71001)&&root,var(52)=29&&(root,var(36)=0||root,fvar(4)=2)
+anim=72000+root,var(52)
+ID=72001
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=18+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=!numexplod(72001)&&teamside=2
+trigger1=(numexplod(71001)||numexplod(71004))&&root,var(52)=4&&root,var(36)=0
+trigger2=(numexplod(71001)||numexplod(71016))&&root,var(52)=16&&root,var(36)=0
+trigger3=numexplod(71001)&&root,var(52)=19&&(root,var(36)=0||root,fvar(3)=2)
+trigger4=numexplod(71001)&&root,var(52)=27&&(root,var(36)=0||power<=999)
+trigger5=numexplod(71001)&&root,var(52)=29&&(root,var(36)=0||root,fvar(4)=2)
+anim=72000+root,var(52)
+ID=72001
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-18-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+
+
+[State ];プリキュアサポートゲージ文字消える～ふたりめ
+type=null
+triggerall=!numexplod(72002)&&teamside=1
+trigger1=(numexplod(71002)||numexplod(71004))&&root,var(53)=4&&root,var(36)=0
+trigger2=(numexplod(71002)||numexplod(71016))&&root,var(53)=16&&root,var(36)=0
+trigger3=numexplod(71002)&&root,var(53)=19&&(root,var(36)=0||root,fvar(3)=2)
+trigger4=numexplod(71002)&&root,var(53)=27&&(root,var(36)=0||power<=999)
+trigger5=numexplod(71002)&&root,var(53)=29&&(root,var(36)=0||root,fvar(4)=2)
+anim=72000+root,var(53)
+ID=72002
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=46+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=!numexplod(72002)&&teamside=2
+trigger1=(numexplod(71002)||numexplod(71004))&&root,var(53)=4&&root,var(36)=0
+trigger2=(numexplod(71002)||numexplod(71016))&&root,var(53)=16&&root,var(36)=0
+trigger3=numexplod(71002)&&root,var(53)=19&&(root,var(36)=0||root,fvar(3)=2)
+trigger4=numexplod(71002)&&root,var(53)=27&&(root,var(36)=0||power<=999)
+trigger5=numexplod(71002)&&root,var(53)=29&&(root,var(36)=0||root,fvar(4)=2)
+anim=72000+root,var(53)
+ID=72002
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-46-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+
+[State ];プリキュアサポートゲージ文字消える～さんにんめ
+type=null
+triggerall=!numexplod(72003)&&teamside=1
+trigger1=(numexplod(71003)||numexplod(71004))&&root,var(54)=4&&root,var(36)=0
+trigger2=(numexplod(71003)||numexplod(71016))&&root,var(54)=16&&root,var(36)=0
+trigger3=numexplod(71003)&&root,var(54)=19&&(root,var(36)=0||root,fvar(3)=2)
+trigger4=numexplod(71003)&&root,var(54)=27&&(root,var(36)=0||power<=999)
+trigger5=numexplod(71003)&&root,var(54)=29&&(root,var(36)=0||root,fvar(4)=2)
+anim=72000+root,var(54)
+ID=72003
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=73+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=!numexplod(72003)&&teamside=2
+trigger1=(numexplod(71003)||numexplod(71004))&&root,var(54)=4&&root,var(36)=0
+trigger2=(numexplod(71003)||numexplod(71016))&&root,var(54)=16&&root,var(36)=0
+trigger3=numexplod(71003)&&root,var(54)=19&&(root,var(36)=0||root,fvar(3)=2)
+trigger4=numexplod(71003)&&root,var(54)=27&&(root,var(36)=0||power<=999)
+trigger5=numexplod(71003)&&root,var(54)=29&&(root,var(36)=0||root,fvar(4)=2)
+anim=72000+root,var(54)
+ID=72003
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-73-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(71004)&&root,var(36)=0
+ID=71004
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(72004)&&root,var(36)=0
+ID=72004
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(71016)&&root,var(36)=0
+ID=71016
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(72016)&&root,var(36)=0
+ID=72016
+
+[State ]
+type=RemoveExplod
+triggerall=numexplod(71001)
+trigger1=root,var(36)=0||(root,var(52)=4&&root,fvar(2)=1)||(root,var(52)=16&&root,fvar(0)=1)||(root,var(52)=19&&root,fvar(3)!=1)||(root,var(52)=27&&power<=999)||(root,var(52)=29&&root,fvar(4)!=1)
+ID=71001
+
+[State ]
+type=RemoveExplod
+triggerall=numexplod(71002)
+trigger1=root,var(36)=0||(root,var(53)=4&&root,fvar(2)=1)||(root,var(53)=16&&root,fvar(0)=1)||(root,var(53)=19&&root,fvar(3)!=1)||(root,var(53)=27&&power<=999)||(root,var(53)=29&&root,fvar(4)!=1)
+ID=71002
+
+[State ]
+type=RemoveExplod
+triggerall=numexplod(71003)
+trigger1=root,var(36)=0||(root,var(54)=4&&root,fvar(2)=1)||(root,var(54)=16&&root,fvar(0)=1)||(root,var(54)=19&&root,fvar(3)!=1)||(root,var(54)=27&&power<=999)||(root,var(54)=29&&root,fvar(4)!=1)
+ID=71003
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6676)=1&&root,var(36)=0
+ID=6676
+
+[State ];CALLING
+type=Explod
+trigger1=!numexplod(6706)&&root,var(9)<=999&&numhelper(4000)&&teamside=1
+anim=6706
+ID=6706
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=54+var(15),58+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=!numexplod(6706)&&root,var(9)<=999&&numhelper(4000)&&teamside=2
+anim=6706
+ID=6706
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-54-var(15),58+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(16706)&&root,var(10)<=999&&numhelper(4500)&&teamside=1
+anim=6706
+ID=16706
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=87+var(15),58+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(16706)&&root,var(10)<=999&&numhelper(4500)&&teamside=2
+anim=6706
+ID=16706
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-87-var(15),58+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];CALLING戻り
+type=Explod
+trigger1=numexplod(6706)&&!numexplod(6707)&&root,var(9)<=999&&!numhelper(4000)&&teamside=1
+anim=6707
+ID=6707
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=54+var(15),58+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=Explod
+trigger1=numexplod(6706)&&!numexplod(6707)&&root,var(9)<=999&&!numhelper(4000)&&teamside=2
+anim=6707
+ID=6707
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-54-var(15),58+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numexplod(16706)&&!numexplod(16707)&&root,var(10)<=999&&!numhelper(4500)&&teamside=1
+anim=6707
+ID=16707
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=87+var(15),58+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numexplod(16706)&&!numexplod(16707)&&root,var(10)<=999&&!numhelper(4500)&&teamside=2
+anim=6707
+ID=16707
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-87-var(15),58+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ];WAIT
+type=Explod
+triggerall=!numexplod(6704)&&root,var(9)<=999&&teamside=1
+trigger1=!numhelper(4000)&&numexplod(6706)
+trigger2=numhelper(4000)&&root,var(39)<=0&&numexplod(6706)
+trigger2=helper(4000),stateno=4005||helper(4000),stateno=4022||helper(4000),stateno=4028
+trigger3=numhelper(3000)
+trigger3=helper(3000),var(40)>=1
+anim=6704
+ID=6704
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=39+var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=Explod
+triggerall=!numexplod(6704)&&root,var(9)<=999&&teamside=2
+trigger1=!numhelper(4000)&&numexplod(6706)
+trigger2=numhelper(4000)&&root,var(39)<=0&&numexplod(6706)
+trigger2=helper(4000),stateno=4005||helper(4000),stateno=4022||helper(4000),stateno=4028
+trigger3=numhelper(3000)
+trigger3=helper(3000),var(40)>=1
+anim=6704
+ID=6704
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-39-var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=!numexplod(16704)&&root,var(10)<=999&&teamside=1
+trigger1=!numhelper(4500)&&numexplod(16706)
+trigger2=numhelper(4500)&&root,var(40)<=0&&numexplod(16706)
+trigger2=helper(4500),stateno=4505||helper(4500),stateno=4522||helper(4500),stateno=4528
+trigger3=numhelper(3000)
+trigger3=helper(3000),var(40)>=1
+anim=6704
+ID=16704
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=71+var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=!numexplod(16704)&&root,var(10)<=999&&teamside=2
+trigger1=!numhelper(4500)&&numexplod(16706)
+trigger2=numhelper(4500)&&root,var(40)<=0&&numexplod(16706)
+trigger2=helper(4500),stateno=4505||helper(4500),stateno=4522||helper(4500),stateno=4528
+trigger3=numhelper(3000)
+trigger3=helper(3000),var(40)>=1
+anim=6704
+ID=16704
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-71-var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];WAIT戻り
+type=Explod
+trigger1=numexplod(6704)&&!numexplod(6705)&&root,var(9)<=999&&teamside=1&&numhelper(4000)
+trigger1=helper(4000),stateno=4028&&helper(4000),anim=3030
+anim=6705
+ID=6705
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=39+var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=Explod
+trigger1=numexplod(6704)&&!numexplod(6705)&&root,var(9)<=999&&teamside=2&&numhelper(4000)
+trigger1=helper(4000),stateno=4028&&helper(4000),anim=3030
+anim=6705
+ID=6705
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-39-var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numexplod(16704)&&!numexplod(16705)&&root,var(10)<=999&&teamside=1&&numhelper(4500)
+trigger1=helper(4500),stateno=4528&&helper(4500),anim=3130
+anim=6705
+ID=16705
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=71+var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numexplod(16704)&&!numexplod(16705)&&root,var(10)<=999&&teamside=2&&numhelper(4500)
+trigger1=helper(4500),stateno=4528&&helper(4500),anim=3130
+anim=6705
+ID=16705
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-71-var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ];OK
+type=Explod
+trigger1=numexplod(6704)&&!numexplod(6703)&&root,var(9)=1000&&teamside=1
+anim=6703
+ID=6703
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=39+var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=Explod
+trigger1=numexplod(6704)&&!numexplod(6703)&&root,var(9)=1000&&teamside=2
+anim=6703
+ID=6703
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-39-var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numexplod(16704)&&!numexplod(16703)&&root,var(10)=1000&&teamside=1
+anim=6703
+ID=16703
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=71+var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numexplod(16704)&&!numexplod(16703)&&root,var(10)=1000&&teamside=2
+anim=6703
+ID=16703
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-71-var(15),49+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-170
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6706)&&numexplod(6707)
+ID=6706
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(16706)&&numexplod(16707)
+ID=16706
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6704)&&numexplod(6703)
+trigger2=numhelper(4000)
+trigger2=helper(4000),stateno=4028&&helper(4000),anim=3030
+ID=6704
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(16704)&&numexplod(16703)
+trigger2=numhelper(4500)
+trigger2=helper(4500),stateno=4528&&helper(4500),anim=3130
+ID=16704
+
+[State ];ストライカーゲージ黒
+type=Explod
+trigger1=!numexplod(6591)&&root,var(9)<=999&&teamside=1&&!numhelper(4000)
+anim=6591
+ID=6591
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=29+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=Explod
+trigger1=!numexplod(6591)&&root,var(9)<=999&&teamside=2&&!numhelper(4000)
+anim=6607
+ID=6591
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-29-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=Explod
+trigger1=!numexplod(6597)&&root,var(10)<=999&&teamside=1&&!numhelper(4500)
+anim=6597
+ID=6597
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=61+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=Explod
+trigger1=!numexplod(6597)&&root,var(10)<=999&&teamside=2&&!numhelper(4500)
+anim=6613
+ID=6597
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-61-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=parentVaradd
+trigger1=!numexplod(6592)&&numexplod(6591)&&root,var(9)=1000&&root,var(13)=0
+var(13)=33
+
+[State ]
+type=parentVaradd
+trigger1=!numexplod(6598)&&numexplod(6597)&&root,var(10)=1000&&root,var(13)=0
+var(13)=34
+
+[State ];ストライカーゲージ黒戻り
+type=Explod
+trigger1=!numexplod(6592)&&numexplod(6591)&&root,var(9)=1000&&teamside=1
+anim=6592
+ID=6592
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=29+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=Explod
+trigger1=!numexplod(6592)&&numexplod(6591)&&root,var(9)=1000&&teamside=2
+anim=6608
+ID=6592
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-29-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=Explod
+trigger1=!numexplod(6598)&&numexplod(6597)&&root,var(10)=1000&&teamside=1
+anim=6598
+ID=6598
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=61+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=Explod
+trigger1=!numexplod(6598)&&numexplod(6597)&&root,var(10)=1000&&teamside=2
+anim=6614
+ID=6598
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-61-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6591)&&root,var(9)=1000
+ID=6591
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6597)&&root,var(10)=1000
+ID=6597
+
+[State ];PERFECT SUPPORT
+type=null
+trigger1=!numexplod(6121)&&teamside=1&&numhelper(3003)
+trigger1=helper(3003),var(23)=1
+anim=6121
+ID=6121
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=29+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-189
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(6121)&&teamside=2&&numhelper(3003)
+trigger1=helper(3003),var(23)=1
+anim=6123
+ID=6121
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-29-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-189
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(6122)&&teamside=1&&numhelper(3003)
+trigger1=helper(3003),var(23)=1
+anim=6122
+ID=6122
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=61+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-189
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=!numexplod(6122)&&teamside=2&&numhelper(3003)
+trigger1=helper(3003),var(23)=1
+anim=6124
+ID=6122
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-61-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-189
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6121)&&root,var(36)=0
+ID=6121
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6122)&&root,var(36)=0
+ID=6122
+
+[State ];ストライカーゲージ白～キュアホワイト
+type=Explod
+trigger1=fvar(0)=1&&teamside=1
+anim=6590
+ID=6590
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=29+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=Explod
+trigger1=fvar(0)=1&&teamside=2
+anim=6606
+ID=6590
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-29-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];ストライカーゲージ白～シャイニールミナス
+type=Explod
+trigger1=fvar(0)=1&&teamside=1
+anim=6596
+ID=6596
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=61+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=Explod
+trigger1=fvar(0)=1&&teamside=2
+anim=6612
+ID=6596
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-61-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];プリキュアサポートゲージ白
+type=null
+trigger1=fvar(0)=1&&teamside=1
+anim=6553
+ID=6553
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=46+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10520
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+trigger1=fvar(0)=1&&teamside=2
+anim=6556
+ID=6553
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-46-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10520
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];プリキュアパワーゲージ白
+type=null
+trigger1=fvar(0)=1&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6525
+ID=6525
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=4+var(11),229+var(12)
+sprpriority=10520
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+trigger1=fvar(0)=1&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6533
+ID=6525
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-69-var(11),229+var(12)
+sprpriority=10520
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];プリキュアパワーゲージ白～数字0
+type=null
+trigger1=fvar(0)=1&&power<=999&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6545
+ID=6545
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+trigger1=fvar(0)=1&&power<=999&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6658
+ID=6545
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];プリキュアパワーゲージ白～数字1
+type=null
+triggerall=power=[1000,1999]
+trigger1=fvar(0)=1&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6546
+ID=6546
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+triggerall=power=[1000,1999]
+trigger1=fvar(0)=1&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6659
+ID=6546
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];プリキュアパワーゲージ白～数字2
+type=null
+triggerall=power=[2000,2999]
+trigger1=fvar(0)=1&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6547
+ID=6547
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+triggerall=power=[2000,2999]
+trigger1=fvar(0)=1&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6660
+ID=6547
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];プリキュアパワーゲージ白～数字3
+type=null
+triggerall=power=[3000,3999]
+trigger1=fvar(0)=1&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6548
+ID=6548
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+triggerall=power=[3000,3999]
+trigger1=fvar(0)=1&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6661
+ID=6548
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];プリキュアパワーゲージ白～数字4
+type=null
+triggerall=power=[4000,4999]
+trigger1=fvar(0)=1&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6549
+ID=6549
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+triggerall=power=[4000,4999]
+trigger1=fvar(0)=1&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6662
+ID=6549
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];プリキュアパワーゲージ白～数字5
+type=null
+trigger1=fvar(0)=1&&power>=5000&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6550
+ID=6550
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+trigger1=fvar(0)=1&&power>=5000&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6663
+ID=6550
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];テンションゲージ白
+type=null
+trigger1=fvar(0)=1&&teamside=1
+anim=6636
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=121+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+trigger1=fvar(0)=1&&teamside=2
+anim=6636
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-122-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];ブーストゲージ白
+type=null
+trigger1=fvar(0)=1&&teamside=1
+anim=6697
+ID=6697
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=93+var(21),234+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(22)
+sprpriority=10507
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+trigger1=fvar(0)=1&&teamside=2
+anim=6702
+ID=6695
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-93-var(21),234+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(22)
+sprpriority=10507
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];ガードゲージ白
+type=null
+trigger1=fvar(0)=1&&teamside=1
+anim=6623
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=100+var(17),40+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ]
+type=null
+trigger1=fvar(0)=1&&teamside=2
+anim=6630
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-99-var(17),40+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-190
+bindtime=-1
+scale=.5,.5
+persistent=0
+
+[State ];プリキュアバーストアイコン白～黄色
+type=null
+triggerall=!numexplod(6678)&&!numexplod(6677)&&teamside=1
+trigger1=fvar(0)=1&&root,fvar(38)>=1
+trigger2=numhelper(3003)&&root,fvar(38)=1
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)&&root,fvar(38)=1
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6677
+ID=6677
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=100+(ifelse(var(53),20,0))+var(19),49+var(20)
+sprpriority=-215
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=!numexplod(6678)&&!numexplod(6677)&&teamside=2
+trigger1=fvar(0)=1&&root,fvar(38)>=1
+trigger2=numhelper(3003)&&root,fvar(38)=1
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)&&root,fvar(38)=1
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6677
+ID=6677
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-112-(ifelse(var(53),20,0))-var(19),49+var(20)
+sprpriority=-215
+bindtime=-1
+scale=.5,.5
+
+[State ];プリキュアバーストアイコン白～橙色
+type=null
+triggerall=!numexplod(6680)&&!numexplod(6679)&&teamside=1
+trigger1=fvar(0)=1&&root,fvar(38)>=2 
+trigger2=numhelper(3003)&&root,fvar(38)=2
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)&&root,fvar(38)=2
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6677
+ID=6679
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=103+(ifelse(var(53),20,0))+var(19),51+var(20)
+sprpriority=-213
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=!numexplod(6680)&&!numexplod(6679)&&teamside=2
+trigger1=fvar(0)=1&&root,fvar(38)>=2 
+trigger2=numhelper(3003)&&root,fvar(38)=2
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)&&root,fvar(38)=2
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6677
+ID=6679
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-115-(ifelse(var(53),20,0))-var(19),51+var(20)
+sprpriority=-213
+bindtime=-1
+scale=.5,.5
+
+[State ];プリキュアバーストアイコン白～赤
+type=null
+triggerall=!numexplod(6682)&&!numexplod(6681)&&root,fvar(38)=3&&teamside=1
+trigger1=fvar(0)=1
+trigger2=numhelper(3003)
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6677
+ID=6681
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=106+(ifelse(var(53),20,0))+var(19),53+var(20)
+sprpriority=-211
+bindtime=-1
+scale=.5,.5
+
+
+[State ]
+type=null
+triggerall=!numexplod(6682)&&!numexplod(6681)&&root,fvar(38)=3&&teamside=2
+trigger1=fvar(0)=1
+trigger2=numhelper(3003)
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6677
+ID=6681
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-118-(ifelse(var(53),20,0))-var(19),53+var(20)
+sprpriority=-211
+bindtime=-1
+scale=.5,.5
+
+[State ];ストライカーゲージ下地～キュアホワイト
+type=Explod
+trigger1=fvar(0)>=5&&teamside=1
+anim=6589
+ID=6589
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=29+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-200
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=fvar(0)>=5&&teamside=2
+anim=6605
+ID=6589
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-29-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-200
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];ストライカースタンバイゲージ～キュアホワイト
+type=Explod
+trigger1=fvar(0)>=5&&teamside=1
+anim=6602+(root,ifelse(var(56),16,0))
+ID=6602
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=41+var(15),64+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=fvar(0)>=5&&teamside=2
+anim=6618
+ID=6602
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-41-var(15),64+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];ストライカーアクションゲージ～キュアホワイト
+type=Explod
+trigger1=fvar(0)>=5&&teamside=1
+anim=6603+(root,ifelse(var(56),16,0))
+ID=6603
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=41+var(15),62+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=fvar(0)>=5&&teamside=2
+anim=6619
+ID=6603
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-41-var(15),62+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];ストライカーゲージ枠～キュアホワイト
+type=Explod
+trigger1=fvar(0)>=5&&teamside=1
+anim=6588
+ID=6588
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=29+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-197
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=fvar(0)>=5&&teamside=2
+anim=6604
+ID=6588
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-29-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-197
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];ストライカーゲージ下地～シャイニールミナス
+type=Explod
+trigger1=fvar(0)>=5&&teamside=1
+anim=6595
+ID=6595
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=61+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-200
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=fvar(0)>=5&&teamside=2
+anim=6611
+ID=6595
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-61-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-200
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];ストライカースタンバイゲージ～シャイニールミナス
+type=Explod
+trigger1=fvar(0)>=5&&teamside=1
+anim=6600
+ID=6600
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=74+var(15),64+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=fvar(0)>=5&&teamside=2
+anim=6616
+ID=6600
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-74-var(15),64+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];ストライカーアクションゲージ～シャイニールミナス
+type=Explod
+trigger1=fvar(0)>=5&&teamside=1
+anim=6601
+ID=6601
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=74+var(15),62+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=fvar(0)>=5&&teamside=2
+anim=6617
+ID=6601
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-74-var(15),62+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];ストライカーゲージ枠～シャイニールミナス
+type=Explod
+trigger1=fvar(0)>=5&&teamside=1
+anim=6594
+ID=6594
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=61+var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-197
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=Explod
+trigger1=fvar(0)>=5&&teamside=2
+anim=6610
+ID=6594
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-61-var(15),47+(ifelse(var(49),-19,0))+(ifelse(var(53),19,0))+var(16)
+sprpriority=-197
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];プリキュアサポートゲージ下地
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6552
+ID=6552
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10500
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6555
+ID=6552
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10500
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];プリキュアサポートゲージアイコン～ひとりめ
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=45000+root,var(52)
+ID=45001
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=19+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=45000+root,var(52)
+ID=45001
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-19-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+facing=-1
+
+[State ];プリキュアサポートゲージアイコン～ふたりめ
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=45100+root,var(53)
+ID=45001
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=45100+root,var(53)
+ID=45001
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+facing=-1
+
+[State ];プリキュアサポートゲージアイコン～さんにんめ
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=45000+root,var(54)
+ID=45001
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=74+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=45000+root,var(54)
+ID=45001
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-74-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+facing=-1
+
+[State ];プリキュアサポートゲージアイコン背景色～ひとりめ
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6556+var(1)
+ID=6557
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=19+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6556+var(1)
+ID=6557
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-19-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+facing=-1
+
+[State ];プリキュアサポートゲージアイコン背景色～ふたりめ
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6559+var(2)
+ID=6557
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6559+var(2)
+ID=6557
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+facing=-1
+
+[State ];プリキュアサポートゲージアイコン背景色～さんにんめ
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6556+var(3)
+ID=6557
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=74+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6556+var(3)
+ID=6557
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-74-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+facing=-1
+
+[State ];プリキュアサポートゲージ～ひとりめ
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6568+var(1)
+ID=6569
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=6+var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=0,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6583+var(1)
+ID=6569
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-6-var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=0,.5
+persistent=0
+removetime=-1
+
+[State ];プリキュアサポートゲージ～ふたりめ
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6568+var(2)
+ID=6570
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=33+var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=0,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6583+var(2)
+ID=6570
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-33-var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=0,.5
+persistent=0
+removetime=-1
+
+[State ];プリキュアサポートゲージ～さんにんめ
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6568+var(3)
+ID=6571
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=60+var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=0,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6583+var(3)
+ID=6571
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-61-var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10501
+bindtime=-1
+scale=0,.5
+persistent=0
+removetime=-1
+
+[State ];プリキュアサポートゲージ～スライド光（さんにんめ）
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6666)&&!numexplod(6667)&&numexplod(6668)=0&&teamside=1&&root,var(41)>=3000
+anim=6668
+ID=6668
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=60+var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.21,.5
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6666)&&!numexplod(6667)&&numexplod(6668)=0&&teamside=2&&root,var(41)>=3000
+anim=6671
+ID=6668
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-61-var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.21,.5
+
+[State ];プリキュアサポートゲージ～スライド光（ふたりめ）
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6666)&&!numexplod(6667)&&teamside=1&&root,var(41)>=2000
+anim=6667
+ID=6667
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=33+var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.21,.5
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6666)&&!numexplod(6667)&&teamside=2&&root,var(41)>=2000
+anim=6670
+ID=6667
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-33-var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.21,.5
+
+[State ];プリキュアサポートゲージ～スライド光（ひとりめ）
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6666)&&teamside=1&&root,var(41)>=1000
+anim=6666
+ID=6666
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=6+var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.21,.5
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6666)&&teamside=2&&root,var(41)>=1000
+anim=6669
+ID=6666
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-6-var(13),219+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10502
+bindtime=-1
+scale=.21,.5
+
+[State ];ブーストゲージ～バー緑
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6699
+ID=6699
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=94+var(21),233+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(22)
+sprpriority=10501
+bindtime=-1
+scale=0,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6699
+ID=6699
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-94-var(21),233+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(22)
+sprpriority=10501
+bindtime=-1
+scale=0,.5
+persistent=0
+removetime=-1
+facing=-1
+
+[State ];ブーストゲージ～バー青
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6698
+ID=6698
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=94+var(21),233+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(22)
+sprpriority=10502
+bindtime=-1
+scale=0,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6698
+ID=6698
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-94-var(21),233+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(22)
+sprpriority=10502
+bindtime=-1
+scale=0,.5
+persistent=0
+removetime=-1
+facing=-1
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6699)
+ID=6699
+scale=.5,fvar(20)
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6698)
+ID=6698
+scale=.5,fvar(21)
+
+[State ]
+type=Varset
+trigger1=fvar(0)>=5
+fvar(20)=ifelse(root,var(27)<=999,root,var(27)*.0005,0)
+
+[State ]
+type=Varset
+trigger1=fvar(0)>=5
+fvar(21)=ifelse(root,var(27)>=1000,.5,0)
+
+[State ];ブーストゲージ枠
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6695
+ID=6695
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=93+var(21),234+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(22)
+sprpriority=10505
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6700
+ID=6695
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-93-var(21),234+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(22)
+sprpriority=10505
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];ブーストゲージ下地
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6696
+ID=6696
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=93+var(21),234+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(22)
+sprpriority=10500
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6701
+ID=6696
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-93-var(21),234+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(22)
+sprpriority=10500
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];プリキュアサポートゲージ枠
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6551
+ID=6551
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10515
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6554
+ID=6551
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10515
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];テンションゲージ下地
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6635
+ID=6635
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=121+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10500
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6635
+ID=6635
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-122-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10500
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];テンションゲージ-3
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6638)&&root,var(38)<=714&&teamside=1
+anim=6638
+ID=6638
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6638)&&root,var(38)<=714&&teamside=2
+anim=6638
+ID=6638
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ-2
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6639)&&teamside=1&&(root,var(38)=[715,1428])
+anim=6639
+ID=6639
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6639)&&teamside=2
+trigger1=root,var(38)=[715,1428]
+anim=6639
+ID=6639
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ-1
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6640)&&teamside=1&&(root,var(38)=[1429,2142])
+anim=6640
+ID=6640
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6640)&&teamside=2&&(root,var(38)=[1429,2142])
+anim=6640
+ID=6640
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+0
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6641)&&teamside=1&&(root,var(38)=[2143,2856])
+anim=6641
+ID=6641
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6641)&&teamside=2&&(root,var(38)=[2143,2856])
+anim=6641
+ID=6641
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+1
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6642)&&teamside=1&&(root,var(38)=[2857,3570])
+anim=6642
+ID=6642
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6642)&&teamside=2&&(root,var(38)=[2857,3570])
+anim=6642
+ID=6642
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+2
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6643)&&teamside=1&&(root,var(38)=[3571,4284])
+anim=6643
+ID=6643
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6643)&&teamside=2&&(root,var(38)=[3571,4284])
+anim=6643
+ID=6643
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+3
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6644)&&teamside=1&&(root,var(38)=[4285,4998])
+anim=6644
+ID=6644
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6644)&&teamside=2&&(root,var(38)=[4285,4998])
+anim=6644
+ID=6644
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+4
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6645)&&teamside=1&&(root,var(38)=[4999,5712])
+anim=6645
+ID=6645
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6645)&&teamside=2&&(root,var(38)=[4999,5712])
+anim=6645
+ID=6645
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+5
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6646)&&teamside=1&&(root,var(38)=[5713,6426])
+anim=6646
+ID=6646
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6646)&&teamside=2&&(root,var(38)=[5713,6426])
+anim=6646
+ID=6646
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+6
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6647)&&teamside=1&&(root,var(38)=[6427,7140])
+anim=6647
+ID=6647
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6647)&&teamside=2&&(root,var(38)=[6427,7140])
+anim=6647
+ID=6647
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+7
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6648)&&teamside=1&&(root,var(38)=[7141,7854])
+anim=6648
+ID=6648
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6648)&&teamside=2&&(root,var(38)=[7141,7854])
+anim=6648
+ID=6648
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+8
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6649)&&teamside=1&&(root,var(38)=[7855,8568])
+anim=6649
+ID=6649
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6649)&&teamside=2&&(root,var(38)=[7855,8568])
+anim=6649
+ID=6649
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+9
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6650)&&teamside=1&&(root,var(38)=[8569,9282])
+anim=6650
+ID=6650
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6650)&&teamside=2&&(root,var(38)=[8569,9282])
+anim=6650
+ID=6650
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ+10
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6651)&&root,var(38)>=9283&&teamside=1
+anim=6651
+ID=6651
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=122+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6651)&&root,var(38)>=9283&&teamside=2
+anim=6651
+ID=6651
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];プリキュアバーストアイコン～黄色
+type=null
+triggerall=!numexplod(6678)&&teamside=1
+trigger1=fvar(0)>=5&&root,fvar(38)>=1&&root,var(6)!=18&&root,var(7)!=18&&root,var(8)!=18
+trigger2=numhelper(3003)&&root,fvar(38)=1
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)&&root,fvar(38)=1
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6678
+ID=6678
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=100+(ifelse(var(53),20,0))+var(19),49+var(20)
+sprpriority=-216
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=!numexplod(6678)&&teamside=2
+trigger1=fvar(0)>=5&&root,fvar(38)>=1&&root,var(6)!=18&&root,var(7)!=18&&root,var(8)!=18
+trigger2=numhelper(3003)&&root,fvar(38)=1
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)&&root,fvar(38)=1
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6678
+ID=6678
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-112-(ifelse(var(53),20,0))-var(19),49+var(20)
+sprpriority=-216
+bindtime=-1
+scale=.5,.5
+
+[State ];プリキュアバーストアイコン～橙色
+type=null
+triggerall=!numexplod(6680)&&teamside=1
+trigger1=fvar(0)>=5&&root,fvar(38)>=2&&root,var(6)!=18&&root,var(7)!=18&&root,var(8)!=18
+trigger2=numhelper(3003)&&root,fvar(38)=2
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)&&root,fvar(38)=2
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6680
+ID=6680
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=103+(ifelse(var(53),20,0))+var(19),51+var(20)
+sprpriority=-214
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=!numexplod(6680)&&teamside=2
+trigger1=fvar(0)>=5&&root,fvar(38)>=2&&root,var(6)!=18&&root,var(7)!=18&&root,var(8)!=18
+trigger2=numhelper(3003)&&root,fvar(38)=2
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)&&root,fvar(38)=2
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6680
+ID=6680
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-115-(ifelse(var(53),20,0))-var(19),51+var(20)
+sprpriority=-214
+bindtime=-1
+scale=.5,.5
+
+[State ];プリキュアバーストアイコン～赤
+type=null
+triggerall=!numexplod(6682)&&teamside=1&&root,fvar(38)=3
+trigger1=fvar(0)>=5&&root,var(6)!=18&&root,var(7)!=18&&root,var(8)!=18
+trigger2=numhelper(3003)
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6682
+ID=6682
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=106+(ifelse(var(53),20,0))+var(19),53+var(20)
+sprpriority=-212
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+triggerall=!numexplod(6682)&&teamside=2&&root,fvar(38)=3
+trigger1=fvar(0)>=5&&root,var(6)!=18&&root,var(7)!=18&&root,var(8)!=18
+trigger2=numhelper(3003)
+trigger2=helper(3003),time=34&&((helper(3003),var(4)=1&&root,var(6)=18)||(helper(3003),var(4)=2&&(root,var(6)=18||root,var(7)=18))||(helper(3003),var(4)=3&&(root,var(6)=18||root,var(7)=18||root,var(8)=18)))
+trigger3=numhelper(3003)
+trigger3=(helper(3003),var(6)=34&&root,var(7)=18)||(helper(3003),var(7)=34&&root,var(8)=18)
+anim=6682
+ID=6682
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-118-(ifelse(var(53),20,0))-var(19),53+var(20)
+sprpriority=-212
+bindtime=-1
+scale=.5,.5
+
+[State ];プリキュアバーストアイコン消える～黄色
+type=null
+trigger1=numexplod(6678)&&!numexplod(6689)&&root,fvar(38)=0&&teamside=1
+anim=6689
+ID=6689
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=100+(ifelse(var(53),20,0))+var(19),49+var(20)
+sprpriority=-216
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numexplod(6678)&&!numexplod(6689)&&root,fvar(38)=0&&teamside=2
+anim=6692
+ID=6689
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-112-(ifelse(var(53),20,0))-var(19),49+var(20)
+sprpriority=-216
+bindtime=-1
+scale=.5,.5
+
+[State ];プリキュアバーストアイコン消える～橙色
+type=null
+trigger1=numexplod(6680)&&!numexplod(6690)&&root,fvar(38)=1&&teamside=1
+anim=6690
+ID=6690
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=103+(ifelse(var(53),20,0))+var(19),51+var(20)
+sprpriority=-214
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numexplod(6680)&&!numexplod(6690)&&root,fvar(38)=1&&teamside=2
+anim=6693
+ID=6690
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-115-(ifelse(var(53),20,0))-var(19),51+var(20)
+sprpriority=-214
+bindtime=-1
+scale=.5,.5
+
+[State ];プリキュアバーストアイコン消える～赤
+type=null
+trigger1=numexplod(6682)&&!numexplod(6691)&&root,fvar(38)=2&&teamside=1
+anim=6691
+ID=6691
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=106+(ifelse(var(53),20,0))+var(19),53+var(20)
+sprpriority=-212
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=numexplod(6682)&&!numexplod(6691)&&root,fvar(38)=2&&teamside=2
+anim=6694
+ID=6691
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-118-(ifelse(var(53),20,0))-var(19),53+var(20)
+sprpriority=-212
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6678)&&root,fvar(38)=0 
+ID=6678
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6680)&&root,fvar(38)=1
+ID=6680
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6682)&&root,fvar(38)=2
+ID=6682
+
+[State ];PEAK FORMエフェクト
+type=null
+triggerall=fvar(0)>=5&&teamside=1&&root,var(36)=1&&!numexplod(6676)&&numhelper(3003)
+trigger1=helper(3003),time=33&&((helper(3003),var(4)=1&&root,var(6)=10)||(helper(3003),var(4)=2&&(root,var(6)=10||root,var(7)=10))||(helper(3003),var(4)=3&&(root,var(6)=10||root,var(7)=10||root,var(8)=10)))
+trigger2=(helper(3003),var(6)=33&&root,var(7)=10)||(helper(3003),var(7)=33&&root,var(8)=10)
+anim=6676
+ID=6676
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=121+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10502
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ]
+type=null
+triggerall=fvar(0)>=5&&teamside=2&&root,var(36)=1&&!numexplod(6676)&&numhelper(3003)
+trigger1=helper(3003),time=33&&((helper(3003),var(4)=1&&root,var(6)=10)||(helper(3003),var(4)=2&&(root,var(6)=10||root,var(7)=10))||(helper(3003),var(4)=3&&(root,var(6)=10||root,var(7)=10||root,var(8)=10)))
+trigger2=(helper(3003),var(6)=33&&root,var(7)=10)||(helper(3003),var(7)=33&&root,var(8)=10)
+anim=6676
+ID=6676
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10501
+bindtime=-1
+scale=.2,.2
+removetime=-1
+
+[State ];テンションゲージ枠
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6634
+ID=6634
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=121+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10505
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6634
+ID=6634
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-122-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10505
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];テンションゲージMAX
+type=null
+trigger1=fvar(0)>=5&&teamside=1&&root,fvar(1)=1&&!numexplod(6673)
+anim=6673
+ID=6673
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=121+var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10520
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2&&root,fvar(1)=1&&!numexplod(6673)
+anim=6673
+ID=6673
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-121-var(23),221+(ifelse(var(49),-32,0))+(ifelse(var(53),34,0))+var(24)
+sprpriority=10520
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=Varadd
+trigger1=fvar(0)>=5&&root,fvar(1)=1&&fvar(18)<=.225
+fvar(18)=.025
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&root,fvar(1)=1
+ID=6673
+scale=.75-fvar(18),.75-fvar(18)
+
+[State ]
+type=Varset
+trigger1=fvar(0)>=5&&root,fvar(1)=0
+fvar(18)=0
+
+[State ];ガードゲージ下地
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6621
+ID=6621
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=100+var(17),40+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-200
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6628
+ID=6621
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-99-var(17),40+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-200
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];ガードゲージ緑
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6624)&&root,var(14)<=333&&teamside=1
+anim=6624
+ID=6624
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=101+var(17),41+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6624)&&root,var(14)<=333&&teamside=2
+anim=6631
+ID=6624
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-101-var(17),41+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];ガードゲージ黄色
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6625)&&teamside=1&&(root,var(14)=[334,666])
+anim=6625
+ID=6625
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=101+var(17),41+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6625)&&teamside=2&&(root,var(14)=[334,666])
+anim=6632
+ID=6625
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-101-var(17),41+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];ガードゲージ赤
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6626)&&root,var(14)>=667&&teamside=1
+anim=6626
+ID=6626
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=101+var(17),41+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6626)&&root,var(14)>=667&&teamside=2
+anim=6633
+ID=6626
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-101-var(17),41+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-198
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];ガードゲージ枠
+type=null
+trigger1=fvar(0)>=5&&teamside=1
+anim=6620
+ID=6620
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=100+var(17),40+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-197
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&teamside=2
+anim=6627
+ID=6620
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-99-var(17),40+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-197
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];ガードゲージ点滅
+type=null
+trigger1=fvar(0)>=5&&numexplod(6622)=0&&root,var(14)>=667&&teamside=1
+anim=6622
+ID=6622
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=100+var(17),40+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-196
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&numexplod(6622)=0&&root,var(14)>=667&&teamside=2
+anim=6629
+ID=6622
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-99-var(17),40+(ifelse(var(49),-9,0))+(ifelse(var(53),9,0))+var(18)
+sprpriority=-196
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ下地
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6524
+ID=6524
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=4+var(11),229+var(12)
+sprpriority=10500
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6532
+ID=6524
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-69-var(11),229+var(12)
+sprpriority=10500
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];プリキュアパワーゲージ～バー（青）
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6526)&&power<=1999&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6526
+ID=6526
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=6+var(11),230+var(12)
+sprpriority=10501
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6526)&&power<=1999&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6534
+ID=6526
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-6-var(11),230+var(12)
+sprpriority=10501
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ～バー（緑）
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6527)&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+trigger1=power=[1000,2999]
+anim=6527
+ID=6527
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=6+var(11),230+var(12)
+sprpriority=10502
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6527)&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+trigger1=power=[1000,2999]
+anim=6535
+ID=6527
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-6-var(11),230+var(12)
+sprpriority=10502
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ～バー（黄色）
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6528)&&teamside=1&&(root,teammode=single ||root,teammode=turns)&&(power=[2000,3999])
+anim=6528
+ID=6528
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=6+var(11),230+var(12)
+sprpriority=10503
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6528)&&teamside=2&&(root,teammode=single ||root,teammode=turns)&&(power=[2000,3999])
+anim=6536
+ID=6528
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-6-var(11),230+var(12)
+sprpriority=10503
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ～バー（赤）
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6529)&&teamside=1&&(root,teammode=single ||root,teammode=turns)&&(power=[3000,4999])
+anim=6529
+ID=6529
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=6+var(11),230+var(12)
+sprpriority=10504
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6529)&&teamside=2&&(root,teammode=single ||root,teammode=turns)&&(power=[3000,4999])
+anim=6537
+ID=6529
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-6-var(11),230+var(12)
+sprpriority=10504
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ～バー（ピンク）
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6530)&&power>=4000&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6530
+ID=6530
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=6+var(11),230+var(12)
+sprpriority=10505
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6530)&&power>=4000&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6538
+ID=6530
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-6-var(11),230+var(12)
+sprpriority=10505
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ～スライド光
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6664)&&power>=1000&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6664
+ID=6664
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=6+var(11),230+var(12)
+sprpriority=10506
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6664)&&power>=1000&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6665
+ID=6664
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-6-var(11),230+var(12)
+sprpriority=10506
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ枠
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6523
+ID=6523
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=4+var(11),229+var(12)
+sprpriority=10515
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6531
+ID=6523
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-69-var(11),229+var(12)
+sprpriority=10515
+bindtime=-1
+scale=.5,.5
+persistent=0
+removetime=-1
+
+[State ];プリキュアパワーゲージ～数字0
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6539)&&power<=999&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6539
+ID=6539
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6539)&&power<=999&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6652
+ID=6539
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ～数字1
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6540)&&teamside=1&&(root,teammode=single ||root,teammode=turns)&&(power=[1000,1999])
+anim=6540
+ID=6540
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6540)&&teamside=2&&(root,teammode=single ||root,teammode=turns)&&(power=[1000,1999])
+anim=6653
+ID=6540
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ～数字2
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6541)&&teamside=1&&(root,teammode=single ||root,teammode=turns)&&(power=[2000,2999])
+anim=6541
+ID=6541
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6541)&&teamside=2&&(root,teammode=single ||root,teammode=turns)&&(power=[2000,2999])
+anim=6654
+ID=6541
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ～数字3
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6542)&&teamside=1&&(root,teammode=single ||root,teammode=turns)&&(power=[3000,3999])
+anim=6542
+ID=6542
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6542)&&teamside=2&&(root,teammode=single ||root,teammode=turns)&&(power=[3000,3999])
+anim=6655
+ID=6542
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ～数字4
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6543)&&teamside=1&&(root,teammode=single ||root,teammode=turns)&&(power=[4000,4999])
+anim=6543
+ID=6543
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6543)&&teamside=2&&(root,teammode=single ||root,teammode=turns)&&(power=[4000,4999])
+anim=6656
+ID=6543
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-77-var(11),232+(ifelse(var(49),-35,0))+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ～数字5
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6544)&&power>=5000&&teamside=1&&(root,teammode=single ||root,teammode=turns)
+anim=6544
+ID=6544
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=76+var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+trigger1=var(53)=0&&fvar(0)>=5&&!numexplod(6544)&&power>=5000&&teamside=2&&(root,teammode=single ||root,teammode=turns)
+anim=6657
+ID=6544
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-77-var(11),232+var(12)
+sprpriority=10508
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=Varset
+trigger1=power>=1000||(power!=0&&power<=999)||(fvar(1)!=0&&power<=0)
+fvar(1)=ifelse(power>=1000,100,ifelse(power!=0&&power<=999,power/10,0))
+
+[State ]
+type=Varset
+trigger1=power>=2000||(power=[1000,1999])||power<=999
+fvar(2)=ifelse(power>=2000,100,ifelse((power=[1000,1999]),(power/10)-100,0))
+
+[State ]
+type=Varset
+trigger1=power>=3000||(power=[2000,2999])||power<=1999
+fvar(3)=ifelse(power>=3000,100,ifelse((power=[2000,2999]),(power/10)-200,0))
+
+[State ]
+type=Varset
+trigger1=power>=4000||(power=[3000,3999])||power<=2999
+fvar(4)=ifelse(power>=4000,100,ifelse((power=[3000,3999]),(power/10)-300,0))
+
+[State ]
+type=Varset
+trigger1=power>=5000||(power=[4000,4999])||power<=3999
+fvar(5)=ifelse(power>=5000,100,ifelse((power=[4000,4999]),(power/10)-400,0))
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6526)
+ID=6526
+scale=.5*(fvar(1)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6527)
+ID=6527
+scale=.5*(fvar(2)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6528)
+ID=6528
+scale=.5*(fvar(3)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6529)
+ID=6529
+scale=.5*(fvar(4)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6530)
+ID=6530
+scale=.5*(fvar(5)*.01),.5
+
+[State ]
+type=Varset
+trigger1=root,var(41)>=1000||(root,var(41)=[0,999])||(fvar(6)!=0&&root,var(41)<=0)
+fvar(6)=ifelse(root,var(41)>=1000,100,ifelse((root,var(41)=[0,999]),root,var(41)/10,0))
+
+[State ]
+type=Varset
+trigger1=root,var(41)>=2000||(root,var(41)=[1000,1999])||root,var(41)<=999
+fvar(7)=ifelse(root,var(41)>=2000,100,ifelse((root,var(41)=[1000,1999]),(root,var(41)/10)-100,0))
+
+[State ]
+type=Varset
+trigger1=root,var(41)>=3000||(root,var(41)=[2000,2999])||root,var(41)<=1999
+fvar(8)=ifelse(root,var(41)>=3000,100,ifelse((root,var(41)=[2000,2999]),(root,var(41)/10)-200,0))
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5
+ID=6569
+scale=.21*(fvar(6)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5
+ID=6570
+scale=.21*(fvar(7)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5
+ID=6571
+scale=.21*(fvar(8)*.01),.5
+
+[State ];プリキュアパワーゲージ光用～ひとりめ
+type=Varset
+trigger1=((fvar(9)!=[1,2])&&root,var(41)>=1000)||(fvar(9)!=0&&root,var(41)<=999)
+fvar(9)=ifelse((fvar(9)!=[1,2])&&root,var(41)>=1000,1,0)
+
+[State ];プリキュアパワーゲージ光用～ふたりめ
+type=Varset
+trigger1=((fvar(10)!=[1,2])&&root,var(41)>=2000)||(fvar(10)!=0&&root,var(41)<=1999)
+fvar(10)=ifelse((fvar(10)!=[1,2])&&root,var(41)>=2000,1,0)
+
+[State ];プリキュアパワーゲージ光用～さんにんめ
+type=Varset
+trigger1=((fvar(11)!=[1,2])&&root,var(41)>=3000)||(fvar(11)!=0&&root,var(41)<=2999)
+fvar(11)=ifelse((fvar(11)!=[1,2])&&root,var(41)>=3000,1,0)
+
+[State ];ストライカースタンバイゲージ用～キュアホワイト
+type=Varset
+trigger1=root,var(9)>=1000||(root,var(9)=[0,999])||(fvar(12)!=0&&root,var(9)<=0)
+fvar(12)=ifelse(root,var(9)>=1000,100,ifelse((root,var(9)=[0,999]),root,var(9)/10,0))
+
+[State ];ストライカースタンバイゲージ用～シャイニールミナス
+type=Varset
+trigger1=root,var(10)>=1000||(root,var(10)=[0,999])||(fvar(13)!=0&&root,var(10)<=0)
+fvar(13)=ifelse(root,var(10)>=1000,100,ifelse((root,var(10)=[0,999]),root,var(10)/10,0))
+
+[State ];ストライカーアクションゲージ用～キュアホワイト
+type=Varset
+trigger1=root,var(39)>=1000||(root,var(39)=[0,999])||(fvar(14)!=0&&root,var(39)<=0)
+fvar(14)=ifelse(root,var(39)>=1000,100,ifelse((root,var(39)=[0,999]),root,var(39)/10,0))
+
+[State ];ストライカーアクションゲージ用～シャイニールミナス
+type=Varset
+trigger1=root,var(40)>=1000||(root,var(40)=[0,999])||(fvar(15)!=0&&root,var(40)<=0)
+fvar(15)=ifelse(root,var(40)>=1000,100,ifelse((root,var(40)=[0,999]),root,var(40)/10,0))
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5
+ID=6602
+scale=.5*(fvar(12)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5
+ID=6600
+scale=.5*(fvar(13)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5
+ID=6603
+scale=.5*(fvar(14)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5
+ID=6601
+scale=.5*(fvar(15)*.01),.5
+
+[State ];ガードゲージ用
+type=Varset
+trigger1=root,var(14)>=1000||(root,var(14)=[0,999])||(fvar(16)!=0&&root,var(14)<=0)
+fvar(16)=ifelse(root,var(14)>=1000,100,ifelse((root,var(14)=[0,999]),root,var(14)/10,0))
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5
+ID=6624
+scale=.5*(fvar(16)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5
+ID=6625
+scale=.5*(fvar(16)*.01),.5
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5
+ID=6626
+scale=.5*(fvar(16)*.01),.5
+
+[State ];テンションゲージ用
+type=Varset
+trigger1=root,var(38)>=10000||(root,var(38)=[0,9999])||(fvar(17)!=0&&root,var(38)<=0)
+fvar(17)=ifelse(root,var(38)>=10000,100,ifelse((root,var(38)=[0,9999]),root,var(38)/100,0))
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6638)
+ID=6638
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6639)
+ID=6639
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6640)
+ID=6640
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6641)
+ID=6641
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6642)
+ID=6642
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6643)
+ID=6643
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6644)
+ID=6644
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6645)
+ID=6645
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6646)
+ID=6646
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6647)
+ID=6647
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6648)
+ID=6648
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6649)
+ID=6649
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6650)
+ID=6650
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6651)
+ID=6651
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ]
+type=modifyexplod
+trigger1=fvar(0)>=5&&numexplod(6676)
+ID=6676
+scale=.5*(fvar(17)*.0076)+0.11,.5*(fvar(17)*.0076)+0.11
+
+[State ];プリキュアサポートゲージ白～ひとりめ
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6566)&&fvar(9)=1&&teamside=1
+anim=6566
+ID=6566
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=19+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10511
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6566)&&fvar(9)=1&&teamside=2
+anim=6566
+ID=6566
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-19-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10511
+bindtime=-1
+scale=.5,.5
+facing=-1
+
+[State ];プリキュアサポートゲージ白～ふたりめ
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6567)&&fvar(10)=1&&teamside=1
+anim=6567
+ID=6567
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10511
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6567)&&fvar(10)=1&&teamside=2
+anim=6567
+ID=6567
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10511
+bindtime=-1
+scale=.5,.5
+facing=-1
+
+[State ];プリキュアサポートゲージ白～さんにんめ
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6568)&&fvar(11)=1&&teamside=1
+anim=6566
+ID=6568
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=74+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10511
+bindtime=-1
+scale=.5,.5
+
+[State ]
+type=null
+trigger1=fvar(0)>=5&&!numexplod(6568)&&fvar(11)=1&&teamside=2
+anim=6566
+ID=6568
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-74-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10511
+bindtime=-1
+scale=.5,.5
+facing=-1
+
+[State ];プリキュアサポートゲージ文字～ひとりめ
+type=null
+triggerall=numhelper(3003)&&!numexplod(71001)&&teamside=1
+trigger1=(root,var(52)=4||root,var(52)=16||root,var(52)=19||root,var(52)=29)&&helper(3003),time=33
+trigger2=root,var(52)=27&&power>=1000&&helper(3003),time>=33
+anim=71000+root,var(52)
+ID=71001
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=18+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=numhelper(3003)&&!numexplod(71001)&&teamside=2
+trigger1=(root,var(52)=4||root,var(52)=16||root,var(52)=19||root,var(52)=29)&&helper(3003),time=33
+trigger2=root,var(52)=27&&power>=1000&&helper(3003),time>=33
+anim=71000+root,var(52)
+ID=71001
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-18-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字～ふたりめ
+type=null
+triggerall=numhelper(3003)&&!numexplod(71002)&&teamside=1
+trigger1=(root,var(53)=4||root,var(53)=16||root,var(53)=19||root,var(53)=29)&&(helper(3003),time=33&&helper(3003),var(4)>=2)||helper(3003),var(6)=33
+trigger2=root,var(53)=27&&power>=1000&&((helper(3003),time>=33&&helper(3003),var(4)>=2)||helper(3003),var(6)>=33)
+anim=71000+root,var(53)
+ID=71002
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=numhelper(3003)&&!numexplod(71002)&&teamside=2
+trigger1=(root,var(53)=4||root,var(53)=16||root,var(53)=19||root,var(53)=29)&&(helper(3003),time=33&&helper(3003),var(4)>=2)||helper(3003),var(6)=33
+trigger2=root,var(53)=27&&power>=1000&&((helper(3003),time>=33&&helper(3003),var(4)>=2)||helper(3003),var(6)>=33)
+anim=71000+root,var(53)
+ID=71002
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアサポートゲージ文字～さんにんめ
+type=null
+triggerall=numhelper(3003)&&!numexplod(71003)&&teamside=1
+trigger1=(root,var(54)=4||root,var(54)=16||root,var(54)=19||root,var(54)=29)&&(helper(3003),time=33&&helper(3003),var(4)=3)||helper(3003),var(7)=33
+trigger2=root,var(54)=27&&power>=1000&&((helper(3003),time>=33&&helper(3003),var(4)=3)||helper(3003),var(7)>=33)
+anim=71000+root,var(54)
+ID=71003
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=73+var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=numhelper(3003)&&!numexplod(71003)&&teamside=2
+trigger1=(root,var(54)=4||root,var(54)=16||root,var(54)=19||root,var(54)=29)&&(helper(3003),time=33&&helper(3003),var(4)=3)||helper(3003),var(7)=33
+trigger2=root,var(54)=27&&power>=1000&&((helper(3003),time>=33&&helper(3003),var(4)=3)||helper(3003),var(7)>=33)
+anim=71000+root,var(54)
+ID=71003
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-73-var(13),202+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10517
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ];プリキュアパワーゲージ光用～ひとりめ制御
+type=Varset
+trigger1=fvar(9)=1
+fvar(9)=2
+
+[State ];プリキュアパワーゲージ光用～ふたりめ制御
+type=Varset
+trigger1=fvar(10)=1
+fvar(10)=2
+
+[State ];プリキュアパワーゲージ光用～さんにんめ制御
+type=Varset
+trigger1=fvar(11)=1
+fvar(11)=2
+
+[State ];プリキュアサポートゲージ顔点滅ふたりめ判定解除
+type=Varset
+trigger1=!numhelper(3003)&&var(39)>=1
+var(39)=0
+
+[State ];プリキュアサポートゲージ顔点滅さんにんめ判定解除
+type=Varset
+trigger1=!numhelper(3003)&&var(40)>=1
+var(40)=0
+
+[State ];プリキュアサポートゲージ顔点滅ふたりめ判定
+type=Varadd
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)>=2||helper(3003),var(5)>=1
+var(39)=1
+
+[State ];プリキュアサポートゲージ顔点滅さんにんめ判定
+type=Varadd
+trigger1=numhelper(3003)
+trigger1=helper(3003),var(4)=3||helper(3003),var(5)=2
+var(40)=1
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(59000)&&(root,var(36)=0||(root,var(6)=16&&root,fvar(0)=1)||(root,var(6)=4&&root,fvar(2)=1)||(root,var(6)=19&&root,fvar(3)=2)||(root,var(6)=29&&root,fvar(4)=2)||(root,var(6)=27&&power<=999))
+ID=59000
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(59100)&&(root,var(36)=0||(root,var(6)=27&&power>=1000))
+ID=59100
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(60000)&&(var(39)=0||(root,var(7)=16&&root,fvar(0)=1)||(root,var(7)=4&&root,fvar(2)=1)||(root,var(7)=19&&root,fvar(3)=2)||(root,var(7)=29&&root,fvar(4)=2)||(root,var(7)=27&&power<=999))
+ID=60000
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(59200)&&(var(39)=0||(root,var(7)=27&&power>=1000))
+ID=59200
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(62000)&&(var(40)=0||(root,var(8)=16&&root,fvar(0)=1)||(root,var(8)=4&&root,fvar(2)=1)||(root,var(8)=19&&root,fvar(3)=2)||(root,var(8)=29&&root,fvar(4)=2)||(root,var(8)=27&&power<=999))
+ID=62000
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(59300)&&(var(40)=0||(root,var(8)=27&&power>=1000))
+ID=59300
+
+[State ];プリキュアサポートゲージ顔点滅白特殊～ひとりめ
+type=null
+triggerall=!numexplod(59100)&&root,var(36)>=1&&teamside=1
+trigger1=(root,var(6)=16&&root,fvar(0)=1)||(root,var(6)=4&&root,fvar(2)=1)||(root,var(6)=19&&root,fvar(3)=2)||(root,var(6)=29&&root,fvar(4)=2)||(root,var(6)=27&&power<=999)
+anim=59100+root,var(52)
+ID=59100
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=19+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=!numexplod(59100)&&root,var(36)>=1&&teamside=2
+trigger1=(root,var(6)=16&&root,fvar(0)=1)||(root,var(6)=4&&root,fvar(2)=1)||(root,var(6)=19&&root,fvar(3)=2)||(root,var(6)=29&&root,fvar(4)=2)||(root,var(6)=27&&power<=999)
+anim=59100+root,var(52)
+ID=59100
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-19-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+removetime=-1
+facing=-1
+
+[State ];プリキュアサポートゲージ顔点滅白～ひとりめ
+type=null
+triggerall=!numexplod(59000)&&root,var(36)>=1&&teamside=1
+trigger1=(root,var(6)=16&&root,fvar(0)=0)||(root,var(6)=4&&root,fvar(2)=0)||(root,var(6)=19&&root,fvar(3)!=2)||(root,var(6)=29&&root,fvar(4)!=2)||(root,var(6)=27&&power>=1000)
+trigger2=root,var(6)!=4&&root,var(6)!=16&&root,var(6)!=19&&root,var(6)!=27&&root,var(6)!=29
+anim=59000+root,var(52)
+ID=59000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=19+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=!numexplod(59000)&&root,var(36)>=1&&teamside=2
+trigger1=(root,var(6)=16&&root,fvar(0)=0)||(root,var(6)=4&&root,fvar(2)=0)||(root,var(6)=19&&root,fvar(3)!=2)||(root,var(6)=29&&root,fvar(4)!=2)||(root,var(6)=27&&power>=1000)
+trigger2=root,var(6)!=4&&root,var(6)!=16&&root,var(6)!=19&&root,var(6)!=27&&root,var(6)!=29
+anim=59000+root,var(52)
+ID=59000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-19-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+facing=-1
+removetime=-1
+
+[State ];プリキュアサポートゲージ顔点滅白特殊～ふたりめ
+type=null
+triggerall=!numexplod(59200)&&var(39)>=1&&teamside=1
+trigger1=(root,var(7)=16&&root,fvar(0)=1)||(root,var(7)=4&&root,fvar(2)=1)||(root,var(7)=19&&root,fvar(3)=2)||(root,var(7)=29&&root,fvar(4)=2)||(root,var(7)=27&&power<=999)
+anim=59400+root,var(53)
+ID=59200
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=!numexplod(59200)&&var(39)>=1&&teamside=2
+trigger1=(root,var(7)=16&&root,fvar(0)=1)||(root,var(7)=4&&root,fvar(2)=1)||(root,var(7)=19&&root,fvar(3)=2)||(root,var(7)=29&&root,fvar(4)=2)||(root,var(7)=27&&power<=999)
+anim=59400+root,var(53)
+ID=59200
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+removetime=-1
+facing=-1
+
+[State ];プリキュアサポートゲージ顔点滅白～ふたりめ
+type=null
+triggerall=!numexplod(60000)&&var(39)>=1&&teamside=1
+trigger1=(root,var(7)=16&&root,fvar(0)=0)||(root,var(7)=4&&root,fvar(2)=0)||(root,var(7)=19&&root,fvar(3)!=2)||(root,var(7)=29&&root,fvar(4)!=2)||(root,var(7)=27&&power>=1000)
+trigger2=root,var(7)!=4&&root,var(7)!=16&&root,var(7)!=19&&root,var(7)!=27&&root,var(7)!=29
+anim=59300+root,var(53)
+ID=60000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=46+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=!numexplod(60000)&&var(39)>=1&&teamside=2
+trigger1=(root,var(7)=16&&root,fvar(0)=0)||(root,var(7)=4&&root,fvar(2)=0)||(root,var(7)=19&&root,fvar(3)!=2)||(root,var(7)=29&&root,fvar(4)!=2)||(root,var(7)=27&&power>=1000)
+trigger2=root,var(7)!=4&&root,var(7)!=16&&root,var(7)!=19&&root,var(7)!=27&&root,var(7)!=29
+anim=59300+root,var(53)
+ID=60000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-46-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+facing=-1
+removetime=-1
+
+[State ];プリキュアサポートゲージ顔点滅白特殊～さんにんめ
+type=null
+triggerall=!numexplod(59300)&&var(40)>=1&&teamside=1
+trigger1=(root,var(8)=16&&root,fvar(0)=1)||(root,var(8)=4&&root,fvar(2)=1)||(root,var(8)=19&&root,fvar(3)=2)||(root,var(8)=29&&root,fvar(4)=2)||(root,var(8)=27&&power<=999)
+anim=59100+root,var(54)
+ID=59300
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=74+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=!numexplod(59300)&&var(40)>=1&&teamside=2
+trigger1=(root,var(8)=16&&root,fvar(0)=1)||(root,var(8)=4&&root,fvar(2)=1)||(root,var(8)=19&&root,fvar(3)=2)||(root,var(8)=29&&root,fvar(4)=2)||(root,var(8)=27&&power<=999)
+anim=59100+root,var(54)
+ID=59300
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-74-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+removetime=-1
+facing=-1
+
+[State ];プリキュアサポートゲージ顔点滅白～さんにんめ
+type=null
+triggerall=!numexplod(62000)&&var(40)>=1&&teamside=1
+trigger1=(root,var(8)=16&&root,fvar(0)=0)||(root,var(8)=4&&root,fvar(2)=0)||(root,var(8)=19&&root,fvar(3)!=2)||(root,var(8)=29&&root,fvar(4)!=2)||(root,var(8)=27&&power>=1000)
+trigger2=root,var(8)!=4&&root,var(8)!=16&&root,var(8)!=19&&root,var(8)!=27&&root,var(8)!=29
+anim=59000+root,var(54)
+ID=62000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=74+var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+removetime=-1
+
+[State ]
+type=null
+triggerall=!numexplod(62000)&&var(40)>=1&&teamside=2
+trigger1=(root,var(8)=16&&root,fvar(0)=0)||(root,var(8)=4&&root,fvar(2)=0)||(root,var(8)=19&&root,fvar(3)!=2)||(root,var(8)=29&&root,fvar(4)!=2)||(root,var(8)=27&&power>=1000)
+trigger2=root,var(8)!=4&&root,var(8)!=16&&root,var(8)!=19&&root,var(8)!=27&&root,var(8)!=29
+anim=59000+root,var(54)
+ID=62000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-74-var(13),211+(ifelse(var(49),-24,0))+(ifelse(var(53),24,0))+var(14)
+sprpriority=10510
+bindtime=-1
+scale=.5,.5
+facing=-1
+removetime=-1
+
+[State ];絶対に負けない！モードアイコン
+type=null
+trigger1=fvar(0)=1&&!numexplod(306752)&&root,var(32)=1&&teamside=1
+anim=306752
+ID=306752
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=4+var(25),233+ifelse(var(49),-35,0)+ifelse(var(53),24,0)+var(26)
+sprpriority=10560
+bindtime=-1
+scale=.5,.5
+removetime=-1
+ownpal=1
+
+[State ]
+type=null
+trigger1=fvar(0)=1&&!numexplod(306752)&&root,var(32)=1&&teamside=2
+anim=306754
+ID=306752
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-5-var(25),233+ifelse(var(49),-35,0)+ifelse(var(53),24,0)+var(26)
+sprpriority=10560
+bindtime=-1
+scale=.5,.5
+removetime=-1
+ownpal=1
+facing=-1
+
+[State ];絶対に負けない！モードアイコン白
+type=null
+trigger1=fvar(0)=1&&root,var(32)=1&&teamside=1
+anim=306753
+ID=306753
+supermovetime=100
+pausemovetime=100
+postype=left
+pos=4+var(25),233+ifelse(var(49),-35,0)+ifelse(var(53),24,0)+var(26)
+sprpriority=10561
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[State ]
+type=null
+trigger1=fvar(0)=1&&root,var(32)=1&&teamside=2
+anim=306755
+ID=306753
+supermovetime=100
+pausemovetime=100
+postype=right
+pos=-5-var(25),233+ifelse(var(49),-35,0)+ifelse(var(53),24,0)+var(26)
+sprpriority=10561
+bindtime=-1
+scale=.5,.5
+persistent=0
+ownpal=1
+
+[state ];MODE表示
+type=null
+trigger1=numexplod(97000)=0&&root,fvar(31)=0&&teamside=1&&root,RoundsExisted=0&&time=1
+anim=97000+root,var(45)
+ID=97000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=5,220
+ontop=1
+bindtime=-1
+scale=.5,.5
+
+[state ]
+type=null
+trigger1=numexplod(97000)=0&&root,fvar(31)=0&&teamside=2&&root,RoundsExisted=0&&time=1
+anim=97000+root,var(45)
+ID=97000
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=right
+pos=-72+ifelse(root,var(45)=1,1,0),220
+ontop=1
+bindtime=-1
+scale=.5,.5
+
+[State ];MODE表示制御
+type=parentvarset
+trigger1=root,fvar(31)=0&&root,RoundsExisted=0&&time=1
+fvar(31)=1
+
+[State ];ゲージ消し対応用
+type=Varset
+triggerall=var(34)!=1
+trigger1=(P2name="tiki"&&enemynear,Authorname="UJI"&&root,movetype=H&&(root,stateno=3521||root,stateno=3571))||(root,alive=0&&(root,numexplod(22004)||root,numexplod(21211)))
+trigger2=(P2name="Wapiko"&&enemynear,authorname="NHK"&&root,stateno=20000&&root,movetype=H&&root,time>=2)||(root,movetype=H&&((root,stateno=4100&&root,anim=5300&&root,time>30&&P2name="MONOKUMA")||(root,stateno=14500&&root,anim=1860)))
+trigger3=lose&&enemynear,time>=30&&((EnemyNear,StateNo=18000&&(EnemyNear,Name="Seikimatu Guile"||EnemyNear,Name="SF2 Guile"))||((EnemyNear,StateNo=[18100,18101])&&EnemyNear,Name="Chunli_Sf3_Marvel"))
+trigger4=lose&&enemynear,time>=30&&EnemyNear,StateNo=18000&&(EnemyNear,Name="Ryu_Sf3_Marvel"||EnemyNear,Name="Ken_Sf3_Marvel"||EnemyNear,Name="Sean_Sf3_Marvel"||EnemyNear,Name="Elena_Sf3_Marvel"||EnemyNear,Name="Chunli_Sf3_Marvel")
+trigger5=(lose&&enemynear,time>=30&&EnemyNear,StateNo=18001&&EnemyNear,Name="Blue Eyes White Karin")||(EnemyNear,StateNo=18100&&EnemyNear,Name="Seikimatu Guile")||(root,numexplod(100185)&&roundstate=4)
+trigger6=((P2name="Uzuki_Shimamura_SB"&&enemynear,Authorname="nani(type1)")||(P2name="Uzuki_Shimamura_GF"&&enemynear,Authorname="yugusic"))&&root,movetype=H&&(root,stateno=4716||(root,stateno=[4725,4726]))
+trigger7=Root,StateNo=19601223&&((EnemyNear,Name="Seikimatu Guile"&&(EnemyNear,StateNo=192||EnemyNear,StateNo=196))||(EnemyNear,Name="SF2 Guile"&&(EnemyNear,StateNo=[19000,19001])))
+trigger8=(Root,StateNo=19680301&&EnemyNear,Name="Chunli_Sf3_Marvel"&&(EnemyNear,StateNo=[193,194]))||(EnemyNear,Name="Master Morrigan"&&((Root,StateNo=19940630&&(EnemyNear,StateNo=[19000,19002]))||(Root,lose&&(EnemyNear,StateNo=[18000,18999]))))
+trigger9=enemy,name="Haruhi Suzumiya"&&enemy,Authorname="YU-TOHARU"&&enemy,var(50)!=0&&root,stateno=104009&&root,movetype=H&&root,alive=0
+trigger10=enemy,name="Haruhi Suzumiya"&&enemy,Authorname="YU-TOHARU"&&enemy,var(50)!=0&&(enemy,teammode=single ||enemy,teammode=turns)&&(teammode=single ||teammode=turns)&&root,stateno=104230&&root,movetype=H&&root,time>=50
+trigger11=(enemynear,name="edogawa_conan"||enemynear,name="edogawa_conan_AprilFool")
+trigger11=(enemynear,stateno=4001&&enemynear,movetype=A&&(enemynear,time=[115,ifelse(enemynear,anim=2011,276,255)]))
+trigger12=(enemynear,name="edogawa_conan"||enemynear,name="edogawa_conan_AprilFool")
+trigger12=(enemynear,var(3)=[100012,199999])||(enemynear,var(3)=[200080,299999])||(enemynear,var(3)=[300000,300062])||(enemynear,var(3)=[400010,499999])
+var(34)=1
+
+[State ];ゲージ消し対応用解除
+type=Varset
+triggerall=var(34)=1
+trigger1=(P2name="tiki"&&enemynear,Authorname="UJI"&&(root,stateno!=[3521,3522])&&(root,stateno!=[3571,3572]))
+trigger2=(P2name="Wapiko"&&enemynear,authorname="NHK"&&root,stateno!=20000)||((root,stateno=[4110,4120])&&root,anim=5300&&P2name="MONOKUMA")
+trigger3=((P2name="Uzuki_Shimamura_SB"&&enemynear,Authorname="nani(type1)")||(P2name="Uzuki_Shimamura_GF"&&enemynear,Authorname="yugusic"))&&root,movetype=H&&root,stateno!=4716&&!(root,stateno=[4725,4726])
+trigger4=(P2Name="Seikimatu Guile"||P2Name="SF2 Guile")&&((roundstate<=1&&Root,StateNo!=19601223)||Root,prevStateNo=19601223)
+trigger5=(P2Name="Chunli_Sf3_Marvel"&&((roundstate<=1&&Root,StateNo!=19680301)||Root,prevStateNo=19680301))||(P2Name="Master Morrigan"&&((roundstate<=1&&Root,StateNo!=19940630)||Root,prevStateNo=19940630))
+trigger6=enemy,name="Haruhi Suzumiya"&&enemy,Authorname="YU-TOHARU"&&enemy,var(50)!=0&&root,stateno!=104230&&(root,alive=1||(root,alive=0&&enemy,stateno!=106001&&enemy,stateno!=0))
+trigger7=(enemynear,name="edogawa_conan"||enemynear,name="edogawa_conan_AprilFool")&&(enemynear,var(3)!=[100012,199999])&&(enemynear,var(3)!=[200080,299999])
+trigger7=(roundstate!=4&&enemynear,stateno!=4001&&(enemynear,var(3)!=[300000,399999]))||(enemynear,stateno=4001&&enemynear,movetype=A&&enemynear,time=ifelse(enemynear,anim=2011,277,256))
+var(34)=2
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6523
+sprpriority=ifelse(var(34)=1,-10100,10515)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6524
+sprpriority=ifelse(var(34)=1,-10100,10500)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6526
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6527
+sprpriority=ifelse(var(34)=1,-10100,10502)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6528
+sprpriority=ifelse(var(34)=1,-10100,10503)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6529
+sprpriority=ifelse(var(34)=1,-10100,10504)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6530
+sprpriority=ifelse(var(34)=1,-10100,10505)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6539
+sprpriority=ifelse(var(34)=1,-10100,10508)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6540
+sprpriority=ifelse(var(34)=1,-10100,10508)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6541
+sprpriority=ifelse(var(34)=1,-10100,10508)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6542
+sprpriority=ifelse(var(34)=1,-10100,10508)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6543
+sprpriority=ifelse(var(34)=1,-10100,10508)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6544
+sprpriority=ifelse(var(34)=1,-10100,10508)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6551
+sprpriority=ifelse(var(34)=1,-10100,10515)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6552
+sprpriority=ifelse(var(34)=1,-10100,10500)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6557
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6566
+sprpriority=ifelse(var(34)=1,-10100,10511)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6567
+sprpriority=ifelse(var(34)=1,-10100,10511)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6568
+sprpriority=ifelse(var(34)=1,-10100,10511)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6569
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6570
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6571
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6634
+sprpriority=ifelse(var(34)=1,-10100,10505)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6635
+sprpriority=ifelse(var(34)=1,-10100,10500)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6638
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6639
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6640
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6641
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6642
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6643
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6644
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6645
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6646
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6647
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6648
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6649
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6650
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6651
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6664
+sprpriority=ifelse(var(34)=1,-10100,10506)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6666
+sprpriority=ifelse(var(34)=1,-10100,10502)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6667
+sprpriority=ifelse(var(34)=1,-10100,10502)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6668
+sprpriority=ifelse(var(34)=1,-10100,10502)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6673
+sprpriority=ifelse(var(34)=1,-10100,10520)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6674
+sprpriority=ifelse(var(34)=1,-10100,10520)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6676
+sprpriority=ifelse(var(34)=1,-10100,10502)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6695
+sprpriority=ifelse(var(34)=1,-10100,10505)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6696
+sprpriority=ifelse(var(34)=1,-10100,10500)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6698
+sprpriority=ifelse(var(34)=1,-10100,10502)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=6699
+sprpriority=ifelse(var(34)=1,-10100,10501)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=45001
+sprpriority=ifelse(var(34)=1,-10100,10502)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=59000
+sprpriority=ifelse(var(34)=1,-10100,10510)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=59100
+sprpriority=ifelse(var(34)=1,-10100,10510)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=59200
+sprpriority=ifelse(var(34)=1,-10100,10510)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=59300
+sprpriority=ifelse(var(34)=1,-10100,10510)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=60000
+sprpriority=ifelse(var(34)=1,-10100,10510)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=62000
+sprpriority=ifelse(var(34)=1,-10100,10510)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=71001
+sprpriority=ifelse(var(34)=1,-10100,10517)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=71002
+sprpriority=ifelse(var(34)=1,-10100,10517)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=71003
+sprpriority=ifelse(var(34)=1,-10100,10517)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=71004
+sprpriority=ifelse(var(34)=1,-10100,10517)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=71016
+sprpriority=ifelse(var(34)=1,-10100,10517)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=72004
+sprpriority=ifelse(var(34)=1,-10100,10517)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=72016
+sprpriority=ifelse(var(34)=1,-10100,10517)
+
+[State ]
+type=modifyexplod
+trigger1=var(34)=[1,2]
+ID=306752
+sprpriority=ifelse(var(34)=1,-10100,10560)
+
+[State ]
+type=Varset
+trigger1=var(34)=2
+var(34)=3

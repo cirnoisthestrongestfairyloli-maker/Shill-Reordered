@@ -1,0 +1,119 @@
+; Var(57) Flag List:
+; 1 - 3z
+; 2 - j5z
+; 3 - Fragrant Wave
+; 4 - Cyclone Light Step
+; 5 - "Colorful Windchime"
+; 6 - "Roc's Fist"
+
+[Data]
+life = 950
+attack = 92
+defence = 100
+power= 5000
+fall.defence_up = 0
+liedown.time = 11
+airjuggle = 1
+sparkno = s8000
+guard.sparkno = s8030
+KO.echo = 0
+volume = 255
+IntPersistIndex = 28
+FloatPersistIndex = 40
+
+[Size]
+xscale = 1           ;Horizontal scaling factor.
+yscale = 1           ;Vertical scaling factor.
+ground.back = 16     ;Player width (back, ground)
+ground.front = 16    ;Player width (front, ground)
+air.back = 16        ;Player width (back, air)
+air.front = 16       ;Player width (front, air)
+height = 60          ;Height of player (for opponent to jump over)
+attack.dist = 160    ;Default attack distance
+proj.attack.dist = 90 ;Default attack distance for projectiles
+proj.doscale = 0     ;Set to 1 to scale projectiles too
+head.pos = 6, -70    ;Approximate position of head
+mid.pos = 0, -50     ;Approximate position of midsection
+shadowoffset = 0     ;Number of pixels to vertically offset the shadow
+draw.offset = 0,0    ;Player drawing offset in pixels (x, y)
+
+[Velocity]
+walk.fwd = 3.5       ;Walk forward
+walk.back = -2.3     ;Walk backward
+run.fwd = 6.0,0.0    ;Run forward (x, y)
+run.back = -4.8,-4.5 ;Hop backward (x, y)
+jump.neu = 0,-10.4   ;Neutral jumping velocity (x, y)
+jump.fwd = 3.8       ;Jump forward Speed (x, y)
+jump.back = -3.8     ;Jump back Speed (x, y)
+runjump.fwd = 5.0,-8.1    ;Running jump speeds (opt)
+runjump.back = -5.0,-8.1
+airjump.neu = 0,-8.1      ;Air jump speeds (opt)
+airjump.fwd = 2.5
+airjump.back = -2.55
+air.gethit.groundrecover = -.15,-3.5  ;Velocity for ground recovery state (x, y) **MUGEN 1.0**
+air.gethit.airrecover.mul = .5,.2     ;Multiplier for air recovery velocity (x, y) **MUGEN 1.0**
+air.gethit.airrecover.add = 0,-4.5    ;Velocity offset for air recovery (x, y) **MUGEN 1.0**
+air.gethit.airrecover.back = -1       ;Extra x-velocity for holding back during air recovery **MUGEN 1.0**
+air.gethit.airrecover.fwd = 0         ;Extra x-velocity for holding forward during air recovery **MUGEN 1.0**
+air.gethit.airrecover.up = -2         ;Extra y-velocity for holding up during air recovery **MUGEN 1.0**
+air.gethit.airrecover.down = 1.5      ;Extra y-velocity for holding down during air recovery **MUGEN 1.0**
+
+[Movement]
+airjump.num = 0      ;Number of air jumps allowed (opt)
+airjump.height = 35  ;Minimum distance from ground before you can air jump (opt)
+yaccel = .5          ;Vertical acceleration
+stand.friction = .85  ;Friction coefficient when standing
+crouch.friction = .82 ;Friction coefficient when crouching
+stand.friction.threshold = 2          ;If player's speed drops below this threshold while standing, stop his movement **MUGEN 1.0**
+crouch.friction.threshold = .05       ;If player's speed drops below this threshold while crouching, stop his movement **MUGEN 1.0**
+air.gethit.groundlevel = 25           ;Y-position at which a falling player is considered to hit the ground **MUGEN 1.0**
+air.gethit.groundrecover.ground.threshold = -20 ;Y-position below which falling player can use the recovery command **MUGEN 1.0**
+air.gethit.groundrecover.groundlevel = 10   ;Y-position at which player in the ground recovery state touches the ground **MUGEN 1.0**
+air.gethit.airrecover.threshold = -1  ;Y-velocity above which player may use the air recovery command **MUGEN 1.0**
+air.gethit.airrecover.yaccel = .5     ;Vertical acceleration for player in the air recovery state **MUGEN 1.0**
+air.gethit.trip.groundlevel = 15      ;Y-position at which player in the tripped state touches the ground **MUGEN 1.0**
+down.bounce.offset = 0, 20            ;Offset for player bouncing off the ground (x, y) **MUGEN 1.0**
+down.bounce.yaccel = .4               ;Vertical acceleration for player bouncing off the ground **MUGEN 1.0**
+down.bounce.groundlevel = 12          ;Y-position at which player bouncing off the ground touches the ground again **MUGEN 1.0**
+down.friction.threshold = .05         ;If the player's speed drops below this threshold while lying down, stop his movement **MUGEN 1.0**
+
+
+[Quotes]
+victory1 = "You're all not there yet! You're all children compared to 4000 years of history!"
+victory2 = "Ah, that was easy enough. Without vigorous movement, the body becomes weak."
+victory3 = "I'm a door guard, so ambushing me isn't good enough."
+victory4 = "Geez, please remember my name."
+victory5 = "Maybe next time we can all have steamed buns?"
+;Versus Chun-Li
+victory6 = "I've always wanted to spar with a fellow from the old country."
+victory7 = "You've studied other forms of chinese martial arts. You wouldn't mind sharing some of that knowledge would you?"
+;Versus Yukari Yakumo
+victory8 = "I felt some odd resistance. What are you wearing underneath your clothes?"
+victory9 = "Your age must be catching up with you, no offense."
+victory10 = "A grimoire about chi mastery in Patchy's library? Sounds interes.. wait, how do you know this?"
+;Versus Lie Meiling
+victory11 = "To avoid this future, I must rethink my path."
+victory12 = "I must learn to control my power, or else it will control me."
+victory13 = "Yukari... Why did you...?"
+;Versus Primeus
+victory14 = "Well you're definately not Taisui Xingjun, that's for sure."
+;Versus Reimu
+victory15 = "You really haven't been doing a good job at solving these incidents recently. At least, to me."
+victory16 = "With you, I don't feel like I've won..."
+victory17 = "See? Today, I'm a bit different."
+;Versus Alice Margatroid
+victory18 = "There are many who like to use dolls in their magic. A lot of them are up to no good too.";Soku
+victory19 = "Oh, so you're interested in knowing about the Terracotta Army?";Custom
+victory20 = "Do you use porcelain or terracotta for those dolls?";Custom
+;Versus Patchouli Knowledge
+victory21 = "It's rare to see you outside, isn't it? I'll keep watch while you're away.";IAMP
+victory22 = "That's why I said we need to prepare for earthquakes! The books will be damaged, too...";Soku
+victory23 = "Harnessing Qi with Satsui no Hadou... Interesting. Miss Patchouli do you mind if I borrow this book?";Custom
+;Versus A Stupid Fucking Idiot
+victory24 = "My hands are cold... I'll need to be rougher next time.";Soku
+victory25 = "You wouldn't happen to know of these three fairies who came in through here before do you?";Custom
+victory26 = "At least now I know there the frozen frogs have been coming from.";Custom
+;Versus Pads
+victory27 = "See, I'm not slacking, I'm patrolling... Really~";IAMP
+victory28 = "I'm always just going easy, you see? I won't go easy on you in an official duel.";Soku
+victory29 = "That look...... Ms. Sakuya's gone to her own world again! So now's my chance!";Rekkaden

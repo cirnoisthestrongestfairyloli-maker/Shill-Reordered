@@ -2449,7 +2449,6 @@ Trigger1=Time<45
 trigger2 = NumTarget(3520)
 trigger2 = target(3520), Alive
 trigger2 = MoveHit
-trigger2 = Life <= LifeMax * 0.5   ;Abstract Reordered
 Flag=NoBG
 Flag2=NoFG
 Flag3=TimerFreeze
@@ -2548,13 +2547,14 @@ pausemovetime = 99999
 type = HitDef
 triggerall = TeamMode != Simul
 triggerall = enemyNear,TeamMode != Simul
+triggerall = !NumTarget(3520)   ;Abstract Reordered: hit once, then hold them
 trigger1 = !MoveReversed && !MoveContact
 trigger2 = enemynear, MoveType = H
 attr = A, HA
 damage = Ceil(IfElse(fvar(11) * 26 < 7, 7, fvar(11) * 26)), 20
 animtype = Heavy
 guardflag = MA
-hitflag = MAF
+hitflag = MAFD   ;Abstract Reordered: hits downed opponents (OTG)
 priority = 4, Hit
 pausetime = 6,1
 guard.pausetime = 6,1
@@ -2587,7 +2587,7 @@ attr = A, HA
 damage = Ceil(IfElse(fvar(11) * 356 < 175, 175, fvar(11) * 356)), 20
 animtype = Back
 guardflag = MA
-hitflag = MAF
+hitflag = MAFD   ;Abstract Reordered: hits downed opponents (OTG)
 priority = 4, Hit
 pausetime = 6,1
 guard.pausetime = 6,1
@@ -2732,12 +2732,21 @@ postype = p1
 facing = 1
 ownpal = 0
 
+[State AR cutscene anchor]
+type = VarSet
+triggerall = NumTarget(3520)
+trigger1 = target(3520), Alive
+trigger1 = MoveHit
+fvar(32) = CameraPos X
+persistent = 0
+ignorehitpause = 1
+
 [State 0]
 Type=PosSet
 triggerall = NumTarget(3520)
 trigger1 = target(3520), Alive
 trigger1 = MoveHit
-X=-70 * Facing
+X=(fvar(32)) + (-70 * Facing)   ;Abstract Reordered: relative to the cutscene camera
 Y=0
 
 [State 0, PosAdd]
@@ -2939,26 +2948,26 @@ trigger1 = !Time
 [State Change To Finishers 0]
 Type=ChangeState
 trigger1 = !Time
-Trigger1= Life > LifeMax * 0.5   ;Abstract Reordered: ender by his own life
+Trigger1= 0   ;Abstract Reordered: Finisher 0 unused (enders go by life below)
 Value=3521
 
 [State Change To Finisher 1]
 Type=ChangeState
 trigger1 = !Time
-Trigger1= Life <= LifeMax * 0.5
-Trigger1= Life > LifeMax * 0.25
+Trigger1= Life > LifeMax * 0.5   ;Abstract Reordered: LV1 ender above 50% life
 Value=3530
 
 [State Change To Finishers]
 Type=ChangeState
 trigger1 = !Time
-Trigger1= Life <= LifeMax * 0.25
+Trigger1= Life <= LifeMax * 0.5   ;LV2 ender at 50% or less
+Trigger1= Life > LifeMax * 0.25
 Value=3540
 
 [State Change To Finishers]
 Type=ChangeState
 trigger1 = !Time
-Trigger1= 0   ;Abstract Reordered: no state 3600
+Trigger1= Life <= LifeMax * 0.25   ;LV3 ender at 25% or less
 Value=3600
 
 ;Finisher Start
@@ -3213,7 +3222,7 @@ HitCountPersist=1
 [State 0, PosSet]
 type = PosSet
 trigger1 = !Time
-x = Floor(GameWidth/2)
+x = (fvar(32)) + (Floor(GameWidth/2))   ;Abstract Reordered: relative to the cutscene camera
 y = 0
 
 [State 0, Offset]
@@ -3555,11 +3564,24 @@ Ctrl=0
 VelSet=0,0
 FaceP2=1
 
+[State AR off camera]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
+[State AR hold]
+type = NotHitBy
+trigger1 = 1
+value = SCA,NA,SA,HA,NP,SP,HP,NT,ST,HT
+time = 1
+
 [State Stop Follow Cam]
 Type=null;ScreenBound
 Trigger1=1;enemy, Var(53) >= 700
 Value=0
-MoveCamera=0,1
+MoveCamera=0,0
 [State Hit Animation]
 Type=ChangeAnim2
 ;TriggerAll=Enemy,StateNo=3520
@@ -3572,7 +3594,7 @@ Elem=1
 [State Center Screen]
 Type=PosSet
 Trigger1=!Time
-X=0
+X=(EnemyNear,fvar(32)) + (0)   ;Abstract Reordered: relative to the cutscene camera
 Y=-100
 
 [State First Hit Up]
@@ -3645,8 +3667,7 @@ Value=3526
 
 [State Change To Finisher 1 and 2 Reaction]
 Type=ChangeState
-Trigger1=EnemyNear,var(53) >= 700
-Trigger1=EnemyNear,var(53) < 2100
+Trigger1=EnemyNear,StateNo = 3530 || EnemyNear,StateNo = 3540   ;Abstract Reordered (was his Godly bar)
 Trigger1=StateNo!=3535
 Trigger1= Anim = 5100
 Value=3535
@@ -3674,6 +3695,13 @@ VelSet=0,0
 FaceP2=1
 
 
+[State AR off camera]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
 [State 0, NotHitBy]
 type = NotHitBy
 trigger1 = 1
@@ -3689,7 +3717,7 @@ MoveCamera=0,0
 [State Floor Position]
 Type=PosSet
 Trigger1=!Time
-X=0
+X=(EnemyNear,fvar(32)) + (0)   ;Abstract Reordered: relative to the cutscene camera
 Y=-80
 
 [State Hit Animation]
@@ -3713,7 +3741,7 @@ Y=26
 Type=PosSet
 Trigger1=Enemy,StateNo=3521
 Trigger1=Enemy,AnimElem=33
-X=0
+X=(EnemyNear,fvar(32)) + (0)   ;Abstract Reordered: relative to the cutscene camera
 Y=0
 
 [State Floor Animation]
@@ -3751,7 +3779,7 @@ HitCountPersist=1
 [State 0, PosSet]
 type = PosSet
 trigger1 = !Time
-x = Floor(GameWidth/2)
+x = (fvar(32)) + (Floor(GameWidth/2))   ;Abstract Reordered: relative to the cutscene camera
 y = 0
 
 [State 0, Offset]
@@ -4299,6 +4327,13 @@ VelSet=0,0
 ;FaceP2=1
 SprPriority=0
 
+[State AR off camera]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
 [State Stop Follow Cam]
 Type=ScreenBound
 Trigger1=1
@@ -4308,7 +4343,7 @@ MoveCamera=0,0
 [State Start Floor Position]
 Type=PosSet
 Trigger1=!Time
-X=0
+X=(EnemyNear,fvar(32)) + (0)   ;Abstract Reordered: relative to the cutscene camera
 Y=0
 
 
@@ -4386,7 +4421,7 @@ Value=-5
 Type=PosSet
 Trigger1=EnemyNear,StateNO = 3530
 Trigger1=EnemyNear,AnimElem=45
-X=95*enemy,Facing
+X=(EnemyNear,fvar(32)) + (95*enemy,Facing)   ;Abstract Reordered: relative to the cutscene camera
 Y=-280
 
 [State 0, Turn]
@@ -4400,7 +4435,7 @@ Type=PosSet
 Trigger1=EnemyNear,Anim = 3540
 Trigger1=EnemyNear,StateNO = 3540
 Trigger1=EnemyNear,AnimElem=22
-X=95
+X=(EnemyNear,fvar(32)) + (95)   ;Abstract Reordered: relative to the cutscene camera
 Y=-280
 persistent = 0
 
@@ -4517,7 +4552,7 @@ FaceP2=1
 [State 0, PosSet]
 type = PosSet
 trigger1 = !Time
-x = Floor(GameWidth/2)
+x = (fvar(32)) + (Floor(GameWidth/2))   ;Abstract Reordered: relative to the cutscene camera
 y = 0
 
 [State 0, Offset]
@@ -5384,7 +5419,7 @@ Ctrl=0
 [State Reset Position]
 Type=PosSet
 Trigger1= AnimElemTime(142) = 220
-x = -100
+x = (fvar(32)) + (-100)   ;Abstract Reordered: relative to the cutscene camera
 Y=0
 
 
@@ -6260,6 +6295,13 @@ VelSet=0,0
 FaceP2=1
 SprPriority=0	
 
+[State AR off camera]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
 [State 100, No Turn]
 type = turn
 trigger1 = facing = 1
@@ -6300,7 +6342,7 @@ Type=PosSet
 Trigger1=Anim=3545
 Trigger1=AnimElem=3
 Trigger2=EnemyNear,AnimElem = 58
-X=0
+X=(EnemyNear,fvar(32)) + (0)   ;Abstract Reordered: relative to the cutscene camera
 Y=0
 
 
@@ -6387,6 +6429,13 @@ VelSet=0,0
 FaceP2=-1
 SprPriority=0	
 
+[State AR off camera]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
 [State 0, PosSet]
 type = PosSet
 Trigger1=!Alive
@@ -6406,7 +6455,7 @@ trigger1 = Facing = 1
 [State 0, PosSet]
 type = PosSet
 trigger1 = !Time
-x = 100
+x = (EnemyNear,fvar(32)) + (100)   ;Abstract Reordered: relative to the cutscene camera
 y = 0
 
 [State 0, PosAdd]
@@ -7753,7 +7802,7 @@ persistent = 0
 [State 0, PosSet]
 type = PosSet
 trigger1 = Anim = 3613
-x = 100
+x = (fvar(32)) + (100)   ;Abstract Reordered: relative to the cutscene camera
 y = -8
 ;
 [State 0, Offset]
@@ -9125,7 +9174,7 @@ trigger1 = Var(9) = 1
 type = PosSet
 trigger1 = !Time
 trigger1 = Var(9) = 1
-x = -100
+x = (fvar(32)) + (-100)   ;Abstract Reordered: relative to the cutscene camera
 [State 0, PosSet]
 type = PosSet
 trigger1 = !Time
@@ -9134,8 +9183,7 @@ y = 0
 [State 0, PosSet]
 type = PosSet
 trigger1 = RoundState = 3
-x = 0
-
+x = (fvar(32)) + (0)   ;Abstract Reordered: relative to the cutscene camera
 [state remove hitcount]
 type = RemoveExplod
 trigger1 = !time
@@ -9494,6 +9542,13 @@ VelSet=0,0
 ;FaceP2=1
 SprPriority=0
 
+[State AR off camera]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
 [State 0, SprPriority]
 type = SprPriority
 trigger1 =Time >= 631
@@ -9514,6 +9569,7 @@ y = .04
 type = ScreenBound
 trigger1 = 1
 value = 0
+movecamera = 0,0   ;Abstract Reordered
 
 [State 0, PosAdd]
 type = null;PosAdd
@@ -9582,6 +9638,13 @@ VelSet=0,-2
 ;FaceP2=1
 SprPriority=13
 
+[State AR off camera]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
 [State 0, ChangeAnim2]
 type = ChangeAnim2
 trigger1 = !Time
@@ -9632,6 +9695,13 @@ VelSet=.7,.7
 ;FaceP2=1
 SprPriority=28
 
+[State AR off camera]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
 [State 0, ScreenBound]
 type = ScreenBound
 trigger1 = 1
@@ -9651,7 +9721,7 @@ value = 5300
 [State 0, PosSet]
 type = PosSet
 trigger1 = !Time
-x = -50
+x = (EnemyNear,fvar(32)) + (-50)   ;Abstract Reordered: relative to the cutscene camera
 y = 0
 
 [State 0, PosSet]
@@ -9682,6 +9752,13 @@ FaceP2=Cond(enemynear, Var(9) = 1, 0, 1)
 SprPriority=-1
 anim = 5110
 
+[State AR off camera]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
 [State 0, PalFXWiz]
 type = PalFX
 trigger1 = !Time
@@ -9696,7 +9773,7 @@ color = 0
 type = PosSet
 trigger1 = !Time
 Trigger1=Alive
-x = 0
+x = (EnemyNear,fvar(32)) + (0)   ;Abstract Reordered: relative to the cutscene camera
 y = 0
 
 [State 0, PosAdd]

@@ -443,6 +443,52 @@ local function trimPals(ch)
 	ch.pal = keep
 end
 
+-- the engine re-syncs palette lists while preloading (main.f_syncCharPaletteData, from getCharInfo); if only our
+-- copy were trimmed, every sync would see a different count and reset the colour menu, so trim at the source too
+if type(getCharInfo) == 'function' and not AR.charInfoWrapped then
+	AR.charInfoWrapped = true
+	local infoOrig = getCharInfo
+	getCharInfo = function(ref, ...)
+		local info = infoOrig(ref, ...)
+		pcall(function()
+			if info ~= nil and info.pal ~= nil and main ~= nil and main.t_selChars ~= nil then
+				for _, ch in ipairs(main.t_selChars) do
+					if ch.char_ref == ref and ch.char ~= nil then
+						local lim = AR.palLimit[tostring(ch.char):lower():gsub('[/\\].*$', '')]
+						if lim ~= nil and #info.pal > lim then
+							local keep = {}
+							for _, p in ipairs(info.pal) do
+								if p <= lim then
+									keep[#keep + 1] = p
+								end
+							end
+							info.pal = keep
+						end
+						break
+					end
+				end
+			end
+		end)
+		return info
+	end
+end
+
+-- the colour menu asks the engine (validatePal) for the next palette; past the limit, send it back to 1 so the list ends
+if type(validatePal) == 'function' and not AR.validatePalWrapped then
+	AR.validatePalWrapped = true
+	local validOrig = validatePal
+	validatePal = function(pal, ref, ...)
+		local ok, lim = pcall(function()
+			local ch = main.t_selChars[ref + 1]
+			return ch ~= nil and ch.char ~= nil and AR.palLimit[tostring(ch.char):lower():gsub('[/\\].*$', '')] or nil
+		end)
+		if ok and lim ~= nil and type(pal) == 'number' and pal > lim then
+			pal = 1
+		end
+		return validOrig(pal, ref, ...)
+	end
+end
+
 if start ~= nil and start.f_getCharData ~= nil and not AR.charDataWrapped then
 	AR.charDataWrapped = true
 	local getOrig = start.f_getCharData

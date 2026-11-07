@@ -1923,6 +1923,17 @@ trigger1 = command = "FF"
 trigger1 = statetype = S
 trigger1 = ctrl
 
+;Abstract Reordered: in Bankai, just holding forward runs (no double tap)
+[State -1, AR Bankai hold-forward run]
+type = ChangeState
+value = 100
+triggerall = var(59) != 1
+triggerall = var(39) = 1
+triggerall = statetype = S
+triggerall = command = "holdfwd" && command != "holddown" && command != "holdup" && command != "holdback"
+triggerall = command != "a" && command != "b" && command != "c" && command != "x" && command != "y" && command != "z"
+trigger1 = ctrl && (stateno = 0 || stateno = 20)
+
 ;バックステップ
 [State -1, Back Step]
 type = ChangeState

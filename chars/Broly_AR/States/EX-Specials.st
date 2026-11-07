@@ -1815,6 +1815,11 @@ type = varset
 trigger1 = !time
 var(10) = 4
 
+[State 1460, AR stomp count reset]
+type = varset
+trigger1 = !time
+var(13) = 0
+
 [State 1230, Custom Combo Reset]
 type = PalFX
 trigger1 = !Time && var(20)
@@ -1869,6 +1874,50 @@ trigger1 = prevstateno != 1410 && time <=5
 value = , NA, NP, NT
 time = 1
 
+[State 1460, AR face the opponent]
+type = Turn
+trigger1 = !time && prevstateno != 1410
+trigger1 = p2dist x < 0
+
+[State 1460, AR teleport vanish]
+;Abstract Reordered: he vanishes for a few frames and reappears right above the opponent
+type = AssertSpecial
+trigger1 = prevstateno != 1410
+trigger1 = time <= 5
+flag = invisible
+
+[State 1460, AR teleport]
+type = PosSet
+trigger1 = prevstateno != 1410
+trigger1 = time = 5
+x = enemynear,pos x
+y = ifelse(enemynear,pos y < -60, enemynear,pos y - 70, -110)
+
+[State 1460, AR teleport stop]
+type = VelSet
+trigger1 = prevstateno != 1410
+trigger1 = time = 5
+x = 0
+y = -2
+
+[State 1460, AR teleport face]
+type = Turn
+trigger1 = prevstateno != 1410
+trigger1 = time = 6
+trigger1 = p2dist x < 0
+
+[State 1460, AR teleport sound]
+type = PlaySnd
+trigger1 = prevstateno != 1410
+trigger1 = time = 5
+value = 0, 105
+
+[State 1460, AR track while rising]
+type = VelSet
+trigger1 = prevstateno != 1410
+trigger1 = animelemtime(3) < 0 && time > 5
+x = ifelse(p2dist x / 12 > 6, 6, ifelse(p2dist x / 12 < -6, -6, p2dist x / 12))
+
 [State 0, ChangeAnim]
 type = ChangeAnim
 trigger1 = !time
@@ -1880,7 +1929,7 @@ trigger1 = !time
 y = -4
 [State 1303, Accel]
 type = gravity
-trigger1 = 1
+trigger1 = time > 5 || prevstateno = 1410
 [State 1304, Pos]
 type = playerpush
 trigger1 = !movecontact
@@ -1890,17 +1939,25 @@ type = playsnd
 trigger1 = animelem = 3
 value = s1, 6
 
+[State 1460, AR hold until teleport]
+type = VelSet
+trigger1 = prevstateno != 1410 && time < 5
+x = 0
+y = 0
+
 [State 0, VelSet]
 type = VelSet
 trigger1 = animelemtime(3)>=0
+trigger1 = time > 5 || prevstateno = 1410
 y = 15
-x = ifelse(prevstateno=1410,0,ifelse(vel x<0,-1.5,4.5))
+;Abstract Reordered: homes in on the opponent - spreads the remaining distance over the frames left in the dive (max 10 px/frame)
+x = ifelse(prevstateno=1410, 0, ifelse((p2dist x / ifelse(pos y < -15, ceil(-pos y / 15), 1)) > 10, 10, ifelse((p2dist x / ifelse(pos y < -15, ceil(-pos y / 15), 1)) < -10, -10, (p2dist x / ifelse(pos y < -15, ceil(-pos y / 15), 1)))))
 
 [State 1303, Hit]
 type = hitdef
 trigger1 = animelem = 3
 attr = A, SA
-damage = 80, 8
+damage = 55, 8
 animtype = Hard
 guardflag = H
 hitflag = MAF
@@ -1943,6 +2000,7 @@ ignorehitpause = 1
 [State 1303, End]
 type = changestate
 trigger1 = pos y >= 0 && vel y > 0
+trigger1 = time > 5 || prevstateno = 1410
 value = 1461
 
 [State 0, NotHitBy]
@@ -1966,6 +2024,10 @@ sprpriority = 1
 type = posset
 trigger1 = 1
 y = 0
+[State 1461, AR stomp count]
+type = varadd
+trigger1 = !time
+var(13) = 1
 [State 1304, Snd]
 type = playsnd
 trigger1 = !time
@@ -1980,7 +2042,7 @@ ignorehitpause = 1
 type = hitdef
 trigger1 = animelem = 1
 attr = C, SA
-damage = ifelse(prevstateno=1463,60,ifelse(numtarget(1401),40,120)), 11
+damage = ifelse(prevstateno=1463,35,ifelse(numtarget(1401),30,70)), 11
 animtype = Hard
 guardflag = M
 hitflag = FD
@@ -2015,9 +2077,17 @@ airguard.ctrltime = 16
 airguard.cornerpush.veloff = 0
 airguard.velocity = -8, -1.5
 
+[State 1461, AR third stomp: restand + stun]
+type = TargetState
+triggerall = prevstateno = 1463 && var(13) >= 3
+trigger1 = movehit = 1 && numtarget(1461)
+value = 1111195
+ID = 1461
+ignorehitpause = 0
+
 [State 0, TargetState]
 type = TargetState
-triggerall = prevstateno = 1460
+triggerall = prevstateno = 1460 || (prevstateno = 1463 && var(13) < 3)
 trigger1 = movehit = 1 && numtarget(1461)
 value = 1111190
 ID = 1461
@@ -2030,6 +2100,7 @@ value = 0
 ignorehitpause = 1
 [State 0, TargetState]
 type = TargetBind
+triggerall = var(13) < 3
 trigger1 = movehit = 1 && numtarget(1461)
 pos = 0,0
 ID = 1461
@@ -2058,10 +2129,21 @@ scale = 1, 1;0.38, 0.2
 ownpal = 1
 [State 1304, End]
 type = changestate
+trigger1 = 0   ;Abstract Reordered: 3-stomp EX ends in place (see below)
 trigger1 = movehit = 1 && prevstateno = 1463
 value = 1464
 ctrl = 0
 ignorehitpause = 0
+
+[State 1461, AR laugh]
+;Abstract Reordered: he laughs (win-pose laugh) through the whole stomp string, starting on the first stomp that lands
+type = PlaySnd
+trigger1 = prevstateno = 1460
+trigger1 = movehit && numtarget(1461)
+value = s3, 12
+channel = 0
+persistent = 0
+ignorehitpause = 1
 
 [State 1304, Shake]
 type = envshake
@@ -2072,8 +2154,8 @@ ampl = 6
 [State 1304, End]
 type = changestate
 trigger1 = !animtime
-value = ifelse(prevstateno=1460&&movehit&&numtarget(1461),1462,0)
-ctrl = ifelse(prevstateno=1460&&movehit&&numtarget(1461),0,1)
+value = ifelse((prevstateno=1460||(prevstateno=1463&&var(13)<3))&&movehit&&numtarget(1461),1462,0)
+ctrl = ifelse((prevstateno=1460||(prevstateno=1463&&var(13)<3))&&movehit&&numtarget(1461),0,1)
 
 [Statedef 1462]
 type = A
@@ -2104,6 +2186,7 @@ trigger1 = !time
 value = s0, 41
 [State 1300, Snd]
 type = playsnd
+trigger1 = 0   ;Abstract Reordered: muted so it does not cut off the laugh
 trigger1 = !time
 value = 3, 2
 channel = 0

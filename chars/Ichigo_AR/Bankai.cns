@@ -147,6 +147,13 @@ trigger1 = Time = 0
 v = 40
 value = 0
 
+[State 3010, AR Bankai burnout]
+;Abstract Reordered: Bankai ran out mid-round - he is left dizzy and open (state 3015)
+type = ChangeState
+trigger1 = AnimTime = 0
+trigger1 = RoundState = 2
+value = 3015
+ctrl = 0
 [State 195, ステート変更]
 type = ChangeState
 trigger1 = AnimTime = 0
@@ -2136,3 +2143,21 @@ value = 0
 type = AssertSpecial
 trigger1 = time = [0,200]
 flag = roundnotover
+
+;---------------------------------------------------------------------------
+;Abstract Reordered: Bankai burnout - dizzy for 3 seconds, no control and no guard, so he can be punished
+[Statedef 3015]
+type     = S
+movetype = I
+physics  = S
+anim     = 5300
+velset   = 0,0
+ctrl     = 0
+sprpriority = 1
+
+[State 3015, Burnout end]
+type = ChangeState
+trigger1 = time >= 180
+trigger2 = RoundState != 2
+value = 0
+ctrl = 1

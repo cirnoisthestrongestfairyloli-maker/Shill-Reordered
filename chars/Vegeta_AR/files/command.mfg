@@ -1020,18 +1020,16 @@ triggerall = AILevel = 0
 triggerall = command = "ar_parry"
 trigger1 = ctrl
 
-;Abstract Reordered: mechanic meter HUD - Kuroko's MAGIC CIRCUIT bar, fill in the parry colour,
-;bottom of the screen (P1 left, P2 right). Only the look changed; the meter logic is untouched.
-[State -1, AR meter HUD frame P1]
+[State -1, AR pride HUD 9611 P1]
 type = Explod
 triggerall = !IsHelper
-triggerall = RoundState >= 1
 triggerall = TeamSide = 1
-trigger1 = NumExplod(7790) = 0
+triggerall = RoundState >= 1
+trigger1 = NumExplod(9611) = 0
 trigger1 = 1
-anim = 7790
-ID = 7790
-pos = 32, GameHeight - (33)
+anim = 9611
+ID = 9611
+pos = 18, GameHeight - (28)
 postype = left
 bindtime = -1
 removetime = -1
@@ -1040,108 +1038,19 @@ pausemovetime = 99999
 sprpriority = 10
 ontop = 1
 ownpal = 1
-scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR meter HUD back P1]
+[State -1, AR pride HUD 9612 P1]
 type = Explod
 triggerall = !IsHelper
-triggerall = RoundState >= 1
 triggerall = TeamSide = 1
-trigger1 = NumExplod(7792) = 0
+triggerall = RoundState >= 1
+trigger1 = NumExplod(9612) = 0
 trigger1 = 1
-anim = 7792
-ID = 7792
-pos = 40, GameHeight - (22)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 11
-ontop = 1
-ownpal = 1
-scale = .5,.5
-removeongethit = 0
-ignorehitpause = 1
-
-[State -1, AR meter HUD fill 7791 P1]
-type = Explod
-triggerall = !IsHelper
-triggerall = RoundState >= 1
-triggerall = TeamSide = 1
-trigger1 = NumExplod(7791) = 0
-trigger1 = fvar(26) < 1000
-anim = 7791
-ID = 7791
-pos = 40, GameHeight - (22)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 12
-ontop = 1
-ownpal = 1
-scale = .5,.5
-removeongethit = 0
-ignorehitpause = 1
-
-[State -1, AR meter HUD fill 7795 P1]
-type = Explod
-triggerall = !IsHelper
-triggerall = RoundState >= 1
-triggerall = TeamSide = 1
-trigger1 = NumExplod(7795) = 0
-trigger1 = fvar(26) >= 1000
-anim = 7795
-ID = 7795
-pos = 40, GameHeight - (22)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 12
-ontop = 1
-ownpal = 1
-scale = .5,.5
-removeongethit = 0
-ignorehitpause = 1
-
-[State -1, AR meter HUD icon 7797 P1]
-type = Explod
-triggerall = !IsHelper
-triggerall = RoundState >= 1
-triggerall = TeamSide = 1
-trigger1 = NumExplod(7797) = 0
-trigger1 = 1
-anim = 9611
-ID = 7797
-pos = 19, GameHeight - (20)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 14
-ontop = 1
-ownpal = 1
-scale = 1,1
-removeongethit = 0
-ignorehitpause = 1
-
-[State -1, AR meter HUD frame P2]
-type = Explod
-triggerall = !IsHelper
-triggerall = RoundState >= 1
-triggerall = TeamSide = 2
-trigger1 = NumExplod(7790) = 0
-trigger1 = 1
-anim = 7790
-ID = 7790
-pos = GameWidth - (140), GameHeight - (33)
+anim = 9612
+ID = 9612
+pos = 30, GameHeight - (30)
 postype = left
 bindtime = -1
 removetime = -1
@@ -1150,130 +1059,155 @@ pausemovetime = 99999
 sprpriority = 10
 ontop = 1
 ownpal = 1
-scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR meter HUD back P2]
+[State -1, AR pride HUD 9613 P1]
 type = Explod
 triggerall = !IsHelper
+triggerall = TeamSide = 1
 triggerall = RoundState >= 1
-triggerall = TeamSide = 2
-trigger1 = NumExplod(7792) = 0
-trigger1 = 1
-anim = 7792
-ID = 7792
-pos = GameWidth - (132), GameHeight - (22)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 11
-ontop = 1
-ownpal = 1
-scale = .5,.5
-removeongethit = 0
-ignorehitpause = 1
-
-[State -1, AR meter HUD fill 7791 P2]
-type = Explod
-triggerall = !IsHelper
-triggerall = RoundState >= 1
-triggerall = TeamSide = 2
-trigger1 = NumExplod(7791) = 0
+trigger1 = NumExplod(9613) = 0
 trigger1 = fvar(26) < 1000
-anim = 7791
-ID = 7791
-pos = GameWidth - (40), GameHeight - (22)
+anim = 9613
+ID = 9613
+pos = 31, GameHeight - (30)
 postype = left
-facing = -1
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 12
+sprpriority = 10
 ontop = 1
 ownpal = 1
-scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR meter HUD fill 7795 P2]
+[State -1, AR pride HUD 9615 P1]
 type = Explod
 triggerall = !IsHelper
+triggerall = TeamSide = 1
 triggerall = RoundState >= 1
-triggerall = TeamSide = 2
-trigger1 = NumExplod(7795) = 0
+trigger1 = NumExplod(9615) = 0
 trigger1 = fvar(26) >= 1000
-anim = 7795
-ID = 7795
-pos = GameWidth - (40), GameHeight - (22)
+anim = 9615
+ID = 9615
+pos = 31, GameHeight - (30)
 postype = left
-facing = -1
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 12
+sprpriority = 10
 ontop = 1
 ownpal = 1
-scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR meter HUD icon 7797 P2]
+[State -1, AR pride HUD 9611 P2]
 type = Explod
 triggerall = !IsHelper
-triggerall = RoundState >= 1
 triggerall = TeamSide = 2
-trigger1 = NumExplod(7797) = 0
+triggerall = RoundState >= 1
+trigger1 = NumExplod(9611) = 0
 trigger1 = 1
 anim = 9611
-ID = 7797
-pos = GameWidth - (19), GameHeight - (20)
-postype = left
+ID = 9611
+pos = -18, GameHeight - (28)
+postype = right
 bindtime = -1
 removetime = -1
 supermovetime = 99999
 pausemovetime = 99999
-sprpriority = 14
+sprpriority = 10
 ontop = 1
 ownpal = 1
-scale = 1,1
 removeongethit = 0
 ignorehitpause = 1
 
-[State -1, AR meter HUD off 7791]
+[State -1, AR pride HUD 9612 P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = TeamSide = 2
+triggerall = RoundState >= 1
+trigger1 = NumExplod(9612) = 0
+trigger1 = 1
+anim = 9617
+ID = 9612
+pos = -30, GameHeight - (30)
+postype = right
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR pride HUD 9613 P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = TeamSide = 2
+triggerall = RoundState >= 1
+trigger1 = NumExplod(9613) = 0
+trigger1 = fvar(26) < 1000
+anim = 9614
+ID = 9613
+pos = -31, GameHeight - (30)
+postype = right
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR pride HUD 9615 P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = TeamSide = 2
+triggerall = RoundState >= 1
+trigger1 = NumExplod(9615) = 0
+trigger1 = fvar(26) >= 1000
+anim = 9616
+ID = 9615
+pos = -31, GameHeight - (30)
+postype = right
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR pride HUD fill off]
 type = RemoveExplod
 triggerall = !IsHelper
-trigger1 = NumExplod(7791)
-trigger1 = !(fvar(26) < 1000)
-ID = 7791
+trigger1 = fvar(26) >= 1000 && NumExplod(9613)
+ID = 9613
 ignorehitpause = 1
 
-[State -1, AR meter HUD off 7795]
+[State -1, AR pride HUD full off]
 type = RemoveExplod
 triggerall = !IsHelper
-trigger1 = NumExplod(7795)
-trigger1 = !(fvar(26) >= 1000)
-ID = 7795
+trigger1 = fvar(26) < 1000 && NumExplod(9615)
+ID = 9615
 ignorehitpause = 1
 
-[State -1, AR meter HUD scale 7791]
+[State -1, AR pride HUD fill]
 type = ModifyExplod
 triggerall = !IsHelper
-trigger1 = NumExplod(7791)
-ID = 7791
-scale = 0.5 * (ifelse((fvar(26) / 1000.0) < 0, 0, ifelse((fvar(26) / 1000.0) > 1, 1, (fvar(26) / 1000.0)))) + 0.00005, .5
-ignorehitpause = 1
-
-[State -1, AR meter HUD scale 7795]
-type = ModifyExplod
-triggerall = !IsHelper
-trigger1 = NumExplod(7795)
-ID = 7795
-scale = 0.5 * (1) + 0.00005, .5
+trigger1 = NumExplod(9613)
+ID = 9613
+scale = fvar(26) / 1000.0, 1
 ignorehitpause = 1
 
 ;---------------------------------------------------------------------------
@@ -1361,7 +1295,7 @@ type = VarSet
 triggerall = !IsHelper
 triggerall = fvar(26) >= 1000 && fvar(27) = 0
 triggerall = MoveType = A && Time <= 1
-trigger1 = (stateno = [1000,1050]) || (stateno = [1200,1204]) || (stateno = [1400,1422]) || (stateno = [1500,1520]) || stateno = 2000 || (stateno = [2400,2425]) || stateno = 3000 || stateno = 3200 || (stateno = [3400,3420]) || stateno = 3600 || stateno = 4000
+trigger1 = (stateno = [1000,1050]) || (stateno = [1200,1204]) || (stateno = [1400,1422]) || (stateno = [1500,1520]) || stateno = 2000 || (stateno = [2400,2425]) || stateno = 3000 || stateno = 3200 || (stateno = [3400,3420]) || stateno = 3610 || stateno = 4000
 fvar(27) = 1
 ignorehitpause = 1
 
@@ -1453,12 +1387,31 @@ fvar(24) = EnemyNear, Life
 ignorehitpause = 1
 
 
-;Abstract Reordered: Lv3 Final Flash on the Bankai input
+;Abstract Reordered: Lv3 Final Flash on the Bankai input in the air
 [State -1, Flash]
 type = ChangeState
-value = 3600
+value = 3610
 triggerAll = !AILevel
 triggerall = power >= 3000
+triggerall = command = "ar_lv3"   ;Abstract Reordered
+triggerall = StateType = A && !WinKO
+trigger1 = ctrl 
+trigger2 = (stateno = [600,650]) || (stateno = 1050) || (stateno = 420)
+trigger2 = movecontact
+trigger3 = stateno = 310
+trigger4 = anim = 1512 && animelemtime(6) >= 0
+trigger5 = stateno = 1201 || stateno = 1203
+
+;Final Flash
+
+;Abstract Reordered: Lv3 Elite Assault on the Bankai input on the ground
+[State -1, Elite Assault]
+type = ChangeState
+value = 4000
+triggerAll = !AILevel
+;triggerall = teammode != simul && enemy, teammode != simul
+triggerall = enemy, name != "SaibamenZ2"
+triggerall = ifelse(var(51) != 1,power >= 3000, power >= 2000) 
 triggerall = command = "ar_lv3"   ;Abstract Reordered
 triggerall = StateType != A && !WinKO
 trigger1 = ctrl || stateno = 100
@@ -1476,21 +1429,6 @@ trigger7 = movecontact
 trigger8 = (stateno = [3400,3403]) || (stateno = [3410,3420])
 trigger8 = movecontact && ifelse(anim = 3404, animelemtime(2) < 0,1)
 trigger9 = stateno = 3404 && anim = 3406
-
-;Fourth Wallop
-
-;Abstract Reordered: Elite Assault on the Bankai input in the air (snaps to the ground)
-[State -1, Elite Assault]
-type = ChangeState
-value = 4000
-trigger1 = ctrl
-trigger2 = (stateno = [600,650]) && MoveContact
-triggerAll = !AILevel
-;triggerall = teammode != simul && enemy, teammode != simul
-triggerall = enemy, name != "SaibamenZ2"
-triggerall = ifelse(var(51) != 1,power >= 3000, power >= 2000) 
-triggerall = command = "ar_lv3"   ;Abstract Reordered
-triggerall = StateType = A && !WinKO
 
 
 ;Tryin something out

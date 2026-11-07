@@ -1,5 +1,50 @@
 [Statedef -2]
 
+;Abstract Reordered: Divine Cross cutscene (cinematic explod 991901 up, or the Divine Cross states).
+;The AR stage camera keeps camera.autocenter on, which drags the camera around mid-cutscene,
+;so it is switched off while the cutscene runs and back on afterwards; Black stops moving the camera too.
+[State -2, AR cutscene camera off]
+type = ModifyStageVar
+triggerall = !IsHelper
+trigger1 = NumExplod(991901) || (StateNo = [3520, 3613])
+trigger1 = map(_gb_camoff) = 0
+camera.autocenter = 0
+ignorehitpause = 1
+
+[State -2, AR cutscene camera flag]
+type = MapSet
+triggerall = !IsHelper
+trigger1 = NumExplod(991901) || (StateNo = [3520, 3613])
+trigger1 = map(_gb_camoff) = 0
+map = "_gb_camoff"
+value = 1
+ignorehitpause = 1
+
+[State -2, AR cutscene camera back on]
+type = ModifyStageVar
+triggerall = !IsHelper
+trigger1 = !NumExplod(991901) && !(StateNo = [3520, 3613])
+trigger1 = map(_gb_camoff) = 1
+camera.autocenter = 1
+ignorehitpause = 1
+
+[State -2, AR cutscene camera flag off]
+type = MapSet
+triggerall = !IsHelper
+trigger1 = !NumExplod(991901) && !(StateNo = [3520, 3613])
+trigger1 = map(_gb_camoff) = 1
+map = "_gb_camoff"
+value = 0
+ignorehitpause = 1
+
+[State -2, AR cutscene Black off camera]
+type = ScreenBound
+triggerall = !IsHelper
+trigger1 = NumExplod(991901) || (StateNo = [3520, 3613])
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
 
 [State 0, AssertSpecial]
 type = AssertSpecial

@@ -384,6 +384,23 @@ trigger1 = var(40) > 0
 v = 40
 value = -1
 
+;Abstract Reordered: Bankai nerf - each Shunpo burns 1 s of the Bankai timer, each 5H burns 0.75 s
+[State -2, AR Bankai Shunpo drain]
+type = varadd
+triggerall = !ishelper
+triggerall = var(39) = 1 && var(40) > 0
+trigger1 = stateno = 800 && time = 1
+v = 40
+value = -60
+
+[State -2, AR Bankai 5H drain]
+type = varadd
+triggerall = !ishelper
+triggerall = var(39) = 1 && var(40) > 0
+trigger1 = stateno = 6220 && time = 1
+v = 40
+value = -45
+
 [State -2, VarSet]
 type = varset
 trigger1 = var(40) < 0

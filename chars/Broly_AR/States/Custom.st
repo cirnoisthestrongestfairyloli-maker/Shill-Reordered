@@ -1186,6 +1186,67 @@ trigger1 = alive
 trigger1 = time = 120
 value = 5200
 
+;========================< RESTAND + STUN by EX BLOODY STOMP (3rd stomp) >=============================
+;Abstract Reordered: stood up dizzy for 80 frames so Broly can follow up
+[Statedef 1111195]
+type = S
+movetype = H
+physics = N
+velset = 0, 0
+ctrl = 0
+
+[State 1111195, Ground]
+;restand 50 px in front of Broly (enemynear), not under him, so his attacks can reach
+type = posset
+trigger1 = !time
+x = enemynear,pos x + enemynear,facing * 50
+y = 0
+ignorehitpause = 1
+
+[State 1111195, Face Broly]
+type = turn
+trigger1 = !time
+trigger1 = facing = enemynear,facing
+ignorehitpause = 1
+
+[State 1111195, Anim]
+type = changeanim
+trigger1 = !time
+value = ifelse(SelfAnimExist(5300), 5300, 5000)
+
+[State 1111195, Hold hit frame]
+type = changeanim
+trigger1 = anim = 5000 && animtime = 0
+value = 5000
+elem = 1
+
+[State 1111195, Slide off]
+type = velset
+trigger1 = time < 8
+x = -1.5
+
+[State 1111195, Stop]
+type = velset
+trigger1 = time = 8
+x = 0
+
+[State 1111195, PlayerPush]
+type = PlayerPush
+trigger1 = 1
+value = 1
+
+[State 1111195, Recover]
+type = selfstate
+trigger1 = alive
+trigger1 = time >= 80
+value = 0
+ctrl = 1
+
+[State 1111195, KO]
+type = selfstate
+trigger1 = !alive
+value = 5050
+
 ;========================< STOMPED by GIGANTIC BUSTER >=============================
 [Statedef 1111191]
 type = L

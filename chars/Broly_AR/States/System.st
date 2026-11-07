@@ -4543,9 +4543,11 @@ ignorehitpause = 1
 [State -2, dampener]
 ;Abstract Reordered: fvar(12) carries the Lv1/Lv2 super scale (helpers use it once); his own super hits
 ;also multiply by fvar(12) in their damage, so the scale is divided back out here to apply it only once
+;Abstract Reordered: Broly nerf - 85% damage, and his own harsher combo scaling on top of the shared one:
+;hits 1-2 full, then 10% less per hit in the combo (down to 35%)
 type = attackmulset
 trigger1 = 1
-value = fvar(12) / ifelse(stateno = [3000,3499], 0.75, ifelse(stateno = [3500,3999], 0.8, 1))
+value = fvar(12) / ifelse(stateno = [3000,3499], 0.75, ifelse(stateno = [3500,3999], 0.8, 1)) * 0.85 * ifelse(numenemy, ifelse(enemynear,movetype = H, ifelse(enemynear,gethitvar(hitcount) <= 2, 1, ifelse(1 - 0.1 * (enemynear,gethitvar(hitcount) - 2) < 0.35, 0.35, 1 - 0.1 * (enemynear,gethitvar(hitcount) - 2))), 1), 1)
 ignorehitpause = 1
 
 [State -2, Free Juggling]

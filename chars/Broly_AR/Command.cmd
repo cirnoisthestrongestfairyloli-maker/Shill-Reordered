@@ -2541,7 +2541,8 @@ trigger5 = helper(stateno + 5), var(3)
 type = changestate
 value = 1460
 triggerall = !AIlevel
-triggerall = 0 && power >= (500*(var(53)=0))
+;Abstract Reordered: air 22H = EX stomp (500 meter): three stomps, the last restands and stuns
+triggerall = command = "ar_22H" && power >= (500*(var(53)=0))
 triggerall = roundstate = 2 && statetype = A
 trigger1 = ctrl || ((stateno = [200, 699]) && time <= 2) || (stateno = 200 || stateno = 230)
 trigger2 = (stateno = [200, 699]) && (movecontact = [1, 8])
@@ -2635,7 +2636,7 @@ type = changestate
 value = 1450
 triggerall = !AIlevel
 ;air 22 + L/M/H (button = strength)
-triggerall = command = "ar_22L" || command = "ar_22M" || command = "ar_22H"
+triggerall = command = "ar_22L" || command = "ar_22M"
 triggerall = roundstate = 2 && statetype = A
 trigger1 = ctrl || ((stateno = [200, 699]) && time <= 2) || (stateno = 200 || stateno = 230)
 trigger2 = (stateno = [200, 699]) && (movecontact = [1, 8])

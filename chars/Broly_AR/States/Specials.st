@@ -1469,7 +1469,7 @@ x = ifelse(vel x<0,-3,3)
 type = hitdef
 trigger1 = animelem = 3
 attr = A, SA
-damage = ifelse(var(10)=3,80,ifelse(var(10)=2,65,50)), 8
+damage = ifelse(var(10)=3,60,ifelse(var(10)=2,50,40)), 8
 animtype = Hard
 guardflag = HA
 hitflag = MAF
@@ -1537,7 +1537,7 @@ ignorehitpause = 1
 type = hitdef
 trigger1 = animelem = 1
 attr = C, SA
-damage = ifelse(numtarget(1401),ifelse(var(10)=3,40,ifelse(var(10)=2,35,30)),ifelse(var(10)=3,120,ifelse(var(10)=2,100,80))), 11
+damage = ifelse(numtarget(1401),ifelse(var(10)=3,30,ifelse(var(10)=2,25,20)),ifelse(var(10)=3,85,ifelse(var(10)=2,70,55))), 11
 animtype = Hard
 guardflag = M
 hitflag = FD

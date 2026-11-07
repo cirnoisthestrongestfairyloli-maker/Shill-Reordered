@@ -57,6 +57,42 @@ ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) {
 		map(_ar_enemyPower) := (enemyNear, power);
 	}
 
+	# ---------------------------------------------------------- Broly's Level 3s: damage budget
+	# A Lv3 (his states 4000-4499, and its helpers for 1.5 s after) takes at most 350 life, scaled by
+	# this combo's life-based scaling (no 80% Lv3 floor for him) and his own per-hit scaling
+	# (hits 1-2 full, then 10% less per hit, down to 35%). Anything past the budget is undone.
+	map(_ar_l3in) := 0;
+	if numenemy {
+		if (enemyNear, name = "Broly") {
+			if (enemyNear, stateno) >= 4000 && (enemyNear, stateno) <= 4499 {
+				map(_ar_l3in) := 1;
+			}
+		}
+	}
+	if numenemy && roundstate = 2 {
+		if map(_ar_l3in) = 1 {
+			if map(_ar_l3on) = 0 {
+				map(_ar_l3on) := 1;
+				map(_ar_l3start) := life;
+				map(_ar_l3budget) := 350;
+				if moveType = H {
+					map(_ar_l3budget) := 350 * cond((map(_ar_comboStartLife) - life) < lifeMax * 0.20, 1, cond((map(_ar_comboStartLife) - life) < lifeMax * 0.35, 0.75, cond((map(_ar_comboStartLife) - life) < lifeMax * 0.50, 0.55, 0.4))) * cond(getHitVar(hitcount) <= 2, 1, cond(1 - 0.1 * (getHitVar(hitcount) - 2) < 0.35, 0.35, 1 - 0.1 * (getHitVar(hitcount) - 2)));
+				}
+			}
+			map(_ar_l3grace) := 90;
+		} else if map(_ar_l3on) = 1 {
+			map(_ar_l3grace) := map(_ar_l3grace) - 1;
+			if map(_ar_l3grace) <= 0 || moveType != H {
+				map(_ar_l3on) := 0;
+			}
+		}
+		if map(_ar_l3on) = 1 && life > 0 && map(_ar_l3start) - life > map(_ar_l3budget) {
+			lifeSet{value: map(_ar_l3start) - map(_ar_l3budget)}
+		}
+	} else {
+		map(_ar_l3on) := 0;
+	}
+
 	# ---------------------------------------------------------- whiffed normals / blocked supers are minus
 	if map(_ar_myPower) - power >= 900 && moveType = A {
 		map(_ar_super) := 1;

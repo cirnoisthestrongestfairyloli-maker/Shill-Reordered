@@ -1,0 +1,98 @@
+;---------------------------------------------------------------------------
+; Abstract Reordered: special intro vs Haruhi (Kumagawa side). Haruhi runs the matching state 7790.
+[Statedef 7790]
+type     = S
+movetype = I
+physics  = S
+ctrl     = 0
+anim     = 9711
+velset   = 0, 0
+sprpriority = 2
+
+[State 7790, Intro]
+type = AssertSpecial
+trigger1 = 1
+flag = Intro
+
+[State 7790, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 7790, Stay]
+type = VelSet
+trigger1 = 1
+x = 0
+
+[State 7790, All Fiction pose]
+type = ChangeAnim
+trigger1 = Time = 20
+value = 9710
+
+[State 7790, It's all fiction]
+type = PlaySnd
+trigger1 = Time = 25
+value = 2900, 1
+channel = 0
+
+[State 7790, Subtitle 1]
+type = Explod
+trigger1 = Time = 25
+anim = 9700
+ID = 9700
+pos = GameWidth / 2, 190
+postype = left
+bindtime = -1
+removetime = 95
+scale = .5, .5
+sprpriority = 10
+ontop = 1
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7790, Drain the world grey]
+type = AllPalFX
+trigger1 = Time = [50, 139]
+time = 1
+color = ifelse(Time < 90, 256 - (Time - 50) * 6.4, 0)
+ignorehitpause = 1
+
+[State 7790, Back to standing]
+type = ChangeAnim
+trigger1 = Time = 140
+value = 9711
+
+[State 7790, Laugh]
+type = ChangeAnim
+trigger1 = Time = 320
+value = 705
+
+[State 7790, Laugh voice]
+type = PlaySnd
+trigger1 = Time = 322
+value = 2500, 0
+channel = 0
+
+[State 7790, Subtitle 2]
+type = Explod
+trigger1 = Time = 320
+anim = 9701
+ID = 9701
+pos = GameWidth / 2, 190
+postype = left
+bindtime = -1
+removetime = 95
+scale = .5, .5
+sprpriority = 10
+ontop = 1
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7790, End]
+type = ChangeState
+trigger1 = Time >= 420
+value = 0
+ctrl = 1

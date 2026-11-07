@@ -1,0 +1,103 @@
+;---------------------------------------------------------------------------
+; Abstract Reordered: special intro vs Kumagawa (Haruhi side). Kumagawa runs the matching state 7790.
+[Statedef 7790]
+type     = S
+movetype = I
+physics  = S
+ctrl     = 0
+anim     = 0
+velset   = 0, 0
+sprpriority = 2
+
+[State 7790, Intro]
+type = AssertSpecial
+trigger1 = 1
+flag = Intro
+
+[State 7790, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 7790, Stay]
+type = VelSet
+trigger1 = 1
+x = 0
+
+[State 7790, Stamp]
+type = ChangeAnim
+trigger1 = Time = 135
+value = 9710
+
+[State 7790, Stamp voice]
+type = PlaySnd
+trigger1 = Time = 135
+value = 3500, 7
+channel = 0
+
+[State 7790, Stamp shake]
+type = EnvShake
+trigger1 = Time = 138
+time = 10
+ampl = 5
+
+[State 7790, Colour back]
+type = EnvColor
+trigger1 = Time = 140
+value = 255, 255, 255
+time = 5
+
+[State 7790, Subtitle 1]
+type = Explod
+trigger1 = Time = 135
+anim = 9700
+ID = 9700
+pos = GameWidth / 2, 190
+postype = left
+bindtime = -1
+removetime = 80
+scale = .5, .5
+sprpriority = 10
+ontop = 1
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7790, Point]
+type = ChangeAnim
+trigger1 = Time = 220
+value = 9711
+
+[State 7790, Recruit]
+type = PlaySnd
+trigger1 = Time = 224
+value = 3500, 2
+channel = 0
+
+[State 7790, Subtitle 2]
+type = Explod
+trigger1 = Time = 220
+anim = 9701
+ID = 9701
+pos = GameWidth / 2, 190
+postype = left
+bindtime = -1
+removetime = 95
+scale = .5, .5
+sprpriority = 10
+ontop = 1
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7790, Stand]
+type = ChangeAnim
+trigger1 = Time = 335
+value = 0
+
+[State 7790, End]
+type = ChangeState
+trigger1 = Time >= 420
+value = 0
+ctrl = 1

@@ -954,7 +954,7 @@ end)
 AR.movelistChars = {['saber_ar'] = true, ['reimu_ar'] = true, ['haruhi_ar'] = true, ['ichigo_ar'] = true, ['homura_ar'] = true, ['broly_ar'] = true, ['kuroko_ar'] = true,
 	['meisaku_ar'] = true, ['stocking_ar'] = true, ['sailor_mercury_ar'] = true, ['cureblack_ar'] = true, ['aoko_ar'] = true,
 	['jotaro_ar'] = true, ['ippo_ar'] = true, ['kamijo_ar'] = true, ['gokublack_ar'] = true, ['vegeta_ar'] = true,
-	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true}
+	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true, ['shiki_ar'] = true, ['taiga_ar'] = true}
 AR.movelistArtX = 260
 AR.movelistArtY = 712
 AR.movelistArtScale = 1.0

@@ -540,7 +540,7 @@ time = 30
 [Statedef -1]
 
 ;---------------------------------------------------------------------------
-;==== AR BURST (HUD: the "AR burst gauge" blocks below) ====
+;==== AR BURST (HUD: the "AR burst HUD" blocks below) ====
 ;Abstract Reordered: burst (Kamijo's) - A+B+C while being hit, recharges in 75 s (var(45))
 [State -1, AR burst round reset]
 type = VarSet

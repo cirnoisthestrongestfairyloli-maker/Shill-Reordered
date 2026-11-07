@@ -3773,6 +3773,14 @@ trigger1 = time = 1
 trigger1 = var(11) = 900
 value = 8900
 
+;Abstract Reordered: blade-clash intro vs Shiki (round 1 only; Shiki plays his half from his state 196)
+[state 190, changestate]
+type = changestate
+trigger1 = time = 1
+trigger1 = var(11) = 1000
+trigger1 = roundno = 1
+value = 8950
+
 ;□パートナー鹿目まどか
 [state 190, changestate]
 type = changestate
@@ -5873,6 +5881,14 @@ trigger3 = enemy(2),authorname = "otzkai" && enemy(2),name = "kamen rider kaixa"
 trigger4 = numenemy > 3
 trigger4 = enemy(3),authorname = "otzkai" && enemy(3),name = "kamen rider kaixa"
 var(11) = 900
+
+;Abstract Reordered: blade-clash intro vs Shiki (1-on-1 only), states 8950-8953 in sayaka_intro_shiki.cns
+[state 5900, varset]
+type = varset
+triggerall = var(11) = 0
+trigger1 = numenemy = 1 && numpartner = 0
+trigger1 = enemy(0),name = "ZSShiki"
+var(11) = 1000
 ;---------------------------------------------------------------------------
 ;■味方コード取得
 [state 5900, varset]

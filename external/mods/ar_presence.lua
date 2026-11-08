@@ -207,6 +207,19 @@ end
 
 if hook and hook.add then
 	hook.add('main.menu.loop', 'arPresenceMenu', safe(onMenu))
+	-- 'main.menu.loop' only runs when a menu opens; coming back from a match keeps the same menu
+	-- running, so also mark "menu" from the title menu's per-frame draw (write() skips unchanged data)
+	if main and type(main.f_menuCommonDraw) == 'function' then
+		local origDraw = main.f_menuCommonDraw
+		local n = 0
+		main.f_menuCommonDraw = function(t, item, cursorPosY, moveTxt, sec, ...)
+			n = n + 1
+			if n % 30 == 0 and sec ~= nil and sec == motif.title_info then
+				pcall(onMenu)
+			end
+			return origDraw(t, item, cursorPosY, moveTxt, sec, ...)
+		end
+	end
 	hook.add('options.menu.loop', 'arPresenceOptions', safe(onOptions))
 	hook.add('start.f_selectScreen', 'arPresenceSelect', safe(onSelect))
 	hook.add('start.f_selectVersus', 'arPresenceVersus', safe(onVersus))
@@ -216,3 +229,14 @@ if hook and hook.add then
 end
 
 pcall(write, 'menu')
+
+-- Start the Discord presence script when the game is opened directly (Ikemen_GO.exe).
+-- If the .bat already started it, the script sees its own lock and exits straight away.
+-- 'where' first, so a PC without Python gets no "cannot find pythonw" popup.
+pcall(function()
+	local script = 'discord_presence\\ar_discord_presence.py'
+	local f = io.open(script, 'r')
+	if not f or not os.execute then return end
+	f:close()
+	os.execute('where pythonw >nul 2>nul && start "" pythonw ' .. script .. ' --attach')
+end)

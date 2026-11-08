@@ -189,7 +189,7 @@ sinadd = 50,15,45,40
 ignorehitpause = 1
 
 ;Abstract Reordered: mechanic meter HUD - Kuroko's MAGIC CIRCUIT bar, fill in the parry colour,
-;bottom of the screen (P1 left, P2 right). Only the look changed; the meter logic is untouched.
+;bottom corner of the screen (P1 bottom-left, P2 bottom-right), no icon. Only the look changed; the meter logic is untouched.
 [state -2, AR meter HUD frame P1]
 type = Explod
 triggerall = !ishelper
@@ -198,7 +198,7 @@ trigger1 = NumExplod(7790) = 0
 trigger1 = 1
 anim = 7790
 ID = 7790
-pos = 32, GameHeight - (33)
+pos = 8, GameHeight - (29)
 postype = left
 bindtime = -1
 removetime = -1
@@ -219,7 +219,7 @@ trigger1 = NumExplod(7792) = 0
 trigger1 = 1
 anim = 7792
 ID = 7792
-pos = 40, GameHeight - (22)
+pos = 16, GameHeight - (18)
 postype = left
 bindtime = -1
 removetime = -1
@@ -240,7 +240,7 @@ trigger1 = NumExplod(7791) = 0
 trigger1 = 1
 anim = 7791
 ID = 7791
-pos = 40, GameHeight - (22)
+pos = 16, GameHeight - (18)
 postype = left
 bindtime = -1
 removetime = -1
@@ -261,7 +261,7 @@ trigger1 = NumExplod(7803) = 0
 trigger1 = 1
 anim = 7793
 ID = 7803
-pos = 86.0, GameHeight - (22)
+pos = 62.0, GameHeight - (18)
 postype = left
 bindtime = -1
 removetime = -1
@@ -274,48 +274,6 @@ scale = .5,.5
 removeongethit = 0
 ignorehitpause = 1
 
-[state -2, AR meter HUD icon 7797 P1]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(7797) = 0
-trigger1 = var(25) = 0
-anim = 9616
-ID = 7797
-pos = 19, GameHeight - (20)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 14
-ontop = 1
-ownpal = 1
-scale = 1,1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR meter HUD icon 7798 P1]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 1
-trigger1 = NumExplod(7798) = 0
-trigger1 = var(25) = 1
-anim = 9617
-ID = 7798
-pos = 19, GameHeight - (20)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 14
-ontop = 1
-ownpal = 1
-scale = 1,1
-removeongethit = 0
-ignorehitpause = 1
-
 [state -2, AR meter HUD frame P2]
 type = Explod
 triggerall = !ishelper
@@ -324,7 +282,7 @@ trigger1 = NumExplod(7790) = 0
 trigger1 = 1
 anim = 7790
 ID = 7790
-pos = GameWidth - (140), GameHeight - (33)
+pos = GameWidth - (116), GameHeight - (29)
 postype = left
 bindtime = -1
 removetime = -1
@@ -345,7 +303,7 @@ trigger1 = NumExplod(7792) = 0
 trigger1 = 1
 anim = 7792
 ID = 7792
-pos = GameWidth - (132), GameHeight - (22)
+pos = GameWidth - (108), GameHeight - (18)
 postype = left
 bindtime = -1
 removetime = -1
@@ -366,7 +324,7 @@ trigger1 = NumExplod(7791) = 0
 trigger1 = 1
 anim = 7791
 ID = 7791
-pos = GameWidth - (40), GameHeight - (22)
+pos = GameWidth - (16), GameHeight - (18)
 postype = left
 facing = -1
 bindtime = -1
@@ -388,7 +346,7 @@ trigger1 = NumExplod(7803) = 0
 trigger1 = 1
 anim = 7793
 ID = 7803
-pos = GameWidth - (86.0), GameHeight - (22)
+pos = GameWidth - (62.0), GameHeight - (18)
 postype = left
 bindtime = -1
 removetime = -1
@@ -399,64 +357,6 @@ ontop = 1
 ownpal = 1
 scale = .5,.5
 removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR meter HUD icon 7797 P2]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(7797) = 0
-trigger1 = var(25) = 0
-anim = 9616
-ID = 7797
-pos = GameWidth - (19), GameHeight - (20)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 14
-ontop = 1
-ownpal = 1
-scale = 1,1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR meter HUD icon 7798 P2]
-type = Explod
-triggerall = !ishelper
-triggerall = TeamSide = 2
-trigger1 = NumExplod(7798) = 0
-trigger1 = var(25) = 1
-anim = 9617
-ID = 7798
-pos = GameWidth - (19), GameHeight - (20)
-postype = left
-bindtime = -1
-removetime = -1
-supermovetime = 99999
-pausemovetime = 99999
-sprpriority = 14
-ontop = 1
-ownpal = 1
-scale = 1,1
-removeongethit = 0
-ignorehitpause = 1
-
-[state -2, AR meter HUD off 7797]
-type = RemoveExplod
-triggerall = !ishelper
-trigger1 = NumExplod(7797)
-trigger1 = !(var(25) = 0)
-ID = 7797
-ignorehitpause = 1
-
-[state -2, AR meter HUD off 7798]
-type = RemoveExplod
-triggerall = !ishelper
-trigger1 = NumExplod(7798)
-trigger1 = !(var(25) = 1)
-ID = 7798
 ignorehitpause = 1
 
 [state -2, AR meter HUD scale 7791]

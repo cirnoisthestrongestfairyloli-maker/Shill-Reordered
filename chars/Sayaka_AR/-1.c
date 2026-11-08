@@ -339,6 +339,11 @@ command = /x
 time = 1
 
 [command]
+name = "hold_c"
+command = /c
+time = 1
+
+[command]
 name = "recovery"
 command = x+y
 time = 1
@@ -1488,6 +1493,33 @@ ignorehitpause = 1
 
 ;---------------------------------------------------------------------------
 ; Normals: light -> medium -> heavy, standing into crouching of the same strength
+;Abstract Reordered: j.2C cancels into an air dash on hit, twice per combo (fvar(7) counts them, reset in -2)
+[state -1, j.2C air dash fwd]
+type = changestate
+value = 110
+triggerall = command = "ff"
+triggerall = var(50) = 0
+triggerall = fvar(7) < 2
+triggerall = NumTarget(463)
+triggerall = target(463), MoveType = H
+triggerall = target(463), StateNo != [150,159]
+trigger1 = stateno = 465
+trigger2 = stateno = 463
+trigger2 = MoveHit
+
+[state -1, j.2C air dash back]
+type = changestate
+value = 115
+triggerall = command = "bb"
+triggerall = var(50) = 0
+triggerall = fvar(7) < 2
+triggerall = NumTarget(463)
+triggerall = target(463), MoveType = H
+triggerall = target(463), StateNo != [150,159]
+trigger1 = stateno = 465
+trigger2 = stateno = 463
+trigger2 = MoveHit
+
 [state -1, matagi shooting sword (j.2C)]
 type = changestate
 value = 460
@@ -1651,6 +1683,17 @@ trigger2 = stateno = 400
 trigger2 = movecontact
 trigger3 = stateno = 1090   ;air combo after a landed 236A / 236C
 trigger3 = (NumTarget(1010) || NumTarget(1070))
+
+;Abstract Reordered: keep holding C through j.C's windup = spinning dive (7810)
+[state -1, j.C spin (hold C)]
+type = changestate
+value = 7810
+triggerall = var(50) = 0
+triggerall = command = "hold_c"
+trigger1 = stateno = 420
+trigger1 = AnimElemNo(0) = 3
+trigger1 = AnimElemTime(3) >= 1
+trigger1 = !MoveContact
 
 [state -1, j.C]
 type = changestate

@@ -9,8 +9,10 @@ How it works
     It closes itself when the game closes.
 
 Play with presence
-  Double-click "Abstract Reordered (Discord).bat" in the game folder (instead of Ikemen_GO.exe).
-  Discord's desktop app must be running. Starting Ikemen_GO.exe directly still works, just without presence.
+  Just open Ikemen_GO.exe: the Lua module starts the presence script in the background
+  (a console window may blink once at boot) and it closes when the game closes.
+  "Abstract Reordered (Discord).bat" also still works; only one copy of the script ever runs.
+  Discord's desktop app must be running.
 
 One-time setup (already done on this PC)
   1. Python 3 installed, then:  python -m pip install pypresence
@@ -31,8 +33,26 @@ Other options in config.json
   "show_stage": false     hide the stage name
   "buttons": [{"label": "Download", "url": "https://..."}]   up to 2 link buttons
 
+Online lobby (Radmin VPN / LAN)
+  - First launch asks for a player name (saved in save\ar_profile.txt).
+    Change it any time: OPTIONS > Netplay Settings > Lobby Name.
+  - ONLINE LOBBY (main menu; it replaces NETWORK > HOST GAME / JOIN GAME) lists everyone on your Radmin network (or home LAN) who has the game open,
+    with their status (in menu / in lobby / in a match / playing online) and a [different build]
+    warning if their characters/stages files don't match yours (mismatched builds can desync).
+  - The lobby opens on two buttons: LOBBIES (the player list below) and MATCHMAKING (search until
+    another player is also searching, then you are paired and connected automatically; ESC stops).
+  - In LOBBIES, pick a player and press CONFIRM to challenge them. They get a popup in the main menu or lobby:
+    CONFIRM accepts (they host), ESC declines. You then join automatically and both land in the
+    normal netplay mode menu (VERSUS 2P etc.).
+  - Requirements for everyone: Python 3 installed, this discord_presence folder, and the same
+    netplay port in Options (default 7500). pypresence is only needed for Discord.
+  - Windows Firewall: the first time, Windows may ask to allow "pythonw" - allow it on BOTH private and
+    public networks (Radmin counts as public). The lobby uses UDP port 7510; the match itself uses 7500.
+  - Players are found by broadcast; IPs saved in save\config.ini [Netplay] IP.* are also contacted directly.
+  - Turn the lobby off: "lobby": false in config.json.
+
 Troubleshooting
   - discord_presence\presence.log says what happened (connection, missing pypresence, etc.).
   - save\ar_presence.json shows the state the game is reporting right now.
-  - Turn presence off: just launch Ikemen_GO.exe directly. To remove the Lua part,
-    rename external\mods\ar_presence.lua to -ar_presence.lua (a leading '-' stops autoloading).
+  - Turn presence off: rename external\mods\ar_presence.lua to -ar_presence.lua
+    (a leading '-' stops autoloading), or empty "client_id" in config.json.

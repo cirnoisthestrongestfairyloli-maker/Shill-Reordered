@@ -780,3 +780,170 @@ type = ChangeState
 trigger1 = Time >= 52
 value = 0
 ctrl = 1
+
+;---------------------------------------------------------------------------
+; Hold j.C: spinning dive. Hits every 6 frames while C is held, spikes them down with her.
+; Let go = normal fall with control. Lands: after a hit -> 7811 (she bounces up, they ground-bounce once per combo),
+; after a block -> 7812 (long recovery), after nothing -> normal landing.
+[Statedef 7810]
+type     = A
+movetype = A
+physics  = N
+ctrl     = 0
+anim     = 7810
+sprpriority = 2
+
+[State 7810, Reset contact]
+type = VarSet
+trigger1 = Time = 0
+var(47) = 0
+
+[State 7810, Dive]
+type = VelSet
+trigger1 = 1
+x = 2.5
+y = 7
+
+[State 7810, Whoosh]
+type = PlaySnd
+trigger1 = Time % 12 = 0
+value = 0, 6
+
+[State 7810, Spin hit]
+type = HitDef
+trigger1 = Time % 6 = 0
+id = 7810
+attr = A, NA
+hitflag = MAF
+guardflag = HA
+animtype = Medium
+priority = 4, Hit
+damage = floor(12 * fvar(1)), 1
+getpower = floor(25 * fvar(2)), floor(12 * fvar(2))
+givepower = floor(10 * fvar(3)), floor(5 * fvar(3))
+pausetime = 4, 5
+sparkno = s25002
+guard.sparkno = s25030
+sparkxy = -floor(const(size.xscale) * 10), -floor(const(size.yscale) * 40)
+hitsound = s1, 10
+guardsound = s2, 1
+ground.type = High
+ground.hittime = 22
+ground.slidetime = 10
+air.hittime = 22
+guard.hittime = 12
+guard.ctrltime = 12
+ground.velocity = -2.5, -3.5
+air.velocity = -2.5, 7
+guard.velocity = -2
+airguard.velocity = -2.5, 4
+fall = 1
+air.fall = 1
+fall.recover = 0
+fall.yvelocity = ifelse(fvar(6), 0, -9)
+
+[State 7810, Hit]
+type = VarSet
+trigger1 = MoveHit
+var(47) = 1
+ignorehitpause = 1
+
+[State 7810, Blocked]
+type = VarSet
+trigger1 = MoveGuarded
+var(47) = 2
+ignorehitpause = 1
+
+[State 7810, Let go]
+type = ChangeState
+trigger1 = command != "hold_c"
+trigger1 = Time >= 4
+trigger2 = Time >= 90
+value = 50
+ctrl = 1
+
+[State 7810, Land after a hit]
+type = ChangeState
+trigger1 = Pos Y >= 0
+trigger1 = var(47) = 1
+value = 7811
+
+[State 7810, Land after a block]
+type = ChangeState
+trigger1 = Pos Y >= 0
+trigger1 = var(47) = 2
+value = 7812
+
+[State 7810, Land]
+type = ChangeState
+trigger1 = Pos Y >= 0
+value = 52
+
+; she bounces off the floor with control
+[Statedef 7811]
+type     = A
+movetype = I
+physics  = A
+ctrl     = 0
+anim     = 41
+sprpriority = 2
+
+[State 7811, Floor]
+type = PosSet
+trigger1 = Time = 0
+y = -1
+
+[State 7811, Bounce]
+type = VelSet
+trigger1 = Time = 0
+x = -1.5
+y = -6.5
+
+[State 7811, Bounce used this combo]
+type = VarSet
+trigger1 = Time = 0
+fvar(6) = 1
+
+[State 7811, Shake]
+type = EnvShake
+trigger1 = Time = 0
+time = 10
+ampl = 4
+
+[State 7811, Thud]
+type = PlaySnd
+trigger1 = Time = 0
+value = s2, 1
+
+[State 7811, Control]
+type = ChangeState
+trigger1 = Time >= 5
+value = 50
+ctrl = 1
+
+; landed on a blocking opponent: stuck for 40 frames
+[Statedef 7812]
+type     = C
+movetype = I
+physics  = C
+ctrl     = 0
+velset   = 0, 0
+anim     = 1095
+sprpriority = 2
+
+[State 7812, Floor]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 7812, Hold the pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = 1095
+elem = AnimElemNo(0)
+
+[State 7812, Recover]
+type = ChangeState
+trigger1 = Time >= 40
+value = 11
+ctrl = 1

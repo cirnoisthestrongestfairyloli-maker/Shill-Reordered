@@ -862,3 +862,30 @@ x = 0
 id = 1070
 ignorehitpause = 1
 
+;Abstract Reordered: the j.C spin's ground bounce is allowed again once the combo is over
+[state -2, AR spin bounce reset]
+type = VarSet
+triggerall = !ishelper
+triggerall = fvar(6) != 0
+trigger1 = !NumEnemy
+trigger2 = EnemyNear, MoveType != H
+fvar(6) = 0
+ignorehitpause = 1
+
+;Abstract Reordered: count j.2C air dash cancels (2 per combo)
+[state -2, AR j.2C dash count]
+type = VarAdd
+triggerall = !ishelper
+trigger1 = stateno = 110 || stateno = 115
+trigger1 = Time = 1
+trigger1 = prevstateno = 463 || prevstateno = 465
+fvar(7) = 1
+
+[state -2, AR j.2C dash reset]
+type = VarSet
+triggerall = !ishelper
+triggerall = fvar(7) != 0
+trigger1 = !NumEnemy
+trigger2 = EnemyNear, MoveType != H
+fvar(7) = 0
+ignorehitpause = 1

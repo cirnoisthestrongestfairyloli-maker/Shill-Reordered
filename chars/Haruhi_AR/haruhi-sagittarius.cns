@@ -1,0 +1,7221 @@
+;Abstract Reordered: The Day of Sagittarius, ported from haruhi_y (states, anims, sprites and sounds).
+;Level 5: costs 5 bars and deals 450 instead of the original instant kill.
+
+[Statedef 104200]
+type=S
+movetype=A
+physics=S
+anim=4500
+ctrl=0
+poweradd=-5000
+sprpriority=2
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = var(0) = 1
+ID = 9660
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = var(0) = 1
+ID = 9661
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = var(0) = 1
+ID = 9662
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = var(0) = 1
+ID = 9663
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = var(0) = 1
+ID = 9664
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = var(0) = 1
+ID = 9665
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = var(0) = 1
+ID = 9666
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = var(0) = 1
+ID = 9667
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = var(0) = 1
+ID = 9668
+ignorehitpause = 1
+
+
+[State ]
+type=Varset
+trigger1=time=0
+fvar(13)=0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(36)=0
+
+[State ]
+type=Varset
+trigger1=time=0
+var(34)=0
+
+[State ]
+type=Varset
+trigger1=numhelper(104220)
+trigger1=helper(104220),stateno=104222
+trigger2=numhelper(1104220)
+trigger2=helper(1104220),stateno=104223
+var(0)=1
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(6038)&&time=0
+ID=6038
+
+[State ]
+type=attackdist
+trigger1=1
+value=0
+
+[State ]
+type=PalFX
+trigger1=time=0
+time=0
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noFG
+
+[State ]
+type=NotHitBy
+trigger1=time<=60||var(0)=1||(time>=60&&(numhelper(104220)||numhelper(1104220)))
+value=SCA
+time=1
+
+[State ]
+type=Pause
+trigger1=time=0
+time=57
+movetime=57
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="ichigeki enshutsu"
+ID=104210
+postype=p1
+stateno=104210
+supermovetime=9999999999
+pausemovetime=9999999999
+
+[State ]
+type=Helper
+trigger1=time=0
+helpertype=normal
+name="cutin"
+ID=124706
+postype=p1
+stateno=104706
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=PlaySnd
+trigger1=time=0&&var(25)=0
+value=s100000,133
+channel=0
+
+[State ]
+type=PlaySnd
+trigger1=time=0||time=60
+value=s100100,ifelse(time=0,168,169)
+
+[State ]
+type=Helper
+trigger1=time=60
+helpertype=normal
+name="shougekiha"
+ID=ifelse(var(34)>=60||teammode=simul ||enemy,teammode=simul,1104220,104220)
+postype=p1
+pos=floor(20*1),floor(-60*1)
+stateno=104220
+supermovetime=9999999999
+pausemovetime=9999999999
+
+[State ]
+type=ChangeState
+triggerall=var(0)=1
+trigger1=numhelper(104220)
+trigger1=helper(104220),stateno=104222&&helper(104220),time=51
+trigger2=numhelper(1104220)
+trigger2=helper(1104220),stateno=104223&&helper(1104220),time>=26
+value=ifelse(numhelper(104220),104201,104203)
+
+[State ]
+type=ChangeAnim
+triggerall=anim=4500
+trigger1=var(0)=0&&(time=180||(time>=70&&!numhelper(104220)&&!numhelper(1104220)))
+trigger2=numhelper(104220)
+trigger2=helper(104220),stateno!=104220&&helper(104220),stateno!=104222
+trigger3=numhelper(1104220)
+trigger3=helper(1104220),stateno!=104220&&helper(1104220),stateno!=104223
+value=4501
+
+[State ]
+type=ChangeState
+Trigger1=AnimTime=0&&anim=4501
+value=0
+ctrl=1
+
+
+
+[Statedef 104203]
+type=S
+movetype=A
+physics=S
+ctrl=0
+sprpriority=2
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9660
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9661
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9662
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9663
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9664
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9665
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9666
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9667
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9668
+ignorehitpause = 1
+
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=0
+
+[State ]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State ]
+type=ScreenBound
+trigger1=1
+value=0
+movecamera=0,0
+
+[State ]
+type=attackdist
+trigger1=1
+value=0
+
+[State ]
+type=PalFX
+trigger1=time=0
+time=0
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=ChangeAnim
+triggerall=anim=4500
+trigger1=time>=200&&!numhelper(104224)&&numhelper(7000)&&roundstate>=3
+trigger1=helper(7000),fvar(23)>=100
+trigger2=time>=200&&!numhelper(104224)&&roundstate<=2
+trigger3=time=360
+value=4501
+
+[State ]
+type=Varset
+trigger1=win&&roundstate>=3&&anim=4500
+var(45)=2
+
+[State ]
+type=ChangeState
+trigger1=anim=4501&&animtime=0
+value=0
+ctrl=1
+
+
+
+[Statedef 104201]
+type=S
+movetype=A
+physics=S
+anim=1860
+ctrl=0
+sprpriority=2
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9660
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9661
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9662
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9663
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9664
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9665
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9666
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9667
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9668
+ignorehitpause = 1
+
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=0
+
+[State ]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State ]
+type=ScreenBound
+trigger1=1
+value=0
+movecamera=0,0
+
+[State ]
+type=attackdist
+trigger1=1
+value=0
+
+[State ]
+type=PalFX
+trigger1=time=0
+time=0
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noFG
+falg2=roundnotover
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=posadd
+trigger1=time=0&&facing=1
+x=var(42)-ScreenPos X
+
+[State ]
+type=posadd
+trigger1=time=0&&facing=-1
+x=ScreenPos X-var(42)
+
+[State ]
+type=PosSet
+trigger1=Time=1&&facing=1
+x=-20
+
+[State ]
+type=PosSet
+trigger1=Time=1&&facing=-1
+x=20
+
+[State ]
+type=PosSet
+trigger1=Time=1
+y=pos y-ScreenPos Y+160
+
+[State ]
+type=ChangeState
+trigger1=time=4000
+trigger2=numhelper(104220)
+trigger2=helper(104220),stateno=104222&&helper(104220),var(19)>=600
+value=104202
+
+
+
+[Statedef 104202]
+type=S
+movetype=A
+physics=S
+anim=4502
+ctrl=0
+sprpriority=2
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9660
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9661
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9662
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9663
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9664
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9665
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9666
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9667
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9668
+ignorehitpause = 1
+
+
+[State ]
+type=attackdist
+trigger1=1
+value=0
+
+[State ]
+type=NotHitBy
+trigger1=time<=59
+value=SCA
+time=1
+
+[State ]
+type=PlayerPush
+trigger1=time=0
+value=0
+
+[State ]
+type=posadd
+trigger1=time=0&&facing=1
+x=(var(42)-ScreenPos X)-80
+
+[State ]
+type=posadd
+trigger1=time=0&&facing=-1
+x=(ScreenPos X-var(42))-80
+
+[State ]
+type=posset
+trigger1=time=0
+y=0
+
+[State ]
+type=NotHitBy
+trigger1=roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=Varset
+trigger1=win&&roundstate>=3&&time=0
+var(45)=2
+
+[State ]
+type=changeState
+trigger1=animtime=0
+value=0
+ctrl=1
+
+
+
+[Statedef 104210]
+type=A
+movetype=I
+anim=1860
+ctrl=0
+sprpriority=2
+
+[State ]
+type=Varset
+trigger1=(root,stateno!=104200&&(root,stateno!=104203||(root,stateno=104203&&root,anim=4501)))||root,movetype!=A
+var(4)=1
+
+[State ]
+type=null
+trigger1=root,stateno=104200&&root,time>=1
+time=1
+mul=200-var(0),200-var(0),200-var(0)
+invertall=0
+
+[State ]
+type=Varadd
+trigger1=time=[1,4]
+var(0)=50
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=82017
+ID=82017
+postype=p1
+pos=floor(3*1),floor(3*1)
+sprpriority=-1
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=time<=9
+fvar(0)=.05
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=82017
+scale=fvar(0),.5
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=82018
+ID=82018
+postype=P1
+pos=floor(3*1),floor(5*1)
+sprpriority=10
+scale=1.2,1
+pausemovetime=100
+supermovetime=100
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=82019
+ID=82019
+postype=P1
+pos=floor(3*1),floor(5*1)
+sprpriority=-2
+scale=.4,.5
+pausemovetime=100
+supermovetime=100
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=82020
+ID=82020
+postype=left
+pos=(GameWidth/2),0
+sprpriority=-501
+scale=500,500
+bindtime=-1
+removetime=-1
+supermovetime=9999999999
+pausemovetime=9999999999
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=5
+anim=82021
+ID=82021
+postype=left
+pos=-30,-40
+sprpriority=-500
+scale=600,1
+supermovetime=9999999999
+pausemovetime=9999999999
+bindtime=-1
+removetime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=5
+anim=82022
+ID=82022
+postype=left
+pos=-30,70
+sprpriority=-500
+scale=600,1
+supermovetime=9999999999
+pausemovetime=9999999999
+bindtime=-1
+removetime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=root,facing=1&&time%1=0
+anim=82023
+ID=82023
+postype=left
+pos=-100,var(1)
+sprpriority=-499
+scale=var(2)*.1,var(3)*.1
+supermovetime=9999999999
+pausemovetime=9999999999
+removetime=40
+vel=15,0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=root,facing=-1&&time%1=0
+anim=82023
+ID=82023
+postype=right
+pos=100,var(1)
+sprpriority=-499
+scale=var(2)*.1,var(3)*.1
+supermovetime=9999999999
+pausemovetime=9999999999
+removetime=40
+vel=-15,0
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=var(4)=1
+ID=82021
+
+[State ]
+type=RemoveExplod
+trigger1=var(4)=1
+ID=82022
+
+[State ]
+type=RemoveExplod
+trigger1=var(4)=1||FrontEdgeDist<=-100
+ID=82023
+
+[State ]
+type=RemoveExplod
+trigger1=var(4)=1
+ID=82020
+
+[State ]
+type=Varrandom
+trigger1=var(4)=0&&root,movetype=A
+v=1
+range=1,239
+
+[State ]
+type=Varrandom
+trigger1=var(4)=0&&root,movetype=A
+v=2
+range=4,8
+
+[State ]
+type=Varrandom
+trigger1=var(4)=0&&root,movetype=A
+v=3
+range=2,5
+
+[State ]
+type=DestroySelf
+trigger1=var(4)=1
+
+
+
+[Statedef 104220]
+type=S
+movetype=A
+physics=N
+ctrl=0
+anim=82025
+
+[State ]
+type=Varset
+trigger1=time=0&&P2name="Pz.Kpfw.IV_From_Anglerfish_Team"&&enemynear,authorname="YU-TOHARU"
+var(44)=1
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=150,256
+
+[State ]
+type=angledraw
+trigger1=1
+scale=.5,1
+
+[State ]
+type=Velset
+trigger1=1
+x=14
+
+[state ]
+type=Explod
+trigger1=time%5=0&&time>=5
+anim=82026
+postype=p1
+ownpal=1
+scale=.5*1,1*1
+sprpriority=9
+ownpal=1
+
+[State ]
+type=attackdist
+trigger1=1
+value=0
+ignorehitpause=1
+
+[State ]
+type=SprPriority
+trigger1=1
+value=10
+ignorehitpause=1
+
+[State ]
+type=PlayerPush
+trigger1=1
+value=0
+ignorehitpause=1
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+stateno=104220
+ignorehitpause=1
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=time=0
+fvar(20)=1
+
+[State ]
+type=Varset
+trigger1=!movecontact&&enemynear,movetype=H
+fvar(20)=ifelse((enemynear,stateno=[5080,5150])||enemynear,statetype=L,.5,ifelse(enemynear,statetype=A,.9,1))
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=!movecontact&&p2movetype=A
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&movehit&&!movereversed
+var(35)=1
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=time=0||(var(15)=0&&!movecontact)||var(15)=1||var(35)=1
+fvar(36)=ifelse(var(15)=1||var(35)=1,1.1,1)
+ignorehitpause=1
+
+[State ]
+type=parentVarset
+trigger1=time=0&&root,fvar(39)=0
+fvar(39)=1
+
+[State ]
+type=Varset
+trigger1=root,fvar(39)!=0
+fvar(39)=root,fvar(39)
+
+[State ]
+type=parentVarset
+trigger1=movecontact
+fvar(39)=ifelse(root,fvar(39)=1,.8,fvar(39))*.5
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=1
+fvar(27)=fvar(20)*1
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=1
+fvar(28)=(fvar(39)*1*1*fvar(36)*1*1)*1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&((root,teammode=single ||root,teammode=turns)&&(enemy,teammode=single ||enemy,teammode=turns))&&root,var(34)<60&&(var(44)=0||(time>0&&var(44)=1))
+damage=0
+attr=S,HP
+animtype=hard
+groundtype=low
+guardflag=MA
+hitflag=MAFD
+pausetime=0,60
+guard.pausetime=0,30
+priority=7,Hit
+sparkno=-1
+hitsound=s100100,19
+guardsound=s100100,8
+ground.slidetime=30
+ground.hittime=30
+ground.velocity=-10
+air.velocity=-5,-6
+guard.sparkno=-1
+yaccel=.65
+fall=0
+air.fall=1
+fall.recover=0
+ground.cornerpush.veloff=0
+air.cornerpush.veloff=0
+down.velocity=-.5,0
+down.cornerpush.veloff=0
+palfx.time=ifelse(var(15),10,0)
+palfx.sinadd=ifelse(var(15),255,0),0,0,ifelse(var(15),18,0)
+ID=104220
+getpower=0,0
+kill=0
+numhits=0
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed&&(root,var(34)>=60||root,teammode=simul ||enemy,teammode=simul)
+damage=0
+attr=S,HP
+animtype=hard
+groundtype=low
+guardflag=MA
+hitflag=MAFD
+pausetime=0,180
+guard.pausetime=0,40
+priority=7,Hit
+sparkno=-1
+hitsound=s100100,19
+guardsound=s100100,8
+ground.slidetime=30
+ground.hittime=30
+ground.velocity=-10
+air.velocity=-5,-6
+guard.sparkno=-1
+yaccel=.65
+fall=0
+air.fall=1
+fall.recover=0
+ground.cornerpush.veloff=0
+air.cornerpush.veloff=0
+down.velocity=-.5,0
+down.cornerpush.veloff=0
+palfx.time=ifelse(var(15),10,0)
+palfx.sinadd=ifelse(var(15),255,0),0,0,ifelse(var(15),18,0)
+ID=204220
+getpower=0,0
+kill=0
+numhits=0
+
+[State ]
+type=Varset
+trigger1=movehit&&var(0)=0
+var(0)=1
+ignorehitpause=1
+
+[State ]
+type=TargetState
+trigger1=movehit=1&&numtarget(104220)&&((root,teammode=single ||root,teammode=turns)&&(enemy,teammode=single ||enemy,teammode=turns))&&root,var(34)<60&&root,alive&&root,stateno=104200&&root,movetype=A
+trigger1=target,stateno!=104230
+value=104230
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Explod
+trigger1=movehit=1&&numtarget(204220)&&0
+trigger1=target,stateno!=20091
+anim=4653
+ID=4653
+scale=.75,.75
+postype=p2
+pos=0,target,Const(size.mid.pos.y)
+sprpriority=25
+supermovetime=100
+pausemovetime=100
+ownpal=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=hitadd
+trigger1=numtarget(104220)&&((root,teammode=single ||root,teammode=turns)&&(enemy,teammode=single ||enemy,teammode=turns))&&root,var(34)<60
+trigger1=target(104220),stateno=104230&&movehit&&!movereversed
+trigger2=movehit&&!movereversed&&enemynear,movetype=H&&(root,var(34)>=60||root,teammode=simul ||enemy,teammode=simul)
+value=-1000
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=numtarget(104220)&&((root,teammode=single ||root,teammode=turns)&&(enemy,teammode=single ||enemy,teammode=turns))&&root,var(34)<60&&root,alive&&root,stateno=104200&&root,movetype=A
+trigger1=target(104220),stateno=104230&&movehit&&!movereversed
+value=104222
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=movehit&&!movereversed&&enemynear,movetype=H&&(root,var(34)>=60||root,teammode=simul ||enemy,teammode=simul)&&root,alive&&root,stateno=104200&&root,movetype=A
+value=104223
+ignorehitpause=1
+
+[State ]
+type=ChangeState
+trigger1=(FrontEdgeBodyDist<-100&&!movehit)||movereversed||MoveGuarded||root,alive=0||root,stateno!=104200||root,movetype!=A
+value=104221
+ignorehitpause=1
+
+
+
+[Statedef 104222]
+type=S
+movetype=A
+physics=N
+ctrl=0
+sprpriority=10
+
+[State ]
+type=TargetState
+trigger1=numtarget(104220)&&((root,teammode=single ||root,teammode=turns)&&(enemy,teammode=single ||enemy,teammode=turns))&&root,alive&&root,stateno=104200&&root,movetype=A
+trigger1=target,stateno!=104230
+value=104230
+ignorehitpause=1
+
+[State ]
+type=Explod
+trigger1=numtarget
+trigger1=target,anim=4670
+anim=4670
+ID=4670
+scale=1*1,1*1
+postype=p2
+pos=0,0
+sprpriority=1
+supermovetime=100
+pausemovetime=100
+ownpal=1
+persistent=0
+
+[State ]
+type=RemoveExplod
+trigger1=time=51&&numexplod(4670)
+ID=4670
+
+[State ]
+type=turn
+trigger1=facing=-1&&time=51
+
+[State ]
+type=attackdist
+trigger1=1
+value=0
+
+[State ]
+type=SprPriority
+trigger1=1
+value=10
+
+[State ]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State ]
+type=AssertSpecial
+trigger1=time<=50&&var(19)<=499
+flag=noshadow
+flag2=noFG
+flag3=timerfreeze
+
+[State ]
+type=AssertSpecial
+trigger1=time>=51&&var(19)<=499
+flag=noshadow
+flag2=noFG
+
+[State ]
+type=AssertSpecial
+trigger1=time>=51&&var(19)<=499
+flag=timerfreeze
+flag2=nokoslow
+
+[State ]
+type=AssertSpecial
+trigger1=time>=51&&var(19)<=552
+flag=nobardisplay
+
+[State ]
+type=AssertSpecial
+trigger1=time>=51
+flag=nomusic
+
+[State ]
+type=PlaySnd
+trigger1=time=51
+value=s106000,1
+abspan=0
+
+channel=15
+
+[State ]
+type=StopSnd
+trigger1=time=4180
+channel=15
+
+[State ]
+type=StopSnd
+trigger1=time=5340
+channel=16
+
+[State ]
+type=PlaySnd
+trigger1=time=4200&&roundstate>=3
+value=s106000,3
+abspan=0
+channel=16
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=150-var(1),256
+
+[State ]
+type=Varadd
+trigger1=time<=4
+var(1)=30
+
+[State ]
+type=angledraw
+trigger1=time>=1
+scale=.5,1
+
+[State ]
+type=Velset
+trigger1=var(1)>=250
+x=0
+
+[State ]
+type=varadd
+trigger1=(time=[1,50])||(time=[101,150])
+var(2)=ifelse((time=[1,50]),-5,5)
+
+[State ]
+type=varset
+trigger1=time=51||time=151
+var(2)=ifelse(time=51,-256,0)
+
+[State ]
+type=AllPalFX
+trigger1=time<=152
+time=1
+mul=256+var(2),256+var(2),256+var(2)
+invertall=0
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=82032
+ID=82031
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999997
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=82033
+ID=82031
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999995
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=82027
+ID=82027
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999500
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=82028
+ID=82027
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999500
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=82029
+ID=82027
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999500
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=(time=[101,1010])||(time=[1360,2060])
+fvar(0)=.08
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=82027
+postype=left
+pos=floor((GameWidth/2)+fvar(0)),0
+sprpriority=9999500-ifelse((time=[1011,1359]),1,0)
+
+[State ]
+type=RemoveExplod
+trigger1=time=2060
+ID=82027
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=82040
+ID=82040
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999500
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+facing=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=82041
+ID=82040
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999500
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+facing=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=82042
+ID=82040
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999500
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+facing=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varset
+trigger1=time=2060
+fvar(1)=0
+
+[State ]
+type=Varadd
+trigger1=(time=[1011,1359])||(time=[2060,2299])||time>=2408
+fvar(1)=ifelse((time=[2060,2299])||(time=[2408,2510]),-.16,ifelse(time>=2511,-.08,.08))
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=82040
+postype=left
+pos=floor((GameWidth/2)-fvar(1)),0
+sprpriority=9999499+ifelse((time=[1011,1359])||(time=[2060,2299])||time>=2408,1,0)
+
+[State ]
+type=RemoveExplod
+trigger1=var(19)=552
+ID=82040
+
+[State ]
+type=null
+trigger1=time=51
+anim=82030
+ID=82030
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999501
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=82031
+ID=82031
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999999
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=var(19)=552
+ID=82031
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=101456
+ID=101456
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (0)
+sprpriority=-9999999
+scale=500,500
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=var(19)=552
+ID=101456
+
+[State ]
+type=Explod
+trigger1=time=1370
+anim=82034
+ID=82034
+postype=left
+pos=(GameWidth/2)+145, GameHeight/2 + (0)
+sprpriority=9999980
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=260||time=1430||time=1570||time=2840||var(19)=187||var(19)=552||(time=2840&&var(16)=0)
+ID=82090
+
+[State ]
+type=Explod
+trigger1=time=200||time=260||time=1430||time=1570||var(19)=187||(time=2840&&var(16)=0)
+anim=82090+ifelse(time=2840&&var(16)=0,20,ifelse(time=200||var(19)=187,2,ifelse(time=1430,1,0)))
+ID=82090
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=2840||var(19)=187||var(19)=552
+ID=82100
+
+[State ]
+type=Explod
+trigger1=time=200||var(19)=187||(time=2840&&var(17)=0)
+anim=82100+ifelse(time=2840&&var(17)=0,9,0)
+ID=82100
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999998
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=560||time=1430||time=1570||time=2840||var(19)=187||var(19)=552
+ID=82101
+
+[State ]
+type=Varset
+trigger1=time=0&&(enemy,name="asakura ryouko"||enemy,name="Ryoko Asakura")
+var(43)=1
+
+[State ]
+type=Explod
+trigger1=time=260||time=560||time=1430||time=1570||var(19)=187||(time=2840&&var(18)=0)
+anim=82100+ifelse(time=2840&&var(18)=0,8,ifelse(var(19)=187,7,ifelse(time=260,ifelse(var(43)=0,1,5),ifelse(time=560,2,ifelse(time=1430,3,4)))))
+ID=82101
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999998
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=PlaySnd
+trigger1=time=260||time=560||time=1430||time=1570||time=1774||var(19)=187
+value=s100000,134+ifelse(var(19)=187,7,ifelse(time=260,ifelse(var(43)=0,0,5),ifelse(time=560,1,ifelse(time=1430,2,ifelse(time=1570,3,4)))))
+abspan=0
+
+[State ]
+type=PlaySnd
+trigger1=time=440||time=700||time=1050||time=1370||time=1570||time=1863||time=2070||time=2180||time=2320||time=2408
+value=s100100,170+ifelse(time=440,0,ifelse(time=1370,3,ifelse(time=1570,4,ifelse(time=1863,5,ifelse(time=2070,7,ifelse(time=2180,8,ifelse(time=2320,9,ifelse(time=2408,11,1))))))))
+abspan=0
+
+[State ]
+type=PlaySnd
+trigger1=time=1863||time=2180
+value=s100100,ifelse(time=1863,176,182)
+abspan=0
+
+[State ]
+type=PlaySnd
+trigger1=time=2180||time=2408
+value=s100100,ifelse(time=2180,184,180)
+abspan=0
+channel=12
+
+[State ]
+type=StopSnd
+trigger1=time=2300
+channel=12
+
+[State ]
+type=null
+trigger1=time>=101
+fvar(1)=.08
+
+[State ]
+type=null
+trigger1=1
+ID=82030
+postype=left
+pos=floor((GameWidth/2)+fvar(1)),0
+
+[State ]
+type=null
+trigger1=time=[200,230]
+fvar(2)=ifelse(time<=220,-10,ifelse(time<=223,-8,ifelse(time<=226,-4,-2)))
+
+[State ]
+type=null
+trigger1=1
+ID=82034
+postype=left
+pos=floor((GameWidth/2)+280+fvar(2)),150
+
+[State ]
+type=Explod
+trigger1=time=440
+anim=82200
+ID=82200
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999740
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=441
+anim=82201
+ID=82200
+postype=left
+pos=(GameWidth/2)+70,5
+sprpriority=9999630
+scale=.25,.25
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=442
+anim=82202
+ID=82200
+postype=left
+pos=(GameWidth/2)+50,15
+sprpriority=9999700
+scale=.4,.4
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=443
+anim=82203
+ID=82200
+postype=left
+pos=(GameWidth/2)+150,45
+sprpriority=9999600
+scale=.2,.2
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=444
+anim=82204
+ID=82200
+postype=left
+pos=(GameWidth/2)+120, GameHeight/2 + (-20)
+sprpriority=9999770
+scale=.75,.75
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=445
+anim=82205
+ID=82200
+postype=left
+pos=(GameWidth/2)+70,66
+sprpriority=9999730
+scale=.475,.475
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=446
+anim=82206
+ID=82200
+postype=left
+pos=(GameWidth/2)+96,34
+sprpriority=9999660
+scale=.3,.3
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=447
+anim=82207
+ID=82200
+postype=left
+pos=(GameWidth/2)+10,20
+sprpriority=9999740
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=448
+anim=82208
+ID=82200
+postype=left
+pos=(GameWidth/2)+18,28
+sprpriority=9999740
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=449
+anim=82209
+ID=82200
+postype=left
+pos=(GameWidth/2)+65,52
+sprpriority=9999750
+scale=.6,.6
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=450
+anim=82210
+ID=82200
+postype=left
+pos=(GameWidth/2)+59,47
+sprpriority=9999640
+scale=.28,.28
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=451
+anim=82211
+ID=82200
+postype=left
+pos=(GameWidth/2)+160,5
+sprpriority=9999650
+scale=.29,.29
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=452
+anim=82212
+ID=82200
+postype=left
+pos=(GameWidth/2)+270, GameHeight/2 + (0)
+sprpriority=9999780
+scale=.8,.8
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=453
+anim=82213
+ID=82200
+postype=left
+pos=(GameWidth/2)+210,12
+sprpriority=9999740
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=453
+anim=82214
+ID=82200
+postype=left
+pos=(GameWidth/2)+185,30
+sprpriority=9999600
+scale=.2,.2
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=454
+anim=82215
+ID=82200
+postype=left
+pos=(GameWidth/2)+200,9
+sprpriority=9999670
+scale=.32,.32
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=455
+anim=82216
+ID=82200
+postype=left
+pos=(GameWidth/2)+180,60
+sprpriority=9999700
+scale=.4,.4
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=456
+anim=82217
+ID=82200
+postype=left
+pos=(GameWidth/2)+150,40
+sprpriority=9999670
+scale=.32,.32
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=457
+anim=82218
+ID=82200
+postype=left
+pos=(GameWidth/2)+55,41
+sprpriority=9999710
+scale=.42,.42
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=458
+anim=82219
+ID=82200
+postype=left
+pos=(GameWidth/2)+30,25
+sprpriority=9999720
+scale=.45,.45
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=459
+anim=82220
+ID=82200
+postype=left
+pos=(GameWidth/2)+39,35
+sprpriority=9999730
+scale=.475,.475
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=460
+anim=82221
+ID=82200
+postype=left
+pos=(GameWidth/2)+48,46
+sprpriority=9999740
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=461
+anim=82222
+ID=82200
+postype=left
+pos=(GameWidth/2)+125,7
+sprpriority=9999680
+scale=.35,.35
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=462
+anim=82223
+ID=82200
+postype=left
+pos=(GameWidth/2)+40, GameHeight/2 + (10)
+sprpriority=9999760
+scale=.68,.68
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=463
+anim=82224
+ID=82200
+postype=left
+pos=(GameWidth/2)+5,86
+sprpriority=9999690
+scale=.37,.37
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=464
+anim=82225
+ID=82200
+postype=left
+pos=(GameWidth/2)-15,76
+sprpriority=9999690
+scale=.37,.37
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=465
+anim=82226
+ID=82200
+postype=left
+pos=(GameWidth/2)+150, GameHeight/2 + (-28)
+sprpriority=9999660
+scale=.3,.3
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=466
+anim=82227
+ID=82200
+postype=left
+pos=(GameWidth/2)+160, GameHeight/2 + (-15)
+sprpriority=9999630
+scale=.25,.25
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=467
+anim=82228
+ID=82200
+postype=left
+pos=(GameWidth/2)+98,82
+sprpriority=9999620
+scale=.22,.22
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=468
+anim=82229
+ID=82200
+postype=left
+pos=(GameWidth/2)+183,60
+sprpriority=9999610
+scale=.21,.21
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=469
+anim=82230
+ID=82200
+postype=left
+pos=(GameWidth/2)+155, GameHeight/2 + (-26)
+sprpriority=9999600
+scale=.2,.2
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=470
+anim=82231
+ID=82200
+postype=left
+pos=(GameWidth/2)-3, GameHeight/2 + (-20)
+sprpriority=9999740
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=471
+anim=82232
+ID=82200
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (-28)
+sprpriority=9999720
+scale=.45,.45
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=472
+anim=82233
+ID=82200
+postype=left
+pos=(GameWidth/2)-8,60
+sprpriority=9999740
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=473
+anim=82234
+ID=82200
+postype=left
+pos=(GameWidth/2)-5,52
+sprpriority=9999720
+scale=.45,.45
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=474
+anim=82235
+ID=82200
+postype=left
+pos=(GameWidth/2)+125,3
+sprpriority=9999740
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=475
+anim=82236
+ID=82200
+postype=left
+pos=(GameWidth/2)+147,52
+sprpriority=9999740
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=476
+anim=82237
+ID=82200
+postype=left
+pos=(GameWidth/2)+80,30
+sprpriority=9999700
+scale=.4,.4
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=477
+anim=82238
+ID=82200
+postype=left
+pos=(GameWidth/2)+85,25
+sprpriority=9999680
+scale=.35,.35
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=478
+anim=82239
+ID=82200
+postype=left
+pos=(GameWidth/2)+169,48
+sprpriority=9999740
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=479
+anim=82240
+ID=82200
+postype=left
+pos=(GameWidth/2)+211, GameHeight/2 + (-11)
+sprpriority=9999660
+scale=.3,.3
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82300
+ID=82200
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=10
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82300
+ID=82200
+postype=left
+pos=(GameWidth/2)+70,5
+sprpriority=9999629
+scale=.25,.25
+pausemovetime=100
+supermovetime=100
+removetime=15
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82300
+ID=82200
+postype=left
+pos=(GameWidth/2)+50,15
+sprpriority=9999699
+scale=.4,.4
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82303
+ID=82200
+postype=left
+pos=(GameWidth/2)+150,45
+sprpriority=9999599
+scale=.2,.2
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82304
+ID=82200
+postype=left
+pos=(GameWidth/2)+120, GameHeight/2 + (-20)
+sprpriority=9999771
+scale=.75,.75
+pausemovetime=100
+supermovetime=100
+removetime=10
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82305
+ID=82200
+postype=left
+pos=(GameWidth/2)+70,66
+sprpriority=9999729
+scale=.475,.475
+pausemovetime=100
+supermovetime=100
+removetime=15
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82306
+ID=82200
+postype=left
+pos=(GameWidth/2)+96,34
+sprpriority=9999659
+scale=.3,.3
+pausemovetime=100
+supermovetime=100
+removetime=15
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82307
+ID=82200
+postype=left
+pos=(GameWidth/2)+10,20
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=5
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82307
+ID=82200
+postype=left
+pos=(GameWidth/2)+18,28
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=5
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82309
+ID=82200
+postype=left
+pos=(GameWidth/2)+65,52
+sprpriority=9999749
+scale=.6,.6
+pausemovetime=100
+supermovetime=100
+removetime=8
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82306
+ID=82200
+postype=left
+pos=(GameWidth/2)+59,47
+sprpriority=9999639
+scale=.28,.28
+pausemovetime=100
+supermovetime=100
+removetime=15
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82311
+ID=82200
+postype=left
+pos=(GameWidth/2)+160,5
+sprpriority=9999649
+scale=.29,.29
+pausemovetime=100
+supermovetime=100
+removetime=30
+vel=-5
+accel=-.3
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82312
+ID=82200
+postype=left
+pos=(GameWidth/2)+270, GameHeight/2 + (0)
+sprpriority=9999781
+scale=.8,.8
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Varrandom
+trigger1=time%10=0&&(time=[700,1012])
+v=3
+range=0,3
+
+[State ]
+type=Explod
+trigger1=time%10+var(3)=0&&(time=[700,1012])
+anim=82313
+ID=82200
+postype=left
+pos=(GameWidth/2)+210,12
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+var(3)=0&&(time=[700,1012])
+anim=82310
+ID=82200
+postype=left
+pos=(GameWidth/2)+210,12
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15,5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+var(3)=0&&(time=[700,1012])
+anim=82308
+ID=82200
+postype=left
+pos=(GameWidth/2)+210,12
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15,-5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82314
+ID=82200
+postype=left
+pos=(GameWidth/2)+185,30
+sprpriority=9999599
+scale=.2,.2
+pausemovetime=100
+supermovetime=100
+removetime=40
+vel=-5
+accel=-.3
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82315
+ID=82200
+postype=left
+pos=(GameWidth/2)+200,9
+sprpriority=9999669
+scale=.32,.32
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82316
+ID=82200
+postype=left
+pos=(GameWidth/2)+180,60
+sprpriority=9999699
+scale=.4,.4
+pausemovetime=100
+supermovetime=100
+removetime=30
+vel=-5
+accel=-.3
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82317
+ID=82200
+postype=left
+pos=(GameWidth/2)+150,40
+sprpriority=9999671
+scale=.32,.32
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82318
+ID=82200
+postype=left
+pos=(GameWidth/2)+55,41
+sprpriority=9999709
+scale=.42,.42
+pausemovetime=100
+supermovetime=100
+removetime=10
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82319
+ID=82200
+postype=left
+pos=(GameWidth/2)+30,25
+sprpriority=9999719
+scale=.45,.45
+pausemovetime=100
+supermovetime=100
+removetime=10
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82320
+ID=82200
+postype=left
+pos=(GameWidth/2)+39,35
+sprpriority=9999729
+scale=.475,.475
+pausemovetime=100
+supermovetime=100
+removetime=10
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82320
+ID=82200
+postype=left
+pos=(GameWidth/2)+48,46
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=10
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82322
+ID=82200
+postype=left
+pos=(GameWidth/2)+125,7
+sprpriority=9999679
+scale=.35,.35
+pausemovetime=100
+supermovetime=100
+removetime=15
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82323
+ID=82200
+postype=left
+pos=(GameWidth/2)+40, GameHeight/2 + (10)
+sprpriority=9999759
+scale=.68,.68
+pausemovetime=100
+supermovetime=100
+removetime=10
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82324
+ID=82200
+postype=left
+pos=(GameWidth/2)+5,86
+sprpriority=9999689
+scale=.37,.37
+pausemovetime=100
+supermovetime=100
+removetime=10
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82324
+ID=82200
+postype=left
+pos=(GameWidth/2)-15,76
+sprpriority=9999689
+scale=.37,.37
+pausemovetime=100
+supermovetime=100
+removetime=10
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82326
+ID=82200
+postype=left
+pos=(GameWidth/2)+150, GameHeight/2 + (-28)
+sprpriority=9999659
+scale=.3,.3
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82327
+ID=82200
+postype=left
+pos=(GameWidth/2)+160, GameHeight/2 + (-15)
+sprpriority=9999629
+scale=.25,.25
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82328
+ID=82200
+postype=left
+pos=(GameWidth/2)+98,82
+sprpriority=9999621
+scale=.22,.22
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82329
+ID=82200
+postype=left
+pos=(GameWidth/2)+183,60
+sprpriority=9999609
+scale=.21,.21
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82329
+ID=82200
+postype=left
+pos=(GameWidth/2)+155, GameHeight/2 + (-26)
+sprpriority=9999599
+scale=.2,.2
+pausemovetime=100
+supermovetime=100
+removetime=20
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82331
+ID=82200
+postype=left
+pos=(GameWidth/2)-3, GameHeight/2 + (-20)
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=5
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82331
+ID=82200
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (-28)
+sprpriority=9999719
+scale=.45,.45
+pausemovetime=100
+supermovetime=100
+removetime=5
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82333
+ID=82200
+postype=left
+pos=(GameWidth/2)-8,60
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=5
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82333
+ID=82200
+postype=left
+pos=(GameWidth/2)-5,52
+sprpriority=9999719
+scale=.45,.45
+pausemovetime=100
+supermovetime=100
+removetime=5
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82335
+ID=82200
+postype=left
+pos=(GameWidth/2)+125,3
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=15
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82336
+ID=82200
+postype=left
+pos=(GameWidth/2)+147,52
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=15
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82337
+ID=82200
+postype=left
+pos=(GameWidth/2)+80,30
+sprpriority=9999699
+scale=.4,.4
+pausemovetime=100
+supermovetime=100
+removetime=11
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82335
+ID=82200
+postype=left
+pos=(GameWidth/2)+85,25
+sprpriority=9999679
+scale=.35,.35
+pausemovetime=100
+supermovetime=100
+removetime=15
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82339
+ID=82200
+postype=left
+pos=(GameWidth/2)+169,48
+sprpriority=9999739
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+removetime=15
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%10+(Random%3)=0&&(time=[700,1012])
+anim=82323
+ID=82200
+postype=left
+pos=(GameWidth/2)+211, GameHeight/2 + (-11)
+sprpriority=9999659
+scale=.3,.3
+pausemovetime=100
+supermovetime=100
+removetime=25
+vel=-15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=51
+anim=82036
+ID=82036
+supermovetime=9999999999
+pausemovetime=9999999999
+postype=left
+pos=(GameWidth/2)-160, GameHeight/2 + (0)
+sprpriority=9999994
+bindtime=-1
+removetime=-1
+ownpal=1
+scale=.5,10
+
+[State ]
+type=Varadd
+trigger1=time=[1000,1030]
+var(4)=28
+
+[State ]
+type=modifyexplod
+trigger1=time=[51,1031]
+ID=82036
+postype=left
+pos=((GameWidth/2)-160)+var(4), GameHeight/2 + (0)
+
+[State ]
+type=RemoveExplod
+trigger1=time=1013
+ID=82200
+
+[State ]
+type=RemoveExplod
+trigger1=time=1031
+ID=82036
+
+[State ]
+type=bindtoroot
+trigger1=time>=51
+pos=0,0
+
+[State ]
+type=varadd
+trigger1=(time=[2200,2300])
+fvar(5)=.2
+
+[State ]
+type=TargetBind
+trigger1=time>=51&&numtarget&&var(19)<650&&root,stateno!=104202
+pos=0-floor(fvar(5)),0
+
+[State ]
+type=null
+trigger1=numtarget&&var(19)>=651&&root,facing=1
+pos=120,0
+
+[State ]
+type=null
+trigger1=numtarget&&var(19)>=651&&root,facing=-1
+pos=-120,0
+
+[State ]
+type=TargetBind
+trigger1=time%2=0&&((time=[1065,1350])||(time=[2200,2300])||(time=[2408,2894])||(time>=2990&&(root,var(36)=0||(root,var(36)=[10001,10002])))||var(19)=1)&&numtarget&&var(19)<651
+pos=-1-floor(fvar(5)),0
+
+[State ]
+type=Varrandom
+trigger1=time%2=0&&(time=[1050,1350])
+v=5
+range=10,160
+
+[State ]
+type=Varrandom
+trigger1=time%2=0&&(time=[1050,1350])
+v=6
+range=200,800
+
+[State ]
+type=Varrandom
+trigger1=time%2=0&&(time=[1050,1350])
+v=7
+range=0,26
+
+[State ]
+type=Explod
+trigger1=time%2=0&&(time=[1050,1350])
+anim=92400+var(7)
+ID=82400
+postype=right
+pos=10,var(5)
+sprpriority=9999950+ifelse(var(6)<300,-3,ifelse(var(6)<400,-2,ifelse(var(6)<500,-1,ifelse(var(6)<600,1,ifelse(var(6)<700,2,3)))))
+scale=(var(6)*.01)*.1,(var(6)*.01)*.1
+supermovetime=100
+pausemovetime=100
+removetime=25
+vel=-15,0
+ownpal=1
+
+[State ]
+type=Varrandom
+trigger1=time%3=0&&(time=[1050,1350])
+v=8
+range=10,160
+
+[State ]
+type=Varrandom
+trigger1=time%3=0&&(time=[1050,1350])
+v=9
+range=0,26
+
+[State ]
+type=Explod
+trigger1=time%3=0&&(time=[1050,1350])
+anim=92400+var(9)
+ID=82400
+postype=right
+pos=10,var(8)
+sprpriority=9999951
+scale=.5,.5
+supermovetime=100
+pausemovetime=100
+removetime=25
+vel=-15,0
+ownpal=1
+
+[State ]
+type=Varrandom
+trigger1=time=[1065,1350]
+v=11
+range=4,19
+
+[State ]
+type=StopSnd
+trigger1=time%(1+var(11))=0&&(time=[1065,1350])
+channel=11
+
+[State ]
+type=PlaySnd
+trigger1=time%(1+var(11))=0&&(time=[1065,1350])
+value=s100100,172
+abspan=0
+channel=11
+
+[State ]
+type=Varrandom
+trigger1=time=[1065,1350]
+v=10
+range=10,30
+
+[State ]
+type=Varrandom
+trigger1=time=[1065,1350]
+v=12
+range=50,100
+
+[State ]
+type=Explod
+trigger1=time%(1+var(11))=0&&(time=[1065,1350])
+anim=82038
+ID=82400
+postype=p1
+pos=0,-50
+random=50,50
+sprpriority=9999960
+scale=var(12)*.01,var(12)*.01
+supermovetime=100
+pausemovetime=100
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=1360
+ID=82400
+
+[State ]
+type=Explod
+trigger1=time=1350||time=1750||time=1805||time=1863
+anim=ifelse(time=1350,82039,ifelse(time=1750,82045,ifelse(time=1805,82046,82047)))
+ID=82039
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (0)
+sprpriority=9999994
+scale=50,50
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=1570||time=1602||time=1634||time=1666||time=1698||time=1730||time=1762||time=1794||time=1826
+anim=82043
+ID=82034
+postype=left
+pos=(GameWidth/2)+145, GameHeight/2 + (0)
+sprpriority=9999982
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=1570
+anim=82035
+ID=82035
+postype=left
+pos=(GameWidth/2)+85, GameHeight - (84)
+sprpriority=9999983
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=1570
+anim=82050
+ID=82050
+postype=left
+pos=(GameWidth/2)-106,64
+sprpriority=9999981
+scale=1.5,1.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=time=[1570,1826]
+var(13)=1
+
+[State ]
+type=Varadd
+trigger1=time=[1570,1862]
+fvar(4)=.0001
+
+[State ]
+type=modifyexplod
+trigger1=time=[1570,1862]
+ID=82050
+scale=.24+fvar(4),.22
+trans=addalpha
+alpha=var(13),256
+
+[State ]
+type=RemoveExplod
+trigger1=time=1863
+ID=82050
+
+[State ]
+type=Explod
+trigger1=time=1756
+anim=82044
+ID=82039
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999984
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=time=[1640,1649]
+fvar(3)=.025
+
+[State ]
+type=modifyexplod
+trigger1=time=[1570,1669]
+ID=82035
+scale=.5+fvar(3),.5+fvar(3)
+
+[State ]
+type=Explod
+trigger1=time=1863
+anim=82048
+ID=82034
+postype=left
+pos=(GameWidth/2)-102,62
+sprpriority=9999982
+scale=1.5,1.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=2060
+ID=82034
+
+[State ]
+type=Explod
+trigger1=time=2070
+anim=82051
+ID=82051
+postype=left
+pos=(GameWidth/2)+165, GameHeight/2 + (-20)
+sprpriority=9999985
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varset
+trigger1=time=2070
+var(13)=0
+
+[State ]
+type=Varset
+trigger1=time=2070
+fvar(4)=0
+
+[State ]
+type=Varadd
+trigger1=time=[2070,2154]
+var(13)=3
+
+[State ]
+type=Varset
+trigger1=time=2155
+var(13)=256
+
+[State ]
+type=Varadd
+trigger1=time=[2070,2159]
+fvar(4)=.02
+
+[State ]
+type=modifyexplod
+trigger1=time=[2070,2159]
+ID=82051
+scale=1+fvar(4),1+fvar(4)
+trans=addalpha
+alpha=var(13),256
+
+[State ]
+type=RemoveExplod
+trigger1=time=2160
+ID=82051
+
+[State ]
+type=Explod
+trigger1=time=2070||time=2340
+anim=82052
+ID=82052
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (0)
+sprpriority=9999986
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+scale=50,50
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varset
+trigger1=time=2340
+var(13)=0
+
+[State ]
+type=Varadd
+trigger1=(time=[2200,2209])||(time=[2340,2368])||(time=[2410,2439])
+var(13)=ifelse((time=[2200,2209]),-25,ifelse((time=[2340,2368]),9,-9))
+
+[State ]
+type=Varset
+trigger1=time=2369
+var(13)=256
+
+[State ]
+type=modifyexplod
+trigger1=(time=[2070,2209])||(time=[2340,2439])
+ID=82052
+trans=addalpha
+alpha=var(13),256-var(13)
+
+[State ]
+type=RemoveExplod
+trigger1=time=2210||time=2440
+ID=82052
+
+[State ]
+type=Explod
+trigger1=time=2200||time=2408
+anim=82053
+ID=ifelse(time=2200,82053,182053)
+postype=left
+pos=(GameWidth/2)+260, GameHeight/2 + (-20)
+sprpriority=9999982
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+scale=1,6
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=2300
+ID=82053
+
+[State ]
+type=Varadd
+trigger1=time=[2510,2519]
+fvar(6)=.6
+
+[State ]
+type=modifyexplod
+trigger1=time=[2408,2519]
+ID=182053
+scale=1,6-fvar(6)
+
+[State ]
+type=RemoveExplod
+trigger1=time=2520
+ID=182053
+
+[State ]
+type=Varrandom
+trigger1=(time=[2200,2299])||(time=[2408,2480])
+v=37
+range=-20,25
+
+[State ]
+type=Varrandom
+trigger1=(time=[2200,2299])||(time=[2408,2480])
+v=38
+range=3,10
+
+[State ]
+type=Varrandom
+trigger1=(time=[2200,2299])||(time=[2408,2480])
+v=39
+range=2,5
+
+[State ]
+type=Varrandom
+trigger1=(time=[2200,2299])||(time=[2408,2480])
+v=40
+range=-25,20
+
+[State ]
+type=Varrandom
+trigger1=(time=[2200,2299])||(time=[2408,2480])
+v=41
+range=3,10
+
+[State ]
+type=Varrandom
+trigger1=(time=[2200,2299])||(time=[2408,2480])
+v=42
+range=2,5
+
+[State ]
+type=Explod
+trigger1=time%6+(Random%3)=0&&((time=[2200,2299])||(time=[2408,2480]))
+anim=82542
+ID=82542
+postype=left
+pos=(GameWidth/2)+260,60+var(37)
+sprpriority=ifelse(var(38)<=4,9999949,9999981)
+scale=var(38)*.1,var(39)*.1
+supermovetime=100
+pausemovetime=100
+removetime=20
+vel=-30,0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%6+(Random%3)=0&&((time=[2200,2299])||(time=[2408,2480]))
+anim=82542
+ID=82542
+postype=left
+pos=(GameWidth/2)+260, GameHeight/2 + (30)+var(40)
+sprpriority=ifelse(var(41)<=4,9999949,9999981)
+scale=var(41)*.1,var(42)*.1
+supermovetime=100
+pausemovetime=100
+removetime=20
+vel=-30,0
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=2300
+ID=82542
+
+[State ]
+type=Explod
+trigger1=time=2200||time=2408||time=2444||time=2480
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-100,10
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=ifelse(time=2200,-1,16)
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2205||time=2413||time=2449||time=2485
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-130, GameHeight - (80)
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=ifelse(time=2205,-1,16)
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2211||time=2419||time=2455||time=2491
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-5, GameHeight - (75)
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=ifelse(time=2211,-1,16)
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2215||time=2423||time=2459||time=2495
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)+157,5
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=ifelse(time=2215,-1,16)
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2220||time=2428||time=2464||time=2500
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-135,25
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=ifelse(time=2220,-1,16)
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2220||time=2428||time=2464||time=2500
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-25, GameHeight - (83)
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=ifelse(time=2220,-1,16)
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2224||time=2432||time=2468
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)+15,9
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=ifelse(time=2224,-1,16)
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2228||time=2436||time=2472
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)+155, GameHeight - (82)
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=ifelse(time=2228,-1,16)
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2230||time=2438||time=2474
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-159, GameHeight - (88)
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=ifelse(time=2230,-1,16)
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2232||time=2440||time=2476
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)+160,6
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=ifelse(time=2232,-1,16)
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=2300
+ID=82054
+
+[State ]
+type=Explod
+trigger1=time=2300
+anim=82027
+ID=182027
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999501
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+removetime=70
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2320
+anim=82055
+ID=82055
+postype=left
+pos=(GameWidth/2)+200, GameHeight/2 + (15)
+sprpriority=9999982
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+scale=.5,.5
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=2370
+ID=82055
+
+[State ]
+type=Explod
+trigger1=time=2321
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+142, GameHeight/2 + (-12)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.11,.11
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2321
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+150, GameHeight/2 + (10)
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2322
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+132, GameHeight/2 + (-7)
+sprpriority=9999984
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.13,.13
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2322
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+126, GameHeight/2 + (-10)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2323
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+118, GameHeight/2 + (-16)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.11,.11
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2323
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+111, GameHeight/2 + (-14)
+sprpriority=9999984
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.14,.14
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2323
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+105, GameHeight/2 + (1)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2324
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+67,88
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2324
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+63, GameHeight/2 + (-20)
+sprpriority=9999984
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2324
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+65, GameHeight/2 + (-8)
+sprpriority=9999985
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.13,.13
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2324
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+53, GameHeight/2 + (-28)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.12,.12
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2324
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+45, GameHeight/2 + (-13)
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.07,.07
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2324
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+40,84
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2325
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+31, GameHeight/2 + (-29)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.14,.14
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2325
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+28,76
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2325
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+18, GameHeight/2 + (-14)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.09,.09
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2326
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+13, GameHeight/2 + (-30)
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2326
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+7,85
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.07,.07
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2326
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-3,74
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2326
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-8, GameHeight/2 + (-17)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.13,.13
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2327
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-33,79
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2327
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-40,77
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2328
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-60,72
+sprpriority=9999984
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.15,.15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2328
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-63,68
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2328
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-73,55
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2328
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-77, GameHeight/2 + (-20)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.11,.11
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2329
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-97,69
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.12,.12
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2329
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-107,75
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.09,.09
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2329
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-117,88
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.16,.16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2330
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-127,52
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.13,.13
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2330
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-140,60
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.11,.11
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2330
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-155,70
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.12,.12
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=2370
+ID=82056
+
+[State ]
+type=Explod
+trigger1=time=2510||time=2750
+anim=82054
+ID=282054
+postype=p2
+pos=(enemy,Const(size.mid.pos.x)),(enemy,Const(size.mid.pos.y))
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.75,.75
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2515||time=2758
+anim=82054
+ID=282054
+postype=p2
+pos=(enemy,Const(size.head.pos.x)-5),(enemy,Const(size.head.pos.y)-5)
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.65,.65
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2766
+anim=82054
+ID=282054
+postype=p2
+pos=(enemy,Const(size.head.pos.x)+19),(enemy,Const(size.head.pos.y))
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.65,.65
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2522||time=2774
+anim=82054
+ID=282054
+postype=p2
+pos=(enemy,Const(size.head.pos.x)+15),(enemy,Const(size.head.pos.y)+20)
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.55,.55
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2532||time=2782
+anim=82054
+ID=282054
+postype=p2
+pos=(enemy,Const(size.mid.pos.x)-13),(enemy,Const(size.mid.pos.y)+15)
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.7,.7
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2538||time=2790
+anim=82054
+ID=282054
+postype=p2
+pos=18,-8
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.6,.6
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2798
+anim=82054
+ID=282054
+postype=p2
+pos=(enemy,Const(size.mid.pos.x)),(enemy,Const(size.mid.pos.y)-30)
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.68,.68
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2550
+anim=82057
+ID=82057
+postype=p2
+pos=18,-90
+sprpriority=9999956
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.75,.75
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2570
+anim=82060
+ID=82060
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999986
+pausemovetime=1000
+supermovetime=1000
+bindtime=-1
+scale=1,1
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=time=[2740,2791]
+var(14)=5
+
+[State ]
+type=modifyexplod
+trigger1=time=[2740,2791]
+ID=82060
+trans=addalpha
+alpha=256-var(14),256
+
+[State ]
+type=RemoveExplod
+trigger1=time=2792
+ID=82060
+
+
+[State ]
+type=null
+trigger1=time>=2550
+ID=82057
+scale=1+fvar(7),1+fvar(7)
+
+[State ]
+type=Varadd
+trigger1=time>=2550
+fvar(7)=.5
+
+[State ]
+type=PlaySnd
+trigger1=time=2510||time=2515||time=2522||time=2532||time=2538||time=2550||time=2750||time=2758||time=2766||time=2774||time=2782||time=2790||time=2798
+value=s100100,186
+abspan=0
+
+
+[State ]
+type=StopSnd
+trigger1=time=2750||time=2758||time=2766||time=2774||time=2782||time=2790||time=2798
+channel=9
+
+[State ]
+type=PlaySnd
+trigger1=time=2750||time=2758||time=2766||time=2774||time=2782||time=2790||time=2798
+value=s100100,186
+abspan=0
+channel=9
+volume=100
+volumescale=100
+
+[State ]
+type=PlaySnd
+trigger1=time=2570||time=2620
+value=s100100,ifelse(time=2570,185,188)
+abspan=0
+
+[State ]
+type=PlaySnd
+trigger1=time=2570
+value=s100100,187
+abspan=0
+
+[State ]
+type=varset
+trigger1=numtarget
+trigger1=time=1&&target,SelfAnimExist(142872)
+var(16)=1
+
+[State ]
+type=varset
+trigger1=numtarget
+trigger1=time=1&&target,SelfAnimExist(142873)
+var(17)=1
+
+[State ]
+type=varset
+trigger1=numtarget
+trigger1=time=1&&target,SelfAnimExist(142874)
+var(18)=1
+
+[State ]
+type=parentvarset
+trigger1=numtarget
+trigger1=(time=[2750,2869])&&target,SelfAnimExist(142877)&&target,numexplod(142877)
+var(36)=10000
+persistent=0
+
+[State ]
+type=parentvarset
+trigger1=numtarget
+trigger1=time>=2990&&root,var(36)=10000&&target,SelfAnimExist(142877)&&target,numexplod(142877)=0
+var(36)=10001
+persistent=0
+
+[State ]
+type=parentvarset
+trigger1=var(19)=0&&time>=2990&&root,var(36)=0
+var(36)=10002
+persistent=0
+
+[State ]
+type=varadd
+trigger1=(var(19)=0&&time>=2990&&(root,var(36)=[10001,10002]))||var(19)>=1
+var(19)=1
+
+[State ]
+type=null
+trigger1=var(19)=1||var(19)=12||var(19)=18||var(19)=23||var(19)=32||var(19)=39||var(19)=45||var(19)=54||var(19)=60
+channel=9
+
+[State ]
+type=PlaySnd
+trigger1=var(19)=1||var(19)=18||var(19)=28||var(19)=36||var(19)=42||var(19)=47||var(19)=60||var(19)=70||var(19)=80
+value=s100100,ifelse(var(19)=80,188,186)
+abspan=0
+
+
+[State ]
+type=PlaySnd
+trigger1=var(19)=70
+value=s100100,187
+abspan=0
+
+[State ]
+type=Explod
+trigger1=var(19)=1
+anim=82057
+ID=282057
+postype=p2
+pos=(enemy,Const(size.mid.pos.x)),(enemy,Const(size.mid.pos.y))
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.75,.75
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=18
+anim=82057
+ID=282057
+postype=p2
+pos=(enemy,Const(size.head.pos.x)-5),(enemy,Const(size.head.pos.y)-5)
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.65,.65
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=28
+anim=82057
+ID=282057
+postype=p2
+pos=(enemy,Const(size.head.pos.x)+19),(enemy,Const(size.head.pos.y))
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.65,.65
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=36
+anim=82057
+ID=282057
+postype=p2
+pos=(enemy,Const(size.head.pos.x)+15),(enemy,Const(size.head.pos.y)+20)
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.55,.55
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=42
+anim=82057
+ID=282057
+postype=p2
+pos=(enemy,Const(size.mid.pos.x)-13),(enemy,Const(size.mid.pos.y)+15)
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.7,.7
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=47
+anim=82057
+ID=282057
+postype=p2
+pos=18,-8
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.6,.6
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=60
+anim=82057
+ID=282057
+postype=p2
+pos=(enemy,Const(size.mid.pos.x)),(enemy,Const(size.mid.pos.y)-30)
+sprpriority=9999955
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.68,.68
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=70
+anim=82058
+ID=82058
+postype=p2
+pos=0,-70
+sprpriority=9999956
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=1.5,1.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=70
+anim=82037
+ID=82037
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999986
+scale=50,50
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+ownpal=1
+
+[State ]
+type=parentvarset
+trigger1=var(19)=75
+var(36)=30000
+persistent=0
+
+[State ]
+type=Explod
+trigger1=var(19)=130
+anim=82093
+ID=82093
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999991
+scale=50,50
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=(var(19)=[130,157])||(var(19)=[190,217])
+var(20)=ifelse((var(19)=[130,157]),9,-9)
+
+[State ]
+type=Varset
+trigger1=var(19)=158||var(19)=218
+var(20)=ifelse(var(19)=158,256,0)
+
+[State ]
+type=modifyexplod
+trigger1=var(19)>=130
+ID=82093
+trans=addalpha
+alpha=var(20),256
+
+[State ]
+type=RemoveExplod
+trigger1=var(19)=218
+ID=82093
+
+[State ]
+type=Explod
+trigger1=var(19)=188
+anim=82094
+ID=82094
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999985
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=188
+anim=82095
+ID=82094
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999990
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=188
+anim=82096
+ID=82094
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999989
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=188
+anim=82097
+ID=82094
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999988
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=188
+anim=82098
+ID=82094
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999987
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=var(19)=188
+anim=82099
+ID=82094
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999986
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=parentvarset
+trigger1=var(19)=188
+var(36)=40000
+persistent=0
+
+[State ]
+type=varadd
+trigger1=(var(19)=[501,550])||(var(19)=[601,650])
+var(2)=ifelse((var(19)=[501,550]),-5,5)
+
+[State ]
+type=varset
+trigger1=var(19)=551||var(19)=651
+var(2)=ifelse(var(19)=551,-256,0)
+
+[State ]
+type=AllPalFX
+trigger1=var(19)=[501,652]
+time=1
+mul=256+var(2),256+var(2),256+var(2)
+invertall=0
+
+[State ]
+type=RemoveExplod
+trigger1=var(19)=552
+ID=82094
+
+[State ]
+type=Explod
+trigger1=time=2840
+anim=82501
+ID=82501
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999994
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840
+anim=82502
+ID=82501
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999992
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840
+anim=82503
+ID=82501
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840
+anim=82504
+ID=82501
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840
+anim=82505
+ID=82505
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999993
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840
+anim=82506
+ID=82506
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999993
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840
+anim=82540
+ID=82501
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Varset
+trigger1=time=[2840,2851]
+fvar(8)=-ifelse(time=2840,160,ifelse(time=2841,145,ifelse(time=2842,130,ifelse(time=2843,115,ifelse(time=2844,100,ifelse(time=2845,85,ifelse(time=2846,70,ifelse(time=2847,51,ifelse(time=2848,37.5,ifelse(time=2849,25,ifelse(time=2850,7.5,3.5)))))))))))
+
+[State ]
+type=Varset
+trigger1=time=[2852,2854]
+fvar(8)=ifelse(time=2852,-1.5,ifelse(time=2853,-.5,0))
+
+[State ]
+type=Varadd
+trigger1=var(19)>=60
+fvar(8)=-30
+
+[State ]
+type=parentvarset
+trigger1=(time=[2840,2854])||(var(19)=[60,552])
+var(0)=ifelse(var(19)=552||(var(19)>=60&&fvar(8)<=-320),142875,floor(fvar(8)))
+
+[State ]
+type=modifyexplod
+trigger1=time>=2840
+ID=82501
+postype=left
+pos=(GameWidth/2)+floor(fvar(8)),0
+
+[State ]
+type=Varset
+trigger1=numtarget&&time=2840
+fvar(11)=ifelse(target,life>=1000,1000,target,life)/10
+
+[State ]
+type=Varadd
+trigger1=time>=2860&&fvar(11)>0
+fvar(11)=-1
+
+[State ]
+type=Varset
+trigger1=time>=2860&&fvar(11)<0
+fvar(11)=0
+
+[State ]
+type=Varset
+trigger1=numtarget&&time=2840
+var(27)=ifelse(target,life>=1000,1000,target,life)
+
+[State ]
+type=Varadd
+trigger1=time>=2860&&var(27)>0
+var(27)=-10
+
+[State ]
+type=Varset
+trigger1=time>=2860&&var(27)<0
+var(27)=0
+
+[State ]
+type=Varset
+trigger1=numtarget&&time>=2840
+var(21)=ifelse(var(27)>=1000,10000,var(27)*10)
+
+[State ]
+type=targetlifeadd
+trigger1=numtarget&&time=2840
+value=-ceil(450 * (target,const(data.defence)) / 100.0)
+kill=1
+absolute=0
+
+[State ]
+type=modifyexplod
+trigger1=time>=2840
+ID=82505
+postype=left
+pos=(GameWidth/2)-124+floor(fvar(8)),19
+scale=.5*(fvar(11)*.01),.5
+
+[State ]
+type=Varset
+trigger1=numtarget&&time=2840
+fvar(12)=target,power
+
+[State ]
+type=Varset
+trigger1=time=2840
+fvar(14)=ifelse(fvar(12)>=10000,999,fvar(12))/10
+
+[State ]
+type=targetpoweradd
+trigger1=time=2840
+value=1000000000
+
+[State ]
+type=Varset
+trigger1=numtarget&&time=2840
+fvar(13)=target,power
+
+[State ]
+type=Varset
+trigger1=time=2840
+fvar(15)=ifelse(fvar(13)>=10000,999,fvar(13))/10
+
+[State ]
+type=targetpoweradd
+trigger1=time=2840
+value=-1000000000
+
+[State ]
+type=targetpoweradd
+trigger1=time=2840
+value=ceil(fvar(12))
+
+[State ]
+type=modifyexplod
+trigger1=time>=2840
+ID=82506
+postype=left
+pos=(GameWidth/2)-78+floor(fvar(8)),28
+scale=.5*(fvar(12)/fvar(13)),.5
+
+[State ]
+type=Varset
+trigger1=time>=2860&&var(21)<0
+var(21)=0
+
+[State ]
+type=varset
+trigger1=var(21)>=10000
+var(22)=ifelse(var(21)=10000,1,0)
+
+[State ]
+type=varset
+trigger1=var(21)>=3000
+var(23)=ifelse(var(21)=10000,0,ifelse((var(21)=[9000,9999]),9,ifelse((var(21)=[8000,8999]),8,ifelse((var(21)=[7000,7999]),7,ifelse((var(21)=[6000,6999]),6,ifelse((var(21)=[5000,5999]),5,ifelse((var(21)=[4000,4999]),4,3)))))))
+
+[State ]
+type=varset
+trigger1=var(21)<=2999
+var(23)=ifelse((var(21)=[2000,2999]),2,ifelse((var(21)=[1000,1999]),1,10))
+
+[State ]
+type=varset
+trigger1=time>=2840&&(var(21)=[3000,9999])
+var(24)=var(21)-((ifelse((var(21)=[9000,9999]),9,ifelse((var(21)=[8000,8999]),8,ifelse((var(21)=[7000,7999]),7,ifelse((var(21)=[6000,6999]),6,ifelse((var(21)=[5000,5999]),5,ifelse((var(21)=[4000,4999]),4,3)))))))*1000)
+
+[State ]
+type=varset
+trigger1=time>=2840&&(var(21)=[1000,2999])
+var(24)=var(21)-(ifelse((var(21)=[2000,2999]),2,1)*1000)
+
+[State ]
+type=varset
+trigger1=time>=2840&&(var(21)=[200,999])
+var(24)=ifelse(var(21)>=900,900,ifelse((var(21)=[800,899]),800,ifelse((var(21)=[700,799]),700,ifelse((var(21)=[600,699]),600,ifelse((var(21)=[500,599]),500,ifelse((var(21)=[400,499]),400,ifelse((var(21)=[300,399]),300,200)))))))
+
+[State ]
+type=varset
+trigger1=time>=2840&&(var(21)=[100,199])
+var(24)=100
+
+[State ]
+type=varset
+trigger1=var(24)>=100
+var(25)=ifelse(var(24)>=900,9,ifelse((var(24)=[800,899]),8,ifelse((var(24)=[700,799]),7,ifelse((var(24)=[600,699]),6,ifelse((var(24)=[500,599]),5,ifelse((var(24)=[400,499]),4,ifelse((var(24)=[300,399]),3,ifelse((var(24)=[200,299]),2,1))))))))
+
+[State ]
+type=varset
+trigger1=var(24)<=99||var(21)=10000
+var(25)=0
+
+[State ]
+type=varset
+trigger1=var(24)<=9||(var(24)=[100,109])||(var(24)=[200,209])||(var(24)=[300,309])||(var(24)=[400,409])||(var(24)=[500,509])||(var(24)=[600,609])||(var(24)=[700,709])||(var(24)=[800,809])||(var(24)=[900,909])||var(21)=10000
+var(26)=0
+
+[State ]
+type=varset
+trigger1=(var(24)=[10,19])||(var(24)=[110,119])||(var(24)=[210,219])||(var(24)=[310,319])||(var(24)=[410,419])||(var(24)=[510,519])||(var(24)=[610,619])||(var(24)=[710,719])||(var(24)=[810,819])||(var(24)=[910,919])
+var(26)=1
+
+[State ]
+type=varset
+trigger1=(var(24)=[20,29])||(var(24)=[120,129])||(var(24)=[220,229])||(var(24)=[320,329])||(var(24)=[420,429])||(var(24)=[520,529])||(var(24)=[620,629])||(var(24)=[720,729])||(var(24)=[820,829])||(var(24)=[920,929])
+var(26)=2
+
+[State ]
+type=varset
+trigger1=(var(24)=[30,39])||(var(24)=[130,139])||(var(24)=[230,239])||(var(24)=[330,339])||(var(24)=[430,439])||(var(24)=[530,539])||(var(24)=[630,639])||(var(24)=[730,739])||(var(24)=[830,839])||(var(24)=[930,939])
+var(26)=3
+
+[State ]
+type=varset
+trigger1=(var(24)=[40,49])||(var(24)=[140,149])||(var(24)=[240,249])||(var(24)=[340,349])||(var(24)=[440,449])||(var(24)=[540,549])||(var(24)=[640,649])||(var(24)=[740,749])||(var(24)=[840,849])||(var(24)=[940,949])
+var(26)=4
+
+[State ]
+type=varset
+trigger1=(var(24)=[50,59])||(var(24)=[150,159])||(var(24)=[250,259])||(var(24)=[350,359])||(var(24)=[450,459])||(var(24)=[550,559])||(var(24)=[650,659])||(var(24)=[750,759])||(var(24)=[850,859])||(var(24)=[950,959])
+var(26)=5
+
+[State ]
+type=varset
+trigger1=(var(24)=[60,69])||(var(24)=[160,169])||(var(24)=[260,269])||(var(24)=[360,369])||(var(24)=[460,469])||(var(24)=[560,569])||(var(24)=[660,669])||(var(24)=[760,769])||(var(24)=[860,869])||(var(24)=[960,969])
+var(26)=6
+
+[State ]
+type=varset
+trigger1=(var(24)=[70,79])||(var(24)=[170,179])||(var(24)=[270,279])||(var(24)=[370,379])||(var(24)=[470,479])||(var(24)=[570,579])||(var(24)=[670,679])||(var(24)=[770,779])||(var(24)=[870,879])||(var(24)=[970,979])
+var(26)=7
+
+[State ]
+type=varset
+trigger1=(var(24)=[80,89])||(var(24)=[180,189])||(var(24)=[280,289])||(var(24)=[380,389])||(var(24)=[480,489])||(var(24)=[580,589])||(var(24)=[680,689])||(var(24)=[780,789])||(var(24)=[880,889])||(var(24)=[980,989])
+var(26)=8
+
+[State ]
+type=varset
+trigger1=(var(24)=[90,99])||(var(24)=[190,199])||(var(24)=[290,299])||(var(24)=[390,399])||(var(24)=[490,499])||(var(24)=[590,599])||(var(24)=[690,699])||(var(24)=[790,799])||(var(24)=[890,899])||(var(24)=[990,999])
+var(26)=9
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(82510)
+trigger1=time>=2860||var(19)=552||(var(19)>=60&&fvar(8)<=-320)
+ID=82510
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(82520)
+trigger1=time>=2860||var(19)=552||(var(19)>=60&&fvar(8)<=-320)
+ID=82520
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(82530)
+trigger1=time>=2860||var(19)=552||(var(19)>=60&&fvar(8)<=-320)
+ID=82530
+
+[State ]
+type=RemoveExplod
+trigger1=numexplod(82541)
+trigger1=time=2860||var(19)=552||(var(19)>=60&&fvar(8)<=-320)
+ID=82541
+
+[State ]
+type=Explod
+trigger1=time>=2840&&var(21)>=10&&!numexplod(82510)&&var(19)<60
+anim=82510+var(26)
+ID=82510
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time>=2840&&var(21)>=100&&!numexplod(82520)&&var(19)<60
+anim=82520+var(25)
+ID=82520
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time>=2840&&var(21)>=1000&&!numexplod(82530)&&var(19)<60
+anim=82530+var(23)
+ID=82530
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840&&var(21)=10000
+anim=82541
+ID=82541
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=modifyexplod
+trigger1=time>=2840
+ID=82510
+postype=left
+pos=(GameWidth/2)+floor(fvar(8)),0
+
+[State ]
+type=modifyexplod
+trigger1=time>=2840
+ID=82520
+postype=left
+pos=(GameWidth/2)+floor(fvar(8)),0
+
+[State ]
+type=modifyexplod
+trigger1=time>=2840
+ID=82530
+postype=left
+pos=(GameWidth/2)+floor(fvar(8)),0
+
+[State ]
+type=modifyexplod
+trigger1=time>=2840
+ID=82541
+postype=left
+pos=(GameWidth/2)+floor(fvar(8)),0
+
+[State ]
+type=RemoveExplod
+trigger1=var(19)=552||(var(19)>=60&&fvar(8)<=-320)
+ID=82501
+
+[State ]
+type=RemoveExplod
+trigger1=var(19)=552||(var(19)>=60&&fvar(8)<=-320)
+ID=82505
+
+[State ]
+type=RemoveExplod
+trigger1=var(19)=552||(var(19)>=60&&fvar(8)<=-320)
+ID=82506
+
+[State ]
+type=varset
+trigger1=time=2840
+var(28)=ceil(fvar(14))
+
+[State ]
+type=varset
+trigger1=var(28)>=100
+var(30)=ifelse(var(28)>=900,9,ifelse((var(28)=[800,899]),8,ifelse((var(28)=[700,799]),7,ifelse((var(28)=[600,699]),6,ifelse((var(28)=[500,599]),5,ifelse((var(28)=[400,499]),4,ifelse((var(28)=[300,399]),3,ifelse((var(28)=[200,299]),2,1))))))))
+
+[State ]
+type=varset
+trigger1=var(28)<=9||(var(28)=[100,109])||(var(28)=[200,209])||(var(28)=[300,309])||(var(28)=[400,409])||(var(28)=[500,509])||(var(28)=[600,609])||(var(28)=[700,709])||(var(28)=[800,809])||(var(28)=[900,909])||var(21)=10000
+var(31)=0
+
+[State ]
+type=varset
+trigger1=(var(28)=[10,19])||(var(28)=[110,119])||(var(28)=[210,219])||(var(28)=[310,319])||(var(28)=[410,419])||(var(28)=[510,519])||(var(28)=[610,619])||(var(28)=[710,719])||(var(28)=[810,819])||(var(28)=[910,919])
+var(31)=1
+
+[State ]
+type=varset
+trigger1=(var(28)=[20,29])||(var(28)=[120,129])||(var(28)=[220,229])||(var(28)=[320,329])||(var(28)=[420,429])||(var(28)=[520,529])||(var(28)=[620,629])||(var(28)=[720,729])||(var(28)=[820,829])||(var(28)=[920,929])
+var(31)=2
+
+[State ]
+type=varset
+trigger1=(var(28)=[30,39])||(var(28)=[130,139])||(var(28)=[230,239])||(var(28)=[330,339])||(var(28)=[430,439])||(var(28)=[530,539])||(var(28)=[630,639])||(var(28)=[730,739])||(var(28)=[830,839])||(var(28)=[930,939])
+var(31)=3
+
+[State ]
+type=varset
+trigger1=(var(28)=[40,49])||(var(28)=[140,149])||(var(28)=[240,249])||(var(28)=[340,349])||(var(28)=[440,449])||(var(28)=[540,549])||(var(28)=[640,649])||(var(28)=[740,749])||(var(28)=[840,849])||(var(28)=[940,949])
+var(31)=4
+
+[State ]
+type=varset
+trigger1=(var(28)=[50,59])||(var(28)=[150,159])||(var(28)=[250,259])||(var(28)=[350,359])||(var(28)=[450,459])||(var(28)=[550,559])||(var(28)=[650,659])||(var(28)=[750,759])||(var(28)=[850,859])||(var(28)=[950,959])
+var(31)=5
+
+[State ]
+type=varset
+trigger1=(var(28)=[60,69])||(var(28)=[160,169])||(var(28)=[260,269])||(var(28)=[360,369])||(var(28)=[460,469])||(var(28)=[560,569])||(var(28)=[660,669])||(var(28)=[760,769])||(var(28)=[860,869])||(var(28)=[960,969])
+var(31)=6
+
+[State ]
+type=varset
+trigger1=(var(28)=[70,79])||(var(28)=[170,179])||(var(28)=[270,279])||(var(28)=[370,379])||(var(28)=[470,479])||(var(28)=[570,579])||(var(28)=[670,679])||(var(28)=[770,779])||(var(28)=[870,879])||(var(28)=[970,979])
+var(31)=7
+
+[State ]
+type=varset
+trigger1=(var(28)=[80,89])||(var(28)=[180,189])||(var(28)=[280,289])||(var(28)=[380,389])||(var(28)=[480,489])||(var(28)=[580,589])||(var(28)=[680,689])||(var(28)=[780,789])||(var(28)=[880,889])||(var(28)=[980,989])
+var(31)=8
+
+[State ]
+type=varset
+trigger1=(var(28)=[90,99])||(var(28)=[190,199])||(var(28)=[290,299])||(var(28)=[390,399])||(var(28)=[490,499])||(var(28)=[590,599])||(var(28)=[690,699])||(var(28)=[790,799])||(var(28)=[890,899])||(var(28)=[990,999])
+var(31)=9
+
+[State ]
+type=varset
+trigger1=time=2840&&var(28)>=200
+var(32)=var(28)-ifelse(var(28)>=900,900,ifelse((var(28)=[800,899]),800,ifelse((var(28)=[700,799]),700,ifelse((var(28)=[600,699]),600,ifelse((var(28)=[500,599]),500,ifelse((var(28)=[400,499]),400,ifelse((var(28)=[300,399]),300,200)))))))
+
+[State ]
+type=varset
+trigger1=time=2840&&(var(28)=[100,199])
+var(32)=var(28)-100
+
+[State ]
+type=varadd
+trigger1=time=2840&&(var(32)=[10,99])
+var(32)=-ifelse(var(32)>=90,90,ifelse((var(32)=[80,89]),80,ifelse((var(32)=[70,79]),70,ifelse((var(32)=[60,69]),60,ifelse((var(32)=[50,59]),50,ifelse((var(32)=[40,49]),40,ifelse((var(32)=[30,39]),30,ifelse((var(32)=[20,29]),20,10))))))))
+
+[State ]
+type=varset
+trigger1=time=2840
+var(29)=ceil(fvar(15))
+
+[State ]
+type=varset
+trigger1=var(29)>=100
+var(33)=ifelse(var(29)>=900,9,ifelse((var(29)=[800,899]),8,ifelse((var(29)=[700,799]),7,ifelse((var(29)=[600,699]),6,ifelse((var(29)=[500,599]),5,ifelse((var(29)=[400,499]),4,ifelse((var(29)=[300,399]),3,ifelse((var(29)=[200,299]),2,1))))))))
+
+[State ]
+type=varset
+trigger1=var(29)<=9||(var(29)=[100,109])||(var(29)=[200,209])||(var(29)=[300,309])||(var(29)=[400,409])||(var(29)=[500,509])||(var(29)=[600,609])||(var(29)=[700,709])||(var(29)=[800,809])||(var(29)=[900,909])||var(21)=10000
+var(34)=0
+
+[State ]
+type=varset
+trigger1=(var(29)=[10,19])||(var(29)=[110,119])||(var(29)=[210,219])||(var(29)=[310,319])||(var(29)=[410,419])||(var(29)=[510,519])||(var(29)=[610,619])||(var(29)=[710,719])||(var(29)=[810,819])||(var(29)=[910,919])
+var(34)=1
+
+[State ]
+type=varset
+trigger1=(var(29)=[20,29])||(var(29)=[120,129])||(var(29)=[220,229])||(var(29)=[320,329])||(var(29)=[420,429])||(var(29)=[520,529])||(var(29)=[620,629])||(var(29)=[720,729])||(var(29)=[820,829])||(var(29)=[920,929])
+var(34)=2
+
+[State ]
+type=varset
+trigger1=(var(29)=[30,39])||(var(29)=[130,139])||(var(29)=[230,239])||(var(29)=[330,339])||(var(29)=[430,439])||(var(29)=[530,539])||(var(29)=[630,639])||(var(29)=[730,739])||(var(29)=[830,839])||(var(29)=[930,939])
+var(34)=3
+
+[State ]
+type=varset
+trigger1=(var(29)=[40,49])||(var(29)=[140,149])||(var(29)=[240,249])||(var(29)=[340,349])||(var(29)=[440,449])||(var(29)=[540,549])||(var(29)=[640,649])||(var(29)=[740,749])||(var(29)=[840,849])||(var(29)=[940,949])
+var(34)=4
+
+[State ]
+type=varset
+trigger1=(var(29)=[50,59])||(var(29)=[150,159])||(var(29)=[250,259])||(var(29)=[350,359])||(var(29)=[450,459])||(var(29)=[550,559])||(var(29)=[650,659])||(var(29)=[750,759])||(var(29)=[850,859])||(var(29)=[950,959])
+var(34)=5
+
+[State ]
+type=varset
+trigger1=(var(29)=[60,69])||(var(29)=[160,169])||(var(29)=[260,269])||(var(29)=[360,369])||(var(29)=[460,469])||(var(29)=[560,569])||(var(29)=[660,669])||(var(29)=[760,769])||(var(29)=[860,869])||(var(29)=[960,969])
+var(34)=6
+
+[State ]
+type=varset
+trigger1=(var(29)=[70,79])||(var(29)=[170,179])||(var(29)=[270,279])||(var(29)=[370,379])||(var(29)=[470,479])||(var(29)=[570,579])||(var(29)=[670,679])||(var(29)=[770,779])||(var(29)=[870,879])||(var(29)=[970,979])
+var(34)=7
+
+[State ]
+type=varset
+trigger1=(var(29)=[80,89])||(var(29)=[180,189])||(var(29)=[280,289])||(var(29)=[380,389])||(var(29)=[480,489])||(var(29)=[580,589])||(var(29)=[680,689])||(var(29)=[780,789])||(var(29)=[880,889])||(var(29)=[980,989])
+var(34)=8
+
+[State ]
+type=varset
+trigger1=(var(29)=[90,99])||(var(29)=[190,199])||(var(29)=[290,299])||(var(29)=[390,399])||(var(29)=[490,499])||(var(29)=[590,599])||(var(29)=[690,699])||(var(29)=[790,799])||(var(29)=[890,899])||(var(29)=[990,999])
+var(34)=9
+
+[State ]
+type=varset
+trigger1=time=2840&&var(29)>=200
+var(36)=var(29)-ifelse(var(29)>=900,900,ifelse((var(29)=[800,899]),800,ifelse((var(29)=[700,799]),700,ifelse((var(29)=[600,699]),600,ifelse((var(29)=[500,599]),500,ifelse((var(29)=[400,499]),400,ifelse((var(29)=[300,399]),300,200)))))))
+
+[State ]
+type=varset
+trigger1=time=2840&&(var(29)=[100,199])
+var(36)=var(29)-100
+
+[State ]
+type=varadd
+trigger1=time=2840&&(var(36)=[10,99])
+var(36)=-ifelse(var(36)>=90,90,ifelse((var(36)=[80,89]),80,ifelse((var(36)=[70,79]),70,ifelse((var(36)=[60,69]),60,ifelse((var(36)=[50,59]),50,ifelse((var(36)=[40,49]),40,ifelse((var(36)=[30,39]),30,ifelse((var(36)=[20,29]),20,10))))))))
+
+[State ]
+type=Explod
+trigger1=time=2840
+anim=82580+var(32)
+ID=82580
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840&&var(28)>=10
+anim=82590+var(31)
+ID=82580
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840&&var(28)>=100
+anim=82600+var(30)
+ID=82580
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840
+anim=82550+var(36)
+ID=82580
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840&&var(29)>=10
+anim=82560+var(34)
+ID=82580
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2840&&var(29)>=100
+anim=82570+var(33)
+ID=82580
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=modifyexplod
+trigger1=time>=2840
+ID=82580
+postype=left
+pos=(GameWidth/2)+floor(fvar(8)),0
+
+[State ]
+type=RemoveExplod
+trigger1=var(19)=552||(var(19)>=60&&fvar(8)<=-320)
+ID=82580
+
+
+[State ]
+type=Explod
+trigger1=time=2840
+anim=82509
+ID=82509
+postype=p2
+pos=0,0
+sprpriority=9999997
+pausemovetime=1000
+supermovetime=1000
+ownpal=1
+
+[State ]
+type=Varset
+trigger1=time=[2840,2849]
+fvar(9)=ifelse(time=2840,.5,ifelse(time=2841,.57,ifelse(time=2842,.64,ifelse(time=2843,.62,ifelse(time=2844,.6,ifelse(time=2845,.58,ifelse(time=2846,.56,ifelse(time=2847,.54,ifelse(time=2848,.52,.5)))))))))
+
+[State ]
+type=Varset
+trigger1=time=[2840,2849]
+fvar(10)=ifelse(time=2840,.25,ifelse(time=2841,.5,ifelse(time=2842,.75,ifelse(time=2843,.71,ifelse(time=2844,.675,ifelse(time=2845,.64,ifelse(time=2846,.605,ifelse(time=2847,.57,ifelse(time=2848,.535,.5)))))))))
+
+[State ]
+type=modifyexplod
+trigger1=time>=2840
+ID=82509
+scale=fvar(9),fvar(10)
+
+[State ]
+type=Explod
+trigger1=time=2870
+anim=82507
+ID=82507
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999999
+pausemovetime=1000
+supermovetime=1000
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=2870
+anim=82508
+ID=82507
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999998
+pausemovetime=1000
+supermovetime=1000
+bindtime=-1
+scale=.5,.5
+ownpal=1
+
+[State ]
+type=DestroySelf
+trigger1=time=5340||(var(19)=652&&roundstate=2)
+
+
+
+[Statedef 104223]
+type=S
+movetype=A
+physics=N
+ctrl=0
+sprpriority=10
+
+[State ]
+type=parentVarset
+trigger1=time=50
+var(35)=83
+persistent=0
+
+[State ]
+type=turn
+trigger1=facing=-1&&time=26
+
+[State ]
+type=attackdist
+trigger1=1
+value=0
+
+[State ]
+type=SprPriority
+trigger1=time<=26
+value=10
+
+[State ]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State ]
+type=AssertSpecial
+trigger1=time<=25
+flag=noshadow
+flag2=noFG
+
+[State ]
+type=AssertSpecial
+trigger1=time>=26
+flag=noshadow
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noFG
+
+[State ]
+type=AssertSpecial
+trigger1=time<=700
+flag=timerfreeze
+flag2=nokoslow
+
+[State ]
+type=AssertSpecial
+trigger1=time=[26,700]
+flag=nobardisplay
+
+[State ]
+type=AssertSpecial
+trigger1=time>=26
+flag=nomusic
+
+[State ]
+type=PlaySnd
+trigger1=time=26
+value=s106000,2
+abspan=0
+channel=15
+
+[State ]
+type=StopSnd
+trigger1=time=1400
+channel=15
+
+[State ]
+type=StopSnd
+trigger1=time=2500
+channel=16
+
+[State ]
+type=PlaySnd
+trigger1=time=1360&&roundstate>=3
+value=s106000,3
+abspan=0
+channel=16
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=150-var(1),256
+
+[State ]
+type=Varadd
+trigger1=time<=4
+var(1)=30
+
+[State ]
+type=angledraw
+trigger1=time>=1
+scale=.5,1
+
+[State ]
+type=Velset
+trigger1=var(1)>=250
+x=0
+
+[State ]
+type=varadd
+trigger1=(time=[1,25])||(time=[51,75])
+var(2)=ifelse((time=[1,25]),-10,10)
+
+[State ]
+type=varset
+trigger1=time=26||time=76
+var(2)=ifelse(time=26,-256,0)
+
+[State ]
+type=AllPalFX
+trigger1=time<=77
+time=1
+mul=256+var(2),256+var(2),256+var(2)
+invertall=0
+
+[State ]
+type=Explod
+trigger1=time=26
+anim=82032
+ID=82031
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999997
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=26
+anim=82033
+ID=82031
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999995
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=26
+anim=82027
+ID=82027
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999500
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=26
+anim=82028
+ID=82027
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999500
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=26
+anim=82029
+ID=82027
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999500
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=time>=51
+fvar(0)=.08
+
+[State ]
+type=modifyexplod
+trigger1=1
+ID=82027
+postype=left
+pos=floor((GameWidth/2)+fvar(0)),0
+sprpriority=9999500
+
+[State ]
+type=RemoveExplod
+trigger1=time=630
+ID=82027
+
+[State ]
+type=Explod
+trigger1=time=26
+anim=82031
+ID=82031
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999999
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=700
+ID=82031
+
+[State ]
+type=Explod
+trigger1=time=26
+anim=101456
+ID=101456
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (0)
+sprpriority=-9999999
+scale=500,500
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=700
+ID=101456
+
+[State ]
+type=Explod
+trigger1=time=80
+anim=82034
+ID=82034
+postype=left
+pos=(GameWidth/2)+145, GameHeight/2 + (0)
+sprpriority=9999980
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=140||time=346||time=700
+ID=82090
+
+[State ]
+type=Explod
+trigger1=time=80||time=140||time=346
+anim=82090+ifelse(time=80,2,ifelse(time=140,1,0))
+ID=82090
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999996
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=700
+ID=82100
+
+[State ]
+type=Explod
+trigger1=time=80
+anim=82100
+ID=82100
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999998
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=140||time=346||time=700
+ID=82101
+
+[State ]
+type=varrandom
+trigger1=time=140
+v=46
+range=0,1
+
+[State ]
+type=Explod
+trigger1=time=140||time=346
+anim=82111+ifelse(time=140,ifelse(var(46)=0,0,2),1)
+ID=82101
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999998
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=PlaySnd
+trigger1=time=140||time=346
+value=s100000,ifelse(time=140,ifelse(var(46)=0,142,143),138)
+abspan=0
+
+[State ]
+type=PlaySnd
+trigger1=time=80||time=140||time=433||time=650||time=740||time=870
+value=s100100,170+ifelse(time=80,3,ifelse(time=140,4,ifelse(time=433,5,ifelse(time=650,9,ifelse(time=740,7,8)))))
+abspan=0
+
+[State ]
+type=PlaySnd
+trigger1=time=433||time=870
+value=s100100,ifelse(time=433,176,184)
+abspan=0
+
+[State ]
+type=PlaySnd
+trigger1=time=870
+value=s100100,181
+abspan=0
+
+[State ]
+type=Explod
+trigger1=time=140||time=172||time=204||time=236||time=268||time=300||time=332||time=364||time=396
+anim=82043
+ID=82034
+postype=left
+pos=(GameWidth/2)+145, GameHeight/2 + (0)
+sprpriority=9999982
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=140
+anim=82035
+ID=82035
+postype=left
+pos=(GameWidth/2)+85, GameHeight - (84)
+sprpriority=9999983
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=140
+anim=82050
+ID=82050
+postype=left
+pos=(GameWidth/2)-106,64
+sprpriority=9999981
+scale=1.5,1.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=time=[140,396]
+var(13)=1
+
+[State ]
+type=Varadd
+trigger1=time=[140,396]
+fvar(4)=.0001
+
+[State ]
+type=modifyexplod
+trigger1=time=[140,396]
+ID=82050
+scale=.24+fvar(4),.22
+trans=addalpha
+alpha=var(13),256
+
+[State ]
+type=RemoveExplod
+trigger1=time=397
+ID=82050
+
+[State ]
+type=Explod
+trigger1=time=320||time=375||time=433
+anim=ifelse(time=320,82045,ifelse(time=375,82046,82047))
+ID=82039
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (0)
+sprpriority=9999994
+scale=50,50
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=326
+anim=82044
+ID=82039
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999984
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=time=[210,219]
+fvar(3)=.025
+
+[State ]
+type=modifyexplod
+trigger1=time=[140,239]
+ID=82035
+scale=.5+fvar(3),.5+fvar(3)
+
+[State ]
+type=Explod
+trigger1=time=433
+anim=82048
+ID=82034
+postype=left
+pos=(GameWidth/2)-102,62
+sprpriority=9999982
+scale=1.5,1.5
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=630
+ID=82034
+
+[State ]
+type=Explod
+trigger1=time=630
+anim=82027
+ID=182027
+postype=left
+pos=(GameWidth/2),0
+sprpriority=9999501
+scale=.5,.5
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+removetime=70
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=650
+anim=82055
+ID=82055
+postype=left
+pos=(GameWidth/2)+200, GameHeight/2 + (15)
+sprpriority=9999982
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+scale=.5,.5
+bindtime=-1
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=700
+ID=82055
+
+[State ]
+type=Explod
+trigger1=time=651
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+142, GameHeight/2 + (-12)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.11,.11
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=651
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+150, GameHeight/2 + (10)
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=652
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+132, GameHeight/2 + (-7)
+sprpriority=9999984
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.13,.13
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=652
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+126, GameHeight/2 + (-10)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=653
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+118, GameHeight/2 + (-16)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.11,.11
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=653
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+111, GameHeight/2 + (-14)
+sprpriority=9999984
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.14,.14
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=653
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+105, GameHeight/2 + (1)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=654
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+67,88
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=654
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+63, GameHeight/2 + (-20)
+sprpriority=9999984
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=654
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+65, GameHeight/2 + (-8)
+sprpriority=9999985
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.13,.13
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=654
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+53, GameHeight/2 + (-28)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.12,.12
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=654
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+45, GameHeight/2 + (-13)
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.07,.07
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=654
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+40,84
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=655
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+31, GameHeight/2 + (-29)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.14,.14
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=655
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+28,76
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=655
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+18, GameHeight/2 + (-14)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.09,.09
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=656
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+13, GameHeight/2 + (-30)
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=656
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)+7,85
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.07,.07
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=656
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-3,74
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=656
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-8, GameHeight/2 + (-17)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.13,.13
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=657
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-33,79
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=657
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-40,77
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=658
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-60,72
+sprpriority=9999984
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.15,.15
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=658
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-63,68
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.08,.08
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=658
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-73,55
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.1,.1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=658
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-77, GameHeight/2 + (-20)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.11,.11
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=659
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-97,69
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.12,.12
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=659
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-107,75
+sprpriority=9999981
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.09,.09
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=659
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-117,88
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.16,.16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=660
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-127,52
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.13,.13
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=660
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-140,60
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.11,.11
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=660
+anim=82056
+ID=82056
+postype=left
+pos=(GameWidth/2)-155,70
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+bindtime=-1
+scale=.12,.12
+ownpal=1
+
+[State ]
+type=RemoveExplod
+trigger1=time=700
+ID=82056
+
+[State ]
+type=varadd
+trigger1=(time=[666,690])||(time=[716,740])
+var(2)=ifelse((time=[666,690]),-10,10)
+
+[State ]
+type=varset
+trigger1=time=691||time=741
+var(2)=ifelse(time=691,-256,0)
+
+[State ]
+type=AllPalFX
+trigger1=time=[666,742]
+time=1
+mul=256+var(2),256+var(2),256+var(2)
+invertall=0
+
+[State ]
+type=Explod
+trigger1=time=740
+anim=82051
+ID=82051
+postype=right
+pos=5, GameHeight/2 + (-20)
+sprpriority=9999985
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varset
+trigger1=time=740
+var(13)=0
+
+[State ]
+type=Varset
+trigger1=time=740
+fvar(4)=0
+
+[State ]
+type=Varadd
+trigger1=time=[740,824]
+var(13)=3
+
+[State ]
+type=Varset
+trigger1=time=825
+var(13)=256
+
+[State ]
+type=Varadd
+trigger1=time=[740,829]
+fvar(4)=.02
+
+[State ]
+type=modifyexplod
+trigger1=time=[740,829]
+ID=82051
+scale=1+fvar(4),1+fvar(4)
+trans=addalpha
+alpha=var(13),256
+
+[State ]
+type=RemoveExplod
+trigger1=time=830
+ID=82051
+
+[State ]
+type=Explod
+trigger1=time=740
+anim=82052
+ID=82052
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (0)
+sprpriority=9999986
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+scale=50,50
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=time=[870,879]
+var(13)=-25
+
+[State ]
+type=Varset
+trigger1=time=825
+var(13)=256
+
+[State ]
+type=modifyexplod
+trigger1=time=[740,879]
+ID=82052
+trans=addalpha
+alpha=var(13),256-var(13)
+
+[State ]
+type=RemoveExplod
+trigger1=time=880
+ID=82052
+
+[State ]
+type=Explod
+trigger1=time=870
+anim=82053
+ID=82053
+postype=left
+pos=(GameWidth/2)+260, GameHeight/2 + (0)
+sprpriority=9999982
+pausemovetime=9999999999
+supermovetime=9999999999
+removetime=-1
+scale=1,8
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Varadd
+trigger1=time=[972,981]
+fvar(6)=.6
+
+[State ]
+type=modifyexplod
+trigger1=time=[972,981]
+ID=82053
+scale=1,6-fvar(6)
+
+[State ]
+type=RemoveExplod
+trigger1=time=982
+ID=82053
+
+[State ]
+type=Varrandom
+trigger1=time=[870,942]
+v=37
+range=-20,55
+
+[State ]
+type=Varrandom
+trigger1=time=[870,942]
+v=38
+range=3,10
+
+[State ]
+type=Varrandom
+trigger1=time=[870,942]
+v=39
+range=2,5
+
+[State ]
+type=Varrandom
+trigger1=time=[870,942]
+v=40
+range=-55,20
+
+[State ]
+type=Varrandom
+trigger1=time=[870,942]
+v=41
+range=3,10
+
+[State ]
+type=Varrandom
+trigger1=time=[870,942]
+v=42
+range=2,5
+
+[State ]
+type=Explod
+trigger1=time%6+(Random%3)=0&&(time=[870,942])
+anim=82542
+ID=82542
+postype=left
+pos=(GameWidth/2)+260,60+var(37)
+sprpriority=ifelse(var(38)<=4,9999949,9999981)
+scale=var(38)*.2,var(39)*.2
+supermovetime=100
+pausemovetime=100
+removetime=20
+vel=-30,0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time%6+(Random%3)=0&&(time=[870,942])
+anim=82542
+ID=82542
+postype=left
+pos=(GameWidth/2)+260, GameHeight - (60)+var(40)
+sprpriority=ifelse(var(41)<=4,9999949,9999981)
+scale=var(41)*.2,var(42)*.2
+supermovetime=100
+pausemovetime=100
+removetime=20
+vel=-30,0
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=870||time=906||time=942
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-100,10
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=875||time=911||time=947
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-130, GameHeight - (80)
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=881||time=917||time=953
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-5, GameHeight - (75)
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=885||time=921||time=957
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)+157,5
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=890||time=926||time=962
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-135,25
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=890||time=926||time=962
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-25, GameHeight - (83)
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=894||time=930
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)+15,9
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=898||time=934
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)+155, GameHeight - (82)
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=900||time=936
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)-159, GameHeight - (88)
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=16
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=902||time=938
+anim=82054
+ID=82054
+postype=left
+pos=(GameWidth/2)+160,6
+sprpriority=9999983
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=.5,.5
+removetime=16
+ownpal=1
+
+[State ]
+type=Helper
+trigger1=time=870
+helpertype=normal
+name="laser"
+ID=104224
+postype=p1
+pos=0,0
+stateno=104224
+
+[State ]
+type=Pause
+trigger1=time=25
+time=715
+movetime=715
+
+[State ]
+type=DestroySelf
+trigger1=time>=ifelse(roundstate>=3,2500,1020)
+
+
+
+[Statedef 104224]
+type=A
+movetype=A
+physics=N
+ctrl=0
+anim=82061
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+stateno=104224
+ignorehitpause=1
+
+[State ]
+type=attackdist
+trigger1=1
+value=0
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+flag2=unguardable
+ignorehitpause=1
+
+[State ]
+type=PlayerPush
+trigger1=1
+value=0
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=time%10=0&&time<=90
+damage=47
+attr=S,HP
+animtype=hard
+guardflag=MA
+hitflag=MAFD
+pausetime=0,30
+guard.pausetime=0,30
+priority=7,Hit
+sparkno=-1
+hitsound=-1
+guardsound=-1
+ground.slidetime=30
+ground.hittime=30
+ground.velocity=0
+air.velocity=0,-3
+guard.sparkno=-1
+yaccel=.65
+fall=1
+air.fall=1
+fall.recover=0
+ground.cornerpush.veloff=0
+air.cornerpush.veloff=0
+down.velocity=-.5,0
+down.cornerpush.veloff=0
+palfx.time=ifelse(var(15),10,0)
+palfx.sinadd=ifelse(var(15),255,0),0,0,ifelse(var(15),18,0)
+ID=104220
+getpower=0,0
+kill=1
+
+[State ]
+type=HitDef
+trigger1=time=100
+damage=59
+attr=S,HP
+animtype=hard
+guardflag=MA
+hitflag=MAFD
+pausetime=0,30
+guard.pausetime=0,30
+priority=7,Hit
+sparkno=-1
+hitsound=-1
+guardsound=-1
+ground.slidetime=30
+ground.hittime=30
+ground.velocity=0
+air.velocity=0,-3
+guard.sparkno=-1
+yaccel=.65
+fall=1
+air.fall=1
+fall.recover=0
+ground.cornerpush.veloff=0
+air.cornerpush.veloff=0
+down.velocity=-.5,0
+down.cornerpush.veloff=0
+palfx.time=ifelse(var(15),10,0)
+palfx.sinadd=ifelse(var(15),255,0),0,0,ifelse(var(15),18,0)
+ID=104220
+getpower=0,0
+kill=1
+
+[State ]
+type=PlaySnd
+trigger1=movehit=1
+value=s100100,172
+pan=floor(enemynear,pos x)
+ignorehitpause=1
+
+[State ]
+type=PlaySnd
+trigger1=movehit=1&&time>=100
+value=s100100,186
+pan=floor(enemynear,pos x)
+ignorehitpause=1
+
+[State ]
+type=PlaySnd
+trigger1=MoveGuarded=1
+value=s100100,8
+pan=floor(enemynear,pos x)
+ignorehitpause=1
+
+[State ]
+type=Varrandom
+trigger1=1
+v=0
+range=-30,30
+
+[State ]
+type=Varrandom
+trigger1=1
+v=1
+range=-30,30
+
+[State ]
+type=Varrandom
+trigger1=1
+v=2
+range=0,30
+
+[State ]
+type=Explod
+trigger1=movehit=1
+anim=ifelse(time>=100,82058,82057)
+ID=82057
+postype=p2
+pos=enemynear,Const(size.mid.pos.x)+var(0),enemynear,Const(size.mid.pos.y)+var(1)
+sprpriority=9999983
+pausemovetime=100
+supermovetime=100
+scale=ifelse(time>=100,1.5,.5+(var(2)*.01)),ifelse(time>=100,1.5,.5+(var(2)*.01))
+ownpal=1
+
+[State ]
+type=null
+trigger1=movehit=1
+helpertype=normal
+name="hit_effect"
+ID=57100
+postype=p2
+pos=10,-60
+stateno=7100
+supermovetime=100
+pausemovetime=100
+ignorehitpause=1
+
+[State ]
+type=DestroySelf
+trigger1=time=110
+
+
+
+[Statedef 104221]
+type=S
+movetype=I
+physics=N
+ctrl=0
+sprpriority=10
+
+[State ]
+type=PlaySnd
+trigger1=time=5
+value=s100500,27
+abspan=0
+
+[State ]
+type=attackdist
+trigger1=1
+value=0
+
+[State ]
+type=SprPriority
+trigger1=1
+value=10
+
+[State ]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State ]
+type=AssertSpecial
+trigger1=1
+flag=noshadow
+
+[State ]
+type=Trans
+trigger1=1
+trans=addalpha
+alpha=256-var(1),256
+
+[State ]
+type=Varadd
+trigger1=1
+var(1)=50
+
+[State ]
+type=angledraw
+trigger1=time>=1
+scale=.5,1
+
+[State ]
+type=DestroySelf
+trigger1=var(1)>=256||time>=6
+
+
+
+[Statedef 104230]
+type=U
+movetype=H
+physics=N
+sprpriority=1
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9660
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9661
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9662
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9663
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9664
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9665
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9666
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9667
+ignorehitpause = 1
+
+[State 0, AR hide burst gauge]
+type = RemoveExplod
+trigger1 = 1
+ID = 9668
+ignorehitpause = 1
+
+
+[State ]
+type=NotHitBy
+trigger1=1
+value=SCA
+time=1
+
+[State ]
+type=turn
+trigger1=time=50&&facing=-1
+
+[State ]
+type=ScreenBound
+trigger1=time>=50
+value=0
+movecamera=0,0
+
+[State ]
+type=PosFreeze
+trigger1=time<=50
+value=1
+
+[State ]
+type=PlayerPush
+trigger1=time>=50
+value=0
+
+[State ]
+type=Velset
+trigger1=1
+x=0
+y=0
+
+[State ]
+type=SprPriority
+trigger1=time>=51
+value=9999950
+
+[State ]
+type=AssertSpecial
+trigger1=time>=51
+flag=noshadow
+
+[State ]
+type=AssertSpecial
+trigger1=(time=[51,1010])||(time=[1360,2059])||(time=[2300,2408])||(time>=2930&&(enemy,var(36)=30000||enemy,var(36)=40000))
+flag=invisible
+
+[State ]
+type=AssertSpecial
+trigger1=time>=51&&SelfAnimExist(142877)
+flag=nokosnd
+
+[State ]
+type=Changeanim
+trigger1=SelfAnimExist(9040)&&0&&time<=50
+value=9040
+
+[State ]
+type=Changeanim2
+trigger1=!SelfAnimExist(9040)&&0&&time<=50
+value=4670
+
+[State ]
+type=AssertSpecial
+trigger1=!SelfAnimExist(9040)&&0&&anim=4670&&time<=50
+flag=invisible
+
+[State ]
+type=Changeanim2
+trigger1=!SelfAnimExist(5030)&&statetype=A&&time<=50&&anim!=9040&&anim!=4670
+value=5030
+
+[State ]
+type=Changeanim
+trigger1=SelfAnimExist(5030)&&statetype=A&&time<=50&&anim!=9040&&anim!=4670
+value=5030
+
+[State ]
+type=Changeanim2
+trigger1=!SelfAnimExist(5010)&&anim!=5030&&time<=50&&anim!=9040&&anim!=4670
+value=5010
+
+[State ]
+type=Changeanim
+trigger1=SelfAnimExist(5010)&&anim!=5030&&time<=50&&anim!=9040&&anim!=4670
+value=5010
+
+[State ]
+type=Changeanim
+trigger1=SelfAnimExist(142869)&&(time=1010||time=2060)
+value=142869
+
+[State ]
+type=Changeanim
+trigger1=!SelfAnimExist(142869)&&(time=1010||time=2060)
+value=0
+
+[State ]
+type=Changeanim
+trigger1=SelfAnimExist(142870)&&(time=1065||time=2200)
+value=142870
+
+[State ]
+type=Changeanim
+trigger1=!SelfAnimExist(142870)&&SelfAnimExist(5010)&&((time=[1065,2059])||(time>=2200&&anim!=142871&&anim!=82059))
+value=5010
+
+[State ]
+type=Changeanim2
+trigger1=!SelfAnimExist(142870)&&!SelfAnimExist(5010)&&((time=[1065,2059])||(time>=2200&&anim!=142871&&anim!=82059))
+value=5010
+
+[State ]
+type=Changeanim
+trigger1=SelfAnimExist(142871)&&(time=3140||enemy,var(36)=10001)
+value=142871
+persistent=0
+
+[State ]
+type=Changeanim2
+trigger1=!SelfAnimExist(142871)&&(time=3140||enemy,var(36)=10002)
+value=82059
+persistent=0
+
+[State ]
+type=Explod
+trigger1=SelfAnimExist(142872)&&time=2840
+anim=142872
+ID=142872
+postype=left
+pos=enemy,var(42),0
+sprpriority=9999996
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=SelfAnimExist(142873)&&time=2840
+anim=142873
+ID=142873
+postype=left
+pos=enemy,var(42),0
+sprpriority=9999998
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=SelfAnimExist(142874)&&time=2840
+anim=142874
+ID=142874
+postype=left
+pos=enemy,var(42),0
+sprpriority=9999998
+scale=.5,.5
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=(SelfAnimExist(142875)||SelfAnimExist(142876))&&time=2840
+anim=ifelse(SelfAnimExist(142876),142876,142875)
+ID=142875
+postype=left
+pos=GameWidth/2 + (0),60
+sprpriority=9999995
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+scale=ifelse(SelfAnimExist(142876),.5,Const(size.xscale)*.5),ifelse(SelfAnimExist(142876),.5,Const(size.xscale)*.5)
+removetime=420
+ownpal=1
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(142875)&&time>=2840
+ID=142875
+postype=left
+pos=enemy,var(42)+enemy,var(0)-141,34
+
+[State ]
+type=Explod
+trigger1=!SelfAnimExist(142875)&&!SelfAnimExist(142876)&&(time>=2840&&enemy,var(36)!=40000&&enemy,var(0)!=142875)
+anim=0
+ID=1142875
+postype=left
+pos=GameWidth/2 + (0),60
+sprpriority=9999995
+pausemovetime=10
+supermovetime=10
+bindtime=-1
+scale=Const(size.xscale)*.25,Const(size.yscale)*.25
+removetime=1
+ownpal=1
+
+[State ]
+type=modifyexplod
+trigger1=numexplod(1142875)&&time>=2840
+ID=1142875
+postype=left
+pos=enemy,var(42)+enemy,var(0)-141,34
+
+[State ]
+type=Explod
+trigger1=SelfAnimExist(142877)&&time=2840
+anim=142877
+ID=142877
+postype=left
+pos=0,0
+pausemovetime=9999999999
+supermovetime=9999999999
+bindtime=-1
+
+[State ]
+type=PlaySnd
+trigger1=SelfAnimExist(142877)&&time=2840
+value=s142857,100
+abspan=0
+
+[State ]
+type=RemoveExplod
+trigger1=time>=2930&&enemy,var(36)=40000&&numexplod(142872)
+ID=142872
+
+[State ]
+type=RemoveExplod
+trigger1=time>=2930&&enemy,var(36)=40000&&numexplod(142873)
+ID=142873
+
+[State ]
+type=RemoveExplod
+trigger1=time>=2930&&enemy,var(36)=40000&&numexplod(142874)
+ID=142874
+
+[State ]
+type=RemoveExplod
+trigger1=time>=2930&&(enemy,var(36)=40000||enemy,var(0)=142875)&&numexplod(142875)
+ID=142875
+
+[State ]
+type=RemoveExplod
+trigger1=time>=2930&&(enemy,var(36)=40000||enemy,var(0)=142875)&&numexplod(1142875)
+ID=1142875
+
+[State ]
+type=RemoveExplod
+trigger1=time=3140||(time>=2930&&enemy,var(36)=40000&&numexplod(142872))
+ID=142877
+
+[state ]
+type=posadd
+trigger1=enemy,stateno=104202||time=3900
+x=ifelse(enemy,facing=1,100,-80)
+persistent=0
+
+[State ]
+type=turn
+trigger1=(enemy,stateno=104202||time=3900)&&enemy,facing=1
+persistent=0
+
+[State ]
+type=changeState
+trigger1=!alive&&(enemy,stateno=104202||time=3900)
+value=5150
+
+[State ]
+type=selfstate
+trigger1=alive&&(enemy,stateno=104202||time=3900)
+value=5100
+
+
+
+[Statedef 104706]
+type=S
+physics=S
+anim=1860
+ctrl=0
+sprpriority=5
+
+[State ]
+type=Explod
+trigger1=time=0&&ishelper(104706)
+anim=102505
+ID=102505
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (0)
+sprpriority=-30
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+ownpal=1
+
+[State ]
+type=modifyexplod
+trigger1=ishelper(104706)
+ID=102505
+scale=1.3-fvar(0),1.3-fvar(0)
+
+[State ]
+type=Varadd
+trigger1=time<=7&&ishelper(104706)
+fvar(0)=.1
+
+[State ]
+type=Varadd
+trigger1=time>=28&&ishelper(104706)
+fvar(0)=-.1
+
+[State ]
+type=Explod
+trigger1=time=0&&root,facing=1&&ishelper(114706)
+anim=101453
+ID=101453
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (20)
+sprpriority=24
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+ownpal=1
+
+[State ]
+type=Explod
+trigger1=time=0&&root,facing=-1&&ishelper(114706)
+anim=101453
+ID=101453
+postype=right
+pos=-(GameWidth/2), GameHeight/2 + (20)
+sprpriority=24
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+ownpal=1
+
+[State ]
+type=modifyexplod
+trigger1=ishelper(114706)
+ID=101453
+scale=1-fvar(0),1-fvar(0)
+
+[State ]
+type=Varadd
+trigger1=time<=4&&ishelper(114706)
+fvar(0)=.1
+
+[State ]
+type=Varadd
+trigger1=time>=20&&ishelper(114706)
+fvar(0)=-.1
+
+[State ]
+type=Explod
+trigger1=time=0&&ishelper(124706)
+anim=82024
+ID=82024
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (0)
+sprpriority=-30
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+ownpal=1
+
+[State ]
+type=modifyexplod
+trigger1=ishelper(124706)
+ID=82024
+scale=1.3-fvar(0),1.3-fvar(0)
+
+[State ]
+type=Varadd
+trigger1=time<=7&&ishelper(124706)
+fvar(0)=.1
+
+[State ]
+type=null
+trigger1=time>=38&&ishelper(124706)
+fvar(0)=-.1
+
+[State ]
+type=Explod
+trigger1=time=0&&ishelper(134706)
+anim=107006
+ID=107006
+postype=left
+pos=(GameWidth/2), GameHeight/2 + (20)
+sprpriority=-30
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+ownpal=1
+
+[State ]
+type=modifyexplod
+trigger1=ishelper(134706)
+ID=107006
+scale=1.2-fvar(0),1.2-fvar(0)
+
+[State ]
+type=Varadd
+trigger1=ishelper(134706)
+fvar(0)=ifelse(time<5,.1,.0025)
+
+[State ]
+type=DestroySelf
+trigger1=time=ifelse(ishelper(104706),37,ifelse(ishelper(114706),26,ifelse(ishelper(124706),47,70)))
+
+

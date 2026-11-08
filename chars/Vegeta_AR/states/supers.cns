@@ -897,7 +897,7 @@ time = 1
 type = RemapPal
 trigger1 = !time
 source = 1,1
-dest = 1,Var(58)
+dest = ifelse(fvar(35), 2, 1), var(58)   ;Abstract Reordered: stays Blue
 
 [state 195, emo]
 type = varset
@@ -10985,7 +10985,7 @@ supermovetime = -1
 type = RemapPal
 trigger1 = anim = 4104 && animelemtime(1) = 0
 source = 1,1
-dest = 1,var(58)
+dest = ifelse(fvar(35), 2, 1), var(58)   ;Abstract Reordered: stays Blue
 
 [State 17100, Landing Sound]
 type = PlaySnd
@@ -11869,7 +11869,7 @@ removetime = -2
 type = RemapPal
 trigger1 = time = 400
 source = 1,1
-dest = 1,var(58)
+dest = ifelse(fvar(35), 2, 1), var(58)   ;Abstract Reordered: stays Blue
 
 [state 4000, timeover]
 type = assertspecial

@@ -10807,6 +10807,12 @@ ctrl = 0
 anim = 205+var(43)
 facep2 = 1
 
+[State 205, AR used this combo]
+type = VarSet
+trigger1 = MoveHit
+var(55) = 1
+ignorehitpause = 1
+
 [State Šî’ê•â³]
 type = Varset
 trigger1 = var(43) = 0
@@ -10899,13 +10905,14 @@ type = HitDef
 trigger1 = animelemtime(5) >= 0
 trigger1 = (!movecontact && !movereversed)
 trigger1 = !var(56)
+trigger1 = !var(55)   ;Abstract Reordered: 6A connects once per combo
 persistent = 1
 priority = 5, miss
 attr = S, NA
 animtype = m
 damage = ceil(64*fvar(19)*(var(51)*0.01)*(var(52)*0.01)*fvar(21)), 0
 guardflag = M
-hitflag = MAFD
+hitflag = MAF
 pausetime = 13, ifelse(!var(21),13,17)
 guard.pausetime = 13, 13
 sparkno = -1
@@ -10931,7 +10938,6 @@ ground.cornerpush.veloff = -12
 guard.cornerpush.veloff = -12
 p2facing = 1
 yaccel = 0.55
-p2stateno = 1103
 id = 205
 
 [State 220, 1]
@@ -10939,12 +10945,13 @@ type = HitDef
 trigger1 = animelemtime(5) >= 0
 trigger1 = (!movecontact && !movereversed)
 trigger1 = var(56)
+trigger1 = !var(55)   ;Abstract Reordered: 6A connects once per combo
 persistent = 1
 attr = S, NA
 animtype = m
 damage = ceil(64*fvar(19)*(var(51)*0.01)*(var(52)*0.01)*fvar(21)), 0
 guardflag = M
-hitflag = MAFD
+hitflag = MAF
 pausetime = 13, ifelse(!var(21),13,17)
 guard.pausetime = 13, 13
 sparkno = -1

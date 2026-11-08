@@ -3447,13 +3447,14 @@ trigger2 = stateno = 40 && time > 0
 
 
 [State -1, ?[???v?b?c?g?L???g?Z??]
-triggerall = 0   ;Abstract Reordered: removed
+;Abstract Reordered: Stand cancel is back, on the Stand button (X); players only
 type = ChangeState
 triggerall = !NumPartner || (NumPartner && (sysvar(4) != [8,9]) && (sysvar(4) != 12) && (StateNo != [1251109,1251114])) 
 triggerall = stateno != 750
+triggerall = !var(59)
 triggerall = power >= 500*var(45)
 triggerall = !IShelper
-triggerall = command = "a" 
+triggerall = command = "c"
 triggerall = !var(0)
 triggerall = statetype != A 
 trigger1 = stateno = 195

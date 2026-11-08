@@ -69,6 +69,11 @@ trigger1 = root,stateno = 7760
 trigger1 = root,time <= 1
 value = 38070
 
+[State 38000, AR combo assist call]
+type = ChangeState
+trigger1 = root,var(48) > 0
+value = 38300
+
 [State 38000, Called (214)]
 type = VarSet
 trigger1 = root,var(45) > 0
@@ -895,3 +900,76 @@ trigger1 = Pos Y >= 0
 trigger1 = Vel Y > 0
 value = 52
 ctrl = 1
+
+;---------------------------------------------------------------------------
+; AR combo assist: appears beside the opponent and launches them so the combo can continue
+[Statedef 38300]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+velset = 0,0
+anim = ifelse(root,var(47) = 0, 40220, 220)
+sprpriority = 3
+juggle = 0
+facep2 = 1
+
+[State 38300, Request taken]
+type = rootVarSet
+trigger1 = Time = 0
+var(48) = 0
+
+[State 38300, Appear beside the opponent]
+type = PosSet
+trigger1 = Time = 0 && NumEnemy
+x = enemynear,pos x - 44 * facing
+y = ifelse(enemynear,pos y < 0, enemynear,pos y, 0)
+
+[State 38300, Partner hit while attacking: stunned]
+type = HitOverride
+trigger1 = 1
+attr = SCA, AA, AT, AP
+slot = 0
+stateno = 38050
+time = 1
+ignorehitpause = 1
+
+[State 38300, No push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 38300, Hit]
+type = HitDef
+trigger1 = animelemtime(4) >= 0 && animelemtime(5) < 0
+attr = S, HA
+damage = 45, 0
+animtype = Hard
+hitflag = MAF
+guardflag = MA
+priority = 4, Hit
+pausetime = 6, 10
+sparkno = S8020
+guard.sparkno = S8030
+sparkxy = -15, -60
+hitsound = S1,2
+guardsound = S2,0
+ground.type = High
+ground.slidetime = 22
+ground.hittime = 30
+air.hittime = 30
+ground.velocity = -2.5, -6.5
+air.velocity = -2.5, -6.5
+yaccel = .42
+fall = 1
+air.fall = 1
+fall.recover = 0
+getpower = 0, 0
+givepower = 30, 30
+id = 38300
+
+[State 38300, Back to following]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 38000
+

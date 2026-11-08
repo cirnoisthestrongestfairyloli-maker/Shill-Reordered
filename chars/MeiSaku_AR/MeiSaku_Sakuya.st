@@ -2526,6 +2526,15 @@ ampl = 200,7,-.467
 time = 30
 waveform = sine
 
+[State 5110, AR get up]
+;Abstract Reordered: the engine only auto-rises players in state 5110, so this ported copy has to do it itself
+;(lie-down time from the hit: hard knockdowns set down.recovertime, everything else uses data.liedown.time)
+type = ChangeState
+trigger1 = alive
+trigger1 = Anim = [45110,45119]
+trigger1 = Time >= ifelse(GetHitVar(down.recovertime) > 0, GetHitVar(down.recovertime), Const(data.liedown.time))
+value = 45120
+
 ;---------------------------------------------------------------------------
 ; Downed get-hit (getting up)
 

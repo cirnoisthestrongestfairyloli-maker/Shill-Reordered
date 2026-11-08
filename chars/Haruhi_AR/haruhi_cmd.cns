@@ -475,6 +475,12 @@ name = "ar_burst"
 command = x+y+z
 time = 1
 
+;Abstract Reordered: The Day of Sagittarius (Level 5, 5 bars)
+[Command]
+name = "ar_lv5"
+command = ~F, B, DB, D, DF, F, z
+time = 35
+
 [Statedef -1]
 
 ;---------------------------------------------------------------------------
@@ -2200,6 +2206,19 @@ trigger2   = Random < 50
 trigger2   = enemy,hitdefattr = SA, AA, AT, AP
 
 ;==============================================================================
+
+[State -1, The Day of Sagittarius]
+;Abstract Reordered: Level 5 from haruhi_y, 5 bars, 450 damage
+type = ChangeState
+value = 104200
+triggerall = command = "ar_lv5"
+triggerall = var(59) = 0
+triggerall = statetype != A
+triggerall = roundstate = 2
+triggerall = power >= 5000
+trigger1 = ctrl
+trigger2 = (stateno = [200,299]) || (stateno = [400,499])
+trigger2 = movecontact
 
 [State -1, Live alive!]
 type = ChangeState

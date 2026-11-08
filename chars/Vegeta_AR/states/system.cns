@@ -1343,7 +1343,7 @@ volumescale = 255
 [State 1000, Power]
 type = PowerAdd
 triggerall = (Anim = 900 || anim = 902 || anim = 911) && (power < 3000)
-trigger1 = (AILevel<=0) && fvar(28) = 0 && ((fvar(28) = 0 && command = "ar_hold_b" && command = "ar_hold_c") || (fvar(28) = 1 && command = "ar_hold_x"))
+trigger1 = (AILevel<=0) && (command = "ar_hold_b" && command = "ar_hold_c")
 trigger2 = AILevel>0
 value = 5 + (time/20)
 
@@ -1482,9 +1482,9 @@ size.yscale = .06 - (.1*.5)
 [State 1001, stopsnd]
 type = stopsnd
 trigger1 = !AILEVEL
-trigger1 = !((fvar(28) = 0 && command = "ar_hold_b" && command = "ar_hold_c") || (fvar(28) = 1 && command = "ar_hold_x"))
+trigger1 = !(command = "ar_hold_b" && command = "ar_hold_c")
 trigger2 = anim != 900 && anim != 902 && anim != 911
-trigger3 = ifelse(fvar(28), fvar(26) >= 1000, Power >= const(data.power) || Power >= PowerMax) || RoundState != 2
+trigger3 = Power >= const(data.power) || Power >= PowerMax || RoundState != 2
 channel = 3
 persistent = 0
 
@@ -1492,8 +1492,8 @@ persistent = 0
 type = ChangeState
 triggerall = anim = 900 || anim = 902 || anim = 911
 trigger1 = (AILevel<=0)
-trigger1 = !((fvar(28) = 0 && command = "ar_hold_b" && command = "ar_hold_c") || (fvar(28) = 1 && command = "ar_hold_x"))
-trigger2 = ifelse(fvar(28), fvar(26) >= 1000, Power >= const(data.power) || Power >= PowerMax) || RoundState != 2
+trigger1 = !(command = "ar_hold_b" && command = "ar_hold_c")
+trigger2 = Power >= const(data.power) || Power >= PowerMax || RoundState != 2
 trigger3 = AILevel > 0
 trigger3 = enemynear, movetype = A || enemy, Vel X > 4
 trigger3 = Time >= 20

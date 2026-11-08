@@ -47,6 +47,18 @@ trigger1 = stateno = 6661 || stateno = 6662 || stateno = 6666 || stateno = 6667
 var(5) = 0
 ignorehitpause = 1
 
+;Passive fill in neutral: 1 point every N ticks. Each stage is quicker to fill than the one before, except the
+;last climb (Hard Luck into Hard Luck Blue, and the HLB Extra gauge), which is slow. Calamity / Extra modes do not fill.
+[State -2, AR luck passive fill]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = RoundState = 2
+triggerall = Ctrl && MoveType = I
+triggerall = var(3) <= 5 && var(12) = 0
+triggerall = var(5) < var(24)
+trigger1 = GameTime % ifelse(var(3) = 0, 30, ifelse(var(3) = 1, 15, 45)) = 0
+var(5) = 1
+
 [State -2, AR luck clamp hi]
 type = VarSet
 trigger1 = var(5) > var(24)

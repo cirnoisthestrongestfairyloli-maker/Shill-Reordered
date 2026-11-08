@@ -141,7 +141,7 @@ fvar(3) = 1.0+(life-enemynear,life)*0.0005
 type = lifeadd
 trigger1 = alive = 1
 trigger1 = var(1) > 0
-trigger1 = var(2)%6 = 0
+trigger1 = var(2)%18 = 0   ;Abstract Reordered: was %6 (300 life total), now 100 over the same 30 s
 trigger1 = movetype != h
 value = 1
 ignorehitpause = 1

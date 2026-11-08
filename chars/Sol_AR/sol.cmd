@@ -1164,6 +1164,15 @@ trigger2 = stateno = [5001, 5099]
 trigger2 = stateno != 5000 && stateno != 5010 && stateno != 5020 && stateno != 5070
 
 ;Abstract Reordered: parry on Z
+[State -1, AR 6A once per combo reset]
+type = VarSet
+triggerall = !ishelper
+triggerall = var(55)
+trigger1 = !NumEnemy
+trigger2 = EnemyNear, MoveType != H
+var(55) = 0
+ignorehitpause = 1
+
 [State -1, AR Parry]
 type = ChangeState
 value = 7740
@@ -1859,13 +1868,14 @@ trigger3 = stateno = 12 || stateno = 52
 trigger4 = stateno = [195,197]
 trigger4 = time > ifelse(anim = 196,18,64)
 trigger5 = statetype != A
-trigger5 = stateno = 200 || stateno = 205 || stateno = 410
+trigger5 = stateno = 200 || stateno = 410
 trigger5 = movecontact || movereversed
 
 [State -1, AR 6A (6P)]
 type = ChangeState
 value = 205
 triggerall = !ishelper
+triggerall = !var(55)   ;Abstract Reordered: once per combo
 triggerall = var(59) <= 0
 triggerall = command = "a"
 triggerall = command = "holdfwd"
@@ -1877,7 +1887,7 @@ trigger3 = stateno = 12 || stateno = 52
 trigger4 = stateno = [195,197]
 trigger4 = time > ifelse(anim = 196,18,64)
 trigger5 = statetype != A
-trigger5 = stateno = 200 || stateno = 205 || stateno = 410
+trigger5 = stateno = 200 || stateno = 410
 trigger5 = movecontact || movereversed
 
 [State -1, AR 5A (5P)]
@@ -1894,7 +1904,7 @@ trigger3 = stateno = 12 || stateno = 52
 trigger4 = stateno = [195,197]
 trigger4 = time > ifelse(anim = 196,18,64)
 trigger5 = statetype != A
-trigger5 = stateno = 200 || stateno = 205 || stateno = 410
+trigger5 = stateno = 200 || stateno = 410
 trigger5 = movecontact || movereversed
 
 [State -1, AR j.2C (j.D)]

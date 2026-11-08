@@ -1,5 +1,40 @@
 [Statedef -2]
 
+;Abstract Reordered: after losing a round he is SSJ Blue for the rest of the match (fvar(35), cleared at match start in config.txt)
+[State -2, AR blue lost round]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = Lose
+fvar(35) = 1
+ignorehitpause = 1
+
+[State -2, AR blue transformation]
+type = ChangeState
+triggerall = !IsHelper
+triggerall = fvar(35) && fvar(36) = 0
+trigger1 = RoundState = 1 && stateno = 0 && Alive
+value = 7770
+
+[State -2, AR blue palette]
+type = RemapPal
+triggerall = !IsHelper
+triggerall = fvar(35)
+trigger1 = RoundState < 2 && fvar(36) = 2
+trigger2 = RoundState = 2 && fvar(36) != 2 && stateno != 7770
+source = 1, 1
+dest = 2, var(58)
+ignorehitpause = 1
+
+;if the intro was skipped he goes Blue without the animation
+[State -2, AR blue no animation]
+type = VarSet
+triggerall = !IsHelper
+triggerall = fvar(35) && fvar(36) != 2
+trigger1 = RoundState = 2 && stateno != 7770
+fvar(36) = 2
+ignorehitpause = 1
+
+
 ;[State 0, AssertSpecial]
 ;type = AssertSpecial
 ;trigger1 = 1
@@ -3069,7 +3104,7 @@ triggerall = alive || (stateno = 5150 && time = 30) ;Detransform in death liedow
 trigger1 = var(25) = 2 
 trigger1 = stateno != [4000,4999]
 source = 1,1
-dest = 1,var(58)
+dest = ifelse(fvar(35), 2, 1), var(58)   ;Abstract Reordered: stays Blue
 
 
 [state 3102, detransform]
@@ -3348,7 +3383,7 @@ type = RemapPal
 trigger1 = animelemtime(3) = 0
 trigger1 = anim = 7611
 source = 1,1
-dest = cond(var(51) = 0,1,cond(var(51) = 1,2,3)),Var(58)
+dest = cond(var(51) = 0,ifelse(fvar(35), 2, 1),cond(var(51) = 1,2,3)),Var(58)
 ;=======================================================
 ;Advanced EXPLODsive buffer turning
 ;=======================================================

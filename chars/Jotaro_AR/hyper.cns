@@ -123,7 +123,8 @@ trigger1 = !var(49)
 trigger1 = AnimTime = 0
 trigger2 = var(49)
 trigger2 = time >= 31
-value = 0
+;Abstract Reordered: the cancel also switches the Stand (stays as it is if the Stand is crashed or still out)
+value = ifelse(!NumHelper(10000), 0, ifelse(var(49), 830, ifelse(var(8), 0, 10820)))
 ctrl = 1
 
 [Statedef 850 - Tandem]

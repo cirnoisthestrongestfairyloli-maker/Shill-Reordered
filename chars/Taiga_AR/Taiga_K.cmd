@@ -1321,6 +1321,7 @@ trigger3 = var(21)
 [State -1, Tiger Upper EX]
 type = Changestate
 value = 2100
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "Tiger Upper EX"
 triggerall = statetype != A
 triggerall = power >= 1000
@@ -1368,6 +1369,7 @@ trigger6 = AnimElemTime(3) > 0
 [State -1, Demon Thrust EX]
 type = Changestate
 value = 2000
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "Demon Thrust EX"
 triggerall = statetype != A
 triggerall = power >= 1000
@@ -1415,6 +1417,7 @@ trigger6 = AnimElemTime(3) > 0
 [State -1, Sled EX]
 type = Changestate
 value = 2200
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "Sled EX"
 triggerall = power >= 1000
 triggerall = Var(46) = 0
@@ -1483,6 +1486,7 @@ trigger1 = ctrl || (StateNo = [100,101])
 type = ChangeState
 value = 1100
 triggerall = Statetype != A
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "Tiger Upper"
 trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
 trigger2 = var(20)
@@ -1493,6 +1497,7 @@ trigger4 = StateNo = 5120 && time = [4,9]
 type = ChangeState
 value = 1000
 triggerall = Statetype != A
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "Demon Thrust Z"
 trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
 trigger2 = var(20)
@@ -1502,6 +1507,7 @@ trigger3 = Var(23)
 type = ChangeState
 value = 1010
 triggerall = Statetype != A
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "Demon Thrust X"
 trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
 trigger2 = var(20)
@@ -1511,6 +1517,7 @@ trigger3 = Var(23)
 type = ChangeState
 value = 1020
 triggerall = Statetype != A
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "Demon Thrust Y"
 trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
 trigger2 = var(20)
@@ -1520,6 +1527,7 @@ trigger3 = Var(23)
 type = ChangeState
 value = 1210
 triggerall = Statetype != A
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "Sled Ram X"
 trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
 trigger2 = var(20)
@@ -1529,6 +1537,7 @@ trigger3 = Var(23)
 type = ChangeState
 value = 1220
 triggerall = Statetype != A
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "Sled Ram Y"
 trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
 trigger2 = var(20)
@@ -1538,6 +1547,7 @@ trigger3 = Var(23)
 type = ChangeState
 value = 1200
 triggerall = Statetype != A
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "Sled Ram Z"
 trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
 trigger2 = var(20)
@@ -1546,6 +1556,7 @@ trigger3 = Var(23)
 [State -1, Air Sled Ram]
 type = ChangeState
 value = 1230
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = Statetype = A
 triggerall = command = "Sled Ram X" || command = "Sled Ram Y" || command = "Sled Ram Z"
 trigger1 = ctrl
@@ -1699,6 +1710,7 @@ trigger2 = movecontact
 [State -1, Crouching Strong Punch]
 type = ChangeState
 value = 420
+triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
 triggerall = command = "c"
 triggerall = command = "holddown"
 triggerall = statetype != A

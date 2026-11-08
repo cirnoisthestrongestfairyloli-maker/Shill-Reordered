@@ -1288,6 +1288,275 @@ triggerall = !IsHelper
 triggerall = command = "ar_parry"
 trigger1 = ctrl
 
+;Abstract Reordered: AR combo assist - X during an attack that hit calls the partner; costs 1/3 of the MAGIC CIRCUIT bar
+[State -1, AR assist meter round start]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = RoundState < 2
+fvar(12) = 300
+ignorehitpause = 1
+
+[State -1, AR assist meter refill]
+type = VarAdd
+triggerall = !IsHelper
+trigger1 = RoundState = 2 && fvar(12) < 300
+fvar(12) = 0.2778
+ignorehitpause = 1
+
+[State -1, AR assist meter cap]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = fvar(12) > 300
+fvar(12) = 300
+ignorehitpause = 1
+
+[State -1, AR combo assist]
+type = VarSet
+triggerall = !IsHelper
+triggerall = AILevel = 0
+triggerall = command = "ar_tag"
+triggerall = movetype = A && movehit
+triggerall = fvar(12) >= 100
+triggerall = NumHelper(40000)
+triggerall = helper(40000),stateno = 38000
+triggerall = helper(40000),time >= 10
+triggerall = var(50) = 0 && var(7) <= 0
+triggerall = var(48) = 0
+trigger1 = (fvar(12) := fvar(12) - 100) || 1
+var(48) = 1
+ignorehitpause = 1
+
+;Abstract Reordered: mechanic meter HUD - Kuroko's MAGIC CIRCUIT bar, fill in the parry colour,
+;bottom of the screen (P1 left, P2 right). Only the look changed; the meter logic is untouched.
+[State -1, AR meter HUD frame P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7790) = 0
+trigger1 = 1
+anim = 7790
+ID = 7790
+pos = 32, GameHeight - (33)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR meter HUD back P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7792) = 0
+trigger1 = 1
+anim = 7792
+ID = 7792
+pos = 40, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR meter HUD fill 7791 P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7791) = 0
+trigger1 = 1
+anim = 7791
+ID = 7791
+pos = 40, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR meter HUD tick 0 P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7803) = 0
+trigger1 = 1
+anim = 7793
+ID = 7803
+pos = 70.7, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 13
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR meter HUD tick 1 P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7813) = 0
+trigger1 = 1
+anim = 7793
+ID = 7813
+pos = 101.3, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 13
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR meter HUD frame P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7790) = 0
+trigger1 = 1
+anim = 7790
+ID = 7790
+pos = GameWidth - (140), GameHeight - (33)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR meter HUD back P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7792) = 0
+trigger1 = 1
+anim = 7792
+ID = 7792
+pos = GameWidth - (132), GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR meter HUD fill 7791 P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7791) = 0
+trigger1 = 1
+anim = 7791
+ID = 7791
+pos = GameWidth - (40), GameHeight - (22)
+postype = left
+facing = -1
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR meter HUD tick 0 P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7803) = 0
+trigger1 = 1
+anim = 7793
+ID = 7803
+pos = GameWidth - (70.7), GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 13
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR meter HUD tick 1 P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7813) = 0
+trigger1 = 1
+anim = 7793
+ID = 7813
+pos = GameWidth - (101.3), GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 13
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR meter HUD scale 7791]
+type = ModifyExplod
+triggerall = !IsHelper
+trigger1 = NumExplod(7791)
+ID = 7791
+scale = 0.5 * (ifelse((fvar(12) / 300.0) < 0, 0, ifelse((fvar(12) / 300.0) > 1, 1, (fvar(12) / 300.0)))) + 0.00005, .5
+ignorehitpause = 1
+
 ;Abstract Reordered: X = tag. Not while the partner is busy or stunned, or during a spellcard timer.
 [State -1, AR Tag]
 type = ChangeState

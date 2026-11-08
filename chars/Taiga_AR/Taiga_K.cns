@@ -553,7 +553,7 @@ damage = IfElse(Var(12),34,28)
 animtype = Heavy
 guardflag = MA
 hitflag = MAF
-priority = 5, Hit
+priority = 4, Hit   ;Abstract Reordered: was 5
 pausetime = 10,15
 sparkno = -1+(0*(var(41) := 8052))
 guard.sparkno = -1+(0*(var(42) := 9000))
@@ -566,6 +566,10 @@ ground.hittime = 18
 ground.velocity = -3
 airguard.ctrltime = 2
 guard.velocity = -3
+guard.pausetime = 10,10
+guard.slidetime = 19
+guard.hittime = 19
+guard.ctrltime = 19   ;Abstract Reordered: 5C is -5 on block
 air.velocity = -1.5,-4.4
 envshake.time = 9
 envshake.ampl = 3
@@ -2997,7 +3001,7 @@ trigger1 = pos Y >= 0
 value = 1202
 
 [StateDef 1202]
-type = L
+type = C   ;Abstract Reordered: was L, which burst (hitflag MAF) cannot hit
 movetype = I
 physics = N
 ctrl = 0
@@ -3429,7 +3433,7 @@ trigger1 = Time >= 20
 value = 1211
 
 [StateDef 1211]
-type = L
+type = C   ;Abstract Reordered: was L, which burst (hitflag MAF) cannot hit
 movetype = I
 physics = N
 ctrl = 0
@@ -3604,7 +3608,7 @@ trigger1 = pos Y >= 0
 value = 1222
 
 [StateDef 1222]
-type = L
+type = C   ;Abstract Reordered: was L, which burst (hitflag MAF) cannot hit
 movetype = I
 physics = N
 ctrl = 0
@@ -3792,7 +3796,7 @@ trigger1 = pos Y >= 0
 value = 1232
 
 [StateDef 1232]
-type = L
+type = C   ;Abstract Reordered: was L, which burst (hitflag MAF) cannot hit
 movetype = I
 physics = N
 ctrl = 0
@@ -6070,6 +6074,8 @@ value = 300
 [State 2200, NotHitBy]
 type = NotHitBy
 trigger1 = time = 0
+trigger1 = numenemy
+trigger1 = enemynear,movetype != H   ;Abstract Reordered: no invincibility mid-combo, so burst connects
 value = SCA
 time = 13
 
@@ -6260,7 +6266,7 @@ trigger1 = pos Y >= 0
 value = 2203
 
 [StateDef 2203]
-type = L
+type = C   ;Abstract Reordered: was L, which burst (hitflag MAF) cannot hit
 movetype = I
 physics = N
 ctrl = 0
@@ -11207,7 +11213,7 @@ fvar(0) = 1
 [State -2, VarSet]
 type = VarSet
 trigger1 = 1
-fvar(1) = 1   ;Abstract Reordered: global combo scaling handles this
+fvar(1) = ifelse(StateNo >= 4000 && StateNo <= 4018, 1, ifelse((StateNo >= 4020 && StateNo <= 4023) || (StateNo >= 4100 && StateNo <= 4113), fvar(1), ifelse(fvar(0) <= 1, 1, ifelse(fvar(0) >= 13, 0.4, 1 - 0.05 * (fvar(0) - 1)))))   ;Abstract Reordered: combo scaling
 ignorehitpause = 1
 
 [State -2, AttackMulSet]
@@ -11829,6 +11835,27 @@ trigger25 = Enemy,Time = 81
 trigger26 = Enemy,Time = 104
 v = 45
 value = 2
+
+;=== AR BALANCE: one launcher per combo. var(25) = a launcher connected in this combo; launcher moves check it in State -1.
+;Cleared when the opponent leaves hitstun or is knocked down. ===
+[State -2, AR launcher reset]
+type = VarSet
+trigger1 = !ishelper
+trigger1 = !numenemy
+trigger2 = !ishelper
+trigger2 = numenemy
+trigger2 = (enemynear,movetype != H) || ((enemynear,stateno >= 5110) && (enemynear,stateno <= 5120))
+var(25) = 0
+ignorehitpause = 1
+
+[State -2, AR launcher used]
+type = VarSet
+trigger1 = !ishelper
+trigger1 = MoveHit
+trigger1 = stateno = 420 || stateno = 1001 || stateno = 1100 || stateno = 1201 || stateno = 1210 || stateno = 1221 || stateno = 1231 || stateno = 2001 || stateno = 2011 || stateno = 2013 || stateno = 2100 || stateno = 2102 || stateno = 2201 || stateno = 2202
+var(25) = 1
+ignorehitpause = 1
+;=== END AR BALANCE ===
 
 ;=== AR MECHANIC METER: Ryuji gauge (restyle here: explods 9611/9613; anim 9611 = sprite 9610,8, the Ryuji
 ;portrait frame cut from her original HUD; fill = her original anim 6013 / sprite 6111,1) ===

@@ -201,6 +201,13 @@ physics = n
 sprpriority = 4
 anim = 6500
 
+[state 6100, AR rain stops if she is hit]
+type = changestate
+trigger1 = root,movetype = h
+trigger1 = (root,stateno < 120) || (root,stateno > 155)
+value = 65000
+ignorehitpause = 1
+
 [state 6100, assertspecial]
 type = assertspecial
 trigger1 = 1
@@ -311,6 +318,13 @@ movetype = a
 physics = n
 anim = 1
 
+[state 6110, AR rain stops if she is hit]
+type = changestate
+trigger1 = root,movetype = h
+trigger1 = (root,stateno < 120) || (root,stateno > 155)
+value = 65000
+ignorehitpause = 1
+
 [state 6110, assertspecial]
 type = assertspecial
 trigger1 = 1
@@ -394,6 +408,13 @@ movetype = a
 physics = n
 sprpriority = 4
 anim = 6100+var(1)
+
+[state 6120, AR rain stops if she is hit]
+type = changestate
+trigger1 = root,movetype = h
+trigger1 = (root,stateno < 120) || (root,stateno > 155)
+value = 65000
+ignorehitpause = 1
 
 [state 6120, assertspecial]
 type = assertspecial

@@ -34,7 +34,9 @@ local function readState()
 		if p[1] == 'me' then
 			st.me = {name = p[2] or '', build = p[3] or ''}
 		elseif p[1] == 'peer' and #p >= 6 then
-			table.insert(st.peers, {id = p[2], name = p[3], ip = p[4], status = p[5], same = p[6] == '1'})
+			table.insert(st.peers, {id = p[2], name = p[3], ip = p[4], status = p[5], same = p[6] == '1', rtt = tonumber(p[7]) or 0})
+		elseif p[1] == 'online' and #p >= 4 then
+			st.online = {name = p[2], side = tonumber(p[3]) or 1, rtt = tonumber(p[4]) or 0}
 		elseif p[1] == 'incoming' and #p >= 4 then
 			st.incoming = {cid = p[2], id = p[3], name = p[4], left = tonumber(p[5]) or 0}
 		elseif p[1] == 'outgoing' and #p >= 7 then
@@ -145,8 +147,43 @@ local function pressed(which)
 	return getInput(-1, m[which].key)
 end
 
+-------------------------------------------------------------------------- automatic rollback delay
+-- Input delay ~ one-way latency in frames (60 fps), so rollbacks stay small. Set once, right before connecting,
+-- from the lobby helper's smoothed ping (Ikemen only reads it when the session starts); your own Options value
+-- is restored after the session.
+local DELAY_MIN, DELAY_MAX = 1, 8
+
+local function delayForPing(rtt)
+	if not rtt or rtt <= 0 then return nil end
+	local d = math.ceil((rtt / 2) / (1000 / 60))
+	return math.max(DELAY_MIN, math.min(DELAY_MAX, d))
+end
+
+local function setDelay(rtt, why)
+	local d = delayForPing(rtt)
+	if d == nil then return end
+	pcall(modifyGameOption, 'Netplay.Rollback.FrameDelay', d)
+	local f = io.open('save/ar_netdelay.txt', 'a')
+	if f then
+		f:write(string.format('%s ping %d ms -> rollback frame delay %d (%s)\n', os.date and os.date('%H:%M:%S') or '', rtt, d, why))
+		f:close()
+	end
+end
+
+-- opponent's ping from the lobby helper: the live 'online' line, else the peer list (by id or name)
+local function opponentPing(st, id, name)
+	if st.online and st.online.rtt > 0 then return st.online.rtt end
+	for _, p in ipairs(st.peers) do
+		if (id and p.id == id) or (name and p.name == name) then return p.rtt end
+	end
+	return 0
+end
+
 -- host (server == '') or join (server = IP), then the synced netplay menu, like NETWORK > HOST/JOIN
-local function netplay(server, label)
+-- oppId / label identify the opponent, for the automatic rollback delay
+local function netplay(server, label, oppId)
+	local okD, userDelay = pcall(gameOption, 'Netplay.Rollback.FrameDelay')
+	pcall(function() setDelay(opponentPing(readState(), oppId, label), 'connecting to ' .. tostring(label)) end)
 	L.inNet = true
 	pcall(main.f_waitForPreloads, true)
 	if main.f_connect(server, label) then
@@ -160,9 +197,20 @@ local function netplay(server, label)
 		replayStop()
 		exitNetPlay()
 		exitReplay()
-		showSessionWarning()
+		L.inNet = false
+		-- main.lua's showSessionWarning() is local, so do the same thing here (desync/disconnect notice)
+		local ok, err = pcall(function()
+			local text = getSessionWarning()
+			if text ~= nil and text ~= '' then
+				main.f_warning(text, motif[main.group], motif[main.background])
+			end
+		end)
+		if not ok and tostring(err):find('<game end>', 1, true) then error(err, 0) end
 	end
 	L.inNet = false
+	if okD and userDelay ~= nil then   -- back to your own Options value
+		pcall(modifyGameOption, 'Netplay.Rollback.FrameDelay', userDelay)
+	end
 end
 
 -- errors in lobby code are logged and swallowed; "game closed" and anything during netplay pass through
@@ -206,7 +254,7 @@ local function challengePopup(inc, withBg)
 			if pressed('done') then
 				sound('done')
 				command('accept', inc.cid)
-				netplay('', inc.name)
+				netplay('', inc.name, inc.id)
 				return true
 			elseif pressed('cancel') then
 				sound('cancel')
@@ -265,8 +313,8 @@ function L.lobbyList()
 				acceptedAt = acceptedAt or t
 				if t - acceptedAt > 60 then   -- give the host a moment to start listening
 					command('clear')
-					local ip, name = out.ip, out.name
-					netplay(ip, name)
+					local ip, name, oid = out.ip, out.name, out.id
+					netplay(ip, name, oid)
 					return 'done'
 				end
 			else
@@ -340,7 +388,7 @@ function L.matchmaking()
 			acceptedAt = acceptedAt or t
 			if t - acceptedAt > 60 then   -- give the host a moment to start listening
 				command('clear')
-				netplay(out.ip, out.name)
+				netplay(out.ip, out.name, out.id)
 				return 'done'
 			end
 		else

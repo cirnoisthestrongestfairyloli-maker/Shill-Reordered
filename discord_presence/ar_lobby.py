@@ -50,8 +50,9 @@ class Lobby(threading.Thread):
         self.searching = False   # matchmaking on
         self.search_since = 0.0
         self.match = None        # matchmaking found us an opponent and we host: {name, ip}
-        self.mm_skip = {}
-        self.online = None       # last match set up here: {"opp": name, "side": 1 host / 2 joiner}        # peer id -> time; don't re-try a peer that just failed
+        self.mm_skip = {}        # peer id -> time; don't re-try a peer that just failed
+        self.online = None       # last match set up here: {"opp": name, "id": peer id, "side": 1 host / 2 joiner}
+        self.next_ping = 0.0
         self.last_seq = None
         self.last_written = None
         self.stop_flag = False
@@ -139,6 +140,15 @@ class Lobby(threading.Thread):
         except OSError:
             pass
 
+    def ping_peers(self):
+        """Once a second, ping every known player (the opponent's ping sets the rollback delay)."""
+        now = time.time()
+        if now < self.next_ping:
+            return
+        self.next_ping = now + 1.0
+        for p in list(self.peers.values()):
+            self.send({"t": "ping", "ts": time.perf_counter()}, p["ip"])
+
     def broadcast_hello(self):
         self.refresh_name()
         msg = json.dumps({"app": APP, "v": PROTO, "t": "hello", "id": self.id, "name": self.name,
@@ -177,6 +187,18 @@ class Lobby(threading.Thread):
         pid, t = str(msg.get("id", "")), msg.get("t")
         name = _clean(msg.get("name"))
         now = time.time()
+        if t == "ping":
+            self.send({"t": "pong", "ts": msg.get("ts", 0)}, ip)
+            return
+        if t == "pong":
+            p = self.peers.get(pid)
+            try:
+                rtt = (time.perf_counter() - float(msg.get("ts", 0))) * 1000.0
+            except (TypeError, ValueError):
+                return
+            if p is not None and 0 <= rtt < 5000:
+                p["rtt"] = rtt if not p.get("rtt") else p["rtt"] * 0.7 + rtt * 0.3
+            return
         if t == "hello":
             p = self.peers.setdefault(pid, {})
             p.update(name=name, ip=ip, status=str(msg.get("status", "menu")),
@@ -187,7 +209,7 @@ class Lobby(threading.Thread):
             if self.searching and not self.match and not self.outgoing:
                 self.send({"t": "reply", "cid": cid, "answer": "accept", "port": self.listen_port_of_game()}, ip)
                 self.match = {"name": name, "ip": ip}
-                self.online = {"opp": name, "side": 1}
+                self.online = {"opp": name, "id": pid, "side": 1}
                 self.searching = False
                 self.log(f"lobby: matchmaking paired with {name} ({ip}), hosting")
             else:
@@ -209,7 +231,7 @@ class Lobby(threading.Thread):
                 ans = msg.get("answer")
                 if ans == "accept":
                     o.update(state="accepted", ip=ip, port=int(msg.get("port", 7500)))
-                    self.online = {"opp": o["name"], "side": 2}
+                    self.online = {"opp": o["name"], "id": o["id"], "side": 2}
                     if o.get("mm"):
                         self.searching = False
                 elif o.get("mm"):
@@ -242,7 +264,7 @@ class Lobby(threading.Thread):
                 reply = {"t": "reply", "cid": arg, "answer": cmd}
                 if cmd == "accept":
                     reply["port"] = self.listen_port_of_game()
-                    self.online = {"opp": i["name"], "side": 1}
+                    self.online = {"opp": i["name"], "id": i["id"], "side": 1}
                 self.send(reply, i["ip"])
                 self.log(f"lobby: {cmd}d challenge from {i['name']}")
                 self.incoming = None
@@ -293,10 +315,13 @@ class Lobby(threading.Thread):
         lines = [f"me\t{self.name}\t{self.build}"]
         for pid, p in sorted(self.peers.items(), key=lambda kv: kv[1]["name"].lower()):
             same = "1" if (p.get("build") and p["build"] == self.build) or not self.build else "0"
-            lines.append(f"peer\t{pid}\t{p['name']}\t{p['ip']}\t{p['status']}\t{same}")
+            lines.append(f"peer\t{pid}\t{p['name']}\t{p['ip']}\t{p['status']}\t{same}\t{int(p.get('rtt') or 0)}")
         if self.incoming:
             i = self.incoming
             lines.append(f"incoming\t{i['cid']}\t{i['id']}\t{i['name']}\t{int(CHALLENGE_TIMEOUT - (now - i['t']))}")
+        if self.online:
+            opp = self.peers.get(self.online.get("id"), {})
+            lines.append(f"online\t{self.online['opp']}\t{self.online['side']}\t{int(opp.get('rtt') or 0)}")
         if self.searching:
             n = sum(1 for p in self.peers.values() if p.get("status") == "searching")
             lines.append(f"search	{int(now - self.search_since)}	{n}")
@@ -362,6 +387,7 @@ class Lobby(threading.Thread):
                 next_hello = now + HELLO_EVERY
                 self.broadcast_hello()
             self.read_commands()
+            self.ping_peers()
             self.matchmake()
             self.expire()
             self.write_state()

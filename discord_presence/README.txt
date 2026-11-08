@@ -49,6 +49,11 @@ Online lobby (Radmin VPN / LAN)
   - Windows Firewall: the first time, Windows may ask to allow "pythonw" - allow it on BOTH private and
     public networks (Radmin counts as public). The lobby uses UDP port 7510; the match itself uses 7500.
   - Players are found by broadcast; IPs saved in save\config.ini [Netplay] IP.* are also contacted directly.
+  - Rollback frame delay is set automatically for lobby/matchmaking matches: the lobby pings your
+    opponent every second and uses about one frame of delay per 16 ms of one-way latency (1-8),
+    set once when you connect (Ikemen only reads it at the start of a session). Your own Options
+    value comes back afterwards.
+    What it picked is logged in save\ar_netdelay.txt.
   - Turn the lobby off: "lobby": false in config.json.
 
 Troubleshooting

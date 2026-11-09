@@ -1315,7 +1315,8 @@ type = VarSet
 triggerall = !IsHelper
 triggerall = AILevel = 0
 triggerall = command = "ar_tag"
-triggerall = movetype = A && movehit
+triggerall = movetype != H && NumEnemy
+triggerall = enemynear,movetype = H
 triggerall = fvar(12) >= 100
 triggerall = NumHelper(40000)
 triggerall = helper(40000),stateno = 38000
@@ -1562,6 +1563,7 @@ ignorehitpause = 1
 type = ChangeState
 value = 7760
 triggerall = !IsHelper
+triggerall = var(48) = 0
 triggerall = AILevel = 0
 triggerall = command = "ar_tag"
 triggerall = statetype != A

@@ -265,6 +265,83 @@ hook.add('main.menu.loop', 'abstractReorderedSelectMusic', function()
 	AR.selFrames = 0
 end)
 
+local function scaled(g, i, s)
+	local a = anim(g, i, 0)
+	animSetScale(a, s, s)
+	animUpdate(a)
+	return a
+end
+
+-- Persona-style main menu: static, stripe panel, a pair of characters per mode, baked labels (p4_select_art.make_menu)
+AR.menuLabels = {['1P VS 2P'] = 0, ['ARCADE'] = 1, ['Audio Settings'] = 2, ['BACK'] = 3, ['Back'] = 4, ['Button Config'] = 5, ['CHALLENGE'] = 6, ['CPU MATCH'] = 7, ['Character Change'] = 8, ['Command List'] = 9, ['Continue'] = 10, ['Default Values'] = 11, ['EXIT'] = 12, ['Engine Settings'] = 13, ['Exit'] = 14, ['Game Settings'] = 15, ['Input Settings'] = 16, ['Netplay Settings'] = 17, ['ONLINE LOBBY'] = 18, ['OPTIONS'] = 19, ['QUICK MATCH'] = 20, ['REPLAYS'] = 21, ['Return Without Saving'] = 22, ['SINGLE MODE'] = 23, ['SURVIVAL'] = 24, ['SURVIVAL CO-OP'] = 25, ['Save and Return'] = 26, ['TEAM ARCADE'] = 27, ['TEAM CO-OP'] = 28, ['TEAM VERSUS'] = 29, ['TIME ATTACK'] = 30, ['TRAINING'] = 31, ['Training Menu'] = 32, ['VERSUS'] = 33, ['VERSUS CO-OP'] = 34, ['Video Settings'] = 35}
+AR.menuPairs = {['arlobby'] = 0, ['menuarcade'] = 1, ['menuversus'] = 2, ['training'] = 3, ['menumission'] = 4, ['replay'] = 5, ['options'] = 6, ['exit'] = 7}
+AR.menuTick = 0
+AR.menuPair = 0
+AR.menuPairT = 0
+
+if main ~= nil and main.f_menuCommonDraw ~= nil and not AR.menuWrapped then
+	AR.menuWrapped = true
+	local drawOrig = main.f_menuCommonDraw
+	main.f_menuCommonDraw = function(t, item, cursorPosY, moveTxt, sec, bg, skipClear, opts)
+		if not active() or sec ~= motif.title_info or skipClear then
+			return drawOrig(t, item, cursorPosY, moveTxt, sec, bg, skipClear, opts)
+		end
+		AR.menuTick = AR.menuTick + 1
+		clearColor(10, 4, 20)
+		main.f_animPosDraw(scaled(7300, math.floor(AR.menuTick / 2) % 4, 3), 0, 0, 1)
+		local by = (AR.menuTick * 1.2) % 720
+		main.f_animPosDraw(anim(7301, 0), 0, by, 1)
+		main.f_animPosDraw(anim(7301, 0), 0, by - 720, 1)
+		local cur = t[item]
+		local p = cur and AR.menuPairs[cur.itemname]
+		if p ~= nil and p ~= AR.menuPair then
+			AR.menuPair = p
+			AR.menuPairT = 0
+		end
+		AR.menuPairT = AR.menuPairT + 1
+		local e = 1 - easeOut(AR.menuPairT / 12)
+		main.f_animPosDraw(anim(7570, AR.menuPair), 360 * e, 0, 1)
+		main.f_animPosDraw(anim(7560, 0), 0, 0, 1)
+		local t2 = {}
+		local shown = {}
+		for i, v in ipairs(t) do
+			local c = {}
+			for k, val in pairs(v) do c[k] = val end
+			local id = AR.menuLabels[v.displayname]
+			if id ~= nil then
+				c.displayname = ''
+				shown[i] = id
+			end
+			t2[i] = c
+		end
+		local o = {}
+		for k, v in pairs(opts or {}) do o[k] = v end
+		o.skipBG0, o.skipBG1 = true, true
+		drawOrig(t2, item, cursorPosY, moveTxt, sec, bg, true, o)
+		local y = 166
+		for i = 1, #t do
+			local x = 48 - (i - 1) * 5
+			if i == item then
+				main.f_animPosDraw(anim(7563, math.min(i - 1, 7)), 0, y, 1)
+				if shown[i] ~= nil then
+					main.f_animPosDraw(anim(7562, shown[i]), x + 18, y + 8, 1)
+				end
+				y = y + 76
+			else
+				if shown[i] ~= nil then
+					main.f_animPosDraw(anim(7561, shown[i]), x + 10, y + 2, 1)
+				end
+				y = y + 56
+			end
+		end
+		refresh()
+	end
+end
+
+-- Persona-style select: TV static, close-ups and names above / below a curved portrait ribbon, then the color select.
+-- All art is baked into cadenza.sff by p4_select_art.py and positioned by its own axis, so most of it is drawn at 0,0.
+AR.p4Tick = 0
+
 -- behind the grid: big art + bio tickers (runs right after the layer 0 background)
 function AR.drawBack()
 	AR.selFrames = AR.selFrames + 1
@@ -955,7 +1032,7 @@ AR.movelistChars = {['saber_ar'] = true, ['reimu_ar'] = true, ['haruhi_ar'] = tr
 	['meisaku_ar'] = true, ['stocking_ar'] = true, ['sailor_mercury_ar'] = true, ['cureblack_ar'] = true, ['aoko_ar'] = true,
 	['jotaro_ar'] = true, ['ippo_ar'] = true, ['kamijo_ar'] = true, ['gokublack_ar'] = true, ['vegeta_ar'] = true,
 	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true, ['shiki_ar'] = true, ['taiga_ar'] = true, ['panty_ar'] = true}
-AR.movelistArtX = 260
+AR.movelistArtX = 1040
 AR.movelistArtY = 712
 AR.movelistArtScale = 1.0
 
@@ -979,13 +1056,122 @@ if menu ~= nil and menu.f_commandlistRender ~= nil then
 		-- drawn first, so the list (and its dark overlay, right side only) sits on top:
 		-- the pause menu's purple gradient (the Command List screen doesn't draw it), then the art
 		if active() then
-			-- the pause menu's purple gradient (the Command List screen doesn't draw its background)
-			main.f_animPosDraw(anim(7602, 0, 2), 0, 0, 1)
+			-- static behind everything, the character on the right, then the panel the list is printed on
+			AR.p4Tick = AR.p4Tick + 1
+			main.f_animPosDraw(AR.scaledL(7300, math.floor(AR.p4Tick / 2) % 4, 3, 2), 0, 0, 1)
 			if t ~= nil and t.tbl ~= nil then
 				AR.drawMovelistArt(t.tbl.ref)
 			end
+			main.f_animPosDraw(anim(7584, 0, 2), 0, 0, 1)
 		end
 		return commandlistRenderOrig(sec, t, ...)
+	end
+end
+
+-- Options and pause: striped banner list when every row is a plain known entry, dark panel + normal text for rows with values
+function AR.scaledL(g, i, s, l)
+	local a = anim(g, i, l)
+	animSetScale(a, s, s)
+	animUpdate(a)
+	return a
+end
+
+local function pausedRef()
+	if menu == nil or menu.t_movelists == nil then
+		return nil
+	end
+	local m = menu.t_movelists[menu.movelistChar or 1]
+	return m ~= nil and m.tbl ~= nil and m.tbl.ref or nil
+end
+
+local function bannerRows(t)
+	local ids = {}
+	for i, v in ipairs(t) do
+		if tostring(v.itemname):match('^spacer') then
+			ids[i] = false                -- blank gap row
+		else
+			local id = AR.menuLabels[v.displayname]
+			if id == nil or (v.vardisplay ~= nil and v.vardisplay ~= '') or (v.infodisplay ~= nil and v.infodisplay ~= '') then
+				return nil
+			end
+			ids[i] = id
+		end
+	end
+	return ids
+end
+
+function AR.panelMenu(orig, t, item, cursorPosY, moveTxt, sec, bg, skipClear, opts, cfg)
+	local L = cfg.layer
+	if cfg.clear then
+		AR.menuTick = AR.menuTick + 1
+		clearColor(10, 4, 20)
+		main.f_animPosDraw(AR.scaledL(7300, math.floor(AR.menuTick / 2) % 4, 3, L), 0, 0, 1)
+		local by = (AR.menuTick * 1.2) % 720
+		main.f_animPosDraw(anim(7301, 0, L), 0, by, 1)
+		main.f_animPosDraw(anim(7301, 0, L), 0, by - 720, 1)
+		main.f_animPosDraw(anim(7581, 0, L), 0, 0, 1)
+	else
+		main.f_animPosDraw(anim(7602, 0, L), 0, 0, 1)
+		AR.drawMovelistArt(pausedRef())
+	end
+	local o = {}
+	for k, v in pairs(opts or {}) do o[k] = v end
+	o.skipBG0, o.skipBG1 = true, true
+	local ids = bannerRows(t)
+	local m = sec.menu
+	local vb, vc = m.boxbg.visible, m.boxcursor.visible
+	m.boxbg.visible = false
+	if ids == nil then
+		main.f_animPosDraw(anim(7583, 0, L), 0, 0, 1)
+		m.boxcursor.visible = vc
+		orig(t, item, cursorPosY, moveTxt, sec, bg, true, o)
+	else
+		main.f_animPosDraw(anim(7580, cfg.header, L), 0, 0, 1)
+		m.boxcursor.visible = false
+		o.skipTitle = true
+		local t2 = {}
+		for i, v in ipairs(t) do
+			local c = {}
+			for k, val in pairs(v) do c[k] = val end
+			c.displayname = ''
+			t2[i] = c
+		end
+		orig(t2, item, cursorPosY, moveTxt, sec, bg, true, o)
+		local y = cfg.y0
+		for i = 1, #t do
+			local x = 48 - (i - 1) * 5
+			if ids[i] == false then
+				y = y + 16
+			elseif i == item then
+				main.f_animPosDraw(anim(7563, math.min(i - 1, 11), L), 0, y, 1)
+				main.f_animPosDraw(anim(7562, ids[i], L), x + 18, y + 10, 1)
+				y = y + 76
+			else
+				main.f_animPosDraw(anim(7561, ids[i], L), x + 10, y + 2, 1)
+				y = y + 54
+			end
+		end
+	end
+	m.boxbg.visible, m.boxcursor.visible = vb, vc
+	if cfg.clear then
+		refresh()
+	end
+end
+
+if main ~= nil and main.f_menuCommonDraw ~= nil and not AR.panelWrapped then
+	AR.panelWrapped = true
+	local drawPrev = main.f_menuCommonDraw
+	main.f_menuCommonDraw = function(t, item, cursorPosY, moveTxt, sec, bg, skipClear, opts)
+		if active() then
+			if sec == motif.option_info and not skipClear then
+				return AR.panelMenu(drawPrev, t, item, cursorPosY, moveTxt, sec, bg, skipClear, opts, {layer = 0, clear = true, header = 0, y0 = 128})
+			end
+			local pm = motif.pause_menu
+			if pm ~= nil and skipClear and (sec == pm.pause_menu or sec == pm.training_pause_menu) then
+				return AR.panelMenu(drawPrev, t, item, cursorPosY, moveTxt, sec, bg, skipClear, opts, {layer = 2, clear = false, header = 1, y0 = 170})
+			end
+		end
+		return drawPrev(t, item, cursorPosY, moveTxt, sec, bg, skipClear, opts)
 	end
 end
 

@@ -939,35 +939,116 @@ type = PlayerPush
 trigger1 = 1
 value = 0
 
-[State 38300, Hit]
+[State 38300, Snd]
+type = PlaySnd
+trigger1 = root,var(47) = 1
+trigger1 = animelemtime(4) = 0
+value = 420,0
+channel = 0
+
+[State 38300, Snd]
+type = PlaySnd
+trigger1 = root,var(47) = 1
+trigger1 = animelemtime(4) = 0
+value = 0,2
+
+[State 38300, Snd]
+type = PlaySnd
+trigger1 = root,var(47) = 0
+trigger1 = animelemtime(4) = 0
+value = 40220,0
+channel = 0
+
+[State 38300, Snd]
+type = PlaySnd
+trigger1 = root,var(47) = 0
+trigger1 = animelemtime(4) = 0
+value = 40000,2
+
+[State 38300, Meiling steps in]
+type = PosAdd
+trigger1 = root,var(47) = 1
+trigger1 = animelemtime(2) = 0 || animelemtime(3) = 0 || animelemtime(4) = 0
+x = 7
+
+[State 38300, Meiling standing heavy]
 type = HitDef
+trigger1 = root,var(47) = 1
 trigger1 = animelemtime(4) >= 0 && animelemtime(5) < 0
-attr = S, HA
-damage = 45, 0
-animtype = Hard
-hitflag = MAF
-guardflag = MA
-priority = 4, Hit
-pausetime = 6, 10
-sparkno = S8020
+trigger1 = !movecontact && !movereversed
+attr = S,NA
+damage = 60,0
+animtype = Heavy
+pausetime = 10,10
+sparkno = S8020+(random%2)
 guard.sparkno = S8030
-sparkxy = -15, -60
+sparkxy = -10,-50
 hitsound = S1,2
 guardsound = S2,0
-ground.type = High
 ground.slidetime = 22
-ground.hittime = 30
-air.hittime = 30
-ground.velocity = -2.5, -6.5
-air.velocity = -2.5, -6.5
-yaccel = .42
-fall = 1
+ground.hittime = 32
+air.hittime = 32
+guard.slidetime = 17
+guard.hittime = 17
+ground.velocity = -3,0
+air.type = High
+air.velocity = -3,-4.5
+givepower = 45,45
+hitflag = MAF
+guardflag = M
+priority = 4,Hit
+ground.type = High
+yaccel = 0.5
 air.fall = 1
 fall.recover = 0
-getpower = 0, 0
-givepower = 30, 30
+getpower = 0,0
+ground.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
 id = 38300
+p2facing = 1
 
+[State 38300, Sakuya second hit]
+type = MoveHitReset
+trigger1 = root,var(47) = 0
+trigger1 = animelemtime(5) = 0
+
+[State 38300, Sakuya standing heavy]
+type = HitDef
+triggerall = root,var(47) = 0
+triggerall = !movecontact && !movereversed
+trigger1 = animelemtime(4) >= 0 && animelemtime(5) < 0
+trigger2 = animelemtime(5) >= 0 && animelemtime(6) < 0
+attr = S,NA
+damage = 45,0
+animtype = Hard
+pausetime = 6,6
+sparkno = S48025+(random%2)
+guard.sparkno = S48030
+sparkxy = -10,-44
+hitsound = S40001,12
+guardsound = S40002,0
+ground.slidetime = 17
+ground.hittime = 30
+air.hittime = 30
+guard.slidetime = 13
+guard.hittime = 13
+ground.velocity = -3,0
+air.velocity = -3,-3.5
+givepower = 22,22
+hitflag = MAF
+guardflag = M
+priority = 4,Hit
+ground.type = High
+yaccel = 0.5
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+ground.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+id = 38300
+p2facing = 1
 [State 38300, Back to following]
 type = ChangeState
 trigger1 = AnimTime = 0

@@ -41,7 +41,7 @@ snd = system.snd            ;Filename of sound data
 logo.storyboard = logo.def  ;Logo storyboard definition (optional)
 ;intro.storyboard =         ;Intro storyboard definition (optional)
 select = select.def         ;Character and stage selection list
-fight = mbaa/AR_MBAA.def   ;Fight definition filename (purple MBAA lifebars; VPFG: ../VPFG_2.0/VP_Fight.def)
+fight = mbaa/AR_MBAA.def
 font1 = f-4x6.def
 font2 = ikemen1/fonts/Pixel.def
 font3 = ikemen1/fonts/Menu2.def
@@ -176,7 +176,7 @@ textinput.overlay.alpha = 0, 128
 ; These parameters define the window in which the items are visible
 ; in.
 menu.window.margins.y = 40, 30
-menu.window.visibleitems = 6
+menu.window.visibleitems = 8
 menu.boxcursor.visible = 0         ;Set to 1 to enable default cursor display
 menu.boxcursor.tween.snap = 1      ;Set to 0 to disable cursor snap on menu section change
 menu.boxcursor.tween.factor = 0.5
@@ -190,6 +190,16 @@ cancel.snd = 100,2
 ;Full documentation of this feature is available on Ikemen GO features wiki
 
 ; Submenu: Arcade
+menu.itemname.menunetwork = NETWORK
+menu.itemname.menunetwork.serverhost = HOST GAME
+menu.itemname.menunetwork.serverjoin = JOIN GAME
+menu.itemname.menunetwork.back = BACK
+menu.itemname.menunetwork.serverjoin.joinadd = NEW ADDRESS
+menu.itemname.menunetwork.serverjoin.back = BACK
+menu.itemname.server.netplayversus = VERSUS 2P
+menu.itemname.server.netplayteamcoop = ARCADE CO-OP
+menu.itemname.server.netplaysurvivalcoop = SURVIVAL CO-OP
+menu.itemname.server.back = EXIT
 menu.itemname.menuarcade = ARCADE
 menu.itemname.menuarcade.arcade = SINGLE MODE
 menu.itemname.menuarcade.teamarcade = TEAM ARCADE
@@ -197,60 +207,53 @@ menu.itemname.menuarcade.teamcoop = TEAM CO-OP
 menu.itemname.menuarcade.back = BACK
 
 ; Submenu: Versus
-menu.itemname.menuversus = VS MODE
+menu.itemname.menuversus = VERSUS
 menu.itemname.menuversus.versus = 1P VS 2P
 menu.itemname.menuversus.teamversus = TEAM VERSUS
 menu.itemname.menuversus.versuscoop = VERSUS CO-OP
 menu.itemname.menuversus.freebattle = QUICK MATCH
+menu.itemname.menuversus.watch = CPU MATCH
 menu.itemname.menuversus.back = BACK
 
 ; Submenu: Story Mode
-menu.itemname.storymode = STORY MODE
+menu.itemname.storymode = 
 ; story arcs menu items are automatically added before storymode.back
-menu.itemname.storymode.back = BACK
+menu.itemname.storymode.back = 
 
 ; Submenu: Network
-menu.itemname.menunetwork = NETWORK
-menu.itemname.menunetwork.serverhost = HOST GAME
-menu.itemname.menunetwork.serverjoin = JOIN GAME
-menu.itemname.menunetwork.back = BACK
 
 ; known IP addresses show up before serverjoin.back item
-menu.itemname.menunetwork.serverjoin.joinadd = NEW ADDRESS
-menu.itemname.menunetwork.serverjoin.back = BACK
 
 ; This group is hidden and should not be moved to other menus.
 ; It's opened automatically, after synchronization with online player.
-menu.itemname.server.netplayversus = VERSUS 2P
-menu.itemname.server.netplayteamcoop = ARCADE CO-OP
-menu.itemname.server.netplaysurvivalcoop = SURVIVAL CO-OP
-menu.itemname.server.back = EXIT
 
 ; Submenu: Practice
-menu.itemname.menupractice = PRACTICE
-menu.itemname.menupractice.training = TRAINING
-menu.itemname.menupractice.back = BACK
+menu.itemname.menupractice = 
+menu.itemname.menupractice.training = 
+menu.itemname.menupractice.back = 
 
 ; Submenu: Mission
-menu.itemname.menumission = MISSION
+menu.itemname.training = TRAINING
+menu.itemname.menumission = CHALLENGE
 menu.itemname.menumission.survival = SURVIVAL
 menu.itemname.menumission.survivalcoop = SURVIVAL CO-OP
 menu.itemname.menumission.timeattack = TIME ATTACK
-menu.itemname.menumission.bonusgames = BONUS GAMES
+menu.itemname.menumission.bonusgames = 
 menu.itemname.menumission.back = BACK
 
 ; Submenu: Mission => Bonus Games
 ; bonus characters menu items are automatically added before bonusgames.back
-menu.itemname.menumission.bonusgames.back = BACK
+menu.itemname.menumission.bonusgames.back = 
 
 ; Submenu: Watch Mode
-menu.itemname.menuwatch = WATCH MODE
-menu.itemname.menuwatch.watch = CPU MATCH
-menu.itemname.menuwatch.randomtest = RANDOMTEST
-menu.itemname.menuwatch.replay = REPLAY
-menu.itemname.menuwatch.back = BACK
+menu.itemname.menuwatch = 
+menu.itemname.menuwatch.watch = 
+menu.itemname.menuwatch.randomtest = 
+menu.itemname.menuwatch.replay = 
+menu.itemname.menuwatch.back = 
 
 ; Options
+menu.itemname.replay = REPLAYS
 menu.itemname.options = OPTIONS
 
 ; Exit Game
@@ -766,8 +769,8 @@ p2.palmenu.bg.localcoord = 1280,720
 p1.select.snd = 9000,0
 p2.select.snd = 9000,0
 cell.*-1.offset = 32,0
-cell.6-1.skip = 1
 cell.*-3.offset = 32,0
+cell.6-1.skip = 1
 cell.6-3.skip = 1
 
 [Begin Action 110]
@@ -1695,7 +1698,7 @@ storyboard = gameover.def ;Game over storyboard filename
 ;This is the screen that is shown when you win a match in arcade mode.
 ;It will not be displayed on the last match of arcade mode.
 [Victory Screen]
-enabled = 0   ;Abstract Reordered: victory is shown in-stage by cadenza.lua
+enabled = 0
 sounds.enabled = 0        ;Set to 0 to disable char sounds during Victory Screen
 time = 360                ;Time to show screen
 fadein.time = 8
@@ -1880,11 +1883,11 @@ fadein.col = 0, 0, 0
 fadeout.time = 10
 fadeout.col = 0, 0, 0
 ;fadeout.anim = 
-title.offset = 640,48
-title.font = 4,0,0
-title.scale = 1.0, 1.0
+title.offset = 40, 92
+title.font = 4,0,1
+title.scale = 0.8, 0.8
 title.text = OPTIONS
-menu.pos = 414, 99
+menu.pos = 60, 150
 menu.item.offset = 0, 0
 menu.item.font = 7,0,1, 191,191,191
 menu.item.scale = 1.0, 1.0
@@ -2014,26 +2017,10 @@ keymenu.itemname.page = Page
 [OptionBGdef]
 bgclearcolor = 20,6,34
 
-; Abstract Reordered: main menu background (no logo, the settings list sits on top)
-[OptionBG Abstract BG]
+; Abstract Reordered: purple static (the Options screens themselves are drawn by cadenza.lua)
+[OptionBG Static]
 type = normal
-spriteno = 7100,0
-mask = 1
-layerno = 0
-start = -640,0
-
-[OptionBG Characters]
-type = normal
-spriteno = 7101,0
-mask = 1
-layerno = 0
-start = -640,110
-tile = 1,0
-velocity = -1.2, 0
-
-[OptionBG Shade]
-type = normal
-spriteno = 7102,0
+spriteno = 7590,0
 mask = 1
 layerno = 0
 start = -640,0
@@ -2117,11 +2104,11 @@ fadein.time = 0
 fadein.col = 0, 0, 0
 fadeout.time = 0
 fadeout.col = 0, 0, 0
-title.offset = 640,48
-title.font = 4,0,0
-title.scale = 1.0, 1.0
+title.offset = 40, 92
+title.font = 4,0,1
+title.scale = 0.8, 0.8
 title.text = PAUSE
-menu.pos = 414, 99
+menu.pos = 60, 150
 menu.item.offset = 0, 0
 menu.item.font = 7,0,1, 191,191,191
 menu.item.scale = 1.0, 1.0
@@ -2170,8 +2157,8 @@ cursor.done.snd = 100, 1
 cancel.snd = 100, 2
 enter.snd = 100, 1
 exit.snd = 100, 2
-movelist.pos = 540, 60
-movelist.title.offset = 350, -12
+movelist.pos = 40, 150
+movelist.title.offset = -3000, 0
 movelist.title.font = 4,0,0
 movelist.title.scale = 1.0, 1.0
 movelist.title.text = %s
@@ -2184,12 +2171,12 @@ movelist.text.text = Command List not found.
 movelist.glyphs.offset = 0, 6
 movelist.glyphs.scale = 1.0, 1.0
 movelist.glyphs.spacing = 6
-movelist.window.width = 700
+movelist.window.width = 680
 movelist.window.margins.y = 60, 3
-movelist.window.visibleitems = 24
+movelist.window.visibleitems = 20
 ;movelist.overlay.window = 0, 0, 1280, 720
 movelist.overlay.col = 0, 0, 0
-movelist.overlay.alpha = 0, 128
+movelist.overlay.alpha = 0, 256
 ;movelist.arrow.up.anim = 
 ;movelist.arrow.up.spr = 
 movelist.arrow.up.offset = 0, 0
@@ -2206,7 +2193,7 @@ movelist.arrow.down.scale = 1.0, 1.0
 
 ;-------------------
 ;Pause menu screen background
-movelist.overlay.window = 520, 0, 1280, 720
+movelist.overlay.window = 0, 0, 1280, 720
 movelist.overlay.localcoord = 1280, 720
 movelist.overlay.layerno = 2
 
@@ -2233,14 +2220,19 @@ start = -640,0
 
 ;-------------------------------------------------------------------
 ;Attract mode definition
-movelist.pos = 540, 60
-movelist.window.width = 700
-movelist.title.offset = 350, -12
+movelist.pos = 40, 150
+movelist.window.width = 680
+movelist.title.offset = -3000, 0
 movelist.text.scale = 0.75, 0.75
-movelist.window.visibleitems = 24
-movelist.overlay.window = 520, 0, 1280, 720
+movelist.window.visibleitems = 20
+movelist.overlay.alpha = 0, 256
+movelist.overlay.window = 0, 0, 1280, 720
 movelist.overlay.localcoord = 1280, 720
 movelist.overlay.layerno = 2
+menu.pos = 60, 150
+title.offset = 40, 92
+title.font = 4,0,1
+title.scale = 0.8, 0.8
 
 [Attract Mode]
 enabled = 0

@@ -602,9 +602,11 @@ function L.firstLaunch()
 end
 
 -------------------------------------------------------------------------- menus
--- ONLINE LOBBY on the main menu next to NETWORK (HOST GAME / JOIN GAME with a typed-in IP, kept as the
--- manual way to connect), and OPTIONS > Netplay Settings > Lobby Name (menus are built after mods load).
+-- ONLINE LOBBY on the main menu where NETWORK was, and OPTIONS > Netplay Settings > Lobby Name
+-- (menus are built after mods load). NETWORK (HOST GAME / JOIN GAME) is hidden: a group with an
+-- empty display name is skipped by main.f_start. The hidden 'server' netplay menu is untouched.
 pcall(main.f_appendItemname, motif.title_info.menu, '', 'arlobby', 'ONLINE LOBBY', 'menunetwork')
+pcall(function() motif.title_info.menu.itemname.menunetwork = '' end)
 pcall(main.f_appendItemname, motif.option_info.menu, 'menunetplay', 'arname', 'Lobby Name', 'portchange')
 
 if options and options.t_itemname and options.t_vardisplay then

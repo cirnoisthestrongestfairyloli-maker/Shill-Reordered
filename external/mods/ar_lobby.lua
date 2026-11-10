@@ -35,6 +35,8 @@ local function readState()
 			st.me = {name = p[2] or '', build = p[3] or ''}
 		elseif p[1] == 'peer' and #p >= 6 then
 			table.insert(st.peers, {id = p[2], name = p[3], ip = p[4], status = p[5], same = p[6] == '1', rtt = tonumber(p[7]) or 0})
+		elseif p[1] == 'join' and #p >= 4 then
+			st.join = {id = p[2], name = p[3], state = p[4]}
 		elseif p[1] == 'online' and #p >= 4 then
 			st.online = {name = p[2], side = tonumber(p[3]) or 1, rtt = tonumber(p[4]) or 0}
 		elseif p[1] == 'incoming' and #p >= 4 then
@@ -187,7 +189,12 @@ local function netplay(server, label, oppId, autoVersus)
 	pcall(function() setDelay(opponentPing(readState(), oppId, label), 'connecting to ' .. tostring(label)) end)
 	L.inNet = true
 	pcall(main.f_waitForPreloads, true)
-	if main.f_connect(server, label) then
+	local linked = main.f_connect(server, label)
+	if linked then
+		if server == '' then           -- a room host learns its opponent only now
+			command('room_live')
+			pcall(function() setDelay(opponentPing(readState()), 'room joined') end)
+		end
 		if synchronize() then
 			main.f_clearShuffleTables()
 			if autoVersus then
@@ -222,6 +229,7 @@ local function netplay(server, label, oppId, autoVersus)
 	if okD and userDelay ~= nil then   -- back to your own Options value
 		pcall(modifyGameOption, 'Netplay.Rollback.FrameDelay', userDelay)
 	end
+	return linked
 end
 
 -- errors in lobby code are logged and swallowed; "game closed" and anything during netplay pass through
@@ -246,7 +254,7 @@ local function pad(s, n)
 end
 
 local statusText = {menu = 'in menu', lobby = 'in lobby', playing = 'in a match', online = 'playing online',
-	searching = 'looking for a match', training = 'in training', arcade = 'in arcade'}
+	searching = 'looking for a match', training = 'in training', arcade = 'in arcade', hosting = 'hosting a room'}
 
 -- who can be challenged: in the menus/lobby, or in training/arcade (they answer from the pause menu)
 local challengeable = {menu = true, lobby = true, training = true, arcade = true}
@@ -279,7 +287,43 @@ local function challengePopup(inc, withBg)
 	end
 end
 
--- LOBBIES: list of players, challenge one. Returns 'done' after a netplay session, 'back' for the hub.
+-- HOST A ROOM: the engine's "waiting for player 2" screen; ESC closes the room.
+function L.hostRoom()
+	command('host', '1')
+	local linked = netplay('', 'your room')
+	command('host', '0')
+	return linked and 'done' or 'back'
+end
+
+-- join an open room: claim its slot first (so two people can't take it), then connect straight to the host
+function L.joinRoom(p)
+	command('join', p.id)
+	local t, st = 0, readState()
+	while true do
+		t = t + 1
+		if t % 6 == 1 then st = readState() end
+		local j = st.join
+		if j and j.id == p.id and t > 6 then
+			if j.state == 'ok' then
+				command('clear_join')
+				netplay(p.ip, p.name, p.id)
+				return 'done'
+			elseif j.state ~= 'waiting' then
+				command('clear_join')
+				return 'back', (j.state == 'full' and "That room is full or closed." or (p.name .. "'s room didn't answer."))
+			end
+		end
+		drawScreen('Joining ' .. p.name .. "'s room...\\n\\nESC: cancel", true)
+		if t > 15 and pressed('cancel') then
+			sound('cancel')
+			command('clear_join')
+			return 'back'
+		end
+	end
+end
+
+-- LOBBIES: host a room, join an open room, or challenge a player.
+-- Returns 'done' after a netplay session, 'back' for the hub.
 function L.lobbyList()
 	local sel, t, st = 1, 0, readState()
 	local msg, msgT = nil, 0
@@ -298,6 +342,17 @@ function L.lobbyList()
 		end
 
 		local out = st.outgoing
+		-- what can be selected, top to bottom: host button, open rooms, players
+		local entries, rooms, players = {}, {}, {}
+		if st.running then
+			table.insert(entries, {kind = 'host'})
+			for _, p in ipairs(st.peers) do
+				table.insert(p.status == 'hosting' and rooms or players, p)
+			end
+			for _, p in ipairs(rooms) do table.insert(entries, {kind = 'room', p = p}) end
+			for _, p in ipairs(players) do table.insert(entries, {kind = 'player', p = p}) end
+			if sel > #entries then sel = #entries end
+		end
 		local lines = {}
 		local who = st.me and st.me.name or '?'
 		table.insert(lines, 'You are: ' .. who)
@@ -305,16 +360,30 @@ function L.lobbyList()
 		if not st.running then
 			table.insert(lines, 'The lobby helper is not running.')
 			table.insert(lines, 'It starts with the game when Python + discord_presence are set up.')
-		elseif #st.peers == 0 then
-			table.insert(lines, 'No one is on the game dumbass')
 		else
-			table.insert(lines, 'Pick your opponent:')
+			table.insert(lines, (sel == 1 and '> ' or '   ') .. '[ HOST A ROOM ]')
 			table.insert(lines, '')
-			if sel > #st.peers then sel = #st.peers end
-			for i, p in ipairs(st.peers) do
-				local line = (i == sel and '> ' or '   ') .. pad(p.name, 18) .. ' ' .. (statusText[p.status] or p.status)
-				if not p.same then line = line .. '   [different build]' end
-				table.insert(lines, line)
+			local row = 1
+			if #rooms > 0 then
+				table.insert(lines, 'Open rooms:')
+				for _, p in ipairs(rooms) do
+					row = row + 1
+					local line = (row == sel and '> ' or '   ') .. pad(p.name .. "'s room", 24) .. ' ' .. p.rtt .. ' ms'
+					if not p.same then line = line .. '   [different build]' end
+					table.insert(lines, line)
+				end
+				table.insert(lines, '')
+			end
+			if #st.peers == 0 then
+				table.insert(lines, 'No one is on the game dumbass')
+			elseif #players > 0 then
+				table.insert(lines, 'Pick your opponent:')
+				for _, p in ipairs(players) do
+					row = row + 1
+					local line = (row == sel and '> ' or '   ') .. pad(p.name, 18) .. ' ' .. (statusText[p.status] or p.status)
+					if not p.same then line = line .. '   [different build]' end
+					table.insert(lines, line)
+				end
 			end
 		end
 		table.insert(lines, '')
@@ -342,7 +411,8 @@ function L.lobbyList()
 			msgT = msgT - 1
 			table.insert(lines, msg)
 		else
-			table.insert(lines, #st.peers > 0 and 'UP/DOWN: choose    CONFIRM: challenge    ESC: back' or 'ESC: back')
+			table.insert(lines, #entries > 1 and 'UP/DOWN: choose    CONFIRM: select    ESC: back'
+				or (#entries == 1 and 'CONFIRM: host a room    ESC: back' or 'ESC: back'))
 		end
 
 		drawScreen(table.concat(lines, '\\n'), true)
@@ -358,14 +428,26 @@ function L.lobbyList()
 				if pressed('cancel') then
 					sound('cancel')
 					return 'back'
-				elseif #st.peers > 0 and pressed('next') then
-					sel = sel % #st.peers + 1
+				elseif #entries > 0 and pressed('next') then
+					sel = sel % #entries + 1
 					sound('move')
-				elseif #st.peers > 0 and pressed('previous') then
-					sel = (sel - 2) % #st.peers + 1
+				elseif #entries > 0 and pressed('previous') then
+					sel = (sel - 2) % #entries + 1
 					sound('move')
-				elseif #st.peers > 0 and pressed('done') then
-					local p = st.peers[sel]
+				elseif #entries > 0 and entries[sel].kind == 'host' and pressed('done') then
+					sound('done')
+					if L.hostRoom() == 'done' then return 'done' end
+					t = 0
+					st = readState()
+				elseif #entries > 0 and entries[sel].kind == 'room' and pressed('done') then
+					sound('done')
+					local r, why = L.joinRoom(entries[sel].p)
+					if r == 'done' then return 'done' end
+					if why then msg, msgT = why, 180 end
+					t = 0
+					st = readState()
+				elseif #entries > 0 and pressed('done') then
+					local p = entries[sel].p
 					if p and challengeable[p.status] then
 						sound('done')
 						command('challenge', p.id)
@@ -520,11 +602,9 @@ function L.firstLaunch()
 end
 
 -------------------------------------------------------------------------- menus
--- ONLINE LOBBY on the main menu where NETWORK was, and OPTIONS > Netplay Settings > Lobby Name
--- (menus are built after mods load). NETWORK (HOST GAME / JOIN GAME) is hidden: a group with an
--- empty display name is skipped by main.f_start. The hidden 'server' netplay menu is untouched.
+-- ONLINE LOBBY on the main menu next to NETWORK (HOST GAME / JOIN GAME with a typed-in IP, kept as the
+-- manual way to connect), and OPTIONS > Netplay Settings > Lobby Name (menus are built after mods load).
 pcall(main.f_appendItemname, motif.title_info.menu, '', 'arlobby', 'ONLINE LOBBY', 'menunetwork')
-pcall(function() motif.title_info.menu.itemname.menunetwork = '' end)
 pcall(main.f_appendItemname, motif.option_info.menu, 'menunetplay', 'arname', 'Lobby Name', 'portchange')
 
 if options and options.t_itemname and options.t_vardisplay then

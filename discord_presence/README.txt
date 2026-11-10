@@ -36,7 +36,11 @@ Other options in config.json
 Online lobby (Radmin VPN / LAN)
   - First launch asks for a player name (saved in save\ar_profile.txt).
     Change it any time: OPTIONS > Netplay Settings > Lobby Name.
-  - ONLINE LOBBY (main menu; it replaces NETWORK > HOST GAME / JOIN GAME) lists everyone on your Radmin network (or home LAN) who has the game open,
+  - Rooms: in LOBBIES pick HOST A ROOM. Your room shows up for everyone on your Radmin network; they
+    select it to join directly (P2P, no server). One opponent per room; ESC on the waiting screen closes it.
+  - Manual connection: NETWORK > HOST GAME on one PC, NETWORK > JOIN GAME > NEW ADDRESS on the other,
+    typing the host's Radmin IP. This doesn't use the lobby, so it needs no Python or port 7510.
+  - ONLINE LOBBY (main menu) lists everyone on your Radmin network (or home LAN) who has the game open,
     with their status (in menu / in lobby / in a match / playing online) and a [different build]
     warning if their characters/stages files don't match yours (mismatched builds can desync).
   - The lobby opens on two buttons: LOBBIES (the player list below) and MATCHMAKING (search until

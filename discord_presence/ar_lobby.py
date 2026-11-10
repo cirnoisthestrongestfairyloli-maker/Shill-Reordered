@@ -53,6 +53,11 @@ class Lobby(threading.Thread):
         self.mm_skip = {}        # peer id -> time; don't re-try a peer that just failed
         self.online = None       # last match set up here: {"opp": name, "id": peer id, "side": 1 host / 2 joiner}
         self.next_ping = 0.0
+        self.hosting = False     # we have an open room
+        self.room_taken = False  # someone claimed the slot
+        self.room_live = False   # they actually connected
+        self.taken_at = 0.0
+        self.joining = None      # room we asked to join: {id, name, ip, state, t}
         self.known_file = os.path.join(root, "save", "ar_lobby_peers.txt")
         self.known_ips = self.load_known()
         self.last_seq = None
@@ -88,6 +93,8 @@ class Lobby(threading.Thread):
 
     def game_status(self):
         """menu / lobby / playing / online, from the presence status the game writes."""
+        if self.hosting:
+            return "online" if self.room_taken else "hosting"
         if self.searching:
             return "searching"
         if self.lobby_open:
@@ -227,6 +234,22 @@ class Lobby(threading.Thread):
         pid, t = str(msg.get("id", "")), msg.get("t")
         name = _clean(msg.get("name"))
         now = time.time()
+        if t == "join":                 # a player wants the slot in our room
+            ok = self.hosting and not self.room_taken
+            if ok:
+                self.room_taken, self.taken_at = True, now
+                self.online = {"opp": name, "id": pid, "side": 1}
+                self.log(f"lobby: {name} ({ip}) is joining our room")
+            self.send({"t": "joinreply", "ok": ok}, ip)
+            return
+        if t == "joinreply":
+            j = self.joining
+            if j and j["id"] == pid and j["state"] == "waiting":
+                j["state"] = "ok" if msg.get("ok") else "full"
+                if msg.get("ok"):
+                    self.online = {"opp": j["name"], "id": pid, "side": 2}
+                self.log(f"lobby: join {j['name']}'s room: {j['state']}")
+            return
         if t == "ping":
             self.send({"t": "pong", "ts": msg.get("ts", 0)}, ip)
             return
@@ -294,6 +317,8 @@ class Lobby(threading.Thread):
     def command(self, cmd, arg):
         if cmd == "lobby":
             self.lobby_open = arg == "1"
+            if arg != "1":              # leaving the lobby always closes our room
+                self.hosting = self.room_taken = self.room_live = False
         elif cmd == "challenge":
             p = self.peers.get(arg)
             if p:
@@ -336,6 +361,21 @@ class Lobby(threading.Thread):
                 if o and o.get("mm") and o["state"] == "waiting":
                     self.send({"t": "cancel", "cid": o["cid"]}, o["ip"])
                     self.outgoing = None
+        elif cmd == "host":
+            self.hosting, self.room_taken, self.room_live = arg == "1", False, False
+            self.log("lobby: room opened" if self.hosting else "lobby: room closed")
+        elif cmd == "room_live":
+            self.room_live = True
+        elif cmd == "join":
+            p = self.peers.get(arg)
+            if p:
+                self.joining = {"id": arg, "name": p["name"], "ip": p["ip"], "state": "waiting", "t": time.time()}
+                self.send({"t": "join"}, p["ip"])
+                self.log(f"lobby: asking to join {p['name']}'s room ({p['ip']})")
+            else:
+                self.joining = {"id": arg, "name": "?", "ip": "", "state": "full", "t": time.time()}
+        elif cmd == "clear_join":
+            self.joining = None
         elif cmd == "clear_match":
             self.match = None
 
@@ -383,6 +423,9 @@ class Lobby(threading.Thread):
         if self.incoming:
             i = self.incoming
             lines.append(f"incoming\t{i['cid']}\t{i['id']}\t{i['name']}\t{int(CHALLENGE_TIMEOUT - (now - i['t']))}")
+        if self.joining:
+            j = self.joining
+            lines.append(f"join\t{j['id']}\t{j['name']}\t{j['state']}")
         if self.online:
             opp = self.peers.get(self.online.get("id"), {})
             lines.append(f"online\t{self.online['opp']}\t{self.online['side']}\t{int(opp.get('rtt') or 0)}")
@@ -408,6 +451,11 @@ class Lobby(threading.Thread):
 
     def expire(self):
         now = time.time()
+        if self.room_taken and not self.room_live and now - self.taken_at > 12:
+            self.room_taken, self.online = False, None      # they never connected: reopen the room
+            self.log("lobby: joiner never connected, room open again")
+        if self.joining and self.joining["state"] == "waiting" and now - self.joining["t"] > 3:
+            self.joining["state"] = "noreply"
         for pid in [k for k, p in self.peers.items() if now - p["last"] > PEER_TIMEOUT]:
             del self.peers[pid]
         if self.incoming and now - self.incoming["t"] > CHALLENGE_TIMEOUT:

@@ -53,6 +53,8 @@ class Lobby(threading.Thread):
         self.mm_skip = {}        # peer id -> time; don't re-try a peer that just failed
         self.online = None       # last match set up here: {"opp": name, "id": peer id, "side": 1 host / 2 joiner}
         self.next_ping = 0.0
+        self.known_file = os.path.join(root, "save", "ar_lobby_peers.txt")
+        self.known_ips = self.load_known()
         self.last_seq = None
         self.last_written = None
         self.stop_flag = False
@@ -97,19 +99,36 @@ class Lobby(threading.Thread):
             return "menu"
         if str(st.get("mode_id", "")).startswith("netplay"):
             return "online"
-        return "menu" if st.get("state") in ("menu", "options") else "playing"
+        if st.get("state") in ("menu", "options"):
+            return "menu"
+        mode = str(st.get("mode_id", ""))
+        if mode in ("training", "arcade"):
+            return mode          # can still be challenged: they answer from the pause menu
+        return "playing"
 
     def compute_build(self):
         """Fingerprint of the gameplay files, so players can see if their builds match."""
         h = hashlib.sha1()
         exts = (".def", ".cns", ".st", ".cmd", ".air", ".zss")
         files = []
+        # Only count what the build ships (updater/manifest.json): local backups and leftovers exist on one
+        # PC but not another, and would make identical builds look different.
+        shipped = None
+        try:
+            with open(os.path.join(self.root, "updater", "manifest.json"), encoding="utf-8") as f:
+                shipped = {p.lower() for p in json.load(f).get("files", {})}
+        except (OSError, ValueError, AttributeError):
+            pass
         for top in ("chars", "stages"):
             base = os.path.join(self.root, top)
-            for d, _, names in os.walk(base):
+            for d, dirs, names in os.walk(base):
+                dirs[:] = [x for x in dirs if not x.lower().startswith("_backup")]
                 for n in names:
-                    if n.lower().endswith(exts):
-                        files.append(os.path.join(d, n))
+                    if not n.lower().endswith(exts):
+                        continue
+                    p = os.path.join(d, n)
+                    if shipped is None or os.path.relpath(p, self.root).replace("\\", "/").lower() in shipped:
+                        files.append(p)
         files.append(os.path.join(self.root, "data", "select.def"))
         for p in sorted(files, key=lambda p: os.path.relpath(p, self.root).lower()):
             try:
@@ -140,6 +159,27 @@ class Lobby(threading.Thread):
         except OSError:
             pass
 
+    def load_known(self):
+        """IPs of players heard from before (save/ is never touched by updates); contacted directly."""
+        try:
+            with open(self.known_file, encoding="utf-8") as f:
+                ips = [l.strip() for l in f if re.fullmatch(r"\d+\.\d+\.\d+\.\d+", l.strip())]
+        except OSError:
+            return []
+        return [ip for ip in ips if not ip.startswith("127.")][-40:]
+
+    def remember(self, ip):
+        if ip in self.known_ips or ip.startswith("127.") or ip in self.local_ips():
+            return
+        self.known_ips = (self.known_ips + [ip])[-40:]
+        tmp = self.known_file + ".tmp"
+        try:
+            with open(tmp, "w", encoding="utf-8") as f:
+                f.write("\n".join(self.known_ips) + "\n")
+            os.replace(tmp, self.known_file)
+        except OSError:
+            pass
+
     def ping_peers(self):
         """Once a second, ping every known player (the opponent's ping sets the rollback delay)."""
         now = time.time()
@@ -153,7 +193,7 @@ class Lobby(threading.Thread):
         self.refresh_name()
         msg = json.dumps({"app": APP, "v": PROTO, "t": "hello", "id": self.id, "name": self.name,
                           "status": self.game_status(), "build": self.build}).encode()
-        targets = set(self.saved_ips()) | {p["ip"] for p in self.peers.values()}
+        targets = set(self.saved_ips()) | set(self.known_ips) | {p["ip"] for p in self.peers.values()}
         for ip in targets:
             try:
                 self.sock.sendto(msg, (ip, self.send_port))
@@ -200,15 +240,22 @@ class Lobby(threading.Thread):
                 p["rtt"] = rtt if not p.get("rtt") else p["rtt"] * 0.7 + rtt * 0.3
             return
         if t == "hello":
+            self.remember(ip)
             p = self.peers.setdefault(pid, {})
             p.update(name=name, ip=ip, status=str(msg.get("status", "menu")),
                      build=str(msg.get("build", "")), last=now)
+            if p["status"] != "searching":
+                p.pop("searching_since", None)
+            else:
+                p.setdefault("searching_since", now)
         elif t == "challenge" and msg.get("mm"):
             # matchmaking: accept automatically if we are still searching
             cid = str(msg.get("cid", ""))
             if self.searching and not self.match and not self.outgoing:
-                self.send({"t": "reply", "cid": cid, "answer": "accept", "port": self.listen_port_of_game()}, ip)
-                self.match = {"name": name, "ip": ip}
+                auto = bool(msg.get("auto"))
+                self.send({"t": "reply", "cid": cid, "answer": "accept", "port": self.listen_port_of_game(),
+                           "auto": auto}, ip)
+                self.match = {"name": name, "ip": ip, "auto": auto}
                 self.online = {"opp": name, "id": pid, "side": 1}
                 self.searching = False
                 self.log(f"lobby: matchmaking paired with {name} ({ip}), hosting")
@@ -217,7 +264,7 @@ class Lobby(threading.Thread):
         elif t == "challenge":
             cid = str(msg.get("cid", ""))
             status = self.game_status()
-            if status not in ("menu", "lobby") or self.incoming or (self.outgoing and self.outgoing["state"] == "waiting"):
+            if status not in ("menu", "lobby", "training", "arcade") or self.incoming or (self.outgoing and self.outgoing["state"] == "waiting"):
                 self.send({"t": "reply", "cid": cid, "answer": "busy"}, ip)
                 return
             self.incoming = {"cid": cid, "id": pid, "name": name, "ip": ip, "t": now}
@@ -230,10 +277,12 @@ class Lobby(threading.Thread):
             if o and o["cid"] == msg.get("cid") and o["state"] == "waiting":
                 ans = msg.get("answer")
                 if ans == "accept":
-                    o.update(state="accepted", ip=ip, port=int(msg.get("port", 7500)))
+                    o.update(state="accepted", ip=ip, port=int(msg.get("port", 7500)),
+                             wait=int(msg.get("wait", 0) or 0))
                     self.online = {"opp": o["name"], "id": o["id"], "side": 2}
                     if o.get("mm"):
                         self.searching = False
+                        o["auto"] = bool(msg.get("auto"))
                 elif o.get("mm"):
                     self.mm_skip[o["id"]] = now      # they stopped searching; keep looking
                     self.outgoing = None
@@ -260,10 +309,13 @@ class Lobby(threading.Thread):
             self.outgoing = None
         elif cmd in ("accept", "decline"):
             i = self.incoming
-            if i and i["cid"] == arg:
-                reply = {"t": "reply", "cid": arg, "answer": cmd}
+            cid, _, flag = arg.partition("|")
+            if i and i["cid"] == cid:
+                reply = {"t": "reply", "cid": cid, "answer": cmd}
                 if cmd == "accept":
                     reply["port"] = self.listen_port_of_game()
+                    if flag == "late":
+                        reply["wait"] = 4
                     self.online = {"opp": i["name"], "id": i["id"], "side": 1}
                 self.send(reply, i["ip"])
                 self.log(f"lobby: {cmd}d challenge from {i['name']}")
@@ -272,6 +324,10 @@ class Lobby(threading.Thread):
             self.outgoing = None
         elif cmd == "search":
             if arg == "1":
+                o = self.outgoing
+                if o and o["state"] == "waiting":
+                    self.send({"t": "cancel", "cid": o["cid"]}, o["ip"])
+                self.outgoing = None
                 self.searching, self.search_since, self.match = True, time.time(), None
                 self.log("lobby: matchmaking started")
             else:
@@ -288,14 +344,22 @@ class Lobby(threading.Thread):
         if not self.searching or self.match or self.outgoing:
             return
         now = time.time()
-        for pid, p in sorted(self.peers.items()):
-            same = not self.build or not p.get("build") or p["build"] == self.build
-            if p.get("status") == "searching" and same and self.id < pid and now - self.mm_skip.get(pid, 0) > 10:
+        def same_build(p):
+            return not self.build or not p.get("build") or p["build"] == self.build
+
+        for pid, p in sorted(self.peers.items(), key=lambda kv: (not same_build(kv[1]), kv[0])):
+            if p.get("status") != "searching" or now - self.mm_skip.get(pid, 0) <= 10:
+                continue
+            # normally the lower id challenges; after 6 s of both searching the other side does (older versions
+            # of this helper refuse to challenge a different build, so they would never start it)
+            both_since = max(self.search_since, p.get("searching_since", now))
+            if self.id < pid or now - both_since >= 6:
                 cid = "%08x" % random.getrandbits(32)
                 self.outgoing = {"cid": cid, "id": pid, "name": p["name"], "ip": p["ip"],
                                  "state": "waiting", "port": 0, "t": now, "mm": True}
-                self.send({"t": "challenge", "cid": cid, "mm": True}, p["ip"])
-                self.log(f"lobby: matchmaking -> {p['name']} ({p['ip']})")
+                self.send({"t": "challenge", "cid": cid, "mm": True, "auto": True}, p["ip"])
+                note = "" if same_build(p) else " [different build]"
+                self.log(f"lobby: matchmaking -> {p['name']} ({p['ip']}){note}")
                 return
 
     def read_commands(self):
@@ -326,10 +390,10 @@ class Lobby(threading.Thread):
             n = sum(1 for p in self.peers.values() if p.get("status") == "searching")
             lines.append(f"search	{int(now - self.search_since)}	{n}")
         if self.match:
-            lines.append(f"match	host	{self.match['name']}")
+            lines.append(f"match\thost\t{self.match['name']}\t{1 if self.match.get('auto') else 0}")
         if self.outgoing:
             o = self.outgoing
-            lines.append(f"outgoing\t{o['cid']}\t{o['id']}\t{o['name']}\t{o['state']}\t{o['ip']}\t{o['port']}")
+            lines.append(f"outgoing\t{o['cid']}\t{o['id']}\t{o['name']}\t{o['state']}\t{o['ip']}\t{o['port']}\t{o.get('wait', 0)}\t{1 if o.get('auto') else 0}")
         text = "\n".join(lines) + "\n"
         if text == self.last_written:
             return
@@ -382,6 +446,8 @@ class Lobby(threading.Thread):
                 pass
             except (OSError, ValueError):
                 pass
+            except Exception as e:      # one bad packet must never stop the lobby
+                self.log(f"lobby: ignored bad packet: {e!r}")
             now = time.time()
             if now >= next_hello:
                 next_hello = now + HELLO_EVERY

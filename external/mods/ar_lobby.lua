@@ -40,11 +40,12 @@ local function readState()
 		elseif p[1] == 'incoming' and #p >= 4 then
 			st.incoming = {cid = p[2], id = p[3], name = p[4], left = tonumber(p[5]) or 0}
 		elseif p[1] == 'outgoing' and #p >= 7 then
-			st.outgoing = {cid = p[2], id = p[3], name = p[4], state = p[5], ip = p[6], port = tonumber(p[7]) or 0}
+			st.outgoing = {cid = p[2], id = p[3], name = p[4], state = p[5], ip = p[6], port = tonumber(p[7]) or 0,
+				wait = tonumber(p[8]) or 0, auto = p[9] == '1'}
 		elseif p[1] == 'search' then
 			st.search = {secs = tonumber(p[2]) or 0, searching = tonumber(p[3]) or 0}
 		elseif p[1] == 'match' and #p >= 3 then
-			st.match = {role = p[2], name = p[3]}
+			st.match = {role = p[2], name = p[3], auto = p[4] == '1'}
 		end
 	end
 	return st
@@ -181,7 +182,7 @@ end
 
 -- host (server == '') or join (server = IP), then the synced netplay menu, like NETWORK > HOST/JOIN
 -- oppId / label identify the opponent, for the automatic rollback delay
-local function netplay(server, label, oppId)
+local function netplay(server, label, oppId, autoVersus)
 	local okD, userDelay = pcall(gameOption, 'Netplay.Rollback.FrameDelay')
 	pcall(function() setDelay(opponentPing(readState(), oppId, label), 'connecting to ' .. tostring(label)) end)
 	L.inNet = true
@@ -189,10 +190,20 @@ local function netplay(server, label, oppId)
 	if main.f_connect(server, label) then
 		if synchronize() then
 			main.f_clearShuffleTables()
-			main.f_menuSnap(motif[main.group])
-			main.f_menuItemBgAnimReset(motif[main.group])
-			fadeInInit(motif[main.group].fadein.FadeData)
-			main.menu.submenu.server.loop()
+			if autoVersus then
+				-- matchmaking: straight into VERSUS 2P, the same calls the netplay menu makes for that item
+				main.f_default()
+				local mode = main.t_itemname.netplayversus({{itemname = 'netplayversus', displayname = 'VERSUS 2P'}}, 1)
+				main.f_unlock(false)
+				if mode ~= nil then mode() end
+				main.f_default()
+				main.f_unlock(false)
+			else
+				main.f_menuSnap(motif[main.group])
+				main.f_menuItemBgAnimReset(motif[main.group])
+				fadeInInit(motif[main.group].fadein.FadeData)
+				main.menu.submenu.server.loop()
+			end
 		end
 		replayStop()
 		exitNetPlay()
@@ -235,7 +246,10 @@ local function pad(s, n)
 end
 
 local statusText = {menu = 'in menu', lobby = 'in lobby', playing = 'in a match', online = 'playing online',
-	searching = 'looking for a match'}
+	searching = 'looking for a match', training = 'in training', arcade = 'in arcade'}
+
+-- who can be challenged: in the menus/lobby, or in training/arcade (they answer from the pause menu)
+local challengeable = {menu = true, lobby = true, training = true, arcade = true}
 
 -- incoming challenge popup; returns true if accepted (and the netplay session has finished)
 local function challengePopup(inc, withBg)
@@ -311,7 +325,7 @@ function L.lobbyList()
 			elseif out.state == 'accepted' then
 				table.insert(lines, out.name .. ' accepted!  Connecting...')
 				acceptedAt = acceptedAt or t
-				if t - acceptedAt > 60 then   -- give the host a moment to start listening
+				if t - acceptedAt > 60 + (out.wait or 0) * 60 then   -- give the host a moment to start listening
 					command('clear')
 					local ip, name, oid = out.ip, out.name, out.id
 					netplay(ip, name, oid)
@@ -352,7 +366,7 @@ function L.lobbyList()
 					sound('move')
 				elseif #st.peers > 0 and pressed('done') then
 					local p = st.peers[sel]
-					if p and (p.status == 'menu' or p.status == 'lobby') then
+					if p and challengeable[p.status] then
 						sound('done')
 						command('challenge', p.id)
 						acceptedAt = nil
@@ -375,7 +389,7 @@ function L.matchmaking()
 		if t % 10 == 1 then st = readState() end
 		if st.match and t > 10 then   -- we were picked and host
 			command('clear_match')
-			netplay('', st.match.name)
+			netplay('', st.match.name, nil, st.match.auto)
 			return 'done'
 		end
 		local out = st.outgoing
@@ -386,9 +400,9 @@ function L.matchmaking()
 			table.insert(lines, 'Opponent found: ' .. out.name .. '!')
 			table.insert(lines, 'Connecting...')
 			acceptedAt = acceptedAt or t
-			if t - acceptedAt > 60 then   -- give the host a moment to start listening
+			if t - acceptedAt > 60 + (out.wait or 0) * 60 then   -- give the host a moment to start listening
 				command('clear')
-				netplay(out.ip, out.name, out.id)
+				netplay(out.ip, out.name, out.id, out.auto)
 				return 'done'
 			end
 		else
@@ -551,6 +565,13 @@ end
 -- every frame of the title menus: first-launch name prompt (after the boot logo), and challenges
 -- received while browsing the menus
 function L.menuFrame()
+	-- a challenge accepted from the pause menu: the match has ended, now host it
+	if L.pendingHost then
+		local h = L.pendingHost
+		L.pendingHost = nil
+		guarded(netplay, '', h.name, h.id)
+		return
+	end
 	if not L.profileChecked then
 		L.profileChecked = true
 		if not L.getName() then
@@ -572,5 +593,93 @@ if main and type(main.f_menuCommonDraw) == 'function' then
 			L.menuFrame()
 		end
 		return origDraw(t, item, cursorPosY, moveTxt, sec, ...)
+	end
+end
+
+-------------------------------------------------------------------------- challenges during training / arcade
+-- The lobby helper lets players in training or arcade be challenged. During the fight a banner shows the
+-- challenge; pausing adds ACCEPT / DECLINE CHALLENGE at the top of the pause menu. Accepting ends the match
+-- (like the pause menu's EXIT) and hosts from the menu; the challenger is told to wait a few seconds.
+L.fight = {tick = 0, inc = nil}
+
+local function fightModeOk()
+	local ok, m = pcall(gameMode)
+	return ok and (m == 'training' or m == 'arcade')
+end
+
+local function fightBanner(inc)
+	pcall(function()
+		local ts = motif.title_info.textinput.TextSpriteData
+		textImgReset(ts)
+		pcall(textImgSetPos, ts, 40, 60)
+		textImgSetText(ts, inc.name .. ' challenges you!  Pause to answer  (' .. math.max(0, inc.left or 0) .. ')')
+		pcall(textImgSetLayerno, ts, 2)
+		textImgDraw(ts)
+	end)
+end
+
+if hook and hook.add then
+	hook.add('loop', 'arLobbyFightChallenge', function()
+		pcall(function()
+			if not fightModeOk() then
+				L.fight.inc = nil
+				return
+			end
+			L.fight.tick = L.fight.tick + 1
+			if L.fight.tick % 30 == 1 then
+				local st = readState()
+				local inc = st.incoming
+				L.fight.inc = (inc and not L.dismissed[inc.cid]) and inc or nil
+			end
+			if L.fight.inc then
+				fightBanner(L.fight.inc)
+			end
+		end)
+	end)
+
+	-- pause menu: add/remove the two items at the top of the root pause menu
+	hook.add('menu.menu.loop', 'arLobbyPauseItems', function()
+		pcall(function()
+			local root = menu.currentMenuId and menu[menu.currentMenuId]
+			if root == nil or type(root.items) ~= 'table' then return end
+			local has = root.items[1] and root.items[1].itemname == 'archalaccept'
+			local inc = fightModeOk() and L.fight.inc or nil
+			if inc and not has then
+				table.insert(root.items, 1, {itemname = 'archaldecline', displayname = 'DECLINE CHALLENGE', paramname = 'archaldecline'})
+				table.insert(root.items, 1, {itemname = 'archalaccept', displayname = 'ACCEPT CHALLENGE: ' .. inc.name, paramname = 'archalaccept'})
+				root.item, root.cursorPosY, root.moveTxt = 1, 1, 0
+			elseif has and not inc then
+				table.remove(root.items, 1)
+				if root.items[1] and root.items[1].itemname == 'archaldecline' then table.remove(root.items, 1) end
+				root.item, root.cursorPosY, root.moveTxt = 1, 1, 0
+			end
+		end)
+	end)
+end
+
+if menu and menu.t_itemname then
+	menu.t_itemname.archalaccept = function(t, item, cursorPosY, moveTxt, sec)
+		if getInput(-1, sec.menu.done.key) and L.fight.inc then
+			local inc = L.fight.inc
+			pcall(sndPlay, motif.Snd, sec.cursor.done.snd[1], sec.cursor.done.snd[2])
+			L.dismissed[inc.cid] = true
+			L.fight.inc = nil
+			command('accept', inc.cid .. '|late')
+			L.pendingHost = {name = inc.name, id = inc.id}
+			endMatch()                 -- same as the pause menu's EXIT
+			start.exit = true
+			main.pauseMenuActive = false
+			return false
+		end
+		return true
+	end
+	menu.t_itemname.archaldecline = function(t, item, cursorPosY, moveTxt, sec)
+		if getInput(-1, sec.menu.done.key) and L.fight.inc then
+			pcall(sndPlay, motif.Snd, sec.cancel.snd[1], sec.cancel.snd[2])
+			L.dismissed[L.fight.inc.cid] = true
+			command('decline', L.fight.inc.cid)
+			L.fight.inc = nil   -- the pause-menu hook removes the items next frame
+		end
+		return true
 	end
 end

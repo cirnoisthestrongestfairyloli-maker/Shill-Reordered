@@ -43,11 +43,15 @@ Online lobby (Radmin VPN / LAN)
     another player is also searching, then you are paired and connected automatically; ESC stops).
   - In LOBBIES, pick a player and press CONFIRM to challenge them. They get a popup in the main menu or lobby:
     CONFIRM accepts (they host), ESC declines. You then join automatically and both land in the
-    normal netplay mode menu (VERSUS 2P etc.).
+    normal netplay mode menu (VERSUS 2P etc.). MATCHMAKING goes straight to VERSUS 2P when both have this version.
+  - Players in TRAINING or ARCADE can be challenged too: they see a banner during the fight, and
+    pausing adds ACCEPT CHALLENGE / DECLINE CHALLENGE at the top of the pause menu. Accepting leaves
+    the match and hosts; the challenger waits a few extra seconds before joining.
   - Requirements for everyone: Python 3 installed, this discord_presence folder, and the same
     netplay port in Options (default 7500). pypresence is only needed for Discord.
   - Windows Firewall: the first time, Windows may ask to allow "pythonw" - allow it on BOTH private and
     public networks (Radmin counts as public). The lobby uses UDP port 7510; the match itself uses 7500.
+  - IPs of players you have met are kept in save\ar_lobby_peers.txt and contacted directly.
   - Players are found by broadcast; IPs saved in save\config.ini [Netplay] IP.* are also contacted directly.
   - Rollback frame delay is set automatically for lobby/matchmaking matches: the lobby pings your
     opponent every second and uses about one frame of delay per 16 ms of one-way latency (1-8),

@@ -21,7 +21,7 @@ import time
 APP = "AbstractReordered"
 PROTO = 1
 HELLO_EVERY = 2.0
-PEER_TIMEOUT = 7.0
+PEER_TIMEOUT = 12.0
 CHALLENGE_TIMEOUT = 25.0
 
 
@@ -57,6 +57,7 @@ class Lobby(threading.Thread):
         self.room_taken = False  # someone claimed the slot
         self.room_live = False   # they actually connected
         self.taken_at = 0.0
+        self.recv_errors = 0
         self.joining = None      # room we asked to join: {id, name, ip, state, t}
         self.known_file = os.path.join(root, "save", "ar_lobby_peers.txt")
         self.known_ips = self.load_known()
@@ -264,9 +265,15 @@ class Lobby(threading.Thread):
             return
         if t == "hello":
             self.remember(ip)
+            new = pid not in self.peers
             p = self.peers.setdefault(pid, {})
+            p["hellos"] = p.get("hellos", 0) + 1
             p.update(name=name, ip=ip, status=str(msg.get("status", "menu")),
                      build=str(msg.get("build", "")), last=now)
+            if new:
+                self.log(f"lobby: heard {name} ({ip}) status={p['status']} build={p['build']}")
+                # answer straight from the lobby socket: they learn us at once, and it lets their replies in
+                self.send({"t": "hello", "status": self.game_status(), "build": self.build}, ip)
             if p["status"] != "searching":
                 p.pop("searching_since", None)
             else:
@@ -457,7 +464,9 @@ class Lobby(threading.Thread):
         if self.joining and self.joining["state"] == "waiting" and now - self.joining["t"] > 3:
             self.joining["state"] = "noreply"
         for pid in [k for k, p in self.peers.items() if now - p["last"] > PEER_TIMEOUT]:
-            del self.peers[pid]
+            p = self.peers.pop(pid)
+            self.log(f"lobby: lost {p['name']} ({p['ip']}) after {p.get('hellos', 0)} hellos, "
+                     f"ping {int(p.get('rtt') or 0)} ms")
         if self.incoming and now - self.incoming["t"] > CHALLENGE_TIMEOUT:
             self.send({"t": "reply", "cid": self.incoming["cid"], "answer": "decline"}, self.incoming["ip"])
             self.incoming = None
@@ -492,8 +501,10 @@ class Lobby(threading.Thread):
                 self.handle(json.loads(data.decode("utf-8", "ignore")), addr[0])
             except socket.timeout:
                 pass
-            except (OSError, ValueError):
-                pass
+            except (OSError, ValueError) as e:
+                self.recv_errors += 1
+                if self.recv_errors <= 5:
+                    self.log(f"lobby: receive error: {e!r}")
             except Exception as e:      # one bad packet must never stop the lobby
                 self.log(f"lobby: ignored bad packet: {e!r}")
             now = time.time()

@@ -8330,7 +8330,7 @@ postype=p1
 stateno=4560
 ownpal=1
 
-;Black holds the crouch, then leaps as Luminous connects
+;Black leaps while Luminous dives; short arc so the punch lands inside her hitstun
 [State ]
 type=ChangeAnim
 trigger1=time=36
@@ -8339,7 +8339,7 @@ elem=1
 
 [State ]
 type=ChangeAnim
-trigger1=time=70
+trigger1=time=58
 value=1620
 
 [State ]
@@ -8350,7 +8350,7 @@ physics=N
 
 [State ]
 type=Helper
-trigger1=time=70
+trigger1=time=58
 helpertype=normal
 name="jump effect"
 ID=7001
@@ -8360,7 +8360,7 @@ stateno=7000
 
 [State ]
 type=Explod
-trigger1=time=70
+trigger1=time=58
 anim=6004
 postype=p1
 pos=floor(-40*fvar(32)),floor(20*fvar(33))
@@ -8370,36 +8370,36 @@ removeongethit=1
 
 [State ]
 type=PlaySnd
-trigger1=time=70
+trigger1=time=58
 value=s0,11
 channel=0
 
 [State ]
 type=PlaySnd
-trigger1=time=70
+trigger1=time=58
 value=s100,6
 
 [State ]
 type=Varset
-trigger1=time=70
-fvar(7)=P2BodyDist X*.035
+trigger1=time=58
+fvar(7)=P2BodyDist X*.048
 
 [State ]
 type=Velset
-trigger1=time>=70
+trigger1=time>=58
 x=fvar(7)
 
 [State ]
 type=Velset
-trigger1=time=70
-y=-13
+trigger1=time=58
+y=-10
 
 [State ]
 type=Veladd
-trigger1=time>70
+trigger1=time>58
 y=.6
 
 [State ]
 type=ChangeState
-trigger1=time=90
+trigger1=time=72
 value=2001

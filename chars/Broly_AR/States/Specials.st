@@ -345,7 +345,7 @@ persistent = 0
 
 [State 1100, Hit]
 type = hitdef
-trigger1 = !time && !var(20)
+trigger1 = time = 8 && !var(20)
 attr = A, ST
 damage = 30, 6
 animtype = Back
@@ -386,7 +386,7 @@ airguard.cornerpush.veloff = 0
 
 [State 1100, Hit LSSJ2]
 type = hitdef
-trigger1 = !time && var(20)
+trigger1 = time = 8 && var(20)
 attr = A, ST
 damage = 30, 6
 animtype = Back
@@ -669,6 +669,13 @@ juggle = ifelse(AIlevel,0,8);ifelse(p2movetype = A, 8, ifelse(numtarget, 15, 8))
 sprpriority = 1
 facep2 = 1
 
+[State 0, AR claw startup]
+;Abstract Reordered: hold the wind-up 14 more frames (20 total) so a blocking opponent can jump out
+type = ChangeAnim
+trigger1 = time < 14
+value = 1200
+elem = 1
+
 [State -3, Energy Color]
 type = remappal
 trigger1 = var(44)=1 || var(44)=3
@@ -772,12 +779,12 @@ persistent = 0
 
 [State 3005, Hit]
 type = hitdef
-trigger1 = time = 6 && var(10)=1
+trigger1 = time = 20 && var(10)=1
 priority = 4, Hit
 attr = S, SA
 damage = ceil(ifelse(var(10)=3,90,ifelse(var(10)=2,75,90)) * (fvar(12))), 4
 animtype = Hard
-hitflag = MAF
+hitflag = MF   ;AR: misses jumping opponents
 guardflag = M
 pausetime = 6, 6
 hitSound = -1 + 0 * (var(31) := 3)
@@ -808,12 +815,12 @@ forcestand = 1
 
 [State 3005, Hit]
 type = hitdef
-trigger1 = time = 6 && var(10)!=1
+trigger1 = time = 20 && var(10)!=1
 priority = 4, Hit
 attr = S, SA
 damage = ceil(90 * (fvar(12))), 4
 animtype = Hard
-hitflag = MAF
+hitflag = MF   ;AR: misses jumping opponents
 guardflag = M
 pausetime = 1, 0
 hitSound = -1 + 0 * (var(31) := 3)
@@ -849,7 +856,7 @@ value = 893
 ignorehitpause = 0
 [State 0, ChangeAnim]
 type = ChangeAnim
-trigger1 = anim = 1200 && time = 5 + var(10)*5 && ifelse(var(10)!=1, !(movehit && numtarget),1)
+trigger1 = anim = 1200 && time = 19 + var(10)*5 && ifelse(var(10)!=1, !(movehit && numtarget),1)
 value = 1201
 [State 0, End]
 type = changestate
@@ -1699,6 +1706,7 @@ removeongethit = 1
 
 [State 800, Hit]
 type = hitdef
+triggerall = time >= 8   ;AR: grab startup
 trigger1 = time >= 5 && p2dist x >= 0 && p2bodydist x <= 60 && !var(37) && (enemynear, movetype != H || enemynear, stateno = [120,155])
 trigger1 = !AIlevel && !var(20) && enemynear, stateno != 1111150
 attr = S, ST
@@ -1721,6 +1729,7 @@ fall.recovertime = 120
 
 [State 800, Hit]
 type = hitdef
+triggerall = time >= 8   ;AR: grab startup
 trigger1 = time = 5 && var(37)
 trigger1 = !AIlevel && !var(20) ;|| enemynear, stateno != 1111150
 attr = A, ST
@@ -1743,6 +1752,7 @@ fall.recovertime = 120
 
 [State 800, Hit]
 type = hitdef
+triggerall = time >= 8   ;AR: grab startup
 trigger1 = time = 5 && var(37)
 trigger1 = AIlevel || var(20)
 attr = A, ST
@@ -1765,6 +1775,7 @@ fall.recovertime = 120
 
 [State 800, Hit]
 type = hitdef
+triggerall = time >= 8   ;AR: grab startup
 trigger1 = time = 5 && !var(37)
 trigger1 = var(20)
 attr = S, ST
@@ -1787,6 +1798,7 @@ fall.recovertime = 120
 
 [State 800, Hit]
 type = hitdef
+triggerall = time >= 8   ;AR: grab startup
 trigger1 = time >= 5 && !var(37) && enemynear, movetype = H && enemynear, stateno != [120,155]
 trigger1 = AIlevel && !var(20);|| var(20) || enemynear, stateno != 1111150
 attr = S, ST
@@ -1809,6 +1821,7 @@ fall.recovertime = 120
 
 [State 800, Hit]
 type = hitdef
+triggerall = time >= 8   ;AR: grab startup
 trigger1 = time >= 5 && !var(37) && (enemynear, movetype != H || enemynear, stateno = [120,155])
 trigger1 = AIlevel && !var(20);|| var(20) || enemynear, stateno != 1111150
 attr = S, ST

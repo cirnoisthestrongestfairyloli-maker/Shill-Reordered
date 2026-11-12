@@ -67,10 +67,21 @@ ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) {
 			if (enemyNear, stateno) >= 4000 && (enemyNear, stateno) <= 4499 {
 				map(_ar_l3in) := 1;
 			}
+			# his 2-bar supers (3500-3999): flat cap, 155 raw / 100 in a combo
+			if (enemyNear, stateno) >= 3500 && (enemyNear, stateno) <= 3999 {
+				map(_ar_l3in) := 2;
+			}
 		}
 	}
 	if numenemy && roundstate = 2 {
-		if map(_ar_l3in) = 1 {
+		if map(_ar_l3in) = 2 {
+			if map(_ar_l3on) = 0 {
+				map(_ar_l3on) := 1;
+				map(_ar_l3start) := life;
+				map(_ar_l3budget) := cond(moveType = H, 100, 155);
+			}
+			map(_ar_l3grace) := 90;
+		} else if map(_ar_l3in) = 1 {
 			if map(_ar_l3on) = 0 {
 				map(_ar_l3on) := 1;
 				map(_ar_l3start) := life;

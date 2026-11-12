@@ -15,6 +15,11 @@ command=~D,DF,F,D,DF,F,a+x
 time=20
 
 [Command]
+name="lv2"
+command=~D,DF,F,D,DF,F,a+b
+time=30
+
+[Command]
 name="pms"
 command=~D,DF,F,a+x
 
@@ -474,6 +479,14 @@ command=U,a,D,y,F,z,b,B,a,c,x,y
 time=0
 
 [Statedef -1]
+
+[State ];Lv2 Max Heart Rush (236236 + A+B, 2 bars)
+type=ChangeState
+value=2060
+triggerall=command="lv2"&&power>=2000&&statetype!=A&&roundstate=2
+triggerall=!numhelper(4000)&&!numhelper(4500)
+trigger1=ctrl||((stateno=[100,101])&&time>=1)
+trigger2=movecontact&&(stateno=[200,420])&&(stateno!=[240,261])
 
 [State ];プリキュアマーブルスクリュー
 type=ChangeState

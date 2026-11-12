@@ -1242,13 +1242,7 @@ trigger1 = movetype != A
 var(49) = 0
 ignorehitpause = 1
 
-[State -1, AR repeat pushback]
-type = VelSet
-trigger1 = var(49) > 2
-trigger1 = MoveContact = 1
-trigger1 = (stateno = [200,240]) || (stateno = [400,440])
-x = -7
-ignorehitpause = 1
+;Abstract Reordered: repeat pushback removed (it pushed combos out of range)
 
 ;supers: blocked = extra recovery (state 7780)
 [State -1, AR super blocked]

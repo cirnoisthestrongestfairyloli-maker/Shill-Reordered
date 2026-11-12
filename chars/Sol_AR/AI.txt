@@ -3612,7 +3612,7 @@ TriggerAll=Time=13;[13,15]
 TriggerAll=StateNo=1000||StateNo=2000
 Trigger1=Enemy(ceil(fvar(18))),MoveType=H
 Trigger1=Enemy(ceil(fvar(18))),StateNo!=[150,155]
-Trigger2=PalNo=[11,12]
+Trigger2=1=[11,12]
 Trigger3=NumHelper(40000+ID)
 Trigger3=Helper(40000+ID),var(1)>0
 Trigger4=Enemy(ceil(fvar(18))),Ctrl||Enemy(ceil(fvar(18))),StateNo<180
@@ -3651,7 +3651,7 @@ Trigger2=MoveContAct||movereversed
 Trigger3=Enemy(ceil(fvar(18))),MoveType!=H
 Trigger3=P2BodyDist X*fvar(8)>80
 Trigger3=Random<500
-Trigger4=PalNo=[11,12]
+Trigger4=1=[11,12]
 value=961
 TriggerAll=0   ;Abstract Reordered: removed system
 IgnorehitPause=1
@@ -3794,7 +3794,7 @@ TriggerAll=fvar(38)>0
 TriggerAll=Enemy(ceil(fvar(18))),StateType!=L
 TriggerAll=Enemy(ceil(fvar(18))),MoveType=H
 TriggerAll=Enemy(ceil(fvar(18))),StateNo!=[120,155]
-TriggerAll=(PalNo=[11,12])||Enemy(ceil(fvar(18))),Life<(160*fvar(19)*fvar(31)*(var(52)*0.01)*fvar(21))
+TriggerAll=(1=[11,12])||Enemy(ceil(fvar(18))),Life<(160*fvar(19)*fvar(31)*(var(52)*0.01)*fvar(21))
 TriggerAll=fvar(34)>4
 Trigger1=P2BodyDist X*fvar(8)-Enemy(ceil(fvar(18))),vel x*4=[-9,64-20]
 Trigger1=P2Dist Y+Helper(30000+ID),fvar(4)=[-70,0]
@@ -3974,7 +3974,7 @@ Trigger1=fvar(34)>2
 Trigger1=P2BodyDist X*fvar(8)-Enemy(ceil(fvar(18))),vel x*2*(1-(facing=Enemy(ceil(fvar(18))),facing)*2)<31
 Trigger1=P2Dist Y+Helper(30000+ID),fvar(2)=[-40,9]
 Trigger2=var(58)<2
-Trigger2=var(59)<8&&!fvar(39)||(PalNo!=[11,12])
+Trigger2=var(59)<8&&!fvar(39)||(1!=[11,12])
 Trigger2=fvar(34)>5
 Trigger2=P2BodyDist X*fvar(8)-Enemy(ceil(fvar(18))),vel x*5*(1-(facing=Enemy(ceil(fvar(18))),facing)*2)=[10,63]
 Trigger2=P2Dist Y+Helper(30000+ID),fvar(6)=[-99,-20]
@@ -3998,7 +3998,7 @@ Trigger1=fvar(34)>2
 Trigger1=P2BodyDist X*fvar(8)-Enemy(ceil(fvar(18))),vel x*2*(1-(facing=Enemy(ceil(fvar(18))),facing)*2)<31
 Trigger1=P2Dist Y+Enemy(ceil(fvar(18))),vel y*3+0.5*3=[-50,9]
 Trigger2=var(58)=0
-Trigger2=var(59)<8&&!fvar(39)||(PalNo!=[11,12])
+Trigger2=var(59)<8&&!fvar(39)||(1!=[11,12])
 Trigger2=fvar(34)>5
 Trigger2=P2BodyDist X*fvar(8)-Enemy(ceil(fvar(18))),vel x*5*(1-(facing=Enemy(ceil(fvar(18))),facing)*2)=[10,63]
 Trigger2=P2Dist Y+Enemy(ceil(fvar(18))),vel y*6+0.5*12=[-99,-20]
@@ -4044,7 +4044,7 @@ TriggerAll=Enemy(ceil(fvar(18))),MoveType=H
 TriggerAll=Enemy(ceil(fvar(18))),StateNo!=[120,155]
 TriggerAll=NumHelper(11111+ID)
 TriggerAll=P2Dist X>=0
-TriggerAll=var(59)<8&&!fvar(39)||(PalNo!=[11,12])
+TriggerAll=var(59)<8&&!fvar(39)||(1!=[11,12])
 TriggerAll=fvar(34)>7
 TriggerAll=P2BodyDist X*fvar(8)-Enemy(ceil(fvar(18))),vel x*7*(1-(facing=Enemy(ceil(fvar(18))),facing)*2)=[-9-(var(58)<2)*30,49]
 Trigger1=P2Dist Y+Helper(30000+ID),fvar(7)=[-110,-30]
@@ -4189,7 +4189,7 @@ TriggerAll=Enemy(ceil(fvar(18))),StateType=A
 TriggerAll=Enemy(ceil(fvar(18))),MoveType=H
 TriggerAll=P2Dist X>0
 TriggerAll=var(58)=0
-TriggerAll=var(59)<8&&!fvar(39)||PalNo!=[11,12]
+TriggerAll=var(59)<8&&!fvar(39)||1!=[11,12]
 TriggerAll=fvar(34)>2
 TriggerAll=(Helper(11111+ID),var((facing=-1)*2)-Helper(11111+ID),RootDist X)*facing>300
 Trigger1=P2Dist Y+Helper(30000+ID),fvar(2)<9
@@ -5179,7 +5179,7 @@ TriggerAll=0   ;Abstract Reordered: removed system
 TriggerAll=!IsHelper
 TriggerAll=NumEnemy>0
 TriggerAll=RoundState=2
-TriggerAll=PalNo=[11,12]
+TriggerAll=1=[11,12]
 TriggerAll=Power>999
 TriggerAll=StateType!=A
 TriggerAll=var(59)>6&&Random<var(59)*100||fvar(39)
@@ -5892,7 +5892,7 @@ TriggerAll=NumHelper(11111+ID)
 Trigger1=(Helper(11111+ID),var((facing=-1)*2)-Helper(11111+ID),RootDist X)*facing<250
 Trigger2=NumHelper(40000+ID)
 Trigger2=Helper(40000+ID),var(1)>0
-Trigger3=PalNo=[11,12]
+Trigger3=1=[11,12]
 
 ;
 ;„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
@@ -6240,14 +6240,14 @@ TriggerAll=P2BodyDist X*fvar(8)=[-9,80]
 TriggerAll=P2Dist Y=[-130,70]
 TriggerAll=fvar(34)>4
 TriggerAll=!var(23)||vel y>0&&var(11)>0
-TriggerAll=(PalNo=[11,12])||Enemy(ceil(fvar(18))),Life<(88*fvar(19)*fvar(31)*(var(52)*0.01)*fvar(21))
+TriggerAll=(1=[11,12])||Enemy(ceil(fvar(18))),Life<(88*fvar(19)*fvar(31)*(var(52)*0.01)*fvar(21))
 TriggerAll=var(51)>3||var(59)>11
 TriggerAll=MoveHit
 Trigger1=StateNo=600
 Trigger2=StateNo=610
 Trigger3=StateNo=620
 Trigger4=StateNo=[630,631]
-Trigger5=(PalNo=[11,12])||var(11)>0||fvar(25)<0.9&&vel y>0&&0||var(58)>1
+Trigger5=(1=[11,12])||var(11)>0||fvar(25)<0.9&&vel y>0&&0||var(58)>1
 Trigger5=Pos Y<-80
 Trigger5=StateNo=640
 
@@ -6959,7 +6959,7 @@ TriggerAll=Enemy(ceil(fvar(18))),StateType!=L
 TriggerAll=Enemy(ceil(fvar(18))),MoveType!=H
 TriggerAll=Enemy(ceil(fvar(18))),Ctrl||Enemy(ceil(fvar(18))),StateNo<180||Enemy(ceil(fvar(18))),Anim<180
 TriggerAll=PrevStateNo!=[97,98]
-TriggerAll=(PalNo=[11,12])||Enemy(ceil(fvar(18))),Life<(160*fvar(19)*fvar(31)*(var(52)*0.01)*fvar(21))
+TriggerAll=(1=[11,12])||Enemy(ceil(fvar(18))),Life<(160*fvar(19)*fvar(31)*(var(52)*0.01)*fvar(21))
 TriggerAll=P2BodyDist X*fvar(8)-(Enemy(ceil(fvar(18))),StateType=A)*Enemy(ceil(fvar(18))),vel x*4=[-9,64]
 TriggerAll=P2Dist Y+Helper(30000+ID),fvar(4)=[-80,0]
 Trigger1=Random<var(59)*30
@@ -7274,8 +7274,8 @@ TriggerAll=Enemy(ceil(fvar(18))),MoveType!=H
 TriggerAll=Enemy(ceil(fvar(18))),Ctrl||Enemy(ceil(fvar(18))),StateNo<180||Enemy(ceil(fvar(18))),Anim<180
 TriggerAll=PrevStateNo!=[97,98]
 TriggerAll=!NumHelper(1001)
-TriggerAll=Random<var(59)*(10+(Power>999)*20+(PalNo=[11,12])*90)
-Trigger1=P2BodyDist X*fvar(8)-Enemy(ceil(fvar(18))),vel x*19=[-5,150+(PalNo=[11,12])*90]
+TriggerAll=Random<var(59)*(10+(Power>999)*20+(1=[11,12])*90)
+Trigger1=P2BodyDist X*fvar(8)-Enemy(ceil(fvar(18))),vel x*19=[-5,150+(1=[11,12])*90]
 Trigger1=P2Dist Y+Helper(30000+ID),fvar(19)=[-99,0]
 
 [State -1,GF];ƒKƒ“ƒtƒŒƒCƒ€
@@ -7298,7 +7298,7 @@ TriggerAll=Enemy(ceil(fvar(18))),Ctrl||Enemy(ceil(fvar(18))),StateNo<180||Enemy(
 TriggerAll=Enemy(ceil(fvar(18))),StateNo!=[120,155]
 TriggerAll=PrevStateNo!=[97,98]
 TriggerAll=!NumHelper(1001)
-TriggerAll=Random<var(59)*(10+(Power>999)*20+(PalNo=[11,12])*50)
+TriggerAll=Random<var(59)*(10+(Power>999)*20+(1=[11,12])*50)
 Trigger1=P2BodyDist X*fvar(8)-Enemy(ceil(fvar(18))),vel x*9-(Enemy(ceil(fvar(18))),StateType=A)*Enemy(ceil(fvar(18))),vel x*19=[120,230]
 Trigger1=P2Dist Y+Helper(30000+ID),fvar(19)>-80
 
@@ -7906,13 +7906,13 @@ Trigger1=var(16)=0
 x=ifelse(sysvar(1)=0,const(velocity.jump.neu.x),ifelse(sysvar(1)=1,const(velocity.jump.fwd.x),const(velocity.jump.Back.x)))+ifelse(sysvar(1)=-1,0,1.4)
 [State ]
 Type=veladd
-Trigger1=PalNo=11
+Trigger1=1=11
 Trigger1=!AnimTime
 Trigger1=sysvar(1)=1
 x=2.5
 [State ]
 Type=veladd
-Trigger1=PalNo=11
+Trigger1=1=11
 Trigger1=!AnimTime
 Trigger1=sysvar(1)=-1
 x=-2.5
@@ -7970,7 +7970,7 @@ Trigger1=var(15)=1
 x=const(velocity.jump.fwd.x)+(var(16)=0)*1.4
 [State ]
 Type=veladd
-Trigger1=PalNo=11
+Trigger1=1=11
 Trigger1=!AnimTime
 x=2.5
 [State ]
@@ -8022,7 +8022,7 @@ Trigger1=var(15)=1
 x=const(velocity.jump.fwd.x)+(var(16)=0)*1.4
 [State ]
 Type=veladd
-Trigger1=PalNo=11
+Trigger1=1=11
 Trigger1=!AnimTime
 x=2.5
 [State ]
@@ -8068,7 +8068,7 @@ Trigger1=!AnimTime
 x=const(velocity.jump.Back.x)
 [State ]
 Type=veladd
-Trigger1=PalNo=11
+Trigger1=1=11
 Trigger1=!AnimTime
 x=-2.5
 [State ]
@@ -8124,7 +8124,7 @@ Trigger1=var(15)=1
 x=const(velocity.jump.fwd.x)+(var(16)=0)*1.4
 [State ]
 Type=veladd
-Trigger1=PalNo=11
+Trigger1=1=11
 Trigger1=!AnimTime
 x=2.5
 [State ]
@@ -8170,7 +8170,7 @@ Trigger1=!AnimTime
 x=const(velocity.jump.Back.x)
 [State ]
 Type=veladd
-Trigger1=PalNo=11
+Trigger1=1=11
 Trigger1=!AnimTime
 x=-2.5
 [State ]
@@ -8273,7 +8273,7 @@ Trigger1=var(15)=1
 x=const(velocity.jump.fwd.x)+(var(16)=0)*1.4
 [State ]
 Type=veladd
-Trigger1=PalNo=11
+Trigger1=1=11
 Trigger1=!AnimTime
 x=2.5
 [State ]
@@ -8308,7 +8308,7 @@ value=ceil(2*fvar(37))
 [State 21]
 Type=VelSet
 Trigger1=1
-x=const(velocity.walk.fwd.x)*ifelse(var(43)>0,2*(1+(PalNo=11)),1)
+x=const(velocity.walk.fwd.x)*ifelse(var(43)>0,2*(1+(1=11)),1)
 [State 21]
 Type=ChangeAnim
 Trigger1=Anim!=20
@@ -8333,7 +8333,7 @@ value=(var(59)<1)
 [State 22]
 Type=VelSet
 Trigger1=1
-x=const(velocity.walk.back.x)*ifelse(var(43)>0,2*(1+(PalNo=11)),1)
+x=const(velocity.walk.back.x)*ifelse(var(43)>0,2*(1+(1=11)),1)
 [State 21]
 Type=ChangeAnim
 Trigger1=Anim!=21

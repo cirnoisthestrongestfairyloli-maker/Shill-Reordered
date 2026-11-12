@@ -1,12 +1,6 @@
 ;---------------------------------------------------------------------------
 ; サキスパ
 ;---------------------------------------------------------------------------
-[State 6300, AR burst cooldown]
-type = VarSet
-trigger1 = Time = 0
-fvar(30) = 4500
-ignorehitpause = 1
-
 [Statedef 6300,]
 	Type=S
 	MoveType=H
@@ -16,6 +10,12 @@ ignorehitpause = 1
 	faceP2=1
 	Anim=6300
 	sprPriority=2
+[State 6300, AR burst cooldown]
+type = VarSet
+trigger1 = Time = 0
+fvar(30) = 4500
+ignorehitpause = 1
+
 
 	[State タイマー減少]
 		type = varset
@@ -108,12 +108,6 @@ ignorehitpause = 1
 		Ctrl=1
 		
 ;---------------------------------------------------------------------------
-[State 6350, AR burst cooldown]
-type = VarSet
-trigger1 = Time = 0
-fvar(30) = 4500
-ignorehitpause = 1
-
       [Statedef 6350,]
 	Type=S
 	MoveType=H
@@ -123,6 +117,12 @@ ignorehitpause = 1
 	faceP2=1
 	Anim=6350
 	sprPriority=2
+[State 6350, AR burst cooldown]
+type = VarSet
+trigger1 = Time = 0
+fvar(30) = 4500
+ignorehitpause = 1
+
 
 	[State タイマー減少]
 		type = varset
@@ -269,11 +269,6 @@ ctrl = 1
 
 ;---------------------------------------------------------------------------
 ;立ちシールド持続(飛び道具のみ)
-[State 6401, AR meter drain]
-type = PowerAdd
-trigger1 = 1
-value = -4
-
 [Statedef 6401] 
 type     = S
 movetype = I
@@ -281,6 +276,11 @@ physics  = S
 ctrl     = 0
 anim     = 6401
 sprpriority = 0
+[State 6401, AR meter drain]
+type = PowerAdd
+trigger1 = 1
+value = -4
+
 
 [State 53,1]
 Type=VelSet
@@ -525,11 +525,6 @@ ctrl = 1
 
 ;---------------------------------------------------------------------------
 ;屈シールド持続（飛び道具のみ）
-[State 6411, AR meter drain]
-type = PowerAdd
-trigger1 = 1
-value = -4
-
 [Statedef 6411] 
 type     = C
 movetype = I
@@ -537,6 +532,11 @@ physics  = C
 ctrl     = 0
 anim     = 6411
 sprpriority = 0
+[State 6411, AR meter drain]
+type = PowerAdd
+trigger1 = 1
+value = -4
+
 
 [State 6411]
 type = Explod
@@ -772,11 +772,6 @@ ctrl = 1
 
 ;---------------------------------------------------------------------------
 ;空中シールド持続（飛び道具のみ）
-[State 6421, AR meter drain]
-type = PowerAdd
-trigger1 = 1
-value = -4
-
 [Statedef 6421] 
 type     = A
 movetype = I
@@ -784,6 +779,11 @@ physics  = N
 ctrl     = 0
 anim     = 6421
 sprpriority = 0
+[State 6421, AR meter drain]
+type = PowerAdd
+trigger1 = 1
+value = -4
+
 
 [State 6420, 重力]
 type = VelAdd

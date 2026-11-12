@@ -2,7 +2,7 @@
 ;õõõCONSTANTSõõõ
 ;===========================================================================
 [data]
-life = 850
+life = 800
 power = 5000
 attack = 100
 defence = 100
@@ -37,18 +37,18 @@ walk.fwd = 1.8
 walk.back = -1.8
 run.fwd = 4.0,0
 run.back = -3.5,-3.3
-jump.neu = 0,-9.5
+jump.neu = 0,-10.2
 jump.fwd = 2.5
 jump.back = -2.5
-runjump.fwd = 4,-11.5
-runjump.back = -2.55,-11.5
-airjump.neu = 0,-8.5
+runjump.fwd = 4,-12.4
+runjump.back = -2.55,-12.4
+airjump.neu = 0,-9.0
 airjump.fwd = 2.5
 airjump.back = -2.55
 
 [movement]
 airjump.num = 0
 airjump.height = 35
-yaccel = 0.35
+yaccel = 0.45
 stand.friction = 0.85
 crouch.friction = 0.82

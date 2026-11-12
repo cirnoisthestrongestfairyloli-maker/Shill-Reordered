@@ -2502,7 +2502,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 type = changestate
 value = 1410
 triggerall = !AIlevel
-triggerall = 0 && power >= (500*(var(53)=0))
+triggerall = 0 && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 && statetype != A
 trigger1 = ctrl || ((stateno = [200, 699]) && time <= 2) || (stateno = 200 || stateno = 230)
 trigger2 = (stateno = [200, 699]) && (movecontact = [1, 8])
@@ -2515,7 +2515,7 @@ trigger5 = helper(stateno + 5), var(3)
 type = changestate
 value = 1110
 triggerall = !AIlevel
-triggerall = command = "ar_623H" && power >= (500*(var(53)=0))
+triggerall = command = "ar_623H" && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 ;&& statetype != A
 trigger1 = ctrl || ((stateno = [200, 699]) && time <= 2) || (stateno = 200 || stateno = 230)
 trigger2 = (stateno = [200, 699]) && (movecontact = [1, 8])
@@ -2528,7 +2528,7 @@ trigger5 = helper(stateno + 5), var(3)
 type = changestate
 value = 1310
 triggerall = !AIlevel
-triggerall = 0 && power >= (500*(var(53)=0))
+triggerall = 0 && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 && statetype != A && !numhelper(1315) && !numhelper(1305)
 trigger1 = ctrl || ((stateno = [200, 699]) && time <= 2) || (stateno = 200 || stateno = 230)
 trigger2 = (stateno = [200, 699]) && (movecontact = [1, 8])
@@ -2542,7 +2542,7 @@ type = changestate
 value = 1460
 triggerall = !AIlevel
 ;Abstract Reordered: air 22H = EX stomp (500 meter): three stomps, the last restands and stuns
-triggerall = command = "ar_22H" && power >= (500*(var(53)=0))
+triggerall = command = "ar_22H" && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 && statetype = A
 trigger1 = ctrl || ((stateno = [200, 699]) && time <= 2) || (stateno = 200 || stateno = 230)
 trigger2 = (stateno = [200, 699]) && (movecontact = [1, 8])
@@ -2555,7 +2555,7 @@ trigger5 = helper(stateno + 5), var(3)
 type = changestate
 value = 1510
 triggerall = !AIlevel
-triggerall = command = "ar_214H" && power >= (500*(var(53)=0))
+triggerall = command = "ar_214H" && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 ;&& statetype != A
 trigger1 = ctrl || ((stateno = [200, 699]) && time <= 2) || (stateno = 200 || stateno = 230)
 trigger2 = (stateno = [200, 699]) && (movecontact = [1, 8])
@@ -2568,7 +2568,7 @@ trigger5 = helper(stateno + 5), var(3)
 type = changestate
 value = 1210
 triggerall = !AIlevel
-triggerall = 0 && power >= (500*(var(53)=0))
+triggerall = 0 && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 && statetype != A
 trigger1 = ctrl || ((stateno = [200, 699]) && time <= 2) || (stateno = 200 || stateno = 230)
 trigger2 = (stateno = [200, 699]) && (movecontact = [1, 8])
@@ -2582,7 +2582,7 @@ type = changestate
 value = 1010
 triggerall = !AIlevel
 triggerall = command = "ar_236H"
-triggerall = roundstate = 2 && statetype != A && power >= (500*(var(53)=0)) && var(20) <= 60
+triggerall = roundstate = 2 && statetype != A && power >= (1250*(var(53)=0)) && var(20) <= 60
 triggerall = !numhelper(1015) ;&& !numhelper(3005)
 trigger1 = ctrl || ((stateno = [200, 299]) && time <= 2) || (stateno = 200 || stateno = 230)
 trigger2 = (stateno = [200, 255]) && (movecontact = [1, 8])
@@ -2596,7 +2596,7 @@ type = changestate
 value = 1060
 triggerall = !AIlevel
 triggerall = command = "ar_236H"
-triggerall = roundstate = 2 && statetype = A && power >= (500*(var(53)=0)) && var(20) <= 60
+triggerall = roundstate = 2 && statetype = A && power >= (1250*(var(53)=0)) && var(20) <= 60
 triggerall = !numhelper(1065) ;&& !numhelper(3005)
 trigger1 = ctrl || ((stateno = [200, 299]) && time <= 2) || (stateno = 200 || stateno = 230)
 trigger2 = (stateno = [200, 285]) && (movecontact = [1, 8])

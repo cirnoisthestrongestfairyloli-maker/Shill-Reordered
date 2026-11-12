@@ -3610,33 +3610,6 @@ LoopStart
 5060,10, 0,0, 3
 
 ; ==== Abstract Reordered: burst (A+B+C while being hit) ====
-[Begin Action 9600]
-9600,0, 0,0, 2, , AS256D0
-9600,1, 0,0, 2, , AS256D0
-9600,2, 0,0, 2, , AS256D0
-9600,3, 0,0, 2, , AS256D0
-9600,4, 0,0, 2, , AS256D0
-9600,5, 0,0, 2, , AS256D0
-9600,6, 0,0, 2, , AS234D22
-9600,7, 0,0, 2, , AS212D44
-9600,8, 0,0, 2, , AS191D65
-9600,9, 0,0, 2, , AS169D87
-9600,10, 0,0, 2, , AS148D108
-9600,11, 0,0, 2, , AS126D130
-9600,12, 0,0, 2, , AS104D152
-9600,13, 0,0, 2, , AS83D173
-9600,14, 0,0, 2, , AS61D195
-9600,15, 0,0, 2, , AS40D216
-
-[Begin Action 9601] ; burst ready
-9601,0, 0,0, -1
-
-[Begin Action 9602] ; burst recharging (grey)
-9601,2, 0,0, -1
-
-[Begin Action 9603] ; recharge bar (grey)
-9601,3, 0,0, -1
-
 ; burst poses: guard poses + a big attack box so the burst connects
 [Begin Action 9604]
 Clsn1Default: 1

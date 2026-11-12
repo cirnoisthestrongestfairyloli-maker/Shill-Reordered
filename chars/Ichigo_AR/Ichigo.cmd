@@ -2227,6 +2227,7 @@ value = 32500
 ; AI swich -> ON
 [State -1, AI]
 type = VarSet
+triggerall = AILevel > 0   ;Abstract Reordered: only a real CPU switches the AI on
 triggerall = !ishelper || isHelper(30000)
 triggerall = !var(59)
 Triggerall=RoundState<2||(RoundState=2&&ctrl)
@@ -2259,6 +2260,14 @@ trigger26 = NumHelper(30000)
 trigger26 = Helper(30000),var(59)
 trigger26 = Helper(30000),time > 5
 var(59) = 1
+
+;Abstract Reordered: a human-controlled Ichigo never runs the AI
+[State -1, AR AI off for players]
+type = VarSet
+trigger1 = AILevel = 0
+trigger1 = var(59) != 0
+var(59) = 0
+ignorehitpause = 1
 
 ;-----------------------------------------------------------------------
 [State -1, AI]

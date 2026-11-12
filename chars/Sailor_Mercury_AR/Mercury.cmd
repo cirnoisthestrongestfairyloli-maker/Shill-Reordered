@@ -50,28 +50,28 @@ time = 30
 
 [Command]
 name = "Shine Aqua Cutter"
-command = ~D, DB, B, D, DF, F, a+b
+command = ~D, DB, B, D, DB, B, a+b
 time = 30
 [Command]
 name = "Shine Aqua Cutter"
-command = ~D, DB, B, D, DF, F, b+c
+command = ~D, DB, B, D, DB, B, b+c
 time = 30
 [Command]
 name = "Shine Aqua Cutter"
-command = ~D, DB, B, D, DF, F, a+c
+command = ~D, DB, B, D, DB, B, a+c
 time = 30
 
 [Command]
 name = "Shine Aqua Cutter R"
-command = ~D, DF, F, D, DB, B, a+b
+command = ~D, DF, F, D, DF, F, a+b
 time = 30
 [Command]
 name = "Shine Aqua Cutter R"
-command = ~D, DF, F, D, DB, B, b+c
+command = ~D, DF, F, D, DF, F, b+c
 time = 30
 [Command]
 name = "Shine Aqua Cutter R"
-command = ~D, DF, F, D, DB, B, a+c
+command = ~D, DF, F, D, DF, F, a+c
 time = 30
 
 [Command]
@@ -1021,18 +1021,8 @@ time = 1
 
 [Command]
 name = "ar_planet"
-command = ~D, DB, B, D, DB, B, a+b
-time = 30
-
-[Command]
-name = "ar_planet"
-command = ~D, DB, B, D, DB, B, b+c
-time = 30
-
-[Command]
-name = "ar_planet"
-command = ~D, DB, B, D, DB, B, a+c
-time = 30
+command = ~D, D, b+c   ;Abstract Reordered: 22 B+C
+time = 20
 
 [Statedef -1]
 
@@ -2394,7 +2384,7 @@ trigger2 = moveguarded
 
 [State -1, AI Aqua Mirage HP]
 type = VarSet
-v = 20+0*(var(21):=1)
+v = 20+0*(var(21):=1)+0*(var(27):=0)
 value = 1510
 triggerall = (var(1)!=2)||(stateno!=50)||(time>10)||(pos y<-40)
 triggerall = (var(49)%5)*(var(49)%19)
@@ -2799,10 +2789,11 @@ trigger1 = helper(7000),cond(facing=root,facing,command="QCB_LP",command="QCF_LP
 ignorehitpause = 1
 [State -1, Aqua Mirage HP]
 type = VarSet
-v = 20+0*(var(21):=var(56))
+v = 20+0*(var(21):=var(56))+0*(var(27):=helper(7000),cond(facing=root,facing,command="QCB_PP",command="QCF_PP"))   ;AR: var(27)=1 -> C, the EX
 value = 1510
 triggerall = roundstate = 2
 triggerall = statetype = A
+triggerall = power >= 500 || (helper(7000),cond(facing=root,facing,command="QCB_PP",command="QCF_PP")) = 0   ;AR: only the C version is EX
 triggerall = var(59) = 0
 triggerall = ((var(20)!=1)&&(var(20)!=stateno-(stateno%100)+1000))||(stateno!=[1000,1999])
 triggerall = (pos y<-ceil(.75*const(movement.airjump.height)))

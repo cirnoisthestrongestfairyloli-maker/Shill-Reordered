@@ -4282,3 +4282,260 @@ type=ChangeState
 Trigger1=animtime=0
 value=4002
 
+;Lv2 Max Heart Rush: dive (copy of 4027, no gauge cost)
+[Statedef 4060]
+type=A
+movetype=A
+physics=N
+anim=3026
+ctrl=0
+
+[State ]
+type=Helper
+trigger1=!numhelper(13030)&&!numhelper(1013030)&&(roundstate=[2,3])&&(screenpos Y>=320||(screenpos Y>=300&&statetype=C)||(screenpos Y>=280&&statetype=L)||screenpos Y<=-1)
+helpertype=normal
+name="icon white"
+ID=ifelse(screenpos Y<=-1,1013030,13030)
+postype=left
+stateno=3030
+supermovetime=99999999999
+pausemovetime=99999999999
+ignorehitpause=1
+
+[State ]
+type=SprPriority
+trigger1=1
+value=-2
+ignorehitpause=1
+
+[State ]
+type=Varset
+trigger1=time=0&&(root,stateno=[120,155])
+var(2)=1
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s30,5
+abspan=floor(root,pos x)
+channel=0
+
+[State ]
+type=null;parentVarset
+trigger1=time=0
+var(9)=0
+
+[State ]
+type=parentVarset
+trigger1=root,var(13)=0
+var(13)=ifelse(var(2),19,18)
+persistent=0
+
+[State ]
+type=null;parentvaradd
+trigger1=time=0&&roundstate=2&&root,var(32)=0
+var(39)=-ifelse(var(2),350,250)*ifelse(root,var(6)=13||root,var(7)=13||root,var(8)=13||root,palno=12,.5,1)
+
+[State ]
+type=NotHitBy
+trigger1=time<=5||roundstate>=3
+value=SCA
+time=1
+
+[State ]
+type=PosSet
+trigger1=time=0
+x=enemynear,pos x-facing*460
+y=-110
+
+[State ]
+type=null;posadd
+trigger1=time=0
+x=-60
+
+[State ]
+type=Velset
+trigger1=1
+x=16
+y=4
+
+[State ]
+type=HitOverride
+trigger1=1
+attr=SCA,AA,AP,AT
+slot=1
+stateno=4005
+time=-1
+
+[State ]
+type=Varrandom
+trigger1=time=0&&root,var(6)!=24&&root,var(7)!=24&&root,var(8)!=24&&root,palno!=12
+v=18
+range=1,12
+
+[State ]
+type=Varrandom
+trigger1=time=0&&(root,var(6)=24||root,var(7)=24||root,var(8)=24||root,palno=12)
+v=18
+range=1,3
+
+[State ]
+type=Varset
+trigger1=!movecontact&&!movereversed&&(p2movetype=A||(root,var(30)=0&&(root,var(6)=9||root,var(7)=9||root,var(8)=9||root,palno=12)))
+var(15)=1
+ignorehitpause=1
+
+[State ]
+type=HitDef
+trigger1=!movecontact&&!movereversed
+attr=S,NA
+damage=ceil(60*(1+ifelse(var(18)=1,.1,0)+ifelse(var(15)=1,.05,0)+ifelse(var(15)=1&&(root,var(6)=8||root,var(7)=8||root,var(8)=8||root,palno=12),.35,0))*root,fvar(29)),0
+guardflag=M
+hitflag=MAFD
+pausetime=11,11
+priority=4,Hit
+sparkno=-1
+hitsound=s100,68
+guardsound=s100,15
+ground.slidetime=20
+ground.hittime=20
+ground.velocity=-5
+air.velocity=-2.8,-5
+guard.sparkno=-1
+yaccel=.48
+air.fall=1
+fall.recovertime=10
+ground.cornerpush.veloff=-7
+palfx.time=ifelse(var(15)=1||var(18)=1,10,0)
+palfx.sinadd=ifelse(var(15)=1,255,0),ifelse(var(18)=1,200,0),ifelse(var(18)=1,50,0),ifelse(var(15)=1||var(18)=1,18,0)
+ID=4027
+
+[State ]
+type=parentVarset
+trigger1=root,var(25)=0&&movehit
+var(13)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVarset
+trigger1=var(15)=1&&root,var(13)=0&&movehit
+var(13)=2
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVarset
+trigger1=var(18)=1&&root,var(13)=0&&movehit
+var(13)=3
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Varset
+trigger1=var(15)=1&&root,var(13)=0&&(movecontact||movereversed||(p2movetype!=A&&root,var(6)!=9&&root,var(7)!=9&&root,var(8)!=9&&root,palno!=12)||(root,var(30)!=0&&(root,var(6)=9||root,var(7)=9||root,var(8)=9||root,palno=12)))
+var(15)=0
+ignorehitpause=1
+
+[State ]
+type=parentVaradd
+trigger1=movehit
+var(30)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=movehit
+value=ceil(70*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=powerAdd
+trigger1=MoveGuarded
+value=ceil(35*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=movehit&&root,var(36)=0
+var(41)=ceil(70*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=MoveGuarded&&root,var(36)=0
+var(41)=ceil(35*(1+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=numhelper(3001)
+trigger1=helper(3001),fvar(0)>=120&&movehit
+var(38)=ceil(70*(1+ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,.5,0)+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentVaradd
+trigger1=numhelper(3001)
+trigger1=helper(3001),fvar(0)>=120&&MoveGuarded
+var(38)=ceil(35*(1+ifelse(root,var(6)=10||root,var(7)=10||root,var(8)=10||root,palno=12,.5,0)+ifelse(root,var(25)=1,0,.1)+ifelse(var(15)=1,.1,0)+ifelse(var(18)=1,.1,0)))
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=parentvarset
+trigger1=movehit
+var(26)=1
+ignorehitpause=1
+persistent=0
+
+[State ]
+type=Helper
+trigger1=movehit
+helpertype=normal
+name="hitL"
+ID=7105
+pos=0,-65
+postype=p2
+stateno=7105
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ]
+type=Helper
+trigger1=moveguarded
+helpertype=normal
+name="guardL"
+ID=27300
+pos=0,-65
+postype=p2
+facing=-1
+stateno=7300
+supermovetime=100
+pausemovetime=100
+persistent=0
+ignorehitpause=1
+
+[State ];Lv2: land and leave
+type=VelSet
+trigger1=Pos Y>=0
+x=0
+y=0
+
+[State ]
+type=PosSet
+trigger1=Pos Y>=0
+y=0
+
+[State ]
+type=ChangeState
+trigger1=Pos Y>=0
+value=4015

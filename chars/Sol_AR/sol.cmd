@@ -272,7 +272,7 @@ time = 1
 
 [Command]
 name = "グランドヴァイパー"
-command = ~D, DB, B, c
+command = ~B, D, DB, c
 time = 30
 
 [Command]
@@ -291,34 +291,42 @@ time = 30
 
 [Command]
 name = "ガンフレイム"
-command = x
-time = 1
-
-[Command]
-name = "フェイント"
-command = /$B, x
-time = 1
-
-[Command]
-name = "ライオット"
-command = ~D, DB, B, a
-time = 30
-[Command]
-name = "ライオット"
-command = ~D, DB, B, b
-time = 30
-
-[Command]
-name = "リヴォルヴァー"
 command = ~D, DF, F, a
 time = 30
 [Command]
-name = "リヴォルヴァー"
+name = "ガンフレイム"
 command = ~D, DF, F, b
 time = 30
 [Command]
-name = "リヴォルヴァー"
+name = "ガンフレイム"
 command = ~D, DF, F, c
+time = 30
+
+[Command]
+name = "フェイント"
+command = U, D, U, D, U, D, U, D
+time = 1
+
+[Command]
+name = "ライオット"
+command = ~B, D, DB, a
+time = 30
+[Command]
+name = "ライオット"
+command = ~B, D, DB, b
+time = 30
+
+[Command]
+name = "リヴォルヴァー"
+command = ~D, DB, B, a
+time = 30
+[Command]
+name = "リヴォルヴァー"
+command = ~D, DB, B, b
+time = 30
+[Command]
+name = "リヴォルヴァー"
+command = ~D, DB, B, c
 time = 30
 
 [Command]
@@ -597,10 +605,10 @@ command=D
 time=1
 
 ;Abstract Reordered: A/B/C = light/medium/heavy, X = Gun Flame (4X / hold = feint), Y = grab, Z = parry,
-;A+B+C = burst, B+C = Dust
+;A+B+C = burst, X = Dust, 236 = Gun Flame (hold = feint)
 [Command]
 name = "ar_bc"
-command = b+c
+command = x
 time = 1
 
 [Command]
@@ -1164,7 +1172,7 @@ trigger2 = stateno = [5001, 5099]
 trigger2 = stateno != 5000 && stateno != 5010 && stateno != 5020 && stateno != 5070
 
 ;Abstract Reordered: parry on Z
-[State -1, AR 6A once per combo reset]
+[State -1, AR once per combo reset (6A, 3C launch)]
 type = VarSet
 triggerall = !ishelper
 triggerall = var(55)
@@ -1316,7 +1324,7 @@ trigger6 = stateno = 1050 && AnimElemTime(6) >= 0
 [State 1000, 1]
 type = varset
 triggerall = !ishelper
-triggerall = command = "ライオット" || command = "グランドヴァイパー"
+triggerall = command = "リヴォルヴァー"
 trigger1 = (stateno = [1100,1161])
 trigger1 = (anim = [1100,1160]) && animelemtime(7) < 2
 trigger1 = var(58) != 2
@@ -1334,7 +1342,7 @@ value = 1180
 triggerall = !ishelper
 triggerall = var(59) <= 0
 triggerall = var(25) = 0
-triggerall = command = "ライオット" || command = "グランドヴァイパー" || var(45)
+triggerall = command = "リヴォルヴァー" || var(45)
 triggerall = statetype = A
 triggerall = movetype != H
 trigger1 = (stateno = [1100,1161])
@@ -1716,7 +1724,7 @@ triggerall = p2movetype != H
 triggerall = !helper(780+id),var(8)
 trigger1 = 1
 
-[State -1, AR Dust (B+C)]
+[State -1, AR Dust (X)]
 type = ChangeState
 value = 240
 triggerall = !ishelper
@@ -1736,6 +1744,7 @@ trigger5 = movecontact || movereversed
 type = ChangeState
 value = 430
 triggerall = !ishelper
+triggerall = !(var(55) & 2)   ;Abstract Reordered: launcher once per combo
 triggerall = var(59) <= 0
 triggerall = command = "c"
 triggerall = command = "holddown"
@@ -1875,7 +1884,7 @@ trigger5 = movecontact || movereversed
 type = ChangeState
 value = 205
 triggerall = !ishelper
-triggerall = !var(55)   ;Abstract Reordered: once per combo
+triggerall = !(var(55) & 1)   ;Abstract Reordered: once per combo
 triggerall = var(59) <= 0
 triggerall = command = "a"
 triggerall = command = "holdfwd"
@@ -1906,6 +1915,19 @@ trigger4 = time > ifelse(anim = 196,18,64)
 trigger5 = statetype != A
 trigger5 = stateno = 200 || stateno = 410
 trigger5 = movecontact || movereversed
+
+[State -1, AR air X = air Dust (j.D)]
+type = ChangeState
+value = 640
+triggerall = !ishelper
+triggerall = var(59) <= 0
+triggerall = command = "x"
+trigger1 = statetype = A
+trigger1 = ctrl || fvar(28)
+trigger2 = (stateno = 110 || stateno = 115) && time >= 6
+trigger3 = stateno = 99 && prevstateno = 620
+trigger4 = stateno = 610 || stateno = 620 || stateno = 630
+trigger4 = movecontact || movereversed
 
 [State -1, AR j.2C (j.D)]
 type = ChangeState
@@ -2097,6 +2119,7 @@ trigger7 = (stateno = [200,236]) && (movecontact||movereversed||fvar(28))
 trigger8 = numhelper(780+id)
 trigger8 = helper(780+id),sysvar(0)
 trigger8 = (stateno = [400,450]) && (movecontact||movereversed||fvar(28))
+trigger9 = stateno = 240 && movehit   ;Abstract Reordered: jump after an air-hit Dust
 
 ;---------------------------------------------------------------------------
 [State 空中ダッシュ]

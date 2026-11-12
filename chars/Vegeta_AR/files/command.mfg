@@ -1538,6 +1538,36 @@ slot = 0
 time = 2
 ignorehitpause = 1
 
+;keepstate armour still applies the hit's damage, so armoured hits are made harmless with a huge defence
+;multiplier while the Pride move runs (fvar(37) = it is set). Throws are not armoured and still hurt.
+[State -1, AR pride armour no damage]
+type = DefenceMulSet
+triggerall = !IsHelper
+trigger1 = fvar(27) = 1 && MoveType != H
+value = 1000000
+ignorehitpause = 1
+
+[State -1, AR pride armour no damage flag]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = fvar(27) = 1
+fvar(37) = 1
+ignorehitpause = 1
+
+[State -1, AR pride armour normal defence]
+type = DefenceMulSet
+triggerall = !IsHelper
+trigger1 = fvar(27) = 0 && fvar(37) = 1
+value = 1
+ignorehitpause = 1
+
+[State -1, AR pride armour normal defence flag]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = fvar(27) = 0 && fvar(37) = 1
+fvar(37) = 0
+ignorehitpause = 1
+
 ;Elite Assault: ender tier by Vegeta's life when it starts (1 = Spirit Breaking Cannon, 2 = Big Bang Attack
 ;at 50% or less, 3 = Falling Empire at 25% or less) and a damage cap of 350 / 400 / 450 for the whole super
 [State -1, AR elite tier]

@@ -72,6 +72,102 @@ var(5) = 0
 ignorehitpause = 1
 
 ;new round: if he finished the last one at the top (Hard Luck Blue / HLB Extra / Good Luck / Calamity), back to Unlucky
+;Post-combo meter: nothing during his combo. When it ends (opponent out of hitstun or lying down), it banks
+;25 meter per hit + 1 per 2 frames the combo lasted (max 750), then trickles in at 3 meter per frame.
+;var(27) = hits so far, var(28) = combo frames, var(29) = meter still to trickle in
+[State -2, AR post-combo reset]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = RoundState < 2
+trigger1 = var(27) != 0 || var(28) != 0 || var(29) != 0
+var(27) = 0
+ignorehitpause = 1
+
+[State -2, AR post-combo reset 2]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = RoundState < 2
+var(28) = 0
+ignorehitpause = 1
+
+[State -2, AR post-combo reset 3]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = RoundState < 2
+var(29) = 0
+ignorehitpause = 1
+
+[State -2, AR post-combo hits]
+type = VarSet
+triggerall = !IsHelper
+triggerall = RoundState = 2
+trigger1 = NumTarget
+trigger1 = enemynear, MoveType = H
+trigger1 = enemynear, stateno != [5110, 5120]
+trigger1 = enemynear, GetHitVar(hitcount) > var(27)
+var(27) = enemynear, GetHitVar(hitcount)
+ignorehitpause = 1
+
+[State -2, AR post-combo time]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = RoundState = 2
+trigger1 = var(27) > 0
+trigger1 = enemynear, MoveType = H
+trigger1 = enemynear, stateno != [5110, 5120]
+var(28) = 1
+ignorehitpause = 1
+
+[State -2, AR post-combo bank]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = var(27) > 0
+trigger1 = enemynear, MoveType != H
+trigger2 = enemynear, stateno = [5110, 5120]
+var(29) = var(27) * 25 + var(28) / 2
+ignorehitpause = 1
+
+[State -2, AR post-combo bank time off]
+type = VarSet
+triggerall = !IsHelper
+triggerall = var(27) > 0
+trigger1 = enemynear, MoveType != H
+trigger2 = enemynear, stateno = [5110, 5120]
+var(28) = 0
+ignorehitpause = 1
+
+[State -2, AR post-combo bank hits off]
+type = VarSet
+triggerall = !IsHelper
+triggerall = var(27) > 0
+trigger1 = enemynear, MoveType != H
+trigger2 = enemynear, stateno = [5110, 5120]
+var(27) = 0
+ignorehitpause = 1
+
+[State -2, AR post-combo cap]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(29) > 750
+var(29) = 750
+ignorehitpause = 1
+
+[State -2, AR post-combo trickle]
+type = PowerAdd
+triggerall = !IsHelper
+triggerall = RoundState = 2
+trigger1 = var(29) > 0
+trigger1 = var(27) = 0
+value = ifelse(var(29) < 3, var(29), 3)
+
+[State -2, AR post-combo trickle spend]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = RoundState = 2
+trigger1 = var(29) > 0
+trigger1 = var(27) = 0
+var(29) = -ifelse(var(29) < 3, var(29), 3)
+
 [State -2, AR luck round revert]
 type = VarSet
 triggerall = RoundState < 2

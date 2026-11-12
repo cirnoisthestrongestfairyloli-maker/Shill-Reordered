@@ -14,7 +14,7 @@ movetype = A
 anim = 1010
 ctrl = 0
 velset = 0, 0
-poweradd = -500 * !var(53)
+poweradd = -1250 * !var(53)   ;AR: EX costs a quarter of the 5-bar meter
 sprpriority = 1
 facep2 = 1
 
@@ -180,7 +180,7 @@ physics = A
 movetype = A
 anim = 1060
 ctrl = 0
-poweradd = -500 * !var(53)
+poweradd = -1250 * !var(53)   ;AR: EX costs a quarter of the 5-bar meter
 juggle = 8
 sprpriority = 1
 facep2 = 0
@@ -343,7 +343,7 @@ movetype = A
 anim = 1100
 ctrl = 0
 velset = ifelse(pos y = 0, 0,vel x), ifelse(pos y = 0, 0,vel y)
-poweradd = -500 * !var(53)
+poweradd = -1250 * !var(53)   ;AR: EX costs a quarter of the 5-bar meter
 juggle = 0
 sprpriority = 1
 ;facep2 = 1
@@ -456,7 +456,7 @@ persistent = 0
 
 [State 1100, Hit]
 type = hitdef
-trigger1 = !time && !var(20)
+trigger1 = time = 8 && !var(20)
 attr = A, ST
 damage = 45, 6
 animtype = Back
@@ -498,7 +498,7 @@ airguard.cornerpush.veloff = 0
 
 [State 1100, Hit]
 type = hitdef
-trigger1 = !time && var(20)
+trigger1 = time = 8 && var(20)
 attr = A, ST
 damage = 45, 6
 animtype = Back
@@ -787,10 +787,17 @@ movetype = A
 anim = 1200
 ctrl = 0
 velset = 0, 0
-poweradd = -500 * !var(53)
+poweradd = -1250 * !var(53)   ;AR: EX costs a quarter of the 5-bar meter
 juggle = 0;ifelse(p2movetype = A, 8, ifelse(numtarget, 15, 8))
 sprpriority = 1
 facep2 = 1
+
+[State 0, AR claw startup]
+;Abstract Reordered: hold the wind-up 14 more frames (20 total) so a blocking opponent can jump out
+type = ChangeAnim
+trigger1 = time < 14
+value = 1200
+elem = 1
 
 [State -3, Energy Color]
 type = remappal
@@ -947,12 +954,12 @@ sparkXY = -10 + 0 * (var(35) := 30), var(36) := -90
 numhits = 0
 [State 3005, Hit]
 type = hitdef
-trigger1 = time = 6
+trigger1 = time = 20
 priority = 4, Hit
 attr = S, HA
 damage = ceil(90 * (fvar(12))), 4
 animtype = Hard
-hitflag = MAF
+hitflag = MF   ;AR: misses jumping opponents
 guardflag = M
 pausetime = 0, 0
 hitSound = -1 + 0 * (var(31) := 3)
@@ -988,7 +995,7 @@ value = 1211
 ignorehitpause = 1
 [State 0, ChangeAnim]
 type = ChangeAnim
-trigger1 = anim = 1200 && time = 5 + var(10)*5 && ifelse(var(10)=3, !(movehit && numtarget),1)
+trigger1 = anim = 1200 && time = 19 + var(10)*5 && ifelse(var(10)=3, !(movehit && numtarget),1)
 value = 1201
 [State 0, End]
 type = changestate
@@ -1307,7 +1314,7 @@ movetype = A
 anim = 1302
 ctrl = 0
 velset = 0, 0
-poweradd = -500 * !var(53)
+poweradd = -1250 * !var(53)   ;AR: EX costs a quarter of the 5-bar meter
 juggle = ifelse(AIlevel,0,8);ifelse(p2movetype = A, 8, ifelse(numtarget, 15, 8))
 sprpriority = 1
 facep2 = 1
@@ -1698,7 +1705,7 @@ physics = N
 movetype = I
 anim = 1400
 ctrl = 0
-poweradd = -500 * !var(53)
+poweradd = -1250 * !var(53)   ;AR: EX costs a quarter of the 5-bar meter
 velset = 0, 0
 sprpriority = 1
 facep2 = 1
@@ -2313,7 +2320,7 @@ physics = S
 movetype = A
 anim = 1500
 ctrl = 0
-poweradd = -500 * !var(53)
+poweradd = -1250 * !var(53)   ;AR: EX costs a quarter of the 5-bar meter
 juggle = ifelse(AIlevel,0,4);ifelse(p2movetype = A, 8, ifelse(numtarget, 15, 8))
 sprpriority = 1
 facep2 = 0
@@ -2444,6 +2451,7 @@ numhits = 0
 
 [State 800, Hit]
 type = hitdef
+triggerall = time >= 8   ;AR: grab startup
 trigger1 = time >= 5 && p2dist x >= 0 && p2bodydist x <= 60 && !var(37) && (enemynear, movetype != H || enemynear, stateno = [120,155])
 attr = S, ST
 hitflag = MF
@@ -2465,6 +2473,7 @@ fall.recovertime = 120
 
 [State 800, Hit]
 type = hitdef
+triggerall = time >= 8   ;AR: grab startup
 trigger1 = time = 5 && var(37)
 attr = A, ST
 hitflag = AF
@@ -2486,6 +2495,7 @@ fall.recovertime = 120
 
 [State 800, Hit]
 type = hitdef
+triggerall = time >= 8   ;AR: grab startup
 trigger1 = time = 5 && !var(37) && enemynear, movetype = H && enemynear, stateno != [120,155]
 attr = S, ST
 hitflag = MAF

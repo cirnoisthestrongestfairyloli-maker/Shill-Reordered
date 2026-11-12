@@ -572,3 +572,26 @@ trigger1 = StateType = A
 trigger1 = Time >= 10
 value = 50
 ctrl = 1
+
+;---------------------------------------------------------------------------
+; Magical Arrow (236A/B/C) extra recovery: holds her last pose for 12 / 14 / 16 frames
+; (10 + 2 x strength) before she can act, so the zoning is easier to punish.
+
+[Statedef 7765]
+type     = S
+movetype = I
+physics  = S
+ctrl     = 0
+
+[State 7765, Pose]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger2 = AnimElemTime(12) >= 4
+value = Anim
+elem = 12
+
+[State 7765, End]
+type = ChangeState
+trigger1 = Time >= 10 + 2 * var(7)
+value = 0
+ctrl = 1

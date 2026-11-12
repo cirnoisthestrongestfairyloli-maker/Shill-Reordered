@@ -8,6 +8,21 @@ trigger1 = Lose
 fvar(35) = 1
 ignorehitpause = 1
 
+;Pride armour safety: being thrown / in a custom state puts defence back to normal (State -1 may not run then)
+[State -2, AR pride armour off when hit]
+type = DefenceMulSet
+triggerall = !IsHelper
+trigger1 = fvar(37) = 1 && MoveType = H
+value = 1
+ignorehitpause = 1
+
+[State -2, AR pride armour off when hit flag]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = fvar(37) = 1 && MoveType = H
+fvar(37) = 0
+ignorehitpause = 1
+
 [State -2, AR blue transformation]
 type = ChangeState
 triggerall = !IsHelper

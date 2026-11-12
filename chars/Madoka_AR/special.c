@@ -185,8 +185,8 @@ size.yscale = const(size.yscale)
 [state 1000, changestate]
 type = changestate
 trigger1 = animtime = 0
-value = 0
-ctrl = 1
+value = 7765   ;Abstract Reordered: extra recovery (was 0, ctrl)
+ctrl = 0
 ;===========================================================================
 ;■ブラストスコール
 [statedef 1100]

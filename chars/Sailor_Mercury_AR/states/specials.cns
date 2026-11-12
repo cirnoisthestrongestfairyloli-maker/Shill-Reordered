@@ -2539,7 +2539,7 @@ movetype = I
 [State 1210]
 type = PosAdd
 trigger1 = animelem = 4
-x = -80
+x = 80   ;AR: forward (was -80)
 
 [State 1210]
 type = NotHitBy
@@ -4203,7 +4203,7 @@ physics = N
 velset = 4,-4
 ctrl = 0
 anim = 1500
-poweradd = (prevstateno!=8000)*!numhelper(3500)*floor(70*fvar(1))
+poweradd = -500 * (prevstateno != 8000) * (var(27) = 1)   ;AR: EX (C only), 500 meter
 facep2 = 0
 sprpriority = -1
 
@@ -4319,12 +4319,13 @@ ground.slidetime = 16
 ground.hittime  = 12
 air.hittime = 16
 guard.hittime = 10
-ground.velocity = -2-3*(movecontact>0),-5
-air.velocity = -2-3*(movecontact>0),-4
+ground.velocity = cond(var(27) = 1, -1.5, -2-3*(movecontact>0)), cond(var(27) = 1, 9, -5)   ;AR: C = EX ground bounce
+air.velocity = cond(var(27) = 1, -1.5, -2-3*(movecontact>0)), cond(var(27) = 1, 9, -4)   ;AR: C = EX ground bounce
 guard.velocity = -4
 airguard.velocity = -3,-3
 fall = 1
-fall.recover = 1
+fall.recover = var(27) != 1
+fall.yvelocity = cond(var(27) = 1, -8, -4.5)   ;AR: C = EX bounce
 fall.recovertime = 30
 yaccel = cond(var(43)*(movehit)>0,.35+.2*(var(43)-1),.35)
 ;power------------------
@@ -4370,12 +4371,13 @@ air.type = low
 ground.slidetime = 16
 ground.hittime  = 12
 air.hittime = 16
-ground.velocity = 2+3*(movecontact>0),-5
-air.velocity = 2+3*(movecontact>0),-4
+ground.velocity = cond(var(27) = 1, -1.5, 2+3*(movecontact>0)), cond(var(27) = 1, 9, -5)   ;AR: C = EX ground bounce
+air.velocity = cond(var(27) = 1, -1.5, 2+3*(movecontact>0)), cond(var(27) = 1, 9, -4)   ;AR: C = EX ground bounce
 guard.velocity = 4
 airguard.velocity = 3,-2
 fall = 1
-fall.recover = 1
+fall.recover = var(27) != 1
+fall.yvelocity = cond(var(27) = 1, -8, -4.5)   ;AR: C = EX bounce
 fall.recovertime = 35
 yaccel = cond(var(43)*(movehit)>0,.35+.2*(var(43)-1),.35)
 ;power------------------
@@ -4458,11 +4460,20 @@ persistent = 0
 x = 2
 y = -1
 
+[State 1510, AR follow-up]
+;Abstract Reordered: once the EX (C) Aqua Mirage hits, she can act again in the air and lands ready to combo
+type = CtrlSet
+trigger1 = var(27) = 1
+trigger1 = movehit
+trigger1 = !hitpausetime
+value = 1
+ignorehitpause = 1
+
 [State 1510]
 type = ChangeState
 trigger1 = pos y>=-vel y
 value = 52
-ctrl = 0
+ctrl = var(27) = 1 && movehit > 0
 
 ; afterimage
 [Statedef 1525]

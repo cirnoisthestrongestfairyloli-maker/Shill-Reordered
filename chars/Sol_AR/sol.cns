@@ -668,6 +668,7 @@ var(3) = ifelse(root,teamside = 1,24,-3)
 
 [State 1000, 6]
 type = explod
+triggerall = 0   ;Abstract Reordered: old burst gauge removed
 trigger1 = numexplod(782+root,id) = 0
 anim = 782
 id = 782+root,id
@@ -706,6 +707,7 @@ ignorehitpause = 1
 
 [State 1000, 6]
 type = explod
+triggerall = 0   ;Abstract Reordered: old burst gauge removed
 trigger1 = numexplod(780+root,id) = 0
 anim = 780
 id = 780+root,id
@@ -724,6 +726,7 @@ scale = 0.5*fvar(0),0.5
 
 [State 1000, 6]
 type = explod
+triggerall = 0   ;Abstract Reordered: old burst gauge removed
 trigger1 = numexplod(781+root,id) = 0
 trigger1 = root,fvar(33) >= 1.5
 anim = 781
@@ -763,6 +766,7 @@ ignorehitpause = 1
 
 [State 1000, 6]
 type = explod
+triggerall = 0   ;Abstract Reordered: old burst gauge removed
 trigger1 = numexplod(783+root,id) = 0
 anim = 783
 id = 783+root,id
@@ -5028,7 +5032,7 @@ y = 0
 type = velset
 trigger1 = abs(vel x) < 2 && !var(15)
 trigger2 = Time = 4 && !var(15)
-trigger3 = palno = 11
+trigger3 = 1 = 11
 trigger3 = Time = 0
 trigger3 = prevstateno = 20
 x = 0
@@ -5075,7 +5079,7 @@ trigger1 = command = "holdfwd"
 Trigger1 = var(59) <= 0
 Trigger2 = var(59)>0
 Trigger2 = P2BodyDist X > 150-(EnemyNear,StateType=L)*85
-x = const(velocity.walk.fwd.x)*2*ifelse(palno=11,2,1)*ifelse(helper(780+id),sysvar(0),1.2,1)
+x = const(velocity.walk.fwd.x)*2*ifelse(1=11,2,1)*ifelse(helper(780+id),sysvar(0),1.2,1)
 
 [State 20, 2]
 type = VelSet
@@ -5093,7 +5097,7 @@ trigger1 = command = "holdback"
 Trigger1 = var(59) <= 0
 Trigger2 = var(59)>0
 Trigger2 = P2BodyDist X = [-5,60]
-x = const(velocity.walk.back.x)*2*ifelse(palno=11,2,1)*ifelse(helper(780+id),sysvar(0),1.2,1)
+x = const(velocity.walk.back.x)*2*ifelse(1=11,2,1)*ifelse(helper(780+id),sysvar(0),1.2,1)
 
 [State 20, 3]
 type = ChangeAnim
@@ -5264,7 +5268,7 @@ var(12) = 1
 [State 100, 1]
 type = veladd
 trigger1 = var(12) = 0
-trigger1 = palno = 11
+trigger1 = 1 = 11
 trigger1 = animtime = 0
 trigger1 = sysvar(1)=1
 x = 2.5
@@ -5272,7 +5276,7 @@ x = 2.5
 [State 100, 1]
 type = veladd
 trigger1 = var(12) = 0
-trigger1 = palno = 11
+trigger1 = 1 = 11
 trigger1 = animtime = 0
 trigger1 = sysvar(1)=-1
 x = -2.5
@@ -5408,7 +5412,7 @@ x = ifelse(sysvar(1)=0, const(velocity.jump.neu.x), ifelse(sysvar(1)=1, const(ve
 [State 100, 1]
 type = veladd
 trigger1 = var(12) = 0
-trigger1 = palno = 11
+trigger1 = 1 = 11
 trigger1 = animtime = 0
 trigger1 = sysvar(1)=1
 x = 2.5
@@ -5416,7 +5420,7 @@ x = 2.5
 [State 100, 1]
 type = veladd
 trigger1 = var(12) = 0
-trigger1 = palno = 11
+trigger1 = 1 = 11
 trigger1 = animtime = 0
 trigger1 = sysvar(1)=-1
 x = -2.5
@@ -5799,7 +5803,7 @@ x = const(velocity.run.fwd.x)*ifelse(helper(780+id),sysvar(0),1.2,1)
 type = velset
 trigger1 = var(43)
 trigger1 = time = 0
-x = ifelse(palno=11,15,const(velocity.run.fwd.x)*2)*ifelse(helper(780+id),sysvar(0),1.2,1)
+x = ifelse(1=11,15,const(velocity.run.fwd.x)*2)*ifelse(helper(780+id),sysvar(0),1.2,1)
 
 [State 100, 1]
 type = veladd
@@ -5956,14 +5960,14 @@ time = 1
 
 [State 105, 3]
 type = velset
-trigger1 = palno!=11
+trigger1 = 1!=11
 trigger1 = Time = 0
 x = const(velocity.run.back.x)*ifelse(helper(780+id),sysvar(0),1.2,1)
 y = const(velocity.run.back.y)
 
 [State 105, 3]
 type = velset
-trigger1 = palno=11
+trigger1 = 1=11
 trigger1 = Time = 0
 x = const(velocity.run.back.x)*2*ifelse(helper(780+id),sysvar(0),1.2,1)
 y = const(velocity.run.back.y)
@@ -6092,14 +6096,14 @@ y = const(velocity.airjump.y)
 
 [State 100, 1]
 type = veladd
-trigger1 = palno = 11
+trigger1 = 1 = 11
 trigger1 = time = 0
 trigger1 = sysvar(1)=1
 x = 2.5
 
 [State 100, 1]
 type = veladd
-trigger1 = palno = 11
+trigger1 = 1 = 11
 trigger1 = time = 0
 trigger1 = sysvar(1)=-1
 x = -2.5
@@ -6315,13 +6319,13 @@ var(11) = 1
 
 [State 100, 3]
 type = velset
-trigger1 = palno!=11
+trigger1 = 1!=11
 trigger1 = Time = 0
 x = 8.75*ifelse(helper(780+id),sysvar(0),1.2,1)
 
 [State 100, 3]
 type = velset
-trigger1 = palno=11
+trigger1 = 1=11
 trigger1 = Time = 0
 x = 13.5*ifelse(helper(780+id),sysvar(0),1.2,1)
 
@@ -6424,13 +6428,13 @@ channel = 4
 
 [State 100, 3]
 type = velset
-trigger1 = palno!=11
+trigger1 = 1!=11
 trigger1 = Time = 0
 x = -7*ifelse(helper(780+id),sysvar(0),1.2,1)
 
 [State 100, 3]
 type = velset
-trigger1 = palno=11
+trigger1 = 1=11
 trigger1 = Time = 0
 x = -10*ifelse(helper(780+id),sysvar(0),1.2,1)
 
@@ -8126,7 +8130,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(enemy,authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 
 [State 151, 2]
@@ -8534,7 +8538,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(enemy,authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 
 [State 151, 2]
@@ -8939,7 +8943,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(enemy,authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 
 [State 151, 2]
@@ -10810,7 +10814,7 @@ facep2 = 1
 [State 205, AR used this combo]
 type = VarSet
 trigger1 = MoveHit
-var(55) = 1
+var(55) = var(55) | 1
 ignorehitpause = 1
 
 [State Šî’ê•â³]
@@ -10905,7 +10909,7 @@ type = HitDef
 trigger1 = animelemtime(5) >= 0
 trigger1 = (!movecontact && !movereversed)
 trigger1 = !var(56)
-trigger1 = !var(55)   ;Abstract Reordered: 6A connects once per combo
+trigger1 = !(var(55) & 1)   ;Abstract Reordered: 6A connects once per combo
 persistent = 1
 priority = 5, miss
 attr = S, NA
@@ -10945,7 +10949,7 @@ type = HitDef
 trigger1 = animelemtime(5) >= 0
 trigger1 = (!movecontact && !movereversed)
 trigger1 = var(56)
-trigger1 = !var(55)   ;Abstract Reordered: 6A connects once per combo
+trigger1 = !(var(55) & 1)   ;Abstract Reordered: 6A connects once per combo
 persistent = 1
 attr = S, NA
 animtype = m
@@ -12981,7 +12985,7 @@ x = 0
 [State 220, 1]
 type = HitDef
 trigger1 = p2statetype = A || p2statetype = L
-trigger1 = animelemtime(8) >= 0
+trigger1 = animelemtime(2) >= 0
 trigger1 = (!movecontact && !movereversed)
 persistent = 1
 attr = S, NA
@@ -13020,7 +13024,7 @@ yaccel = 0.52
 [State 220, 1]
 type = HitDef
 trigger1 = p2statetype != A && p2statetype != L
-trigger1 = animelemtime(8) >= 0
+trigger1 = animelemtime(2) >= 0
 trigger1 = (!movecontact && !movereversed)
 persistent = 1
 priority = 5, miss
@@ -14082,6 +14086,12 @@ anim = 430+var(43)
 sprpriority = 2
 facep2 = 1
 
+[State 430, AR launch used this combo]
+type = VarSet
+trigger1 = MoveHit
+var(55) = var(55) | 2
+ignorehitpause = 1
+
 [State -2]
 type = turn
 triggerall = p2dist X < 0
@@ -14187,6 +14197,7 @@ ignorehitpause = 1
 type = HitDef
 trigger1 = (!movecontact && !movereversed)
 trigger1 = animelemtime(4) >= 0
+trigger1 = !(var(55) & 2)   ;Abstract Reordered: launches once per combo
 trigger1 = p2movetype = A || var(21)
 persistent = 1
 attr = C, NA
@@ -14250,6 +14261,7 @@ ignorehitpause = 1
 type = HitDef
 triggerall = (!movecontact && !movereversed)
 triggerall = animelemtime(4) >= 0
+triggerall = !(var(55) & 2)   ;Abstract Reordered: launches once per combo
 triggerall = p2movetype != A && var(21) = 0
 trigger1 = numhelper(780+id)
 trigger1 = !helper(780+id),sysvar(0)
@@ -14270,14 +14282,15 @@ ground.slidetime = 19+var(9)
 ground.hittime = 17+var(9)
 guard.slidetime = 18
 guard.hittime = 17
-ground.velocity = -11
+ground.velocity = -2,-10*fvar(5)   ;Abstract Reordered: launches
+fall = 1
 guard.velocity = -11
 airguard.velocity = -3,-3.8
 air.velocity = ifelse(var(56),-8,-3),ifelse(var(56),-2,-7)*fvar(5)
 air.fall = 1 
 airguard.ctrltime = 23
 getpower = ceil(76*fvar(37)) ,ceil(38*fvar(37))
-animtype = Hard
+animtype = Up
 fall.recovertime = ifelse(var(21),27,15)+ifelse(var(56),7,ceil(ifelse(var(21),36,18)*fvar(25)))
 palfx.time = 1
 palfx.add = 0,0,0
@@ -14291,6 +14304,7 @@ id = 431
 type = HitDef
 trigger1 = (!movecontact && !movereversed)
 trigger1 = animelemtime(4) >= 0
+trigger1 = !(var(55) & 2)   ;Abstract Reordered: launches once per combo
 trigger1 = p2movetype != A && var(21) = 0
 trigger1 = numhelper(780+id)
 trigger1 = helper(780+id),sysvar(0)
@@ -14310,14 +14324,15 @@ ground.slidetime = 19+var(9)
 ground.hittime = 17+var(9)
 guard.slidetime = 18
 guard.hittime = 17
-ground.velocity = -11
+ground.velocity = -2,-10*fvar(5)   ;Abstract Reordered: launches
+fall = 1
 guard.velocity = -11
 airguard.velocity = -3,-3.8
 air.velocity = ifelse(var(56),-8,-3),ifelse(var(56),-2,-7)*fvar(5)
 air.fall = 1 
 airguard.ctrltime = 23
 getpower = ceil(76*fvar(37)) ,ceil(38*fvar(37))
-animtype = Hard
+animtype = Up
 fall.recovertime = ifelse(var(21),27,15)+ifelse(var(56),7,ceil(ifelse(var(21),36,18)*fvar(25)))
 palfx.time = 1
 palfx.add = 0,0,0
@@ -18939,10 +18954,10 @@ sprpriority = 2
 poweradd = ceil(40*fvar(37))
 facep2 = 1
 
-[State 1000, AR hold X = feint]
+[State 1000, AR hold button = feint]
 type = ChangeState
 trigger1 = Time = 6
-trigger1 = command = "holdx"
+trigger1 = command = "holda" || command = "holdb" || command = "holdc"
 trigger1 = var(59) <= 0
 value = 1050
 
@@ -38486,7 +38501,7 @@ var(0) = -1
 [State 4200]
 type = varset
 trigger1 = var(0) >= 100
-trigger2 = root,palno = 12
+trigger2 = 1 = 12
 var(0) = 100
 
 [State 4200]
@@ -40290,7 +40305,7 @@ velset = 0,0
 [State -2]
 type = lifeadd
 triggerall = gethitvar(damage) < life
-trigger1 = palno=11
+trigger1 = 1=11
 trigger1 = time = 0
 trigger1 = prevstateno != [5000,5999]
 trigger1 = numenemy
@@ -40307,8 +40322,8 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-trigger1 = palno = 11
-value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(palno=11,0.4,1)))
+trigger1 = 1 = 11
+value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40318,7 +40333,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.98*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.98*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40328,7 +40343,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.89*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.89*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40338,7 +40353,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.72*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.72*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40348,7 +40363,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.58*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.58*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40358,7 +40373,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.48*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.48*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40368,7 +40383,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.4*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.4*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 
 
@@ -40506,7 +40521,7 @@ velset = 0,0
 [State -2]
 type = lifeadd
 triggerall = gethitvar(damage) < life
-trigger1 = palno=11
+trigger1 = 1=11
 trigger1 = time = 0
 trigger1 = prevstateno != [5000,5999]
 trigger1 = numenemy
@@ -40523,8 +40538,8 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-trigger1 = palno = 11
-value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(palno=11,0.4,1)))
+trigger1 = 1 = 11
+value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40534,7 +40549,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.98*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.98*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40544,7 +40559,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.89*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.89*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40554,7 +40569,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.72*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.72*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40564,7 +40579,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.58*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.58*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40574,7 +40589,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.48*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.48*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40584,7 +40599,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.4*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.4*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 
 
@@ -40712,7 +40727,7 @@ velset = 0,0
 [State -2]
 type = lifeadd
 triggerall = gethitvar(damage) < life
-trigger1 = palno=11
+trigger1 = 1=11
 trigger1 = time = 0
 trigger1 = prevstateno != [5000,5999]
 trigger1 = numenemy
@@ -40730,8 +40745,8 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-trigger1 = palno = 11
-value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(palno=11,0.4,1)))
+trigger1 = 1 = 11
+value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40741,7 +40756,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.98*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.98*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40751,7 +40766,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.89*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.89*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40761,7 +40776,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.72*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.72*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40771,7 +40786,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.58*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.58*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40781,7 +40796,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.48*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.48*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -40791,7 +40806,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.4*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.4*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 
 
@@ -41090,7 +41105,7 @@ velset = 0,0
 [State -2]
 type = lifeadd
 triggerall = gethitvar(damage) < life
-trigger1 = palno=11
+trigger1 = 1=11
 trigger1 = time = 0
 trigger1 = prevstateno != [5000,5999]
 trigger1 = numenemy
@@ -41109,8 +41124,8 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-trigger1 = palno = 11
-value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(palno=11,0.4,1)))
+trigger1 = 1 = 11
+value = floor(gethitvar(damage)-(gethitvar(damage)*1*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -41120,7 +41135,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.98*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.98*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -41130,7 +41145,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.89*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.89*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -41140,7 +41155,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.72*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.72*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -41150,7 +41165,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.58*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.58*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -41160,7 +41175,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.48*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.48*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -41170,7 +41185,7 @@ trigger1 = time = 0
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 trigger1 = gethitvar(damage) > 0
-value = floor(gethitvar(damage)-(gethitvar(damage)*0.4*ifelse(palno=11,0.4,1)))
+value = floor(gethitvar(damage)-(gethitvar(damage)*0.4*ifelse(1=11,0.4,1)))
 ignorehitpause = 1
 
 
@@ -44828,7 +44843,7 @@ triggerall = life >= 1
 trigger1 = stateno != [5000,5070]
 trigger1 = movetype = H
 trigger1 = life < var(26)
-trigger1 = palno=11
+trigger1 = 1=11
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
 value = floor((var(26)-life)-(var(26)-life)*0.4)
 ignorehitpause = 1
@@ -44841,7 +44856,7 @@ trigger1 = stateno != [5000,5070]
 trigger1 = movetype = H
 trigger1 = life < var(26)
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
-value = floor((var(26)-life)-(var(26)-life)*0.98*ifelse(palno=11,0.4,1))
+value = floor((var(26)-life)-(var(26)-life)*0.98*ifelse(1=11,0.4,1))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -44852,7 +44867,7 @@ trigger1 = stateno != [5000,5070]
 trigger1 = movetype = H
 trigger1 = life < var(26)
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
-value = floor((var(26)-life)-(var(26)-life)*0.89*ifelse(palno=11,0.4,1))
+value = floor((var(26)-life)-(var(26)-life)*0.89*ifelse(1=11,0.4,1))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -44863,7 +44878,7 @@ trigger1 = stateno != [5000,5070]
 trigger1 = movetype = H
 trigger1 = life < var(26)
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
-value = floor((var(26)-life)-(var(26)-life)*0.72*ifelse(palno=11,0.4,1))
+value = floor((var(26)-life)-(var(26)-life)*0.72*ifelse(1=11,0.4,1))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -44874,7 +44889,7 @@ trigger1 = stateno != [5000,5070]
 trigger1 = movetype = H
 trigger1 = life < var(26)
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
-value = floor((var(26)-life)-(var(26)-life)*0.58*ifelse(palno=11,0.4,1))
+value = floor((var(26)-life)-(var(26)-life)*0.58*ifelse(1=11,0.4,1))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -44885,7 +44900,7 @@ trigger1 = stateno != [5000,5070]
 trigger1 = movetype = H
 trigger1 = life < var(26)
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
-value = floor((var(26)-life)-(var(26)-life)*0.48*ifelse(palno=11,0.4,1))
+value = floor((var(26)-life)-(var(26)-life)*0.48*ifelse(1=11,0.4,1))
 ignorehitpause = 1
 [State -2]
 type = lifeadd
@@ -44896,7 +44911,7 @@ trigger1 = stateno != [5000,5070]
 trigger1 = movetype = H
 trigger1 = life < var(26)
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",0,1)
-value = floor((var(26)-life)-(var(26)-life)*0.4*ifelse(palno=11,0.4,1))
+value = floor((var(26)-life)-(var(26)-life)*0.4*ifelse(1=11,0.4,1))
 ignorehitpause = 1
 
 [state -2]
@@ -45191,7 +45206,7 @@ persistent = 0
 
 [State -2]
 type = powerset
-triggerall = palno = [11,12]
+triggerall = 1 = [11,12]
 trigger1 = 1
 value = 99999
 pausemovetime = 99999999
@@ -46403,7 +46418,13 @@ ignorehitpause = 1
 [State -2]
 type = varset
 trigger1 = 1
-fvar(19) = 1.19*ifelse(palno = 11,1.7,1)*fvar(6)
+fvar(19) = 0.95*fvar(6)   ;Abstract Reordered: was 1.19 (-20%)
+ignorehitpause = 1
+
+[State -2, AR per-hit scaling]
+type = varset
+trigger1 = numenemy
+fvar(19) = fvar(19)*ifelse(Enemy(floor(fvar(18))),gethitvar(hitcount) <= 2, 1, ifelse(Enemy(floor(fvar(18))),gethitvar(hitcount) >= 8, 0.5, 1 - 0.08*(Enemy(floor(fvar(18))),gethitvar(hitcount) - 2)))
 ignorehitpause = 1
 
 [State -2]
@@ -46566,7 +46587,7 @@ ignorehitpause = 1
 
 [State -2]
 type = DefenceMulSet
-triggerall = palno = 11
+triggerall = 1 = 11
 trigger1 = numenemy
 trigger1 = ifelse(Enemy(floor(fvar(18))),authorname = "muteki",1,0)
 value = 0.4*fvar(15)
@@ -46654,7 +46675,7 @@ time = 1
 
 [State 1300, 3]
 type = helper
-trigger1 = palno = 11
+trigger1 = 1 = 11
 trigger1 = !numhelper(4)
 stateno = 4
 ID = 4
@@ -46665,13 +46686,13 @@ ignorehitpause = 1
 
 [State -2]
 type = varset
-trigger1 = palno = 11
+trigger1 = 1 = 11
 var(36) = 358
 persistent = 1
 
 [State 3000, 7]
 type = varset
-trigger1 = palno = 11
+trigger1 = 1 = 11
 var(43) = 10000 + (var(58)=2)*2
 
 [State -2]
@@ -46715,7 +46736,7 @@ persistent = 0
 
 [State -2]
 type = lifeadd
-triggerall = palno = 11
+triggerall = 1 = 11
 triggerall = movetype != H
 triggerall = roundstate = 2
 trigger1 = gametime % 20 = 0

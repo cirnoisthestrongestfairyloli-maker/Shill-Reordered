@@ -449,6 +449,12 @@ type = VarAdd
 trigger1 = !Time
 var(25) = 1
 
+[State 230, AR plus on reappear] ;Abstract Reordered: was AnimTime = 0 (18 frames after reappearing)
+type = ChangeState
+trigger1 = AnimElemTime(9) >= 1
+value = 0
+ctrl = 1
+
 [State 230, end]
 type = ChangeState
 trigger1 = AnimTime = 0
@@ -555,6 +561,12 @@ type = ScreenBound
 trigger1 = AnimElemTime(9) < 0 
 value = 0
 movecamera = 0,0
+
+[State 231, AR plus on reappear] ;Abstract Reordered: was AnimTime = 0 (18 frames after reappearing)
+type = ChangeState
+trigger1 = AnimElemTime(9) >= 1
+value = 0
+ctrl = 1
 
 [State 231, end]
 type = ChangeState

@@ -2572,6 +2572,14 @@ trigger1 = var(2) < 3
 var(2) = 1   ;Abstract Reordered: +1 mist level every 45 frames held
 ignorehitpause = 1
 
+[State 196, AR mist meter]
+;Abstract Reordered: at mist level 3, holding X slowly builds meter
+type = PowerAdd
+trigger1 = var(2) >= 3
+trigger1 = time % 6 = 0
+value = 5
+ignorehitpause = 1
+
 [State 196, AR mist sound]
 type = PlaySnd
 trigger1 = time >= 40

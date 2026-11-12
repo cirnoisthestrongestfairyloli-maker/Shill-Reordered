@@ -1,0 +1,702 @@
+;commands edited by EstebanG18
+;===================< BUTTON REMAPPING >===================
+[Remap]
+x = x
+y = y
+z = z
+a = a
+b = b
+c = c
+s = s
+
+
+
+;===================< DEFAULT VALUES >===================
+[Defaults]
+command.time = 30
+command.buffer.time = 1
+
+
+;-| Killer Moves|--------------------------------------------------------
+
+[command]
+name = "Killer_Move_Serious_Table_Flip"
+command = ~D,DB,B,x+y
+time = 30
+
+[command]
+name = "S-Side Hops"
+command = ~D,DF,F,a+b
+time = 30
+
+[command]
+name = "S-Serious_Punch"
+command = ~D,D,c+z
+time = 30
+
+
+
+;-| Super Motions |--------------------------------------------------------
+
+[Command]
+name = "CN-punches";"cnpx"
+command = ~D,DF,F,x+y
+time = 30
+
+[command]
+name = "LV2_CN-Punches"
+command = ~D,DF,F,b+c
+time = 15
+
+;-| Special Motions |------------------------------------------------------
+
+[Command]
+name = "cnpx"
+command = ~D,DF,F,x
+time = 30
+
+[Command]
+name = "cnpy"
+command = ~D,DF,F,y
+time = 30
+
+[Command]
+name = "cnpz"
+command = ~D,DF,F,z
+time = 30
+
+
+
+[Command]
+name = "cnpa"
+command = ~D,DF,F,a
+time = 30
+
+[Command]
+name = "cnpb"
+command = ~D,DF,F,b
+time = 30
+
+[Command]
+name = "cnpc"
+command = ~D,DF,F,c
+time = 30
+;====================<OTHER>====================
+
+; [Command]
+; name = "highjump"
+; command = $D, $U
+; time = 15
+
+;-| Double Tap |-----------------------------------------------------------
+[Command]
+name = "FF"     ;Required (do not remove)
+command = F, F
+time = 10
+
+[Command]
+name = "BB"     ;Required (do not remove)
+command = B, B
+time = 10
+
+[Command]
+name = "recovery"
+command = /x
+time = 1
+
+[Command]
+name = "recovery"
+command = /y
+time = 1
+
+[Command]
+name = "recovery"
+command = /z
+time = 1
+
+[Command]
+name = "recovery"
+command = /a
+time = 1
+
+[Command]
+name = "recovery"
+command = /b
+time = 1
+
+[Command]
+name = "recovery"
+command = /c
+time = 1
+
+;-| 2/3 Button Combination |-----------------------------------------------
+;===================< 2/3 BUTTON COMBINATION >===================
+
+[Command]
+name = "Teleport-1"
+command = a+x
+time = 10
+
+[Command]
+name = "Teleport-2"
+command = b+y
+time = 10
+
+;-| Dir + Button |---------------------------------------------------------
+
+[Command]
+name = "down_a"
+command = /$D,a
+time = 1
+
+[Command]
+name = "down_b"
+command = /$D,b
+time = 1
+
+[Command]
+Name = "holdx"
+Command = /$x
+Time = 1
+
+[Command]
+Name = "holdy"
+Command = /$y
+Time = 1
+
+[Command]
+Name = "holdz"
+Command = /$z
+Time = 1
+
+[Command]
+Name = "holda"
+Command = /$a
+Time = 1
+
+[Command]
+Name = "holdb"
+Command = /$b
+Time = 1
+
+[Command]
+Name = "holdc"
+Command = /$c
+Time = 1
+
+;-| Single Button |---------------------------------------------------------
+[Command]
+name = "a"
+command = a
+time = 1
+
+[Command]
+name = "b"
+command = b
+time = 1
+
+[Command]
+name = "c"
+command = c
+time = 1
+
+[Command]
+name = "x"
+command = x
+time = 1
+
+[Command]
+name = "y"
+command = y
+time = 1
+
+[Command]
+name = "z"
+command = z
+time = 1
+
+[Command]
+name = "start"
+command = s
+time = 1
+
+;-| Hold Dir |--------------------------------------------------------------
+[Command]
+name = "holdfwd";Required (do not remove)
+command = /$F
+time = 1
+
+[Command]
+name = "holdback";Required (do not remove)
+command = /$B
+time = 1
+
+[Command]
+name = "holdup" ;Required (do not remove)
+command = /$U
+time = 1
+
+[Command]
+name = "holddown";Required (do not remove)
+command = /$D
+time = 1
+
+;---------------------------------------------------------------------------
+; 2. State entry
+
+
+; Don't remove the following line. It's required by the CMD standard.
+[Statedef -1]
+
+;===========================================================================
+[State -1, No Push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State -1, No Push Dummy]		; Allows player to be able to push opponent withput opponent being able to push player
+type = Helper
+trigger1 = Var(50) = [0, 1]
+trigger1 = StateNo != 5150
+trigger1 = !NumHelper(10003 + IsHelper(13210))
+trigger1 = Life
+trigger1 = !Lose
+trigger1 = RoundState > 0
+name = "No Push"
+id = 10003 + IsHelper(13210)
+stateno = 10002
+size.ground.back = Const(size.ground.back) * !Var(50) + 20 * (Var(50) = 1)
+size.ground.front = Const(size.ground.front) * !Var(50) + 20 * (Var(50) = 1)
+size.height = Const(size.height) * !Var(50) + 60 * (Var(50) = 1)
+
+[State -1, Clone - ScreenBound]
+type = ScreenBound
+trigger1 = NumHelper(13210)
+value = 1
+
+[State -1, Clone - Life < 0]
+type = VarSet
+triggerall = IsHelper(13210)
+trigger1 = Var(21) < 0
+var(21) = 0
+
+[State -1, Clone - Reduce Red Bar]
+type = VarAdd
+triggerall = IsHelper(13210)
+triggerall = Var(30) > Var(21)
+trigger1 = MoveType != H
+trigger2 = StateNo = 5150
+var(30) = -1 * 5	; Speed of reduction
+
+;===========================================================================
+;---------------------------------------------------------------------------
+;Run Fwd
+[State -1, Run Fwd]
+type = ChangeState
+value = 100
+trigger1 = command = "FF"
+trigger1 = statetype = S
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;Run Back
+[State -1, Run Back]
+type = ChangeState
+value = 105
+trigger1 = command = "BB"
+trigger1 = statetype = S
+trigger1 = ctrl
+
+;===========================================================================
+;Taunt
+[State -1, Taunt]
+type = ChangeState
+value = 195
+triggerall = command = "start"
+trigger1 = statetype != A
+trigger1 = ctrl
+;---------------------------------------------------------------------------
+
+;Teleport near
+[State -1,Teleport-1]
+type = ChangeState
+value = 1040
+triggerall = command = "Teleport-1"
+triggerall = StateType = S
+trigger1 = Ctrl || (var(40)=[1,3])
+trigger2 = var(30) = 2 && var(40) = 4 && (StateNo != [1200,1299])
+trigger3 = (stateno = 220) && time > 6
+trigger4 = (stateno = 250) && time > 6
+ignorehitpause = (var(40) = 4)
+triggerall = var(50) = 0
+;triggerall = !AIlevel && !ishelper(1) ;&& (power >= 500 || var(20))
+; triggerall = stateno != [1500, 1507]
+; trigger1 = ctrl
+; trigger2 = (stateno = [195, 4999]) && time >= 2 && !numhelper(7500)
+; trigger2 = (stateno != [1500, 1500]) && (stateno != [1400, 1401]) && (stateno != [1600, 1601]); && (stateno != [4900, 4999])
+; trigger3 = movetype = H && gametime <= var(58)
+; triggerall = var(50) = 0
+
+;Teleport close
+[State -1,Teleport-2]
+type = ChangeState
+value = 1042
+triggerall = Command = "Teleport-2"
+triggerall = StateType = S
+trigger1 = Ctrl || (var(40)=[1,3])
+trigger2 = var(30) = 2 && var(40) = 4 && (StateNo != [1200,1299])
+trigger3 = (stateno = 220) && time > 6
+trigger4 = (stateno = 250) && time > 6
+ignorehitpause = (var(40) = 4)
+triggerall = var(50) = 0
+;triggerall = !AIlevel && !ishelper(1) ;&& (power >= 500 || var(20))
+; triggerall = stateno != [1500, 1507]
+; trigger1 = ctrl
+; trigger2 = (stateno = [195, 4999]) && time >= 2 && !numhelper(7500)
+; trigger2 = (stateno != [1500, 1500]) && (stateno != [1400, 1401]) && (stateno != [1600, 1601]) ;&& (stateno != [4900, 4999])
+; trigger3 = movetype = H && gametime <= var(58)
+; triggerall = var(50) = 0
+
+
+
+;----------------------------------------
+[State -1, Killer_Move_Serious_Punch]
+type = ChangeState
+value = 3100
+triggerall = command = "S-Serious_Punch"
+triggerall = power >= 3000
+trigger1 = statetype = S
+trigger1 = ctrl
+triggerall = var(50) = 0
+;----------------
+
+;--------------------------------------------------------------
+[State -1, Killer_Move_Side Hops]
+type = ChangeState
+value = 1500
+triggerall = command = "S-Side Hops"
+triggerall = power >= 3000
+trigger1 = statetype = S
+trigger1 = ctrl
+triggerall = var(50) = 0
+;------------------------------------------------------------------------
+[State -1, Killer_Move_Serious_Table_Flip]
+type = ChangeState
+value = 1600
+triggerall = command = "Killer_Move_Serious_Table_Flip"
+triggerall = power >= 3000
+trigger1 = statetype = S
+trigger1 = ctrl
+triggerall = var(50) = 0
+;---------------------------------------------------------
+[State -1, Consecutive_normal_punches]
+type = ChangeState
+value = 1400
+triggerall = command = "CN-punches"
+triggerall = power >= 1000
+trigger1 = statetype = S
+trigger1 = ctrl
+trigger2=(stateno=[210,220]) && time > 20;&& movecontact
+triggerall = var(50) = 0
+;---------------------------------------------
+[State -1,LV2_CN-Punches]
+type = ChangeState
+value = 1700;111400
+triggerall = command = "LV2_CN-Punches"
+triggerall = power >= 2000
+trigger1 = statetype = S
+trigger1 = ctrl
+trigger2=(stateno=[210,220]) && time > 20;&& movecontact
+triggerall = var(50) = 0
+
+; ; Consecutivos
+; [State -1, Consecutivos-serios]
+; type = ChangeState
+; triggerall = var(2) = 2
+; Triggerall = power >= 1500
+; value = 111400
+; triggerall = command = "SPECIAL 5"
+; Triggerall = statetype != A
+; trigger1 = ctrl
+; trigger2 = movecontact
+;----------------------------------------------
+;Punch_Blast
+[State -1, Punch_Blast]
+type = ChangeState
+value = 1000
+triggerall = command = "cnpx" ;|| Command = "cnpy" || Command = "cnpz"
+triggerall = StateType = S
+trigger1 = Ctrl || (var(40)=[1,3])
+trigger2 = var(30) = 2 && var(40) = 4 && (StateNo != [1200,1299])
+trigger3 = (stateno = 210) && time > 6
+trigger4 = (stateno = 220) && time > 6
+; ignorehitpause = (var(40) = 4)
+triggerall = var(50) = 0
+
+
+;Punch_Blast
+[State -1, Punch_Blast Medium]
+type = ChangeState
+value = 1010
+triggerall = command = "cnpy"
+triggerall = StateType = S
+trigger1 = Ctrl || (var(40)=[1,3])
+trigger2 = var(30) = 2 && var(40) = 4 && (StateNo != [1200,1299])
+trigger3 = (stateno = 210) && time > 6
+trigger4 = (stateno = 220) && time > 6
+; ignorehitpause = (var(40) = 4)
+triggerall = var(50) = 0
+
+
+;Punch_Blast
+[State -1, Punch_Blast Anti Air]
+type = ChangeState
+value = 1020
+triggerall = Command = "cnpz"
+triggerall = StateType = S
+trigger1 = Ctrl || (var(40)=[1,3])
+trigger2 = var(30) = 2 && var(40) = 4 && (StateNo != [1200,1299])
+trigger3 = (stateno = 210) && time > 6
+trigger4 = (stateno = 220) && time > 6
+; ignorehitpause = (var(40) = 4)
+triggerall = var(50) = 0
+;------------------------
+;Air_Punch_Blast
+[State -1, Air_Punch_Blast]
+type = ChangeState
+value = 1030
+triggerall = var(2) != 1
+triggerall = command = "cnpx" || Command = "cnpy" || Command = "cnpz";command = "Shoulder Cannon Weak"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = Stateno = [600,610]
+trigger2 = movecontact
+trigger3 = Stateno = [600,610]
+trigger3 = time > 5
+triggerall = var(50) = 0
+
+;-------------------------------------------------------------------------
+[State -1, Normal_Punches]
+type = ChangeState
+value = 1050
+triggerall = command = "cnpa" || Command = "cnpb" || Command = "cnpc"
+triggerall = statetype = S
+trigger1 = ctrl
+trigger2 = stateno = 210 && time > 8
+trigger3 = stateno = 220 && time > 12
+triggerall = var(50) = 0
+
+;AIR_Normal_Punches
+[State -1, AIR_Normal_Punches]
+type = ChangeState
+value = 1052
+triggerall = var(2) != 1
+triggerall = command = "cnpa" || Command = "cnpb" || Command = "cnpc"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = Stateno = [600,610]
+trigger2 = movecontact
+trigger3 = Stateno = [600,610]
+trigger3 = time > 5
+triggerall = var(50) = 0
+;---------------------------------------------------------------------------
+; LP
+[State -1, LP]
+type = ChangeState
+value = 200
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+; MP
+[State -1, MP]
+type = ChangeState
+value = 210
+triggerall = var(59)<=0
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+trigger2 = stateno = 200 && time > 5
+trigger3 = stateno = 230 && time > 5
+trigger4 = stateno = 240 && time > 7
+
+;MP 215
+[State -1, MP 215]
+type = ChangeState
+value = 215
+triggerall = var(59)<=0
+triggerall = command = "y"
+triggerall = command != "holddown"
+trigger1 = statetype = S
+triggerall = p2bodydist X < 16
+trigger1 = ctrl
+trigger2 = stateno = 210 && time > 8
+trigger3 = stateno = 220 && time > 12
+
+;-------------------------------------------------------------------------------
+;HP
+[State -1, HP]
+type = changestate
+value = 220
+triggerall = command = "z"
+triggerall = command != "holddown"
+triggerall = statetype = S
+trigger1 = ctrl
+trigger2 = stateno = 200 && time > 5
+trigger3 = stateno = 210 && time > 8
+trigger4 = stateno = 240 && time > 6
+triggerall = var(50) = 0
+
+;---------------------------------------------------------------------------
+;Stand Light Kick
+[State -1, LK]
+type = ChangeState
+value = 230
+triggerall = command = "a"
+triggerall = command != "holddown"
+trigger1 = statetype = S
+trigger1 = ctrl
+;---------------------------------------------------------------------------
+;Standing Medium Kick
+[State -1, MK]
+type = ChangeState
+value = 240
+triggerall = command = "b"
+triggerall = command != "holddown"
+trigger1 = statetype = S
+trigger1 = ctrl
+trigger2 = stateno = 230 && time > 2
+trigger3 = stateno = 400 && time > 2
+trigger4 = stateno = 430 && time > 3
+;----------------------------------------------------
+;Standing Strong Kick
+[State -1, HK]
+type = ChangeState
+value = 250
+triggerall = command = "c"
+triggerall = command != "holddown"
+trigger1 = statetype = S
+trigger1 = ctrl
+trigger2 = stateno = 200 && time > 5
+trigger3 = stateno = 240 && time > 2
+;------------------------------------------------------------------------------
+;Crouching Light Punch
+[State -1, Crouching Light Punch]
+type = ChangeState
+value = 400
+triggerall = command = "x"
+triggerall = command = "holddown"
+trigger1 = statetype = C
+trigger1 = ctrl
+triggerall = var(50) = 0
+
+;---------------------------------------------------------------------------
+;Crouching Medium Punch
+[State -1, Crouching Medium Punch]
+type = ChangeState
+value = 400
+triggerall = command = "y"
+triggerall = command = "holddown"
+trigger1 = statetype = C
+trigger1 = ctrl
+;---------------------------------------------------------------------------
+;Crouching Strong Punch
+[State -1, Crouching Strong Punch]
+type = ChangeState
+value = 420
+triggerall = command = "z"
+triggerall = command = "holddown"
+trigger1 = statetype = C
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;Crouching light Kick
+[State -1, Crouching light Kick]
+type = ChangeState
+value = 430
+triggerall = command = "a"
+triggerall = command = "holddown"
+trigger1 = statetype = C
+trigger1 = ctrl
+;---------------------------------------------------------------------------
+;Crouching Medium Kick
+[State -1, Crouching Medium Kick]
+type = ChangeState
+value = 440
+triggerall = command = "b"
+triggerall = command = "holddown"
+trigger1 = statetype = C
+trigger1 = ctrl
+;---------------------------------------------------------------------------
+;Crouching Strong Kick
+[State -1, Crouching Strong Kick]
+type = ChangeState
+value = 430
+triggerall = command = "c"
+triggerall = command = "holddown"
+trigger1 = statetype = C
+trigger1 = ctrl
+;---------------------------------------------------------------------------
+;Air Normal Punch
+[State -1, Air Normal Punch]
+type = ChangeState
+value = 600
+triggerall = command = "x"
+trigger1 = statetype = A
+trigger1 = ctrl
+
+;--------------------------------------------------------------------------
+;Air Medium Punch
+[State -1, Air Medium Punch]
+type = ChangeState
+value = 610
+triggerall = command = "y"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = stateno = 600 && time > 3
+
+;--------------------------------------------------------------------------
+;Air Strong Punch
+[State -1, Air Strong Punch]
+type = ChangeState
+value = 620
+triggerall = command = "z"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = stateno = 600 && time > 3
+
+;===============================================================================
+;Air Normal Kick
+[State -1, Air Normal Kick]
+type = ChangeState
+value = 640
+triggerall = command = "a"
+trigger1 = statetype = A
+trigger1 = ctrl
+
+;--------------------------------------------------------------------------
+;Air Medium Kick
+[State -1, Air Medium Kick]
+type = ChangeState
+value = 640
+triggerall = command = "b"
+trigger1 = statetype = A
+trigger1 = ctrl
+
+;--------------------------------------------------------------------------
+;Air Strong Kick
+[State -1, Air Strong Kick]
+type = ChangeState
+value = 650
+triggerall = command = "c"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = stateno = 600 && time > 2
+trigger3 = stateno = 640 && time > 4
+
+
+

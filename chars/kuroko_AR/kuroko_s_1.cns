@@ -10040,7 +10040,7 @@ ID = 11100
 type = ModifyExplod
 trigger1 = numexplod(11100) = 1
 trigger1= parent,fvar(8)=0
-scale = Parent,fvar(7)/120,.5
+scale = ifelse(Parent,fvar(7) > 120, 120, Parent,fvar(7)) / 240.0,.5   ;Abstract Reordered: two charges (120) = full bar, never past the frame
 ID = 11100
 
 [State 0, PalFX]

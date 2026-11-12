@@ -8144,3 +8144,262 @@ trigger1=animtime=0
 value=0
 ctrl=1
 
+;---------------------------------------------------------------------------
+;Lv2 Max Heart Rush (Abstract Reordered): 236236 + A+B, 2 bars.
+;White and Luminous dive at the opponent, then the EX Leaping Ground Punch (2001/2002, var(0)=60).
+[Statedef 2060]
+type=S
+movetype=A
+physics=S
+ctrl=0
+anim=2414
+velset=0,0
+sprpriority=2
+poweradd=-2000
+
+[State ]
+type=Varset
+trigger1=time=0
+var(0)=60
+
+[State ]
+type=ChangeAnim
+trigger1=time=0
+value=2414
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s0,21
+channel=0
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,20
+
+[State ]
+type=PlaySnd
+trigger1=time=0
+value=s100,80
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6128
+ID=6128
+postype=p1
+pos=8,floor(-60*fvar(33))
+scale=1*fvar(32),1*fvar(33)
+sprpriority=3
+bindtime=-1
+removeongethit=1
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6013
+ID=6013
+postype=p1
+pos=0,5
+scale=1920,.5
+sprpriority=-9000
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6018
+postype=left
+scale=.5,.5
+sprpriority=-9001
+vel=0,-5
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6018
+postype=right
+scale=.5,.5
+sprpriority=-9001
+vel=0,-5
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Explod
+trigger1=time=0
+anim=6086
+postype=p1
+pos=8,floor(-60*fvar(33))
+scale=1*fvar(32),1*fvar(33)
+sprpriority=15
+bindtime=-1
+supermovetime=100
+pausemovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&facing=1
+helpertype=normal
+name="catin"
+ID=7600
+pos=-260,0
+postype=left
+stateno=7600
+pausemovetime=100
+supermovetime=100
+
+[State ]
+type=Helper
+trigger1=time=0&&facing=-1
+helpertype=normal
+name="catin"
+ID=7600
+pos=260,0
+postype=right
+stateno=7600
+pausemovetime=100
+supermovetime=100
+facing=-1
+
+[State ]
+type=Varset
+trigger1=time=0
+var(21)=0
+
+[State ]
+type=Varadd
+trigger1=time=[26,35]
+var(21)=25
+
+[State ]
+type=BGPalFX
+trigger1=time<=35
+time=1
+mul=0+var(21),0+var(21),0+var(21)
+invertall=0
+
+[State ]
+type=AssertSpecial
+trigger1=time<=35
+flag=nofg
+
+[State ]
+type=NotHitBy
+trigger1=time<=35
+value=SCA
+time=1
+
+[State ]
+type=Varset
+trigger1=time=0||time=35
+fvar(27)=ifelse(time=35,0,1)
+
+[State ]
+type=Pause
+trigger1=time=0
+time=35
+movetime=35
+
+;partners: White first, Luminous right after
+[State ]
+type=Helper
+trigger1=time=36&&!numhelper(4000)
+helpertype=normal
+name="max heart rush white"
+ID=4000
+pos=-320,-110
+postype=p1
+stateno=4060
+ownpal=1
+
+[State ]
+type=Helper
+trigger1=time=48&&!numhelper(4500)
+helpertype=normal
+name="max heart rush luminous"
+ID=4500
+pos=-320,-110
+postype=p1
+stateno=4560
+ownpal=1
+
+;Black holds the crouch, then leaps as Luminous connects
+[State ]
+type=ChangeAnim
+trigger1=time=36
+value=2414
+elem=1
+
+[State ]
+type=ChangeAnim
+trigger1=time=70
+value=1620
+
+[State ]
+type=StateTypeSet
+trigger1=anim=1620
+statetype=A
+physics=N
+
+[State ]
+type=Helper
+trigger1=time=70
+helpertype=normal
+name="jump effect"
+ID=7001
+pos=floor(-30*fvar(32)),0
+postype=p1
+stateno=7000
+
+[State ]
+type=Explod
+trigger1=time=70
+anim=6004
+postype=p1
+pos=floor(-40*fvar(32)),floor(20*fvar(33))
+scale=.5*fvar(32),.5*fvar(33)
+sprpriority=4
+removeongethit=1
+
+[State ]
+type=PlaySnd
+trigger1=time=70
+value=s0,11
+channel=0
+
+[State ]
+type=PlaySnd
+trigger1=time=70
+value=s100,6
+
+[State ]
+type=Varset
+trigger1=time=70
+fvar(7)=P2BodyDist X*.035
+
+[State ]
+type=Velset
+trigger1=time>=70
+x=fvar(7)
+
+[State ]
+type=Velset
+trigger1=time=70
+y=-13
+
+[State ]
+type=Veladd
+trigger1=time>70
+y=.6
+
+[State ]
+type=ChangeState
+trigger1=time=90
+value=2001

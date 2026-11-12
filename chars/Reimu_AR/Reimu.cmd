@@ -1448,11 +1448,13 @@ trigger3=((stateno=[200,249])||(stateno=[400,449]))&&movecontact&&var(55)
 ;---------------------------------------------------------------------------
 [State -1, Crouching Low Punch]
 type=ChangeState
-value=400
+value=400 + 0 * (var(12) := ifelse(stateno = 400, var(12) + 1, 1))   ;AR: var(12) = 2As in a row
 triggerall=!AILevel&&Roundstate=2&&statetype != A&&command="holddown"&& command="x"
 triggerall = command != "a"   ;Abstract Reordered: F + button = kick
 trigger1=ctrl||stateno=[100,103]
 trigger2=var(4)
+;Abstract Reordered: 2A chains into itself on hit, up to 3 in a row (to set up her charge moves)
+trigger3 = stateno = 400 && movehit && var(12) < 3
 ;---------------------------------------------------------------------------
 [State -1, Crouching Medium Punch]
 type=ChangeState

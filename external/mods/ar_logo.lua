@@ -1,10 +1,10 @@
 -- Abstract Reordered: boot logo.
--- Replaces the Ikemen logo with one of the five Chio clips (video/chio_*.webm), picked at random each launch,
+-- Replaces the Ikemen logo with one of the twelve boot clips (video/chio_*.webm), picked at random each launch,
 -- never the same one twice in a row
 -- and plays it only once per launch (not again when you come back to the main menu).
 -- Storyboards: data/AbstractReordered/logo_chio_<name>.def (copies of logo.def pointing at each clip).
 
-local clips = {'fuji', 'shidou', 'baldimore', 'naruto', 'main'}
+local clips = {'fuji', 'shidou', 'baldimore', 'naruto', 'main', 'zoro', 'watch', 'sailormoon', 'c1111', 'sj7', 'itoshidou', 'teio'}
 
 -- the last clip played is saved in save/ar_logo.txt so the next launch can avoid it
 local stateFile = 'save/ar_logo.txt'

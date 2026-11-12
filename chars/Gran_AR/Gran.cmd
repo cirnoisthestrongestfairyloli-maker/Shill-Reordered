@@ -1,11 +1,11 @@
 ;-| Button Remapping |-----------------------------------------------------
 [Remap]
-x = a
-y = b
-z = c
-a = x
-b = y
-c = z
+x = x
+y = y
+z = z
+a = a
+b = b
+c = c
 s = s
 
 ;-| Default Values |-------------------------------------------------------
@@ -429,21 +429,1137 @@ time = 1
 
 
 ; Don't remove the following line. It's required by the CMD standard.
+
+;Abstract Reordered: A/B/C attacks, X = Power Raise, Y = grab, Z = parry, A+B+C = burst
+[Command]
+name = "ar_lv3"
+command = ~F, B, DB, D, DF, F, c
+time = 30
+
+[Command]
+name = "ar_236236"
+command = ~D, DF, F, D, DF, F, a+b
+time = 30
+
+[Command]
+name = "ar_236236"
+command = ~D, DF, F, D, DF, F, b+c
+time = 30
+
+[Command]
+name = "ar_236236"
+command = ~D, DF, F, D, DF, F, a+c
+time = 30
+
+[Command]
+name = "ar_214214"
+command = ~D, DB, B, D, DB, B, a+b
+time = 30
+
+[Command]
+name = "ar_214214"
+command = ~D, DB, B, D, DB, B, b+c
+time = 30
+
+[Command]
+name = "ar_214214"
+command = ~D, DB, B, D, DB, B, a+c
+time = 30
+
+[Command]
+name = "ar_grab"
+command = y
+time = 1
+
+[Command]
+name = "ar_parry"
+command = z
+time = 1
+
+[Command]
+name = "ar_burst"
+command = a+b+c
+time = 1
+
+[Command]
+name = "ar_power"
+command = x
+time = 1
+
+;GBVS Rising: A = L, B = M, C = H, X = U
+[Command]
+name = "gb_236236c"
+command = ~D, DF, F, D, DF, F, c
+time = 30
+
+[Command]
+name = "gb_236236x"
+command = ~D, DF, F, D, DF, F, x
+time = 30
+
+[Command]
+name = "gb_236a"
+command = ~D, DF, F, a
+time = 20
+
+[Command]
+name = "gb_623a"
+command = ~F, D, DF, a
+time = 20
+
+[Command]
+name = "gb_214a"
+command = ~D, DB, B, a
+time = 20
+
+[Command]
+name = "gb_236b"
+command = ~D, DF, F, b
+time = 20
+
+[Command]
+name = "gb_623b"
+command = ~F, D, DF, b
+time = 20
+
+[Command]
+name = "gb_214b"
+command = ~D, DB, B, b
+time = 20
+
+[Command]
+name = "gb_236c"
+command = ~D, DF, F, c
+time = 20
+
+[Command]
+name = "gb_623c"
+command = ~F, D, DF, c
+time = 20
+
+[Command]
+name = "gb_214c"
+command = ~D, DB, B, c
+time = 20
+
+[Command]
+name = "gb_236x"
+command = ~D, DF, F, x
+time = 20
+
+[Command]
+name = "gb_623x"
+command = ~F, D, DF, x
+time = 20
+
+[Command]
+name = "gb_214x"
+command = ~D, DB, B, x
+time = 20
+
+[Command]
+name = "gb_bc"
+command = b+c
+time = 1
+
+[Command]
+name = "gb_ab"
+command = a+b
+time = 1
+
 [Statedef -1]
+
+;---------------------------------------------------------------------------
+;Abstract Reordered: burst (Kamijo's) - A+B+C while being hit, recharges in 75 s (fvar(32); fvar(30) is Gran's own)
+[State -1, AR burst round reset]
+type = VarSet
+triggerall = !ishelper
+trigger1 = RoundState < 2
+fvar(32) = 0
+
+[State -1, AR burst recharge]
+type = VarAdd
+triggerall = !ishelper
+trigger1 = RoundState = 2
+trigger1 = fvar(32) > 0
+fvar(32) = -1
+ignorehitpause = 1
+
+;Abstract Reordered: comeback - once a combo has done more than 15% of max life, every further hit
+;knocks half a second (30 ticks) off the burst cooldown. fvar(31) = life when the combo started, fvar(33) = life last tick
+[State -1, AR burst comeback]
+type = VarAdd
+triggerall = !ishelper
+triggerall = fvar(32) > 0
+trigger1 = movetype = H
+trigger1 = Life < fvar(33)
+trigger1 = fvar(31) - Life > LifeMax * 0.15
+fvar(32) = -30
+ignorehitpause = 1
+
+[State -1, AR burst comeback clamp]
+type = VarSet
+triggerall = !ishelper
+trigger1 = fvar(32) < 0
+fvar(32) = 0
+ignorehitpause = 1
+
+[State -1, AR burst combo start]
+type = VarSet
+triggerall = !ishelper
+trigger1 = movetype != H
+fvar(31) = Life
+ignorehitpause = 1
+
+[State -1, AR burst last life]
+type = VarSet
+triggerall = !ishelper
+trigger1 = 1
+fvar(33) = Life
+ignorehitpause = 1
+
+;Abstract Reordered: burst HUD - Touma's BURST gauge, recoloured, just under the lifebar.
+;fvar(32) = cooldown ticks (4500 = just used, 0 = ready). Anims 9660-9668, explod IDs = anims.
+[State -1, AR burst gauge 9668 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9668) = 0
+trigger1 = fvar(32) = 0
+anim = 9668
+ID = 9668
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9661) = 0
+trigger1 = fvar(32) = 0
+anim = 9661
+ID = 9661
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9660) = 0
+trigger1 = fvar(32) > 3750
+anim = 9660
+ID = 9660
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9662) = 0
+trigger1 = fvar(32) <= 3750 && fvar(32) > 3000
+anim = 9662
+ID = 9662
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9663) = 0
+trigger1 = fvar(32) <= 3000 && fvar(32) > 2250
+anim = 9663
+ID = 9663
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9664) = 0
+trigger1 = fvar(32) <= 2250 && fvar(32) > 1500
+anim = 9664
+ID = 9664
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9665) = 0
+trigger1 = fvar(32) <= 1500 && fvar(32) > 750
+anim = 9665
+ID = 9665
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9666) = 0
+trigger1 = fvar(32) <= 750 && fvar(32) > 0
+anim = 9666
+ID = 9666
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9667) = 0
+trigger1 = fvar(32) > 3750
+anim = 9667
+ID = 9667
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9668 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9668) = 0
+trigger1 = fvar(32) = 0
+anim = 9668
+ID = 9668
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9661) = 0
+trigger1 = fvar(32) = 0
+anim = 9661
+ID = 9661
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9660) = 0
+trigger1 = fvar(32) > 3750
+anim = 9660
+ID = 9660
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9662) = 0
+trigger1 = fvar(32) <= 3750 && fvar(32) > 3000
+anim = 9662
+ID = 9662
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9663) = 0
+trigger1 = fvar(32) <= 3000 && fvar(32) > 2250
+anim = 9663
+ID = 9663
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9664) = 0
+trigger1 = fvar(32) <= 2250 && fvar(32) > 1500
+anim = 9664
+ID = 9664
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9665) = 0
+trigger1 = fvar(32) <= 1500 && fvar(32) > 750
+anim = 9665
+ID = 9665
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9666) = 0
+trigger1 = fvar(32) <= 750 && fvar(32) > 0
+anim = 9666
+ID = 9666
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9667) = 0
+trigger1 = fvar(32) > 3750
+anim = 9667
+ID = 9667
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9668 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9668)
+trigger1 = !(fvar(32) = 0)
+ID = 9668
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9661)
+trigger1 = !(fvar(32) = 0)
+ID = 9661
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9660)
+trigger1 = !(fvar(32) > 3750)
+ID = 9660
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9662)
+trigger1 = !(fvar(32) <= 3750 && fvar(32) > 3000)
+ID = 9662
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9663)
+trigger1 = !(fvar(32) <= 3000 && fvar(32) > 2250)
+ID = 9663
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9664)
+trigger1 = !(fvar(32) <= 2250 && fvar(32) > 1500)
+ID = 9664
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9665)
+trigger1 = !(fvar(32) <= 1500 && fvar(32) > 750)
+ID = 9665
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9666)
+trigger1 = !(fvar(32) <= 750 && fvar(32) > 0)
+ID = 9666
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9667)
+trigger1 = !(fvar(32) > 3750)
+ID = 9667
+ignorehitpause = 1
+
+
+[State -1, AR burst]
+type = ChangeState
+value = ifelse(StateType = A, 7751, 7750)
+triggerall = !ishelper
+triggerall = command = "ar_burst"
+triggerall = fvar(32) = 0
+triggerall = RoundState = 2
+triggerall = Alive
+trigger1 = (stateno = 5000 || stateno = 5010 || stateno = 5020 || stateno = 5070) && Time > 0
+trigger2 = stateno = [5001, 5099]
+trigger2 = stateno != 5000 && stateno != 5010 && stateno != 5020 && stateno != 5070
+
+;=== END AR BURST ===
+
+;Abstract Reordered: parry on Z
+[State -1, AR Parry]
+type = ChangeState
+value = 7740
+triggerall = !ishelper
+triggerall = command = "ar_parry"
+trigger1 = ctrl
+
+;=== GBVS RISING MOVESET (gran_gbvsr.py) ===
+[State -1, GBVSR string count]
+;corner infinite fix: var(46) = GBVSR normals in this string, var(47) = last state seen
+type = VarAdd
+triggerall = !IsHelper
+trigger1 = StateNo != var(47)
+trigger1 = StateNo = [9100, 9123]
+var(46) = 1
+ignorehitpause = 1
+
+[State -1, GBVSR string last state]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = 1
+var(47) = StateNo
+ignorehitpause = 1
+
+[State -1, GBVSR string reset]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = !NumEnemy
+trigger2 = EnemyNear, MoveType != H && !(EnemyNear, StateNo = [150, 155])
+var(46) = 0
+ignorehitpause = 1
+
+[State -1, GBVSR Catastrophe (3 bars)]
+type = ChangeState
+value = 3900
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_236236x"
+triggerall = power >= 3000
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113 || StateNo = 1000 || StateNo = 1001 || StateNo = 9240 || StateNo = 9241 || StateNo = 1100 || StateNo = 9230 || StateNo = 9231 || StateNo = 9232 || StateNo = 9210 || StateNo = 1201 || StateNo = 9220 || StateNo = 9221 || StateNo = 1215) && MoveContact
+
+[State -1, GBVSR Eternal Edge (+1 bar)]
+type = ChangeState
+value = 3050
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_236x"
+triggerall = power >= 1000
+trigger1 = StateNo = 3000 && MoveContact && AnimElemTime(11) < 0
+
+[State -1, GBVSR Tempest Blade (2 bars)]
+type = ChangeState
+value = 3000
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_236236c"
+triggerall = power >= 2000
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113 || StateNo = 1000 || StateNo = 1001 || StateNo = 9240 || StateNo = 9241 || StateNo = 1100 || StateNo = 9230 || StateNo = 9231 || StateNo = 9232 || StateNo = 9210 || StateNo = 1201 || StateNo = 9220 || StateNo = 9221 || StateNo = 1215) && MoveContact
+
+[State -1, GBVSR 214L follow-up M]
+type = ChangeState
+value = 1201
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_214b"
+trigger1 = StateNo = 9210 && MoveContact
+
+[State -1, GBVSR 214L follow-up H]
+type = ChangeState
+value = 9221
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_214c"
+trigger1 = StateNo = 9210 && MoveContact
+
+[State -1, GBVSR Ultimate Reginleiv]
+type = ChangeState
+value = 9241
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_236x"
+triggerall = StateType != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+trigger3 = StateNo = 1000 || StateNo = 1001 || StateNo = 9240 || StateNo = 1100 || StateNo = 9230 || StateNo = 9231 || StateNo = 9232 || StateNo = 9210 || StateNo = 1201 || StateNo = 9220 || StateNo = 9221 || StateNo = 1215 && MoveContact
+
+[State -1, GBVSR Ultimate Rising Sword]
+type = ChangeState
+value = 9232
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_623x"
+triggerall = StateType != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+trigger3 = StateNo = 1000 || StateNo = 1001 || StateNo = 9240 || StateNo = 9241 || StateNo = 1100 || StateNo = 9230 || StateNo = 9231 || StateNo = 9210 || StateNo = 1201 || StateNo = 9220 || StateNo = 9221 || StateNo = 1215 && MoveContact
+
+[State -1, GBVSR Ultimate Overdrive Surge]
+type = ChangeState
+value = 1215
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_214x"
+triggerall = StateType != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+trigger3 = StateNo = 1000 || StateNo = 1001 || StateNo = 9240 || StateNo = 9241 || StateNo = 1100 || StateNo = 9230 || StateNo = 9231 || StateNo = 9232 || StateNo = 9210 || StateNo = 1201 || StateNo = 9220 || StateNo = 9221 && MoveContact
+
+[State -1, GBVSR Rising Sword H]
+type = ChangeState
+value = 9231
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_623c"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+
+[State -1, GBVSR Rising Sword M]
+type = ChangeState
+value = 9230
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_623b"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+
+[State -1, GBVSR Rising Sword L]
+type = ChangeState
+value = 1100
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_623a"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+
+[State -1, GBVSR Reginleiv H]
+type = ChangeState
+value = 9240
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_236c"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+
+[State -1, GBVSR Reginleiv M]
+type = ChangeState
+value = 1001
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_236b"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+
+[State -1, GBVSR Reginleiv L]
+type = ChangeState
+value = 1000
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_236a"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+
+[State -1, GBVSR Overdrive Surge H]
+type = ChangeState
+value = 9220
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_214c"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+
+[State -1, GBVSR Overdrive Surge M]
+type = ChangeState
+value = 1201
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_214b"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+
+[State -1, GBVSR Overdrive Surge L]
+type = ChangeState
+value = 9210
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_214a"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9109 || StateNo = 9110 || StateNo = 9111 || StateNo = 9113) && MoveContact
+
+[State -1, GBVSR Brave Counter (1 bar)]
+type = ChangeState
+value = 203
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_bc"
+triggerall = power >= 1000
+triggerall = StateType != A
+trigger1 = StateNo = [150, 153]
+
+[State -1, GBVSR Throw (A+B)]
+type = ChangeState
+value = 800
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "gb_ab"
+triggerall = StateType != A
+trigger1 = ctrl
+
+[State -1, GBVSR 2U]
+type = ChangeState
+value = 9109
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "ar_power"
+triggerall = command = "holddown"
+triggerall = StateType != A
+trigger1 = ctrl
+
+[State -1, GBVSR 5U Power Raise]
+type = ChangeState
+value = 1500
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "ar_power"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103 || StateNo = 9104 || StateNo = 9105 || StateNo = 9106 || StateNo = 9107 || StateNo = 9108 || StateNo = 9113) && MoveContact
+
+[State -1, GBVSR j.U]
+type = ChangeState
+value = 9123
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "ar_power"
+triggerall = StateType = A
+trigger1 = ctrl
+
+[State -1, GBVSR Triple Attack 6M (low)]
+type = ChangeState
+value = 9115
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "b"
+triggerall = command = "holdfwd"
+trigger1 = StateNo = 9113 && MoveContact
+
+[State -1, GBVSR Triple Attack 6H (overhead)]
+type = ChangeState
+value = 9116
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "c"
+triggerall = command = "holdfwd"
+trigger1 = StateNo = 9113 && MoveContact
+
+[State -1, GBVSR Triple Attack c.XXX]
+type = ChangeState
+value = 9114
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "a" || command = "b" || command = "c"
+trigger1 = StateNo = 9113 && MoveContact
+
+[State -1, GBVSR Triple Attack c.XX]
+type = ChangeState
+value = 9113
+triggerall = !IsHelper
+triggerall = !AIlevel
+trigger1 = StateNo = 9100 && MoveContact && command = "a"
+trigger2 = StateNo = 9102 && MoveContact && command = "b"
+trigger3 = StateNo = 9104 && MoveContact && command = "c"
+
+[State -1, GBVSR 66H]
+type = ChangeState
+value = 9112
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "c"
+trigger1 = StateNo = 100
+
+[State -1, GBVSR 66M]
+type = ChangeState
+value = 9111
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "b"
+trigger1 = StateNo = 100
+
+[State -1, GBVSR 66L]
+type = ChangeState
+value = 9110
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "a"
+trigger1 = StateNo = 100
+
+[State -1, GBVSR 2H]
+type = ChangeState
+value = 9108
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "c"
+triggerall = command = "holddown"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106 || StateNo = 9102 || StateNo = 9103 || StateNo = 9107) && MoveContact
+
+[State -1, GBVSR 2M]
+type = ChangeState
+value = 9107
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "b"
+triggerall = command = "holddown"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106) && MoveContact
+
+[State -1, GBVSR 2L]
+type = ChangeState
+value = 9106
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "a"
+triggerall = command = "holddown"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106) && MoveContact && var(46) < 3 && !(StateNo = 9106 && PrevStateNo = 9106)
+
+[State -1, GBVSR c.H]
+type = ChangeState
+value = 9104
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "c"
+triggerall = command != "holddown"
+triggerall = StateType != A
+triggerall = P2BodyDist X < 22
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106 || StateNo = 9102 || StateNo = 9103 || StateNo = 9107) && MoveContact
+
+[State -1, GBVSR f.H]
+type = ChangeState
+value = 9105
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "c"
+triggerall = command != "holddown"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106 || StateNo = 9102 || StateNo = 9103 || StateNo = 9107) && MoveContact
+
+[State -1, GBVSR c.M]
+type = ChangeState
+value = 9102
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = StateType != A
+triggerall = P2BodyDist X < 22
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106) && MoveContact
+
+[State -1, GBVSR f.M]
+type = ChangeState
+value = 9103
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106) && MoveContact
+
+[State -1, GBVSR c.L]
+type = ChangeState
+value = 9100
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = StateType != A
+triggerall = P2BodyDist X < 22
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106) && MoveContact && var(46) < 3
+
+[State -1, GBVSR f.L]
+type = ChangeState
+value = 9101
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106) && MoveContact && var(46) < 3
+
+[State -1, GBVSR jH]
+type = ChangeState
+value = 9122
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "c"
+triggerall = StateType = A
+trigger1 = ctrl
+
+[State -1, GBVSR jM]
+type = ChangeState
+value = 9121
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "b"
+triggerall = StateType = A
+trigger1 = ctrl
+
+[State -1, GBVSR jL]
+type = ChangeState
+value = 9120
+triggerall = !IsHelper
+triggerall = !AIlevel
+triggerall = command = "a"
+triggerall = StateType = A
+trigger1 = ctrl
+
+;=== END GBVS RISING MOVESET ===
+
 
 ;===========================================================================
 ;===========================================================================
 [State -1, Raging Roar]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 3900
 triggerall = !ishelper
 triggerall = !AIlevel
-triggerall = command = "DDD_ab"
-triggerall = power >= 2000
+triggerall = command = "ar_lv3"   ;Abstract Reordered: Lv3 Catastrophe
+triggerall = power >= 3000
 triggerall = statetype != A
 triggerall = roundstate = 2
-triggerall = p2life <= (enemynear,lifemax)*.25
-triggerall = var(21) = 0
 triggerall = fvar(35) <= 0
 trigger1 = ctrl
 trigger2 = (stateno = [400,420]) && movecontact
@@ -454,12 +1570,13 @@ trigger5 = numhelper(7771)
 trigger6 = (stateno = 830) && movecontact
 ;---------------------------------------------------------------------------
 [State -1, Pale Bringer]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 3050
 Triggerall = numhelper(9884)!=0
 triggerall = !ishelper
 triggerall = !AIlevel
-triggerall = command = "QCB_ab"
+triggerall = command = "ar_214214"
 triggerall = power >= 1000
 triggerall = statetype != A
 triggerall = roundstate = 2
@@ -467,11 +1584,12 @@ trigger1 = ctrl
 trigger1 = (stateno = 3000) && movecontact
 ;---------------------------------------------------------------------------
 [State -1, Tempest Blade]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 3000
 triggerall = !ishelper
 triggerall = !AIlevel
-triggerall = command = "QCF_ab"
+triggerall = command = "ar_236236"
 triggerall = power >= 1000
 triggerall = statetype != A
 triggerall = roundstate = 2
@@ -486,12 +1604,13 @@ trigger7 = (stateno = 830) && movecontact
 
 
 [State -1, Power Raise Overdrive]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 3080
 triggerall = !ishelper
 triggerall = !AIlevel
 triggerall = var(44)<3
-triggerall = command = "QCB_ab"
+triggerall = command = "ar_214214"
 triggerall = power >= 1000
 triggerall = statetype != A
 triggerall = roundstate = 2
@@ -505,6 +1624,7 @@ trigger6 = numhelper(7771)
 trigger7 = (stateno = 830) && movecontact
 ;---------------------------------------------------------------------------
 [State -1, Exceed Accel]
+triggerall = 0   ;Abstract Reordered: removed (X is Power Raise charge now)
 type = ChangeState
 value = 4000
 triggerall = !ishelper
@@ -526,6 +1646,7 @@ trigger7 = (stateno = 830) && movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, Rising Sword A]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1100
 triggerall = !ishelper
@@ -542,6 +1663,7 @@ trigger6 = stateno = 620
 trigger6 = numhelper(7771)
 ;---------------------------------------------------------------------------
 [State -1, Rising Sword B]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1101
 triggerall = !ishelper
@@ -557,6 +1679,7 @@ trigger6 = stateno = 620
 trigger6 = numhelper(7771)
 ;---------------------------------------------------------------------------
 [State -1, EX Rising Sword]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1150
 triggerall = !ishelper
@@ -573,6 +1696,7 @@ trigger6 = stateno = 620
 trigger6 = numhelper(7771)
 ;---------------------------------------------------------------------------
 [State -1, Air Rising Sword A]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1102
 triggerall = !ishelper
@@ -587,6 +1711,7 @@ trigger3 = numhelper(7771)
 
 ;---------------------------------------------------------------------------
 [State -1, Air Rising Sword B]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1103
 triggerall = !ishelper
@@ -601,6 +1726,7 @@ trigger3 = numhelper(7771)
 
 ;---------------------------------------------------------------------------
 [State -1, Air EX Rising Sword]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1151
 triggerall = !ishelper
@@ -616,6 +1742,7 @@ trigger3 = numhelper(7771)
 
 ;---------------------------------------------------------------------------
 [State -1, Overdrive Surge A]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1200
 triggerall = !ishelper
@@ -629,6 +1756,7 @@ trigger4 = (stateno = [210,212]) && movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, Overdrive Surge B]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1201
 triggerall = !ishelper
@@ -642,6 +1770,7 @@ trigger4 = (stateno = [210,212]) && movecontact
 trigger5 = stateno = 1200 && movecontact
 ;---------------------------------------------------------------------------
 [State -1, EX Overdrive Surge]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1202
 triggerall = !ishelper
@@ -655,6 +1784,7 @@ trigger3 = (stateno = [200,202]) && movecontact
 trigger4 = (stateno = [210,212]) && movecontact
 ;---------------------------------------------------------------------------
 [State -1, Black Orbiter A]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1000
 triggerall = var(16) = 0
@@ -669,6 +1799,7 @@ trigger4 = (stateno = [210,212]) && movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, Black Orbiter B]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1001
 triggerall = var(16) = 0
@@ -683,6 +1814,7 @@ trigger4 = (stateno = [210,212]) && movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, Black Orbiter EX]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1002
 triggerall = var(16) = 0
@@ -728,9 +1860,6 @@ triggerall = !AIlevel
 triggerall = command = "highjump"
 triggerall = fvar(38) < 8
 trigger1 = Stateno = 100
-trigger2 = (Stateno = [200,202]) && Movecontact
-trigger3 = (stateno = [210,211]) && movecontact
-trigger4 = (Stateno = 410) && Movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, Jump Cancel]
@@ -740,12 +1869,10 @@ triggerall = !ishelper
 triggerall = !AIlevel
 triggerall = command = "holdup"
 trigger1 = Stateno = 100
-trigger2 = (Stateno = [200,201]) && Movecontact
-trigger3 = (stateno = [210,211]) && movecontact
-trigger4 = (Stateno = 410) && Movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, Air Jump]
+triggerall = 0   ;Abstract Reordered: no air combos / double jump / air dash (GBVSR)
 type = ChangeState
 value = 45
 triggerall = !ishelper
@@ -765,6 +1892,7 @@ trigger6 = animelemtime(11) >= 0
 
 ;---------------------------------------------------------------------------
 [State -1, Air Dash]
+triggerall = 0   ;Abstract Reordered: no air combos / double jump / air dash (GBVSR)
 type = ChangeState
 value = 102
 triggerall = !ishelper
@@ -780,6 +1908,7 @@ trigger4 = animelemtime(11) >= 0
 
 ;---------------------------------------------------------------------------
 [State -1, Air Dash Back]
+triggerall = 0   ;Abstract Reordered: no air combos / double jump / air dash (GBVSR)
 type = ChangeState
 value = 103
 triggerall = !ishelper
@@ -795,6 +1924,7 @@ trigger4 = animelemtime(11) >= 0
 
 ;---------------------------------------------------------------------------
 [State -1, Ultra Burst]
+triggerall = 0   ;Abstract Reordered: removed (X is Power Raise charge now)
 type = ChangeState
 value = 8050
 triggerall = !ishelper
@@ -808,6 +1938,7 @@ trigger3 = stateno = 5120 && time >= 3
 
 ;---------------------------------------------------------------------------
 [State -1, Ultra Guard Cancel]
+triggerall = 0   ;Abstract Reordered: removed (X is Power Raise charge now)
 type = ChangeState
 value = 8060
 triggerall = !ishelper
@@ -823,7 +1954,7 @@ type = ChangeState
 value = 800
 triggerall = !ishelper
 triggerall = !AIlevel
-triggerall = command = "z"
+triggerall = command = "ar_grab"
 triggerall = statetype != A
 triggerall = ctrl
 trigger1 = stateno != 100
@@ -833,7 +1964,7 @@ type = ChangeState
 value = 820
 triggerall = !ishelper
 triggerall = !AIlevel
-triggerall = command = "z"
+triggerall = command = "ar_grab"
 triggerall = statetype != A
 trigger1 = stateno = 100
 
@@ -842,7 +1973,7 @@ type = ChangeState
 value = 840
 triggerall = !ishelper
 triggerall = !AIlevel
-triggerall = command = "z"
+triggerall = command = "ar_grab"
 triggerall = statetype = A
 trigger1 = ctrl
 
@@ -863,6 +1994,7 @@ trigger2 = (Stateno = 300) && Movecontact
 trigger2 = var(30) > 0
 ;---------------------------------------------------------------------------
 [State -1, 5A]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = changestate
 value = 200
 triggerall = !ishelper
@@ -876,6 +2008,7 @@ trigger3 = (Stateno = [300,301]) && Movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, 5AA]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 201
 triggerall = !ishelper
@@ -887,6 +2020,7 @@ trigger1 = Movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, 5AAA]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 202
 triggerall = !ishelper
@@ -899,11 +2033,12 @@ trigger1 = Movecontact
 ;---------------------------------------------------------------------------
 
 [State -1, Power Raise]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 1500
 triggerall = !ishelper
 triggerall = !AIlevel
-triggerall = command = "b+c"
+triggerall = command = "ar_power"   ;Abstract Reordered: Power Raise on X
 
 triggerall = statetype != A
 trigger1 = ctrl
@@ -912,6 +2047,7 @@ trigger3 = (stateno = [200,202]) && movecontact
 trigger4 = (stateno = [210,212]) && movecontact
 ;---------------------------------------------------------------------------
 [State -1, 5B]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 211
 triggerall = !ishelper
@@ -926,6 +2062,7 @@ trigger3 = (Stateno = [300,301]) && Movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, 5BB]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 201
 triggerall = !ishelper
@@ -937,6 +2074,7 @@ trigger1 = Movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, 5BBB]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 202
 triggerall = !ishelper
@@ -948,6 +2086,7 @@ trigger1 = Movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, 5C]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 212
 triggerall = !ishelper
@@ -962,6 +2101,7 @@ trigger3 = (Stateno = [300,301]) && Movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, 4C]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 210
 triggerall = !ishelper
@@ -976,6 +2116,7 @@ trigger2 = (Stateno = [200,202]) && Movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, 66A]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 230
 triggerall = !ishelper
@@ -986,6 +2127,7 @@ trigger1 = Stateno = 100
 
 ;---------------------------------------------------------------------------
 [State -1, 66B]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 240
 triggerall = !ishelper
@@ -1009,6 +2151,7 @@ trigger1 = ctrl
 
 ;---------------------------------------------------------------------------
 [State -1, 2A]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 400
 triggerall = !ishelper
@@ -1019,6 +2162,7 @@ trigger1 = statetype != A
 trigger1 = ctrl
 ;--------------------------------------------------------------------------
 [State -1, 2A]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 400
 triggerall = !ishelper
@@ -1032,6 +2176,7 @@ trigger1 = movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, 2C]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 420
 triggerall = !ishelper
@@ -1045,6 +2190,7 @@ trigger3 = (stateno = [200,202]) && movecontact
 trigger4 = (stateno = [210,212]) && movecontact
 ;---------------------------------------------------------------------------
 [State -1, 2B]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 410
 triggerall = !ishelper
@@ -1060,6 +2206,7 @@ trigger5 = (stateno = 410) && movecontact
 trigger6 = Stateno = 100
 ;---------------------------------------------------------------------------
 [State -1, jA]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 600
 triggerall = !ishelper
@@ -1072,6 +2219,7 @@ trigger1 = ctrl
 
 ;---------------------------------------------------------------------------
 [State -1, jAA]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 601
 triggerall = !ishelper
@@ -1083,6 +2231,7 @@ trigger1 = movecontact
 
 ;---------------------------------------------------------------------------
 [State -1, jB]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 610
 triggerall = !ishelper
@@ -1097,6 +2246,7 @@ trigger3 = stateno = 202
 trigger3 = movecontact
 ;---------------------------------------------------------------------------
 [State -1, jC]
+triggerall = 0   ;Abstract Reordered: replaced by the GBVS Rising moveset
 type = ChangeState
 value = 620
 triggerall = !ishelper
@@ -1114,6 +2264,7 @@ trigger5 = stateno = 202
 trigger5 = movecontact
 ;---------------------------------------------------------------------------
 [State -1, backdash alternate command]
+triggerall = 0   ;Abstract Reordered: removed
 type = ChangeState
 value = 105
 triggerall = !ishelper
@@ -1127,6 +2278,7 @@ trigger2 = stateno = 5120 && time >= 3
 
 ;---------------------------------------------------------------------------
 [State -1, Dodge]
+triggerall = 0   ;Abstract Reordered: removed
 type = ChangeState
 value = 160
 triggerall = !ishelper
@@ -1139,6 +2291,7 @@ trigger1 = ctrl
 
 ;---------------------------------------------------------------------------
 [State -1, Forward Dodge]
+triggerall = 0   ;Abstract Reordered: removed
 type = ChangeState
 value = 161
 triggerall = !ishelper
@@ -1186,6 +2339,7 @@ trigger3 = stateno = 5120 && time >= 3
 ;---------------------------------------------------------------------------
 
 [State -1, Forward Dodge]
+triggerall = 0   ;Abstract Reordered: removed
 triggerall = random <= (ailevel)*ifelse(ailevel>=6,120,30)
 type = ChangeState
 value = ifelse(p2bodydist X <= 65 && enemynear,movetype!=H && p2bodydist Y >= -170,1101,161)
@@ -1319,7 +2473,7 @@ type = ChangeState
 value = 3900
 triggerall = random <= (ailevel)*ifelse(ailevel>=6,120,30)
 triggerall = ailevel && numenemy
-triggerall = power >= 2000
+triggerall = power >= 3000
 triggerall = statetype != A
 triggerall = roundstate = 2
 triggerall = p2life <= lifemax*.25
@@ -1393,6 +2547,7 @@ trigger3 = (PlayerId(helper(33333333),var(3)), p2bodydist x) >= 20
 
 ;---------------------------------------------------------------------------
 [State -1, Air Dash]
+triggerall = 0   ;Abstract Reordered: no air combos / double jump / air dash (GBVSR)
 type = ChangeState
 value = 102
 triggerall = random <= (ailevel)*ifelse(ailevel>=6,120,30)
@@ -1407,6 +2562,7 @@ triggerall = pos Y <= -45
 trigger1 = p2bodydist X >= 65
 
 [State -1, Air Dash]
+triggerall = 0   ;Abstract Reordered: no air combos / double jump / air dash (GBVSR)
 type = ChangeState
 value = 102
 triggerall = random <= (ailevel)*ifelse(ailevel>=6,120,30)
@@ -1427,6 +2583,7 @@ trigger3 = p2bodydist Y >= -300
 
 ;---------------------------------------------------------------------------
 [State -1, Air Dash Back]
+triggerall = 0   ;Abstract Reordered: no air combos / double jump / air dash (GBVSR)
 type = changestate
 value = 103
 triggerall = !ishelper
@@ -1853,6 +3010,7 @@ trigger1 = MoveGuarded
 triggerall = roundstate=2
 
 [State -1, Ultra Burst]
+triggerall = 0   ;Abstract Reordered: removed (X is Power Raise charge now)
 type = ChangeState
 triggerall = random <= (ailevel)*ifelse(ailevel>=6,120,30)
 value = 8050
@@ -1877,6 +3035,7 @@ triggerall = power >= 1000
 triggerall = var(44)=0
 trigger1 = ctrl 
 [State -1, Air Jump]
+triggerall = 0   ;Abstract Reordered: no air combos / double jump / air dash (GBVSR)
 type = ChangeState
 triggerall = random <= (ailevel)*ifelse(ailevel>=6,120,30)
 value = 45
@@ -1903,6 +3062,7 @@ trigger1 = movehit
 value = 4000
 
 [State -1, Ultra Burst]
+triggerall = 0   ;Abstract Reordered: removed (X is Power Raise charge now)
 type = ChangeState
 triggerall = random <= (ailevel)*ifelse(ailevel>=6,120,30)
 value = 8050
@@ -1934,6 +3094,7 @@ trigger2 = prevstateno = 610
 ;---------------------------------------------------------------------------
 
 [State -1, Jump Cancel]
+triggerall = 0   ;Abstract Reordered: no air combos / double jump / air dash (GBVSR)
 type = ChangeState
 value = 42
 triggerall = !ishelper
@@ -2008,6 +3169,7 @@ trigger1 = ctrl
 ;---------------------------------------------------------------------------
 
 [State -1, Burst]
+triggerall = 0   ;Abstract Reordered: removed
 type = changestate
 triggerall = random <= (ailevel)*ifelse(ailevel>=6,120,30)
 value = 8000

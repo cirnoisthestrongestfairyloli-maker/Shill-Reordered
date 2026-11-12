@@ -849,7 +849,7 @@ Clsn1Default: 1
 1006,3, 0,0, 2, 
 1006,4, 0,0, 10, 
 1006,5, 0,0, 3, 
-200,0, 0,0, 3, 
+200,0, 0,0, 21, 
 
 ; Blast medium
 [Begin Action 1010]
@@ -859,7 +859,7 @@ Clsn1Default: 1
 1006,3, 0,0, 2, 
 1006,4, 0,0, 20, 
 1006,5, 0,0, 3, 
-200,0, 0,0, 3, 
+200,0, 0,0, 21, 
 
 ; Blast Anti air
 [Begin Action 1020]
@@ -868,7 +868,7 @@ Clsn1Default: 1
 1005,2, 0,0, 3, 
 1005,3, 0,0, 3, 
 1005,4, 0,0, 20, 
-1006,0, 0,0, 3, 
+1006,0, 0,0, 21, 
 
 ; Punch Blast on air
 [Begin Action 1030]
@@ -2326,3 +2326,129 @@ Clsn1: 1
   Clsn1[0] = -9999, -9999, 9999, 9999
 -1,0, 0,0, 1, 
 
+; ==== Abstract Reordered ====
+[Begin Action 9800] ; grab (frames of 215 with a hitbox)
+Clsn2Default: 1
+  Clsn2[0] = -15, -106, 34, -54
+610,6, 0,0, 1,
+610,5, 0,0, 1,
+610,4, 0,0, 1,
+610,0, 0,0, 5,
+Clsn1: 1
+  Clsn1[0] = 10, -100, 52, -55
+610,1, 0,0, 2,
+Clsn1: 1
+  Clsn1[0] = 10, -100, 52, -55
+610,2, 0,0, 2,
+610,3, 0,0, 10,
+
+[Begin Action 9604] ; burst pose
+Clsn1Default: 1
+  Clsn1[0] = -70, -119, 68, 0
+Clsn2Default: 1
+  Clsn2[0] = -20, -90, 20, 0
+120,1, 0,0, -1,
+
+[Begin Action 9605] ; burst pose
+Clsn1Default: 1
+  Clsn1[0] = -70, -111, 79, 1
+Clsn2Default: 1
+  Clsn2[0] = -20, -90, 20, 0
+122,1, 0,0, -1,
+
+; ==== Abstract Reordered: BURST gauge (Touma's, recoloured) - HUD under the lifebar ====
+[Begin Action 9660] ; burst gauge empty frame
+9660,0, 0,0, -1
+
+[Begin Action 9661] ; burst ready (full)
+9660,1, 0,0, -1
+
+[Begin Action 9662] ; recharging 1/5
+9660,2, 0,0, -1
+
+[Begin Action 9663] ; recharging 2/5
+9660,3, 0,0, -1
+
+[Begin Action 9664] ; recharging 3/5
+9660,4, 0,0, -1
+
+[Begin Action 9665] ; recharging 4/5
+9660,5, 0,0, -1
+
+[Begin Action 9666] ; recharging 5/5
+9660,6, 0,0, -1
+
+[Begin Action 9667] ; burst spent X
+9660,7, 4,2, -1
+
+[Begin Action 9668] ; ready glow (blinks)
+9660,8, -4,-4, 5, , AS256D256
+9660,8, -4,-4, 5
+
+; ==== Abstract Reordered: Touma's burst cloud (from kamijo 13380 / 13390) ====
+[Begin Action 9670]
+9670, 0, 0, 0, 1, , A
+9670, 1, 0, 0, 1, , A
+9670, 2, 0, 0, 2, , A
+9670, 3, 0, 0, 2, , A
+9670, 4, 0, 0, 2, , A
+9670, 5, 0, 0, 2, , A
+9670, 6, 0, 0, 1, , A
+9670, 7, 0, 0, 1, , A
+9670, 8, 0, 0, 1, , A
+9670, 9, 0, 0, 1, , A
+9670, 10, 0, 0, 1, , A
+9670, 11, 0, 0, 1, , A
+9670, 12, 0, 0, 1, , A
+9670, 13, 0, 0, 1, , A
+9670, 14, 0, 0, 1, , A
+9670, 15, 0, 0, 1, , A
+9670, 16, 0, 0, 1, , A
+
+[Begin Action 9671]
+9671, 0, 0, 0, 1, , AS256D256
+9671, 1, 0, 0, 2, , AS256D256
+9671, 2, 0, 0, 2, , AS256D256
+9671, 3, 0, 0, 2, , AS256D256
+9671, 4, 0, 0, 2, , AS256D256
+9671, 5, 0, 0, 1, , AS256D256
+9671, 6, 0, 0, 1, , AS256D256
+9671, 7, 0, 0, 1, , AS256D256
+9671, 8, 0, 0, 1, , AS256D256
+9671, 9, 0, 0, 1, , AS256D256
+9671, 10, 0, 0, 1, , AS256D256
+9671, 11, 0, 0, 1, , AS256D256
+9671, 12, 0, 0, 1, , AS256D256
+9671, 13, 0, 0, 1, , AS256D256
+9671, 14, 0, 0, 1, , AS256D256
+9671, 15, 0, 0, 1, , AS256D256
+
+; ==== Abstract Reordered: mechanic meter (Kuroko's MAGIC CIRCUIT bar, recoloured) - bottom of the screen ====
+[Begin Action 7790] ; meter frame (additive, like Kuroko's)
+7790,0, 0,0, 2,,AS256D256
+7790,1, 0,0, 2,,AS256D256
+7790,2, 0,0, 2,,AS256D256
+7790,3, 0,0, 2,,AS256D256
+7790,4, 0,0, 2,,AS256D256
+7790,5, 0,0, 2,,AS256D256
+7790,6, 0,0, 2,,AS256D256
+7790,7, 0,0, 2,,AS256D256
+7790,8, 0,0, 2,,AS256D256
+7790,9, 0,0, 2,,AS256D256
+7790,10, 0,0, 2,,AS256D256
+
+[Begin Action 7791] ; meter fill
+7791,0, 0,0, -1
+
+[Begin Action 7792] ; meter backing
+7792,0, 0,0, -1
+
+[Begin Action 7793] ; stock divider
+7793,0, 0,0, -1
+
+[Begin Action 7795] ; meter fill, full (flashing)
+7791,1, 0,0, 6
+7791,0, 0,0, 6
+
+[Begin Action 7796] ; meter fill, deep (install running / draining)
+7791,2, 0,0, -1

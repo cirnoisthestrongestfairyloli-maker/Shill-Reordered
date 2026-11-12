@@ -35,6 +35,14 @@ AR.data = {
 	['shiki_ar'] = {n = 22, plate_w = 189, bio_w = 1841, q = 16, win = {181, 0}},
 	['taiga_ar'] = {n = 23, plate_w = 189, bio_w = 1658, q = 8, win = {180, 0}},
 	['kumagawa_ar'] = {n = 24, plate_w = 226, bio_w = 1595, q = 3, win = {180, 0}},
+	['saitama_ar'] = {n = 25, plate_w = 192, bio_w = 1844, q = 3, win = {190, 0}},
+	['gran_ar'] = {n = 26, plate_w = 146, bio_w = 1896, q = 3, win = {181, 0}},
+	['dio_ar'] = {n = 27, plate_w = 314, bio_w = 1938, q = 3, win = {181, 0}},
+	['ryuko_ar'] = {n = 28, plate_w = 159, bio_w = 1753, q = 3, win = {181, 0}},
+	['satsuki_ar'] = {n = 29, plate_w = 238, bio_w = 1876, q = 3, win = {181, 0}},
+	['sailor_moon_ar'] = {n = 30, plate_w = 330, bio_w = 1727, q = 3, win = {181, 10}},
+	['lilith_ar'] = {n = 31, plate_w = 146, bio_w = 1904, q = 3, win = {181, 0}},
+	['yoruichi_ar'] = {n = 32, plate_w = 238, bio_w = 2000, q = 3, win = {181, 0}},
 }
 AR.random = {n = 99, plate_w = 185, bio_w = 758}
 AR.timeW = 169
@@ -459,6 +467,11 @@ AR.music = {
 	{path = 'Music/Taiga -Tiger VS Dragon.mp3', w = 261, wh = 294},
 	{path = 'Music/Touma - Saijaku VS Saikyou.mp3', w = 296, wh = 329},
 	{path = 'Music/Vegeta\'s Theme - FighterZ.mp3', w = 284, wh = 317},
+	{path = 'Music/Gran - Such a Blue Sky.mp3', w = 255, wh = 286},
+	{path = 'Music/Daytona USA - Sky High.mp3', w = 269, wh = 301},
+	{path = 'Music/Granblue Fantasy - Dark Silver Wings.mp3', w = 373, wh = 404},
+	{path = 'Music/RWBY - Crossing Fate.mp3', w = 246, wh = 278},
+	{path = 'Music/Conciliation.mp3', w = 168, wh = 200},
 }
 AR.musicSel = 1          -- index into AR.music: 1 = random Music track (default), 2 = the stage's own music
 AR.randomPick = nil      -- the track RANDOM resolved to for this match
@@ -1031,7 +1044,8 @@ end)
 AR.movelistChars = {['saber_ar'] = true, ['reimu_ar'] = true, ['haruhi_ar'] = true, ['ichigo_ar'] = true, ['homura_ar'] = true, ['broly_ar'] = true, ['kuroko_ar'] = true,
 	['meisaku_ar'] = true, ['stocking_ar'] = true, ['sailor_mercury_ar'] = true, ['cureblack_ar'] = true, ['aoko_ar'] = true,
 	['jotaro_ar'] = true, ['ippo_ar'] = true, ['kamijo_ar'] = true, ['gokublack_ar'] = true, ['vegeta_ar'] = true,
-	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true, ['shiki_ar'] = true, ['taiga_ar'] = true, ['panty_ar'] = true}
+	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true, ['shiki_ar'] = true, ['taiga_ar'] = true, ['panty_ar'] = true,
+	['saitama_ar'] = true, ['gran_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['yoruichi_ar'] = true}
 AR.movelistArtX = 1040
 AR.movelistArtY = 712
 AR.movelistArtScale = 1.0

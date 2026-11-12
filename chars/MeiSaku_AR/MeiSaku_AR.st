@@ -1054,3 +1054,195 @@ type = ChangeState
 trigger1 = AnimTime = 0
 value = 38000
 
+;---------------------------------------------------------------------------
+; ==== Abstract Reordered: Sakuya vs DIO intro ====
+; Sakuya side (MeiSaku_AR). DIO runs the matching state 7820. Sakuya takes point (var(47) = 1) and keeps it.
+[Statedef 7820]
+type     = S
+movetype = I
+physics  = S
+ctrl     = 0
+anim     = 40000
+velset   = 0, 0
+sprpriority = 2
+
+[State 7820, Sakuya on point]
+type = VarSet
+trigger1 = Time = 0
+var(47) = 1
+
+[State 7820, Intro]
+type = AssertSpecial
+trigger1 = 1
+flag = Intro
+
+[State 7820, Safe]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 7820, Stay]
+type = VelSet
+trigger1 = 1
+x = 0
+
+[State 7820, Knife throw]
+type = ChangeAnim
+trigger1 = Time = 110
+value = 41000
+
+[State 7820, Throw voice]
+type = PlaySnd
+trigger1 = Time = 112
+value = 41000, 0
+channel = 0
+
+[State 7820, Knife sound]
+type = PlaySnd
+trigger1 = Time = 124
+value = 41000, 10
+channel = 1
+
+[State 7820, Frozen knife 1]
+type = Explod
+trigger1 = Time = 125
+anim = 61000
+ID = 7821
+pos = P2Dist X - 34, -38
+postype = p1
+bindtime = 0
+removetime = 200
+sprpriority = 4
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7820, Frozen knife 2]
+type = Explod
+trigger1 = Time = 127
+anim = 61000
+ID = 7821
+pos = P2Dist X - 47, -52
+postype = p1
+bindtime = 0
+removetime = 200
+sprpriority = 4
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7820, Frozen knife 3]
+type = Explod
+trigger1 = Time = 129
+anim = 61000
+ID = 7821
+pos = P2Dist X - 60, -66
+postype = p1
+bindtime = 0
+removetime = 200
+sprpriority = 4
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7820, Frozen knife 4]
+type = Explod
+trigger1 = Time = 131
+anim = 61000
+ID = 7821
+pos = P2Dist X - 73, -38
+postype = p1
+bindtime = 0
+removetime = 200
+sprpriority = 4
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7820, Frozen knife 5]
+type = Explod
+trigger1 = Time = 133
+anim = 61000
+ID = 7821
+pos = P2Dist X - 86, -52
+postype = p1
+bindtime = 0
+removetime = 200
+sprpriority = 4
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7820, Frozen knife 6]
+type = Explod
+trigger1 = Time = 135
+anim = 61000
+ID = 7821
+pos = P2Dist X - 99, -66
+postype = p1
+bindtime = 0
+removetime = 200
+sprpriority = 4
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7820, Stand]
+type = ChangeAnim
+trigger1 = Time >= 140
+trigger1 = Anim = 41000
+trigger1 = AnimTime = 0
+value = 40000
+
+[State 7820, Taunt]
+type = ChangeAnim
+trigger1 = Time = 240
+value = 40195
+
+[State 7820, Subtitle 1]
+type = Explod
+trigger1 = Time = 240
+anim = 9720
+ID = 9720
+pos = GameWidth / 2, GameHeight - 50
+postype = left
+bindtime = -1
+removetime = 75
+scale = .5, .5
+sprpriority = 10
+ontop = 1
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 7820, Time resumes: knives fly]
+type = ModifyExplod
+trigger1 = Time = 300
+ID = 7821
+vel = 7, 0
+
+[State 7820, Knives deflected]
+type = RemoveExplod
+trigger1 = Time = 318
+ID = 7821
+
+[State 7820, Deflect sound]
+type = PlaySnd
+trigger1 = Time = 310 || Time = 316
+value = 41000, 10
+channel = 2
+
+[State 7820, Taunt over]
+type = ChangeAnim
+trigger1 = Time >= 250
+trigger1 = Anim = 40195
+trigger1 = AnimTime = 0
+value = 40000
+
+[State 7820, End]
+type = ChangeState
+trigger1 = Time >= 420
+value = 0
+ctrl = 1
+

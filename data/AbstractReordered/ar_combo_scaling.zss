@@ -1,7 +1,8 @@
 #===============================================================================
 # Abstract Reordered: shared combo rules for every character
 #
-# 1. Damage scaling by how much life the current combo has already taken:
+# 1. Damage scaling by how much life the current combo has already taken (plus per-hit proration:
+#    hits 9+ lose 4% each, floor 50%, and hitstun decay from hit 11):
 #      combo damage so far   further damage
 #      under 20%             100%
 #      20% - 35%              75%
@@ -42,6 +43,10 @@ ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) {
 		}
 	} else {
 		map(_ar_scale) := cond((map(_ar_comboStartLife) - life) < lifeMax * 0.20, 1, cond((map(_ar_comboStartLife) - life) < lifeMax * 0.35, 0.75, cond((map(_ar_comboStartLife) - life) < lifeMax * 0.50, 0.55, 0.4)));
+		# per-hit proration: hits 1-8 full, then 4% less per hit, down to 50%
+		if getHitVar(hitcount) > 8 {
+			map(_ar_scale) := map(_ar_scale) * cond(1 - 0.04 * (getHitVar(hitcount) - 8) < 0.5, 0.5, 1 - 0.04 * (getHitVar(hitcount) - 8));
+		}
 		if map(_ar_lv3) = 1 && map(_ar_scale) < 0.8 {
 			map(_ar_scale) := 0.8;
 		}
@@ -55,6 +60,29 @@ ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) {
 	}
 	if numenemy {
 		map(_ar_enemyPower) := (enemyNear, power);
+	}
+
+	# ---------------------------------------------------------- hitstun decay (dampening)
+	# from the 11th hit of a combo, each new hit's hitstun is 1 frame shorter per hit past 10 (max 8 frames),
+	# so long ground loops run out and the player can block or tech
+	if moveType = H && roundstate = 2 && getHitVar(hitcount) > map(_ar_lastHits) {
+		if getHitVar(hitcount) > 10 && getHitVar(hittime) > 6 {
+			getHitVarSet{hittime: getHitVar(hittime) - cond(getHitVar(hitcount) - 10 > 8, 8, getHitVar(hitcount) - 10)}
+		}
+	}
+	map(_ar_lastHits) := cond(moveType = H, getHitVar(hitcount), 0);
+
+	# ---------------------------------------------------------- Ryuko / Satsuki: super and EX damage caps
+	# Lv1 supers (30x0) 110, Lv2 / Max supers (30x5) 125, EX specials (1x30 / 1x35) 70, all times the combo scaling
+	map(_ar_cap) := 0;
+	if numenemy {
+		if (enemyNear, name = "Ryuko Matoi") || (enemyNear, name = "Satsuki Kiryuin") {
+			if (enemyNear, stateno) >= 3000 && (enemyNear, stateno) <= 3099 {
+				map(_ar_cap) := cond((enemyNear, stateno) % 10 = 5, 125, 110);
+			} else if (enemyNear, stateno) >= 1000 && (enemyNear, stateno) <= 1599 && ((enemyNear, stateno) % 100 = 30 || (enemyNear, stateno) % 100 = 35) {
+				map(_ar_cap) := 70;
+			}
+		}
 	}
 
 	# ---------------------------------------------------------- Broly's Level 3s: damage budget
@@ -74,7 +102,18 @@ ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) {
 		}
 	}
 	if numenemy && roundstate = 2 {
-		if map(_ar_l3in) = 2 {
+		if map(_ar_cap) > 0 && map(_ar_l3in) = 0 {
+			if map(_ar_l3on) = 0 || map(_ar_capOn) != map(_ar_cap) {
+				map(_ar_l3on) := 1;
+				map(_ar_capOn) := map(_ar_cap);
+				map(_ar_l3start) := life;
+				map(_ar_l3budget) := map(_ar_cap);
+				if moveType = H {
+					map(_ar_l3budget) := map(_ar_cap) * cond((map(_ar_comboStartLife) - life) < lifeMax * 0.20, 1, cond((map(_ar_comboStartLife) - life) < lifeMax * 0.35, 0.75, cond((map(_ar_comboStartLife) - life) < lifeMax * 0.50, 0.55, 0.4)));
+				}
+			}
+			map(_ar_l3grace) := 90;
+		} else if map(_ar_l3in) = 2 {
 			if map(_ar_l3on) = 0 {
 				map(_ar_l3on) := 1;
 				map(_ar_l3start) := life;
@@ -95,6 +134,7 @@ ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) {
 			map(_ar_l3grace) := map(_ar_l3grace) - 1;
 			if map(_ar_l3grace) <= 0 || moveType != H {
 				map(_ar_l3on) := 0;
+				map(_ar_capOn) := 0;
 			}
 		}
 		if map(_ar_l3on) = 1 && life > 0 && map(_ar_l3start) - life > map(_ar_l3budget) {
@@ -102,6 +142,7 @@ ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) {
 		}
 	} else {
 		map(_ar_l3on) := 0;
+		map(_ar_capOn) := 0;
 	}
 
 	# ---------------------------------------------------------- whiffed normals / blocked supers are minus

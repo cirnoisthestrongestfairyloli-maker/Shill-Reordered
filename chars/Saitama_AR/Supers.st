@@ -518,7 +518,7 @@ physics = S
 juggle  = 5
 ctrl = 0
 velset = 0,0
-poweradd = -3000
+poweradd = -2000   ;Abstract Reordered: 2 bars
 sprpriority = -1
 
 [State 0, NotHitBy]
@@ -796,7 +796,7 @@ pan = 5
 type = HitDef
 trigger1 = Time = 0
 attr = S,HP
-damage = enemy,const(data.life)*enemy,const(data.defence)/950,100;100;damage = 4*ifelse(6*root,fvar(0)>=1,floor(6*root,fvar(0)),1),7
+damage = floor(24 * ifelse(root,fvar(22), 1.3, 1)), 2
 animtype = Heavy
 guardflag = MA
 hitflag = MAFD
@@ -980,7 +980,7 @@ projsprpriority = 4
 velocity = 0
 attr = S, NA
 animtype  = Hard
-damage = enemy,const(data.life)*enemy,const(data.defence)/700,100;50
+damage = floor(60 * ifelse(fvar(22), 1.3, 1)), 6
 guardflag = MA
 pausetime = 12, 12
 hitsound = s1,5;random % 2
@@ -1532,7 +1532,7 @@ juggle  = 1
 velset = 0,0
 ctrl = 0
 anim = 113001
-poweradd = -100
+poweradd = 0
 sprpriority = 2
 
 [State 1500, Turn]
@@ -1706,129 +1706,63 @@ ctrl = 1
 ;-------------------------------------------------------------------------------
 ;Serious Damage
 [Statedef 3103]
+;Abstract Reordered: Serious Punch hit. Was an instant kill (damage 10^46, TargetLifeAdd); now one big blockable punch.
 type    = S
 movetype= A
-physics = S
+physics = N
 ctrl = 0
 poweradd= 0
 velset = 0,0
-anim = 100000;3103
+anim = 100000
 juggle = 0
 sprpriority = 1
 
-;very good
-[State 0, PlaySnd]
+[State 3103, Sound]
 type = PlaySnd
-trigger1 = movehit = 1
+trigger1 = Time = 5
 value = S1,6
 channel = 12
 volumescale = 130
-freqmul = 51.0
-pan = 5
-;abspan =
 
-[State 1031]
-Type = projectile
-triggerall = enemy,name != "Rare Akuma"
-trigger1 = time >=5
-Attr = S, NA
+[State 3103, Punch]
+type = Projectile
+trigger1 = Time = 5
 projanim = 100000
-ProjID = 100000
+projid = 100000
 projhitanim = -1
+projremanim = -1
+projcancelanim = -1
+projremovetime = 1
+projpriority = 9
 offset = 0,0
 postype = p1
-projscale = 1,1
-projremove  = 0
-projremovetime = 1
-HitFlag = MAFPLD
-AnimType = hard
-reversal.attr = SCA,NA,SA,HA,NP,SP,HP,NT,ST,HT
-Damage = 9999999999999999999999999999999999999999999999
-PauseTime = 0,0
-SparkNo = -1
-Guard.SparkNo = -1
-SparkXY = 0,0
-HitSound = -1
-GuardSound  = -1
-Ground.Type = High
-GetPower = 40,20
-Hitonce = 1
-NumHits = 0
-SprPriority = 3
-p2stateno = 25000000
-fall = 1
-fall.recover = 0
-fall.damage = 999999999999999999999999999999999999999999999999999999
-
-; [State 3100, 4]
-; type = PlaySnd
-; trigger1 = time = 0 || time = 30
-; value = S310000,0
-; volume = 255
-; 
-; [State 3100, 4]
-; type = PlaySnd
-; trigger1 = time = 90
-; value = S8823,1
-; volume = 255
-; 
-; [State x]
-; type = Explod
-; trigger1 = time = 0
-; anim = 35020
-; postype = back
-; pos = 155,150
-; sprpriority = 999998
-; removetime = 930
-; scale = 2,2
-; bindtime = -1
-; pausemovetime = 999999
-
-; [State 3200, 2]
-; type = Explod
-; trigger1 = time = 0
-; anim = 88230
-; pos = 0,0
-; scale = 1
-; postype = back
-; sprpriority = 999999
-; facing = 1
-; vfacing = 1
-; bindtime = 999
-; ownpal = 0
-; ignorehitpause = 1
-
-[State 2000]
-type = ReversalDef
-trigger1 = 1
-reversal.attr = SCA,AA,AT,AP
-;hitflag = M-
+attr = S, SA
+hitflag = MAF
+guardflag = MA
+animtype = Heavy
+damage = floor(350 * ifelse(root,fvar(22), 1.15, 1)), 35
+pausetime = 0, 30
 sparkno = -1
-priority = 7
-p2stateno = 23000000
-p2facing = 1
-pausetime = 0,6
+guard.sparkno = -1
+hitsound = -1
+guardsound = S2,0
+ground.type = High
+ground.slidetime = 20
+ground.hittime = 30
+ground.velocity = -14, -8
+air.velocity = -14, -8
+guard.velocity = -14
 fall = 1
 fall.recover = 0
-fall.damage = 9999999999999999
+envshake.time = 30
+envshake.ampl = 8
+getpower = 0, 0
+givepower = 0, 0
 
-[State 1000, 0]
-type = TargetLifeAdd
-trigger1 = 1
-value = -721438172649817238692179238197264817283712*10298309821098309810982
-ID = -1
-kill = 1
-absolute = 1
-ignorehitpause = 1
-supermovetime = 9999999999
-pausemovetime = 9999999999
-
-
-[State 1105, DS]
+[State 3103, End]
 type = DestroySelf
-triggerall = ishelper
-trigger1 = time = 300
-;-------------------------------------------------------------------------------
+trigger1 = Time = 60
+
 [Statedef 23000000]
 type    = A
 movetype= H

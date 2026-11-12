@@ -1,0 +1,465 @@
+;=============================================================
+;  STAGE INFORMATION :
+;=============================================================
+
+;----------------------------------------------------------------
+[Info] 
+name = "Collapsed Boundary"
+author = "Touhou GR Dev Team" ;Original by Night
+mugenversion = 1.0
+displayname = "Collapsed Boundary"
+;----------------------------------------------------------------
+;PARAMETERS
+;----------------------------------------------------------------
+[Camera]
+startx = 0
+starty = 0
+boundleft = -190
+boundright = 190
+boundhigh = -150
+boundlow = 0
+tension = 50
+verticalfollow = .9
+floortension = 90
+[PlayerInfo]
+p1startx =-70
+p1starty =0
+p1startz =0
+p1facing =1
+p2startx =70
+p2starty =0
+p2startz =0
+p2facing =-1
+leftbound =-1000
+rightbound =1000
+topbound =0
+botbound =0
+[Scaling]
+topz =0
+botz =50
+topscale =1
+botscale =1
+[Bound]
+screenleft =15
+screenright =15
+[StageInfo]
+zoffset = 210
+autoturn = 1
+resetBG = 0
+xscale = 0.5
+yscale = 0.5
+[Shadow]
+intensity = 100
+color = 20,20,20
+yscale = .5
+;[Reflection]
+;intensity = 128
+[Music]
+bgmusic = sound/LastBoss01.logg
+bgmloopstart = 595229
+bgmloopend = 9121260
+;----------------------------------------------------------------
+[BGdef]
+spr = Collapsed Boundary.sff
+debugbg = 0
+;----------------------------------------------------------------
+;CODE
+;----------------------------------------------------------------
+[BG 00]
+Type = Normal
+SpriteNo = 1,1
+Delta = 0,0
+Velocity = 0,0
+Tile = 0,0
+start = 0,300
+
+[BG Blackhole BG]
+type = Anim
+actionNo = 1
+layerNo = 0
+start = 0,200
+delta = 0.01,0.01
+mask = 1
+ID = 1
+
+[BG Blackhole]
+type = Anim
+actionNo = 2
+layerNo = 0
+start = 0,200
+delta = 0.01,0.01
+mask = 1
+ID = 2
+
+[BG BGRock 00]
+Type = Normal
+SpriteNo = 14,1
+delta = 0.03,0.03
+mask = 1
+Velocity = 0,0
+Tile = 0,0
+start = 0,300
+sin.y = 5,300,0
+trans = addalpha
+alpha = 128,0
+[BG BG Rock 00]
+Type = Normal
+SpriteNo = 14,0
+delta = 0.1,0.1
+mask = 1
+Velocity = 0,0
+Tile = 0,0
+start = 0,300
+sin.y = 10,600,90
+trans = addalpha
+alpha = 192,0
+
+[BG Debris Onbashira 01]
+type = Anim
+actionNo = 30
+layerNo = 0
+start = 318,324
+delta = 0.05,0.05
+mask = 1
+sin.y = 20,1200,172
+ID = 11
+
+[BG Debris Tree 01]
+type = Anim
+actionNo = 20
+layerNo = 0
+start = 240,240;120,120
+delta = 0.2,0.2
+mask = 1
+sin.y = 3,120,0
+ID = 11
+
+[BG Debris Tree 02]
+type = Anim
+actionNo = 21
+layerNo = 0
+start = -400,160;120,120
+delta = 0.3,0.3
+mask = 1
+sin.y = 5,200,224
+ID = 11
+
+[BG Debris Rock 01]
+type = normal
+spriteno = 14,5
+delta = 0.4,0.4
+layerNo = 0
+start = 120,250
+mask = 1
+sin.y = 5,300,45
+id = 15
+
+[BG Debris Rock 01]
+type = normal
+spriteno = 14,4
+delta = 0.6,0.6
+layerNo = 0
+start = -170,80
+mask = 1
+sin.y = 7,300,180
+id = 15
+
+[BG Debris Rock 01]
+type = normal
+spriteno = 14,3
+delta = 0.5,0.5
+layerNo = 0
+start = 300,160
+mask = 1
+sin.y = 7,300,225
+id = 15
+
+[BG Debris Rock 11]
+type = normal
+spriteno = 14,2
+layerNo = 0
+start = -400,280
+delta = 0.45,0.45
+mask = 1
+sin.y = 10,600,300
+ID = 15
+
+[BG Debris Rock 02]
+type = Anim
+actionNo = 13
+layerNo = 0
+start = -420,480
+delta = 0.9,0.9
+velocity = 0.0,-5.5
+mask = 1
+ID = 13
+[BG Debris Rock 03]
+type = Anim
+actionNo = 13
+layerNo = 0
+start = -140,600
+delta = 0.9,0.9
+velocity = 0.0,-9.0
+mask = 1
+ID = 13
+[BG Debris Rock 02]
+type = Anim
+actionNo = 13
+layerNo = 0
+start = 140,720
+delta = 0.9,0.9
+velocity = 0.0,-5.5
+mask = 1
+ID = 13
+[BG Debris Rock 02]
+type = Anim
+actionNo = 13
+layerNo = 0
+start = 420,960
+delta = 0.9,0.9
+velocity = 0.0,-7.0
+mask = 1
+ID = 13
+
+[BG Debris Rock 02]
+type = Anim
+actionNo = 13
+layerNo = 0
+start = -360,480
+delta = 0.9,0.9
+velocity = 0.0,-2.5
+mask = 1
+ID = 14
+[BG Debris Rock 03]
+type = Anim
+actionNo = 13
+layerNo = 0
+start = -120,600
+delta = 0.9,0.9
+velocity = 0.0,-4.0
+mask = 1
+ID = 14
+[BG Debris Rock 02]
+type = Anim
+actionNo = 13
+layerNo = 0
+start = 100,720
+delta = 0.9,0.9
+velocity = 0.0,-3.0
+mask = 1
+ID = 14
+[BG Debris Rock 02]
+type = Anim
+actionNo = 13
+layerNo = 0
+start = 360,960
+delta = 0.9,0.9
+velocity = 0.0,-3.5
+mask = 1
+ID = 14
+
+[BG Debris Train]
+type = Anim
+actionNo = 12
+layerNo = 0
+start = 0,4000
+delta = 0.4,0.4
+mask = 1
+ID = 12
+
+[BG Rift Sub]
+type = anim
+actionno = 5
+delta = 1,1
+
+[BG Rift Sub 2]
+type = anim
+actionno = 6
+delta = 1,1
+
+[BG Rift Alpha]
+type = anim
+actionno = 3
+delta = 1,1
+
+[BG Rift Alpha 2]
+type = anim
+actionno = 4
+delta = 1,1
+
+[BG 00]
+type = normal
+spriteno =1,0
+delta = 1,1
+mask = 1
+
+[BG Rift Edge]
+type = normal
+spriteno = 6,0
+delta = 1,1
+trans = addalpha
+alpha = 128,256
+
+;------------
+; Rockcontroller
+[BGCtrlDef]
+looptime = 360
+ctrlID = 13
+
+[BGCtrl Posset]
+type = posset
+time = 0
+y = 600
+
+;------------
+; Rockcontroller
+[BGCtrlDef]
+looptime = 720
+ctrlID = 14
+
+[BGCtrl Posset]
+type = posset
+time = 0
+y = 600
+
+;------------
+; Traincontroller
+[BGCtrlDef]
+looptime = 3600
+ctrlID = 12
+
+[BGCtrl Posset]
+type = posset
+time = 0
+y = 1000
+[BGCtrl Velset]
+type = Velset
+time = 0
+y = 0.0
+[BGCtrl Flyup]
+type = velset
+time = 3000
+y = -10.0
+
+;---------------
+[Begin Action 1]
+3,0, 0,0, 4, , S
+
+[Begin Action 12]
+12,0, 0,0, -1, , , 2.0,2.0, -50
+
+[Begin Action 13]
+13,0, 0,0, 3
+13,1, 0,0, 3
+13,2, 0,0, 3
+13,3, 0,0, 3
+13,4, 0,0, 3
+13,5, 0,0, 3
+
+;Tree 01
+[Begin Action 20]
+11,0, 0,0, -1, , , 0.5,0.5, 30
+
+;Tree 01
+[Begin Action 21]
+11,0, 0,0, -1, , , 0.7,0.7, 232
+
+; Onbashira
+[Begin Action 30]
+15,0, 0,0, 2, , AS64D0, 0.75,0.75, 83
+15,1, 0,0, 2, , AS64D0, 0.75,0.75, 83
+
+[Begin Action 2]
+2,0, 0,0, 360, , A, 1,1, 360
+interpolate angle
+2,0, 0,0, 0, , A, 1,1, 0
+
+[Begin Action 3]
+4,0, 0,0, 3, , AS192D256
+4,1, 0,0, 3, , AS192D256
+4,2, 0,0, 3, , AS192D256
+4,3, 0,0, 3, , AS192D256
+4,4, 0,0, 3, , AS192D256
+4,5, 0,0, 3, , AS192D256
+4,6, 0,0, 3, , AS192D256
+4,7, 0,0, 3, , AS192D256
+4,8, 0,0, 3, , AS192D256
+4,9, 0,0, 3, , AS192D256
+4,10, 0,0, 6, , AS192D256
+4,9, 0,0, 3, , AS192D256
+4,8, 0,0, 3, , AS192D256
+4,7, 0,0, 3, , AS192D256
+4,6, 0,0, 3, , AS192D256
+4,5, 0,0, 3, , AS192D256
+4,4, 0,0, 3, , AS192D256
+4,3, 0,0, 3, , AS192D256
+4,2, 0,0, 3, , AS192D256
+4,1, 0,0, 3, , AS192D256
+4,0, 0,0, 3, , AS192D256
+
+[Begin Action 4]
+4,5, 0,0, 3, H, AS192D256
+4,4, 0,0, 3, H, AS192D256
+4,3, 0,0, 3, H, AS192D256
+4,2, 0,0, 3, H, AS192D256
+4,1, 0,0, 3, H, AS192D256
+4,0, 0,0, 6, H, AS192D256
+4,1, 0,0, 3, H, AS192D256
+4,2, 0,0, 3, H, AS192D256
+4,3, 0,0, 3, H, AS192D256
+4,4, 0,0, 3, H, AS192D256
+4,5, 0,0, 3, H, AS192D256
+4,6, 0,0, 3, H, AS192D256
+4,7, 0,0, 3, H, AS192D256
+4,8, 0,0, 3, H, AS192D256
+4,9, 0,0, 3, H, AS192D256
+4,10, 0,0, 6, H, AS192D256
+4,9, 0,0, 3, H, AS192D256
+4,8, 0,0, 3, H, AS192D256
+4,7, 0,0, 3, H, AS192D256
+4,6, 0,0, 3, H, AS192D256
+
+[Begin Action 5]
+5,0, 0,0, 3, , S
+5,1, 0,0, 3, , S
+5,2, 0,0, 3, , S
+5,3, 0,0, 3, , S
+5,4, 0,0, 3, , S
+5,5, 0,0, 3, , S
+5,6, 0,0, 3, , S
+5,7, 0,0, 3, , S
+5,8, 0,0, 3, , S
+5,9, 0,0, 3, , S
+5,10, 0,0, 6, , S
+5,9, 0,0, 3, , S
+5,8, 0,0, 3, , S
+5,7, 0,0, 3, , S
+5,6, 0,0, 3, , S
+5,5, 0,0, 3, , S
+5,4, 0,0, 3, , S
+5,3, 0,0, 3, , S
+5,2, 0,0, 3, , S
+5,1, 0,0, 3, , S
+5,0, 0,0, 3, , S
+
+[Begin Action 6]
+5,5, 0,0, 3, H, S
+5,4, 0,0, 3, H, S
+5,3, 0,0, 3, H, S
+5,2, 0,0, 3, H, S
+5,1, 0,0, 3, H, S
+5,0, 0,0, 6, H, S
+5,1, 0,0, 3, H, S
+5,2, 0,0, 3, H, S
+5,3, 0,0, 3, H, S
+5,4, 0,0, 3, H, S
+5,5, 0,0, 3, H, S
+5,6, 0,0, 3, H, S
+5,7, 0,0, 3, H, S
+5,8, 0,0, 3, H, S
+5,9, 0,0, 3, H, S
+5,10, 0,0, 6, H, S
+5,9, 0,0, 3, H, S
+5,8, 0,0, 3, H, S
+5,7, 0,0, 3, H, S
+5,6, 0,0, 3, H, S

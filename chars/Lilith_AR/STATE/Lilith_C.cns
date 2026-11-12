@@ -1,0 +1,6812 @@
+;■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+;                         EX必殺技
+;■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+;=========================================================================
+;                     スプレンダーラブ
+;=========================================================================
+[Statedef 850]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 850
+sprpriority = 2
+facep2 = 1
+hitcountpersist = 1
+
+[State 850]
+type = PowerAdd
+trigger1 = AnimElem = 1
+value = -1000
+
+[State 850]
+type = VarSet
+trigger1 = AnimElem = 1
+var(5) = 0
+
+[State 850,根性で色を変更]
+type = VarSet
+trigger1 = var(7) >= 6
+var(7) = 0
+
+[State 850,根性で色を変更]
+type = VarAdd
+trigger1 = TimeMod = 3, 0
+var(7) = 1
+
+[State 850,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 0
+Trigger1 = 1
+Time = 2
+add = 0,128,256
+
+[State 850,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 1
+Trigger1 = 1
+Time = 2
+add = 256,256,0
+
+[State 850,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 2
+Trigger1 = 1
+Time = 2
+add = 256,0,0
+
+[State 850,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 3
+Trigger1 = 1
+Time = 2
+add = 0,256,0
+
+[State 850,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 4
+Trigger1 = 1
+Time = 2
+add = 256,0,256
+
+[State 850,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 5
+Trigger1 = 1
+Time = 2
+add = 256,64,0
+
+;--------------------------
+
+[State 850]
+type = PlayerPush
+trigger1 = time = [10, 60]
+value = 0
+
+[State 850, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 3
+value = 100, 19
+
+[State 850, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 4
+value = 200, 7
+
+[State 850, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 39
+value = 200, 8
+
+[State 850]
+type = NotHitBy
+trigger1 = 1
+value = ,NT, ST, HT
+
+[State 850]
+type = StateTypeSet
+trigger1 = AnimElem = 7
+StateType = A
+;movetype= A
+physics = N
+
+[State 850]
+type = VelSet
+trigger1 = AnimElem = 7
+x = 2.25
+y = -4.5
+
+[State 850]
+type = VelAdd
+triggerall = time <= 46
+trigger1 = StateType = A
+x = -0.05
+y = 0.1
+
+[State 850]
+type = Gravity
+trigger1 = time = [65, 77]
+
+[State 850]
+type = StateTypeSet
+trigger1 = AnimElem = 50
+StateType = C
+physics = C
+
+[State 850]
+type = PosSet
+trigger1 = StateType != A
+y = 0
+
+[State 850]
+type = VelSet
+trigger1 = AnimElem = 34
+trigger2 = AnimElem = 50
+x = 0
+y = 0
+
+[State 850]
+type = Explod
+trigger1 = AnimElem = 7
+anim = 10850
+pos = 20, -65
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = 3
+removetime = -1
+ID = 850
+
+[State 850]
+type = Explod
+trigger1 = AnimElem = 7
+anim = 10851
+pos = 20, -65
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = 1
+removetime = -1
+ID = 850
+
+[State 850]
+type = Explod
+trigger1 = AnimElem = 10
+anim = 10854
+pos = 0, 0
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+ignorehitpause = 0
+
+[State 850]
+type = RemoveExplod
+trigger1 = AnimElem = 34
+ID = 850
+
+[State 850]
+type = Explod
+trigger1 = AnimElem = 34
+anim = 10852
+pos = 20, -62
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = 3
+
+[State 850]
+type = Explod
+trigger1 = AnimElem = 34
+anim = 10853
+pos = 20, -62
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = 1
+
+[State 850]
+type = VarSet
+triggerall = var(5) != 0
+trigger1 = MoveHit = 1
+var(5) = ifelse(var(5)=2,1,2)
+;ignorehitpause = 1
+
+[State 850]
+type = VarSet
+triggerall = var(5) = 0
+trigger1 = AnimElem = 15
+var(5) = 1
+
+[State 850 ヒット定義]
+type = Hitdef
+triggerall = NumExplod(850)
+triggerall = var(5) = 0
+trigger1 = AnimElem = 11
+attr = A, HP
+damage = Ceil((10*6.67)+((5*6.67)*fvar(1))),Ceil((4*6.67)+((2*6.67)*fvar(1))) ;(10,5)
+animtype = Up
+ground.type = High
+air.type = High
+guardflag = MA
+hitflag = MA
+priority = 4, Hit
+pausetime = 7, 7
+sparkno = s15004
+guard.sparkno = s15006
+sparkxy = -30, -40
+hitsound = s4, 2
+guardsound = s6, 0
+ground.slidetime = 15
+guard.slidetime = 14
+ground.hittime  = 15
+guard.hittime  = 14
+air.hittime = 15
+ground.velocity = 3, -6
+air.velocity = 3,-6
+getpower = 0,0 
+givepower= 8*7,0 
+fall = 1
+air.fall = 1
+fall.recover = 0
+
+[State 850 ヒット定義]
+type = Hitdef
+triggerall = NumExplod(850)
+triggerall = var(5) >= 1
+trigger1 = Time%4 = 0
+attr = A, HP
+damage = Ceil(((4*6.67)+((2*6.67)*fvar(1)))*1.25),0 ;(4,2)
+animtype = Up
+ground.type = High
+air.type = High
+guardflag = MA
+hitflag = MAF
+priority = 4, Hit
+pausetime = 7, 7
+sparkno = s15004
+guard.sparkno = s15006
+sparkxy = -30, -40
+hitsound = s4, 2
+guardsound = s6, 0
+ground.slidetime = 15
+guard.slidetime = 14
+ground.hittime  = 15
+guard.hittime  = 14
+air.hittime = 15
+ground.velocity = 5, -4
+air.velocity = ifelse(var(5)=1,-5,4),-4
+getpower = 0,0 
+givepower= 8*7,0 
+fall = 1
+air.fall = 1
+fall.recover = 0
+
+[State 850]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+;=========================================================================
+;                    ルミナスイリュージョン(地上)
+;=========================================================================
+[Statedef 860]
+type    = A
+movetype= A
+physics = N
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 860
+sprpriority = 2
+facep2 = 1
+hitcountpersist = 1
+
+[State 860, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 200, 5
+
+
+[State 860]
+type = PowerAdd
+trigger1 = AnimElem = 1
+value = -1000
+
+[State 860,根性で色を変更]
+type = VarSet
+trigger1 = var(7) >= 6
+var(7) = 0
+
+[State 860,根性で色を変更]
+type = VarAdd
+trigger1 = TimeMod = 3, 0
+var(7) = 1
+
+[State 860,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 0
+Trigger1 = 1
+Time = 2
+add = 0,128,256
+
+[State 860,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 1
+Trigger1 = 1
+Time = 2
+add = 256,256,0
+
+[State 860,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 2
+Trigger1 = 1
+Time = 2
+add = 256,0,0
+
+[State 860,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 3
+Trigger1 = 1
+Time = 2
+add = 0,256,0
+
+[State 860,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 4
+Trigger1 = 1
+Time = 2
+add = 256,0,256
+
+[State 860,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 5
+Trigger1 = 1
+Time = 2
+add = 256,64,0
+
+;--------------------------
+
+[State 860]
+type = NotHitBy
+trigger1 = time <= 1
+value = SCA
+
+[State 860]
+type = VelSet
+trigger1 = AnimElem = 4
+x = 7
+
+[State 860]
+type = VelSet
+trigger1 = AnimElem = 13
+x = 0
+
+[State 860]
+type = StateTypeSet
+trigger1 = AnimElem = 14
+type    = S
+movetype= I
+physics = S
+
+[State 860 ヒット定義]
+type = Hitdef
+triggerall = (PrevStateNo = 440) + (Enemy,StateNo = [5070,5071]) < 2
+trigger1 = AnimElem = 3
+attr = A, HP
+damage = Ceil((4*6.67)+((2*6.67)*fvar(1))),0 ;(4,2)
+animtype = Up
+ground.type = High
+air.type = High
+guardflag = MA
+hitflag = MA
+priority = 4, Miss
+pausetime = 10, 10
+sparkno = s15004
+guard.sparkno = s15006
+sparkxy = -30, -40
+hitsound = s4, 0
+guardsound = s6, 0
+ground.slidetime = 15
+guard.slidetime = 14
+ground.hittime  = 15
+guard.hittime  = 14
+air.hittime = 15
+ground.velocity = -2.5, -4
+air.velocity = -2.5,-4
+getpower = 0,0 
+givepower= 8*7,0 
+fall = 1
+air.fall = 1
+fall.recover = 0
+p1stateno = 862
+p2stateno = 864
+kill = 0
+
+[State 860]
+type = ChangeState
+trigger1 = MoveGuarded
+value = 861
+ctrl = 0
+
+[State 860]
+type = ChangeState
+triggerall = NumHelper(1100)
+trigger1 = Helper(1100),Anim = 860
+trigger1 = Helper(1100),MoveHit = 1
+value = 862
+
+[State 860]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+;ガード
+[Statedef 861]
+type    = A
+movetype= I
+physics = N
+juggle  = 1
+velset = -2,-10
+poweradd = 0
+ctrl = 0
+anim = 43
+sprpriority = 0
+facep2 = 1
+hitcountpersist = 1
+
+[State 861]
+type = Gravity
+trigger1 = 1
+
+[State 861]
+type = ChangeState
+triggerall = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 795
+ctrl = 0
+
+;---------------------------------------------------------------------------
+;Hit後
+[Statedef 862]
+type    = S
+movetype= A
+physics = N
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 862
+sprpriority = 2
+facep2 = 1
+hitcountpersist = 1
+
+[State 862, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 100, 20
+
+[State 862, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 17
+value = 100, 10
+
+[State 862, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 20
+value = 100, 6
+
+[State 862, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 44
+value = 100, 11
+
+[State 862, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 5
+trigger2 = AnimElem = 8, = 3
+trigger3 = AnimElem = 12
+trigger4 = AnimElem = 21, = 3
+trigger5 = AnimElem = 26
+trigger6 = AnimElem = 30
+trigger7 = AnimElem = 34
+trigger8 = AnimElem = 38
+value = 4, 1
+
+[State 862, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 18
+value = 5, 1
+
+[State 862, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 46
+value = 5, 2
+
+[State 862, 音声]
+type = PlaySnd
+triggerall = NumHelper(860)
+trigger1 = Helper(860),AnimElem = 4
+value = 200, 7
+
+[State 862, 掴んだ相手の位置]
+type = TargetBind
+trigger1 = AnimElem = 2
+pos = 65, 0
+
+[State 862]
+type = Helper
+trigger1 = time = 0
+name = "doll"
+ID = 860
+pos = -65, 0
+postype = p2
+stateno = 863
+keyctrl = 0
+facing = -1
+
+[State 862]
+type = StateTypeSet
+trigger1 = AnimElem = 29
+StateType = A
+
+[State 862]
+type = VelSet
+trigger1 = AnimElem = 29
+y = -2
+
+[State 862]
+type = VelSet
+trigger1 = AnimElem = 40
+y = -0.5
+
+[State 862]
+type = VelAdd
+trigger1 = time = [172, 188]
+x = -0.2
+y = 0.6
+
+[State 862]
+type = StateTypeSet
+trigger1 = AnimElem = 57
+StateType = S
+
+[State 862]
+type = VelSet
+trigger1 = AnimElem = 57
+x = 0
+y = 0
+
+[State 862]
+type = PosSet
+trigger1 = AnimElem = 57
+y = 0
+
+[State 862]
+type = Explod
+trigger1 = AnimElem = 5
+anim = 15004
+pos = 50, -75
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 862]
+type = Explod
+trigger1 = AnimElem = 8, = 3
+trigger2 = AnimElem = 21, = 3
+anim = 15004
+pos = 65, -25
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 862]
+type = Explod
+trigger1 = AnimElem = 12
+anim = 15004
+pos = 80, -65
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 862]
+type = Explod
+trigger1 = AnimElem = 18
+anim = 15002
+pos = 50, -85
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 862]
+type = Explod
+trigger1 = AnimElem = 26
+anim = 15004
+pos = 65, -50
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 862]
+type = Explod
+trigger1 = AnimElem = 30
+trigger2 = AnimElem = 34
+trigger3 = AnimElem = 38
+anim = 15004
+pos = 55, -75
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 862]
+type = Explod
+trigger1 = AnimElem = 46
+anim = 15008
+pos = 60, -60
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 862]
+type = HitAdd
+trigger1 = AnimElem = 5
+trigger2 = AnimElem = 8, = 3
+trigger3 = AnimElem = 12
+trigger4 = AnimElem = 18
+trigger5 = AnimElem = 21, = 3
+trigger6 = AnimElem = 26
+trigger7 = AnimElem = 30
+trigger8 = AnimElem = 34
+trigger9 = AnimElem = 38
+trigger10= AnimElem = 46
+value = 2
+
+[State 862, 掴んだ相手のライフ増減,通常]
+type = TargetLifeAdd
+trigger1 = AnimElem = 5
+trigger2 = AnimElem = 8, = 3
+trigger3 = AnimElem = 12
+trigger4 = AnimElem = 18
+trigger5 = AnimElem = 21, = 3
+trigger6 = AnimElem = 26
+trigger7 = AnimElem = 30
+trigger8 = AnimElem = 34
+trigger9 = AnimElem = 38
+value =-ceil((((1*6.67)+((0*6.67)*fvar(1)))*const(data.attack)*0.01)*2) ;(1,0)
+kill = 0
+
+[State 862, 掴んだ相手のライフ増減,通常]
+type = TargetLifeAdd
+trigger1 = AnimElem = 46
+value =-ceil((((7*6.67)+((5*6.67)*fvar(1)))*const(data.attack)*0.01)*1.5) ;(7,5)
+
+[State 862]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;--------------------------------------------------------------------------
+;ドール
+[Statedef 863]
+type    = S
+movetype= A
+physics = N
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 863
+sprpriority = 2
+;facep2 = 1
+hitcountpersist = 1
+
+[State 863]
+type = turn
+trigger1 = (Root,Facing = 1) + (Facing = 1) = 2
+trigger2 = (Root,Facing = -1) + (Facing = -1) = 2
+
+[State 863]
+type = PosSet
+trigger1 = 1
+x = Root,Pos X + (2 * Root,P2Dist X * Root,facing)
+y = Root,Pos Y 
+
+[State 863]
+type = Explod
+trigger1 = AnimElem = 21
+anim = 15004
+pos = 50, -75
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 3
+
+[State 863]
+type = Explod
+trigger1 = AnimElem = 24, = 3
+trigger2 = AnimElem = 37, = 3
+anim = 15004
+pos = 65, -25
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 3
+
+[State 863]
+type = Explod
+trigger1 = AnimElem = 28
+anim = 15004
+pos = 80, -65
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 3
+
+[State 863]
+type = Explod
+trigger1 = AnimElem = 34
+anim = 15002
+pos = 50, -85
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 3
+
+[State 863]
+type = Explod
+trigger1 = AnimElem = 42
+anim = 15004
+pos = 65, -50
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 3
+
+[State 863]
+type = Explod
+trigger1 = AnimElem = 46
+trigger2 = AnimElem = 50
+trigger3 = AnimElem = 54
+anim = 15004
+pos = 55, -75
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 3
+
+[State 863]
+type = AssertSpecial
+trigger1 = time > 180
+trigger1 = Time%2 = 0
+flag = invisible
+
+[State 863]
+type = DestroySelf
+trigger1 = AnimTime = 0
+
+;--------------------------------------------------------------------------
+;相手
+[Statedef 864]
+type    = S
+movetype= H
+physics = N
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 5010
+sprpriority = -1
+facep2 = 1
+hitcountpersist = 1
+
+[State 864]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 864]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 864]
+type = ChangeAnim
+trigger1 = time = 46
+trigger2 = time = 78
+trigger3 = time = 112
+value = 5002
+
+[State 864]
+type = ChangeAnim
+trigger1 = time = 55
+trigger2 = time = 100
+trigger3 = time = 125
+trigger4 = time = 134
+trigger5 = time = 145
+value = 5010
+
+[State 864]
+type = ChangeAnim
+trigger1 = time = 126
+trigger2 = time = 135
+trigger3 = time = 146
+value = 5030
+
+[State 864]
+type = ChangeAnim
+trigger1 = time = 155
+value = 5040
+
+[State 864]
+type = VelSet
+trigger1 = time = 127
+y = -2.5
+
+[State 864]
+type = VelAdd
+trigger1 = time = 160
+y = -3.5
+
+[State 864]
+type = VelAdd
+trigger1 = time = [155, 169]
+y = 0.6
+
+[State 864]
+type = SelfState
+trigger1 = time = 170
+value = 5030
+
+;=========================================================================
+;                    ルミナスイリュージョン(空中)
+;=========================================================================
+[Statedef 865]
+type    = A
+movetype= A
+physics = N
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 865
+sprpriority = 2
+facep2 = 1
+hitcountpersist = 1
+
+[State 865, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 200, 5
+
+[State 865]
+type = PowerAdd
+trigger1 = AnimElem = 1
+value = -1000
+
+[State 865,根性で色を変更]
+type = VarSet
+trigger1 = var(7) >= 6
+var(7) = 0
+
+[State 865,根性で色を変更]
+type = VarAdd
+trigger1 = TimeMod = 3, 0
+var(7) = 1
+
+[State 865,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 0
+Trigger1 = 1
+Time = 2
+add = 0,128,256
+
+[State 865,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 1
+Trigger1 = 1
+Time = 2
+add = 256,256,0
+
+[State 865,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 2
+Trigger1 = 1
+Time = 2
+add = 256,0,0
+
+[State 865,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 3
+Trigger1 = 1
+Time = 2
+add = 0,256,0
+
+[State 865,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 4
+Trigger1 = 1
+Time = 2
+add = 256,0,256
+
+[State 865,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 5
+Trigger1 = 1
+Time = 2
+add = 256,64,0
+
+;--------------------------
+
+[State 865]
+type = NotHitBy
+trigger1 = time <= 1
+value = SCA
+
+[State 865]
+type = VelSet
+trigger1 = AnimElem = 2
+x = 7
+
+[State 865]
+type = VelSet
+trigger1 = AnimElem = 11
+x = 0
+
+[State 865]
+type = Gravity
+trigger1 = time >= 18
+
+[State 865 ヒット定義]
+type = Hitdef
+triggerall = (PrevStateNo = 440) + (Enemy,StateNo = [5070,5071]) < 2
+trigger1 = AnimElem = 2
+attr = A, HP
+damage = Ceil((4*6.67)+((2*6.67)*fvar(1))),0 ;(4,2)
+animtype = Up
+ground.type = High
+air.type = High
+guardflag = MA
+hitflag = MA
+priority = 4, Miss
+pausetime = 10, 10
+sparkno = s15004
+guard.sparkno = s15006
+sparkxy = -30, -40
+hitsound = s4, 0
+guardsound = s6, 0
+ground.slidetime = 15
+guard.slidetime = 14
+ground.hittime  = 15
+guard.hittime  = 14
+air.hittime = 15
+ground.velocity = -2.5, -4
+air.velocity = -2.5,-4
+getpower = 0,0 
+givepower= 8*7,0 
+fall = 1
+air.fall = 1
+fall.recover = 0
+p1stateno = 866
+p2stateno = 868
+kill = 0
+
+[State 865]
+type = ChangeState
+trigger1 = MoveGuarded
+value = 861
+ctrl = 0
+
+[State 865]
+type = ChangeState
+triggerall = NumHelper(1100)
+trigger1 = Helper(1100),Anim = 865
+trigger1 = Helper(1100),MoveHit = 1
+value = 868
+
+[State 865]
+type = ChangeState
+triggerall = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 795
+ctrl = 0
+
+;---------------------------------------------------------------------------
+;Hit後
+[Statedef 866]
+type    = A
+movetype= A
+physics = N
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 866
+sprpriority = 2
+facep2 = 1
+hitcountpersist = 1
+
+[State 866, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 100, 20
+
+[State 866, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 17
+value = 100, 10
+
+[State 866, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 26
+value = 100, 17
+
+[State 866, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 4
+trigger2 = AnimElem = 8
+trigger3 = AnimElem = 12
+trigger4 = AnimElem = 15
+trigger5 = AnimElem = 19
+trigger6 = AnimElem = 23
+trigger7 = AnimElem = 27
+trigger8 = AnimElem = 31
+trigger9 = AnimElem = 35
+value = 4, 1
+
+[State 866, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 41
+value = 5, 2
+
+[State 866, 音声]
+type = PlaySnd
+triggerall = NumHelper(860)
+trigger1 = Helper(860),AnimElem = 4
+value = 200, 7
+
+;[State 866]
+;type = PosSet
+;trigger1 = time = 0
+;y = Target,Pos Y
+
+[State 866, 掴んだ相手の位置]
+type = BindToTarget;TargetBind
+trigger1 = AnimElem = 1
+pos = 65, 0, Foot
+
+[State 866]
+type = Helper
+trigger1 = time = 0
+name = "doll"
+ID = 860
+pos = -65, 0
+postype = p2
+stateno = 867
+keyctrl = 0
+facing = -1
+
+[State 866]
+type = VelSet
+trigger1 = AnimElem = 29
+y = -2
+
+[State 866]
+type = VelSet
+trigger1 = AnimElem = 40
+y = -0.5
+
+[State 866]
+type = VelAdd
+trigger1 = time = [172, 188]
+x = -0.2
+y = 0.6
+
+[State 866]
+type = Explod
+trigger1 = AnimElem = 4
+trigger2 = AnimElem = 15
+anim = 15004
+pos = 60, -40
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 866]
+type = Explod
+trigger1 = AnimElem = 8
+trigger2 = AnimElem = 19
+anim = 15004
+pos = 50, -40
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 866]
+type = Explod
+trigger1 = AnimElem = 12
+anim = 15004
+pos = 55, -50
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 866]
+type = Explod
+trigger1 = AnimElem = 23
+anim = 15004
+pos = 50, -50
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 866]
+type = Explod
+trigger1 = AnimElem = 27
+trigger2 = AnimElem = 31
+trigger3 = AnimElem = 35
+anim = 15004
+pos = 55, -75
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 866]
+type = Explod
+trigger1 = AnimElem = 41
+anim = 15008
+pos = 60, -60
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 866]
+type = HitAdd
+trigger1 = AnimElem = 4
+trigger2 = AnimElem = 8
+trigger3 = AnimElem = 12
+trigger4 = AnimElem = 15
+trigger5 = AnimElem = 19
+trigger6 = AnimElem = 23
+trigger7 = AnimElem = 27
+trigger8 = AnimElem = 31
+trigger9 = AnimElem = 35
+trigger10= AnimElem = 41
+value = 2
+
+[State 866, 掴んだ相手のライフ増減,通常]
+type = TargetLifeAdd
+trigger1 = AnimElem = 4
+trigger2 = AnimElem = 8
+trigger3 = AnimElem = 12
+trigger4 = AnimElem = 15
+trigger5 = AnimElem = 19
+trigger6 = AnimElem = 23
+trigger7 = AnimElem = 27
+trigger8 = AnimElem = 31
+trigger9 = AnimElem = 35
+value =-ceil((((1*6.67)+((0*6.67)*fvar(1)))*const(data.attack)*0.01)*2) ;(1,0)
+kill = 0
+
+[State 866, 掴んだ相手のライフ増減,通常]
+type = TargetLifeAdd
+trigger1 = AnimElem = 41
+value =-ceil((((7*6.67)+((5*6.67)*fvar(1)))*const(data.attack)*0.01)*1.5) ;(7,5)
+
+[State 866]
+type = ChangeState
+triggerall = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 795
+ctrl = 0
+
+;--------------------------------------------------------------------------
+;ドール
+[Statedef 867]
+type    = A
+movetype= A
+physics = N
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 867
+sprpriority = 2
+;facep2 = 1
+hitcountpersist = 1
+
+[State 867]
+type = turn
+trigger1 = (Root,Facing = 1) + (Facing = 1) = 2
+trigger2 = (Root,Facing = -1) + (Facing = -1) = 2
+
+[State 867]
+type = PosSet
+trigger1 = 1
+x = Root,Pos X + (2 * Root,P2Dist X * Root,facing)
+y = Root,Pos Y 
+
+[State 867]
+type = Explod
+trigger1 = AnimElem = 22
+trigger2 = AnimElem = 33
+anim = 15004
+pos = 60, -40
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 867]
+type = Explod
+trigger1 = AnimElem = 26
+trigger2 = AnimElem = 37
+anim = 15004
+pos = 50, -40
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 867]
+type = Explod
+trigger1 = AnimElem = 30
+anim = 15004
+pos = 55, -50
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 867]
+type = Explod
+trigger1 = AnimElem = 41
+anim = 15004
+pos = 50, -50
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 867]
+type = Explod
+trigger1 = AnimElem = 45
+trigger2 = AnimElem = 49
+trigger3 = AnimElem = 53
+anim = 15004
+pos = 55, -75
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+removeongethit = 1
+ownpal = 1
+sprpriority = 4
+
+[State 867]
+type = AssertSpecial
+trigger1 = time > 177
+trigger1 = Time%2 = 0
+flag = invisible
+
+[State 867]
+type = ChangeAnim
+trigger1 = Root,StateNo = 795
+value = 47
+
+[State 867]
+type = DestroySelf
+trigger1 = Root,StateNo != 795
+trigger1 = Root,StateNo != 866
+trigger2 = Anim = 47
+trigger2 = AnimTime = 0
+
+;--------------------------------------------------------------------------
+;相手
+[Statedef 868]
+type    = S
+movetype= H
+physics = N
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 5010
+sprpriority = -1
+facep2 = 1
+hitcountpersist = 1
+
+[State 868]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 868]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 868]
+type = ChangeAnim
+trigger1 = time = 49
+trigger2 = time = 72
+trigger3 = time = 95
+value = 5002
+
+[State 868]
+type = ChangeAnim
+trigger1 = time = 63
+trigger2 = time = 79
+trigger3 = time = 110
+trigger4 = time = 118
+trigger5 = time = 130
+trigger6 = time = 142
+value = 5010
+
+[State 868]
+type = ChangeAnim
+trigger1 = time = 119
+trigger2 = time = 131
+trigger3 = time = 143
+value = 5030
+
+[State 868]
+type = ChangeAnim
+trigger1 = time = 155
+value = 5040
+
+[State 868]
+type = VelSet
+trigger1 = time = 124
+y = -2.5
+
+[State 868]
+type = VelAdd
+trigger1 = time = 158
+y = -3.5
+
+[State 868]
+type = VelAdd
+trigger1 = time = [153, 165]
+y = 0.6
+
+[State 868]
+type = SelfState
+trigger1 = time = 165
+value = 5030
+
+;=========================================================================
+;                    グルーミーパペットショウ
+;=========================================================================
+;始動
+[Statedef 900]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 900
+sprpriority = 2
+facep2 = 1
+hitcountpersist = 1
+
+[State 900]
+type = PowerAdd
+trigger1 = AnimElem = 1
+value = -3000   ;Abstract Reordered
+
+[State 900,根性で色を変更]
+type = VarSet
+trigger1 = var(7) >= 6
+var(7) = 0
+
+[State 900,根性で色を変更]
+type = VarAdd
+trigger1 = TimeMod = 3, 0
+var(7) = 1
+
+[State 900,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 0
+Trigger1 = 1
+Time = 2
+add = 0,128,256
+
+[State 900,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 1
+Trigger1 = 1
+Time = 2
+add = 256,256,0
+
+[State 900,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 2
+Trigger1 = 1
+Time = 2
+add = 256,0,0
+
+[State 900,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 3
+Trigger1 = 1
+Time = 2
+add = 0,256,0
+
+[State 900,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 4
+Trigger1 = 1
+Time = 2
+add = 256,0,256
+
+[State 900,根性で色を変更]
+Type = PalFX
+triggerall = var(7) = 5
+Trigger1 = 1
+Time = 2
+add = 256,64,0
+
+;--------------------------
+
+[State 900, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 100, 22
+
+[State 900]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 10900
+pos = 0, 0
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = 3
+ID = 900
+
+[State 900, シルクハット]
+type = Helper
+trigger1 = AnimElem  = 4, = 2
+name = "hat"
+ID = 900
+pos = 62, -60
+postype = p1
+stateno = 10900
+ownpal = 1
+
+[State 900, Hit]
+type = ChangeState
+triggerall = NumHelper(900)
+triggerall = Helper(900),NumTarget
+trigger1 = Helper(900),MoveHit = 1
+trigger2 = Helper(900),var(1) = 1
+value = 901
+ctrl = 0
+
+[State 900]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;--------------------------------------------------------------------------
+;シルクハット
+[Statedef 10900]
+type    = A
+movetype= A
+physics = N
+juggle  = 1
+velset = 3.5,-9
+poweradd = 0
+ctrl = 0
+anim = 10901
+sprpriority = 3
+hitcountpersist = 1
+
+[State 10900]
+type = VelAdd
+trigger1 = 1
+y = 0.6
+
+[State 10900]
+type = VelSet
+trigger1 = Pos Y > 0
+x = 0.25
+y = -3
+
+[State 10900]
+type = VelSet
+triggerall = Pos Y >= 0
+trigger1 = time < 40
+x = 3
+y = -6
+persistent = 0
+
+[State 10900]
+type = VelSet
+triggerall = Pos Y >= 0
+trigger1 = time > 40
+x = 2
+y = -4
+persistent = 0
+
+[State 10900]
+type = VelSet
+trigger1 = MoveContact = 1
+x = 1
+y = -10
+
+[State 10900, ヒット確認]
+type = VarSet
+triggerall = NumTarget(10900)
+trigger1 = Target(10900),StateNo = [950, 959]
+var(1) = 1
+
+[State 10900, ヒット確認]
+type = VarSet
+triggerall = NumTarget(10900)
+trigger1 = Target(10900),StateNo != [950, 959]
+var(1) = 0
+
+[State 10900, ヒット]
+type = VarSet
+trigger1 = Root,MoveType = H
+trigger2 = MoveGuarded
+var(2) = 1
+
+[State 10900]
+type = AssertSpecial
+trigger1 = !MoveHit
+trigger1 = time > 35
+trigger1 = Time%2 = 0
+trigger2 = time >= 65
+flag = invisible
+
+[State 10900]
+type = VelSet
+trigger1 = time >= 65
+x = 0
+y = 0
+
+[State 10900 ヒット定義]
+type = Hitdef
+trigger1 = var(2) = 0
+attr = A, HP
+damage = Ceil((2*6.67)+((2*6.67)*fvar(1))),0 ;(2,2)
+animtype = Hard
+ground.type = High
+air.type = High
+guardflag = MA
+hitflag = MA
+priority = 4, Hit
+pausetime = 0, 0
+sparkno = s15004
+guard.sparkno = s15006
+sparkxy = -5, 0
+hitsound = s4, 0
+guardsound = s6, 0
+ground.slidetime = 23
+guard.slidetime = 22
+ground.hittime  = 23
+guard.hittime  = 22
+air.hittime = 23
+ground.velocity = 0
+air.velocity = -2.5, -4
+getpower = 0,0 
+givepower= 8*7,0 
+P2StateNo = 950
+ID = 10900
+kill = 0
+hitonce = 1
+p1getp2facing = -1
+
+[State 918]
+type = SprPriority
+trigger1 = MoveHit = 1
+value = -2
+
+[State 10900]
+type = TargetFacing
+triggerall = NumTarget(10900)
+trigger1 = (Root,Facing = 1) + (Target,Facing = 1) = 2
+trigger2 = (Root,Facing = -1) + (Target,Facing = -1) = 2
+value = ifelse((Root,Facing=1),-1,1)
+ID = 10900
+
+[State 10900]
+type = PosSet
+triggerall = time >= 65
+triggerall = NumTarget(10900)
+trigger1 = Root,StateNo != [902, 909]
+x = Target(10900),Pos X
+y = Target(10900),Pos Y
+
+[State 10900]
+type = BindToRoot
+triggerall = time >= 65
+triggerall = NumTarget(10900)
+trigger1 = Root,StateNo = [902, 909]
+trigger1 = Root,Time > 100
+time = 1
+pos = 130, -40
+
+[State 10900]
+type = TargetBind
+triggerall = time >= 65
+triggerall = NumTarget(10900)
+trigger1 = Root,StateNo = [902, 909]
+trigger1 = Root,Time > 100
+time = 1
+ID = 10900
+pos = 0, 0
+
+[State 10900]
+type = DestroySelf
+trigger1 = !NumTarget(10900) && (Parent,Anim != [900, 950])
+trigger2 = time > 800
+trigger3 = NumTarget(10900)
+trigger3 = Target(10900),StateNo = 5100
+
+[State 10900, 相手位置]
+type = TargetState
+trigger1 = (Root,StateNo = [902,909]) && (Root,AnimElem = 7)
+value = 951
+
+[State 10900]
+type = TargetState
+triggerall = NumTarget(10900)
+trigger1 = Root,StateNo = [910, 920]
+value = 960+(Root,StateNo-910)
+persistent = 0
+
+[State 10900, 炎]
+type = Explod
+triggerall = NumTarget(10900)
+trigger1 = Target,StateNo = 962
+trigger1 = Target,time = 97
+trigger2 = Target,StateNo = [963, 964]
+trigger2 = Target,time = 118
+anim = 10920
+pos = 0, 0
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+ownpal = 1
+sprpriority = 4
+
+[State 10900, 音声]
+type = PlaySnd
+triggerall = NumTarget(10900)
+trigger1 = Target,StateNo = 962
+trigger1 = Target,time = 100
+trigger2 = Target,StateNo = [963, 964]
+trigger2 = Target,time = 121
+value = 800, 3
+
+[State 10900, 氷]
+type = Explod
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = [963, 964]
+trigger1 = Target,time = 168
+anim = 10930
+ID = 10930
+pos = 0, 0
+postype = p1
+removetime = -1
+bindtime = -1
+scale = 0.9, 1
+ownpal = 1
+sprpriority = 4
+
+[State 10900, 音声]
+type = PlaySnd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = [963, 964]
+trigger1 = Target,time = 168
+value = 800, 4
+
+[State 10900, 氷消去]
+type = RemoveExplod
+triggerall = NumExplod(10930)
+triggerall = NumTarget(10900)
+trigger1 = Target, Pos Y >= 0
+ID = 10930
+
+[State 10900, 氷破裂（小）]
+type = Explod
+triggerall = NumTarget(10900)
+triggerall = Target,PrevStateNo = [963, 964]
+triggerall = Target,StateNo = 965
+trigger1 = Target, Pos Y >= 0
+anim = 10931
+pos = -45, -75
+postype = p1
+scale = 0.9, 1
+ownpal = 1
+sprpriority = 4
+vel = -1.5, -3.5 
+accel = 0, 0.6
+
+[State 10900, 氷破裂（小）]
+type = Explod
+triggerall = NumTarget(10900)
+triggerall = Target,PrevStateNo = [963, 964]
+triggerall = Target,StateNo = 965
+trigger1 = Target, Pos Y >= 0
+anim = 10931
+pos = 25, -65
+postype = p1
+scale = 0.9, 1
+ownpal = 1
+sprpriority = 4
+vel = 2, -3 
+accel = 0, 0.6
+
+[State 10900, 氷破裂（小）]
+type = Explod
+triggerall = NumTarget(10900)
+triggerall = Target,PrevStateNo = [963, 964]
+triggerall = Target,StateNo = 965
+trigger1 = Target, Pos Y >= 0
+anim = 10931
+pos = 35, -25
+postype = p1
+scale = 0.9, 1
+ownpal = 1
+sprpriority = 4
+vel = 1, -4 
+accel = 0, 0.6
+
+[State 10900, 氷破裂（大）]
+type = Explod
+triggerall = NumTarget(10900)
+triggerall = Target,PrevStateNo = [963, 964]
+triggerall = Target,StateNo = 965
+trigger1 = Target, Pos Y >= 0
+anim = 10932
+pos = -40, -35
+postype = p1
+scale = 0.9, 1
+ownpal = 1
+sprpriority = 4
+vel = -1.5, -3 
+accel = 0, 0.6
+
+[State 10900, 氷破裂（大）]
+type = Explod
+triggerall = NumTarget(10900)
+triggerall = Target,PrevStateNo = [963, 964]
+triggerall = Target,StateNo = 965
+trigger1 = Target, Pos Y >= 0
+anim = 10932
+pos = 45, -30
+postype = p1
+scale = 0.9, 1
+ownpal = 1
+sprpriority = 4
+vel = 1, -3.5 
+accel = 0, 0.6
+
+[State 10900,0~24]
+type = TargetLifeAdd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = 960
+trigger1 = Target,time = 70
+value = -ceil(((14*6.67)+((6*6.67)*fvar(1)))*Root,const(data.attack)*0.01) ;(14,6)
+
+[State 10900,25~49]
+type = TargetLifeAdd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = 961
+trigger1 = Target,time = 59
+value = -ceil(((21*6.67)+((7*6.67)*fvar(1)))*Root,const(data.attack)*0.01) ;(21,7)
+
+[State 10900,50~74]
+type = TargetLifeAdd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = 962
+trigger1 = Target,time = 59
+value = -ceil(((5*6.67)+((3*6.67)*fvar(1)))*Root,const(data.attack)*0.01) ;(5,3)
+kill = 0
+
+[State 10900,50~74]
+type = TargetLifeAdd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = 962
+trigger1 = Target,time = 100
+value = -ceil(((25*6.67)+((6*6.67)*fvar(1)))*Root,const(data.attack)*0.01) ;(25,6)
+
+[State 10900,75~94]
+type = TargetLifeAdd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = 963
+trigger1 = Target,time = 78
+value = -ceil(((6*6.67)+((1*6.67)*fvar(1)))*Root,const(data.attack)*0.01) ;(6,1)
+kill = 0
+
+[State 10900,75~94]
+type = TargetLifeAdd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = 963
+trigger1 = Target,time = 118
+value = -ceil(((10*6.67)+((2*6.67)*fvar(1)))*Root,const(data.attack)*0.01) ;(10,2)
+kill = 0
+
+[State 10900,75~94]
+type = TargetLifeAdd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = 963
+trigger1 = Target,time = 168
+value = -ceil(((28*6.67)+((4*6.67)*fvar(1)))*Root,const(data.attack)*0.01) ;(28,4)
+
+[State 10900,95~]
+type = TargetLifeAdd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = 964
+trigger1 = Target,time = 78
+value = -ceil(((9*6.67)+((1*6.67)*fvar(1)))*Root,const(data.attack)*0.01) ;(9,1)
+kill = 0
+
+[State 10900,95~]
+type = TargetLifeAdd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = 964
+trigger1 = Target,time = 118
+value = -ceil(((14*6.67)+((2*6.67)*fvar(1)))*Root,const(data.attack)*0.01) ;(14,2)
+kill = 0
+
+[State 10900,95~]
+type = TargetLifeAdd
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = 964
+trigger1 = Target,time = 168
+value = -ceil(((35*6.67)+((4*6.67)*fvar(1)))*Root,const(data.attack)*0.01) ;(35,4)
+
+[State 10900, x]
+type = TargetState
+triggerall = Root,StateNo = [902, 907]
+triggerall = Root,Time >= 150
+trigger1 = Root,command = "x"
+value = 952
+
+[State 10900, y]
+type = TargetState
+triggerall = Root,StateNo = [902, 907]
+triggerall = Root,Time >= 150
+trigger1 = Root,command = "y"
+value = 953
+
+[State 10900, z]
+type = TargetState
+triggerall = Root,StateNo = [902, 907]
+triggerall = Root,Time >= 150
+trigger1 = Root,command = "z"
+value = 954
+
+[State 10900, a]
+type = TargetState
+triggerall = Root,StateNo = [902, 907]
+triggerall = Root,Time >= 150
+trigger1 = Root,command = "a"
+value = 955
+
+[State 10900, b]
+type = TargetState
+triggerall = Root,StateNo = [902, 907]
+triggerall = Root,Time >= 150
+trigger1 = Root,command = "b"
+value = 956
+
+[State 10900, c]
+type = TargetState
+triggerall = Root,StateNo = [902, 907]
+triggerall = Root,Time >= 150
+trigger1 = Root,command = "c"
+value = 957
+
+[State 10900, バグ防止]
+type = TargetState
+triggerall = NumTarget(10900)
+triggerall = Target,StateNo = [950, 965]
+triggerall = Target,StateNo != 966
+trigger1 = Root,MoveType = H
+trigger2 = var(2) = 1
+value = 966
+
+;--------------------------------------------------------------------------
+;移動
+[Statedef 901]
+type    = A
+movetype= I
+physics = N
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 901
+sprpriority = -2
+facep2 = 1
+hitcountpersist = 1
+
+[State 901, バグ防止]
+type = ChangeState
+trigger1 = Helper(900),NumTarget(10900) = 0
+value = 0
+ctrl = 1
+
+[State 901, 点数リセット]
+type = VarSet
+trigger1 = time = 0
+var(9) = 0
+
+[State 901, 点数リセット]
+type = VarSet
+trigger1 = time = 0
+var(10) = 0
+
+[State 901, リセット]
+type = VarSet
+trigger1 = time = 0
+var(11) = 0
+
+[State 901]
+type = VelSet
+trigger1 = time = 0
+x = (P2Dist X - 130) * 0.0796
+y = -6
+
+[State 901]
+type = Gravity
+trigger1 = StateType = A
+
+[State 901]
+type = StateTypeSet
+trigger1 = AnimElem = 5
+StateType = S
+physics = S
+
+[State 901]
+type = VelSet
+trigger1 = AnimElem = 5
+x = 0
+y = 0
+
+[State 901]
+type = PosSet
+trigger1 = AnimElem = 5
+y = 0
+
+[State 901, 音声]
+type = PlaySnd
+trigger1 = AnimTime = 0
+value = 100, 23
+
+[State 901, 音声]
+type = PlaySnd
+trigger1 = AnimTime = 0
+value = 800, 1
+
+[State 901]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = Ifelse(Random<310,902,Ifelse(Random<590,903,Ifelse(Random<900,904,Ifelse(Random<930,906,Ifelse(Random<965,906,906)))))
+;902 903 904 905 906 907  910から結果発表
+ctrl = 0
+
+;--------------------------------------------------------------------------
+;パターン1
+[Statedef 902]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 902
+sprpriority = -2
+;facep2 = 1
+hitcountpersist = 1
+
+;^^^^^^[エフェクト]^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[State 902,煙]
+type = Explod
+trigger1 = time = 0
+trigger2 = time = 1
+trigger3 = time = 2
+trigger4 = time = 3
+trigger5 = time = 4
+trigger6 = time = 5
+trigger7 = time = 6
+anim = 16000
+ID = 16000
+random = 40, 60
+pos = 0, -40
+postype = p1
+ontop = 1
+ownpal = 1
+
+[State 902, カーテン]
+type = Explod
+trigger1 = Time = 0
+anim = 10902
+pos = 130, -200
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = -1
+;ontop = 1
+ID = 901
+
+[State 902, 紐]
+type = Explod
+trigger1 = Time = 0
+anim = 10903
+pos = 0, -300
+postype = p1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = -1
+vel = 0, 5
+ID = 903
+
+[State 902]
+type = ModifyExplod
+trigger1 = time = 61
+ID = 903
+postype = p1
+ownpal = 1
+removeongethit = 1 
+vel = 0, 0
+
+[State 902]
+type = ModifyExplod
+trigger1 = time = 273
+ID = 903
+postype = p1
+ownpal = 1
+removeongethit = 1 
+vel = 0, -20
+
+[State 902, お立ち台]
+type = Explod
+trigger1 = AnimElem = 10
+anim = ifelse(facing=1,10904,10907)
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = -3
+vel = 0, 0
+ID = 905
+
+[State 902, ライト]
+type = Explod
+trigger1 = AnimElem = 10
+anim = 10905
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 0, 0, 10
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 905
+
+[State 902, 照明]
+type = Explod
+trigger1 = AnimElem = 10
+anim = 10906
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 0, 0, 10
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = -1
+vel = 0, 0
+ID = 905
+
+[State 902, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 50
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 915
+ownpal = 1
+
+[State 902, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 52
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 916
+ownpal = 1
+
+[State 902, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 54
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 917
+ownpal = 1
+
+[State 902, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 56
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 918
+ownpal = 1
+
+[State 902, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 57
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 922
+ownpal = 1
+
+[State 902, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 55
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 921
+ownpal = 1
+
+[State 902, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 53
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 920
+ownpal = 1
+
+[State 902, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 51
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 919
+ownpal = 1
+
+[State 902, READY]
+type = Explod
+trigger1 = AnimElem = 6, = 19
+anim = ifelse(facing=1,10940,10941)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+ontop = 1
+facing = ifelse(facing=1,1,-1)
+
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+;コマンド入力
+[State 902, コマンド出現]
+type = Explod
+trigger1 = AnimElem = 6, = 19
+anim = ifelse(facing=1,10910,10913)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = 4
+vel = 0, 0
+ID = 910
+
+[State 902]
+type = PlaySND
+trigger1 = AnimElem = 6, = 19
+value = 950, 0
+loop = 1
+channel = 5
+
+[State 902]
+type = PlaySND
+trigger1 = AnimElem = 10
+value = 800, 6
+
+;----お手本--------------
+[State 902, 弱P]
+type = Explod
+trigger1 = time = 37
+trigger2 = time = 77
+trigger3 = time = 90
+trigger4 = time = 134
+anim = ifelse(facing=1,10911,10914)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 910
+
+[State 902, 中P]
+type = Explod
+trigger1 = time = 61
+trigger2 = time = 120
+anim = ifelse(facing=1,10911,10914)
+pos = ifelse(facing=1,16,-16), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 910
+
+;-----------------本番----------------------------
+
+[State 902, 弱P]
+type = Explod
+trigger1 = time = 150
+trigger2 = time = 194
+trigger3 = time = 208
+trigger4 = time = 250
+trigger5 = time = 265
+trigger6 = time = 309
+trigger7 = time = 322
+trigger8 = time = 365
+trigger9 = time = 381
+ID = 1
+anim = ifelse(facing=1,10911,10914)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 902, 中P]
+type = Explod
+trigger1 = time = 178
+trigger2 = time = 236
+trigger3 = time = 293
+trigger4 = time = 352
+ID = 2
+anim = ifelse(facing=1,10911,10914)
+pos = ifelse(facing=1,16,-16), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 902, 隠し]
+type = Explod
+trigger1 = time = 164
+trigger2 = time = 223
+trigger3 = time = 280
+trigger4 = time = 337
+ID = 3
+anim = 10916
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 902, 弱Ｐ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [150, 156]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="x",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [150, 156]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 弱Ｐ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [194, 200]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="x",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [194, 200]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 弱Ｐ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [208, 214]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="x",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [208, 214]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 弱Ｐ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [250, 256]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="x",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [250, 256]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 弱Ｐ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [265, 271]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="x",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [265, 271]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 弱Ｐ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [309, 315]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="x",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [309, 315]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 弱Ｐ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [322, 328]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="x",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [322, 328]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 弱Ｐ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [365, 371]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="x",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [365, 371]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 弱Ｐ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [381, 387]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="x",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [381, 387]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 中Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [178, 184]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="y",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [178, 184]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 中Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [236, 242]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="y",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [236, 242]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 中Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [293, 299]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="y",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [293, 299]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 中Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [352, 358]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="y",50,30)
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [352, 358]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [164, 170]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [164, 170]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [223, 229]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [223, 229]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [280, 286]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [280, 286]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [337, 343]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 902, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [337, 343]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 902, 入力ミス]
+type = VarAdd
+triggerall = time >= 150
+triggerall = NumExplod(1) = 0
+triggerall = NumExplod(2) = 0
+triggerall = NumExplod(3) = 0
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = -20
+
+[State 902, 吹き出し消去]
+type = RemoveExplod
+triggerall = NumExplod(10950)
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+trigger3 = AnimTime = 0
+ID = 10950
+
+[State 902, GOOD!]
+type = Explod
+triggerall = time >= 150
+triggerall = command = "x" || command = "y" || command = "z" || command = "a" || command = "b" || command = "c"
+trigger1 = NumExplod(1)
+trigger2 = NumExplod(2)
+trigger3 = NumExplod(3)
+anim = ifelse(command="x",ifelse(facing=-1,10944,10945),ifelse(command="y",ifelse(facing=-1,10944,10945),ifelse(command="z",ifelse(facing=-1,10944,10945),ifelse(facing=-1,10945,10944))))
+ID = 10950
+pos = ifelse(command="x",70,ifelse(command="y",70,ifelse(command="z",70,190))),ifelse((command="x"||command="a"),-120,ifelse((command="y"||command="b"),-95,-70))
+postype = p1
+ontop = 1
+ownpal = 1
+facing = ifelse(facing=-1,-1,1)
+
+[State 902, ・・・・]
+type = Explod
+triggerall = time >= 150
+triggerall = NumExplod(1) = 0
+triggerall = NumExplod(2) = 0
+triggerall = NumExplod(3) = 0
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+anim = ifelse(command="x",ifelse(facing=-1,10942,10943),ifelse(command="y",ifelse(facing=-1,10942,10943),ifelse(command="z",ifelse(facing=-1,10942,10943),ifelse(facing=-1,10943,10942))))
+ID = 10950
+pos = ifelse(command="x",70,ifelse(command="y",70,ifelse(command="z",70,190))),ifelse((command="x"||command="a"),-120,ifelse((command="y"||command="b"),-95,-70))
+postype = p1
+ontop = 1
+ownpal = 1
+facing = ifelse(facing=-1,-1,1)
+
+[State 902, コマンド消去]
+type = RemoveExplod
+trigger1 = Animtime = 0
+ID = 910
+
+[State 902, 吹き出し消去（バグ防止）]
+type = RemoveExplod
+triggerall = NumExplod(10950)
+trigger1 = Animtime = 0
+ID = 10950
+
+[State 902]
+type = StopSND
+trigger1 = AnimTime = 0
+channel = 5
+
+[State 902]
+type = VarSet
+trigger1 = var(9) < 0
+var(9) = 0
+
+[State 902]
+type = VarSet
+trigger1 = AnimTime = 0
+var(10) = Ceil(var(9)*0.0015385*100)
+
+[State 902, 終了]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = ifelse(var(10)<=24,910,ifelse(var(10)<=49,911,ifelse(var(10)<=74,912,ifelse(var(10)<=94,913,914))))
+ctrl = 0
+
+;--------------------------------------------------------------------------
+;パターン2
+[Statedef 903]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 902
+sprpriority = -2
+;facep2 = 1
+hitcountpersist = 1
+
+;^^^^^^[エフェクト]^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[State 903,煙]
+type = Explod
+trigger1 = time = 0
+trigger2 = time = 1
+trigger3 = time = 2
+trigger4 = time = 3
+trigger5 = time = 4
+trigger6 = time = 5
+trigger7 = time = 6
+anim = 16000
+ID = 16000
+random = 40, 60
+pos = 0, -40
+postype = p1
+ontop = 1
+ownpal = 1
+
+[State 903, カーテン]
+type = Explod
+trigger1 = Time = 0
+anim = 10902
+pos = 130, -200
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = -1
+;ontop = 1
+ID = 901
+
+[State 903, 紐]
+type = Explod
+trigger1 = Time = 0
+anim = 10903
+pos = 0, -300
+postype = p1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = -1
+vel = 0, 5
+ID = 903
+
+[State 903]
+type = ModifyExplod
+trigger1 = time = 61
+ID = 903
+postype = p1
+ownpal = 1
+removeongethit = 1 
+vel = 0, 0
+
+[State 903]
+type = ModifyExplod
+trigger1 = time = 273
+ID = 903
+postype = p1
+ownpal = 1
+removeongethit = 1 
+vel = 0, -20
+
+[State 903, お立ち台]
+type = Explod
+trigger1 = AnimElem = 10
+anim = ifelse(facing=1,10904,10907)
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = -3
+vel = 0, 0
+ID = 905
+
+[State 903, ライト]
+type = Explod
+trigger1 = AnimElem = 10
+anim = 10905
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 0, 0, 10
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 905
+
+[State 903, 照明]
+type = Explod
+trigger1 = AnimElem = 10
+anim = 10906
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 0, 0, 10
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = -1
+vel = 0, 0
+ID = 905
+
+[State 903, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 50
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 915
+ownpal = 1
+
+[State 903, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 52
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 916
+ownpal = 1
+
+[State 903, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 54
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 917
+ownpal = 1
+
+[State 903, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 56
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 918
+ownpal = 1
+
+[State 903, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 57
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 922
+ownpal = 1
+
+[State 903, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 55
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 921
+ownpal = 1
+
+[State 903, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 53
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 920
+ownpal = 1
+
+[State 903, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 51
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 919
+ownpal = 1
+
+[State 903, READY]
+type = Explod
+trigger1 = AnimElem = 6, = 19
+anim = ifelse(facing=1,10940,10941)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+ontop = 1
+facing = ifelse(facing=1,1,-1)
+
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+;コマンド入力
+[State 903, コマンド出現]
+type = Explod
+trigger1 = AnimElem = 6, = 19
+anim = ifelse(facing=1,10910,10913)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = 4
+vel = 0, 0
+ID = 910
+
+[State 903]
+type = PlaySND
+trigger1 = AnimElem = 6, = 19
+value = 950, 1
+loop = 1
+channel = 5
+
+[State 903]
+type = PlaySND
+trigger1 = AnimElem = 10
+value = 800, 6
+
+;----お手本--------------
+[State 903, 弱K]
+type = Explod
+trigger1 = time = 37
+trigger2 = time = 53
+trigger3 = time = 75
+trigger4 = time = 89
+anim = ifelse(facing=1,10912,10915)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 910
+
+[State 903, 強P]
+type = Explod
+trigger1 = time = 119
+anim = ifelse(facing=1,10911,10914)
+pos = ifelse(facing=1,32,-32), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 910
+
+;-----------------本番----------------------------
+
+[State 903, 弱K]
+type = Explod
+trigger1 = time = 148
+trigger2 = time = 170
+trigger3 = time = 193
+trigger4 = time = 206
+trigger5 = time = 265
+trigger6 = time = 287
+trigger7 = time = 310
+trigger8 = time = 324
+trigger9 = time = 382
+ID = 1
+anim = ifelse(facing=1,10912,10915)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 903, 強P]
+type = Explod
+trigger1 = time = 236
+trigger2 = time = 354
+ID = 2
+anim = ifelse(facing=1,10911,10914)
+pos = ifelse(facing=1,32,-32), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 902, 隠し]
+type = Explod
+trigger1 = time = 221
+trigger2 = time = 250
+trigger3 = time = 339
+trigger4 = time = 369
+ID = 3
+anim = 10916
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 903, 弱K]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [148, 154]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="a",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [148, 154]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 弱K]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [170, 176]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="a",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [170, 176]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 弱K]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [193, 199]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="a",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [193, 199]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 弱K]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [206, 212]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="a",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [206, 212]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 弱K]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [265, 271]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="a",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [265, 271]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 弱K]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [287, 293]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="a",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [287, 293]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 弱K]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [310, 316]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="a",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [310, 316]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 弱K]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [324, 330]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="a",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [324, 330]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 弱K]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [382, 388]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="a",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [382, 388]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 強Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [236, 242]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="z",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [236, 242]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 強Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [354, 360]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="z",50,30)
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [354, 360]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [221, 227]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [221, 227]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [250, 256]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [250, 256]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [339, 345]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [339, 345]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [369, 375]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 903, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [369, 375]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 903, 入力ミス]
+type = VarAdd
+triggerall = time >= 150
+triggerall = NumExplod(1) = 0
+triggerall = NumExplod(2) = 0
+triggerall = NumExplod(3) = 0
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = -20
+
+[State 903, 吹き出し消去]
+type = RemoveExplod
+triggerall = NumExplod(10950)
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+trigger3 = AnimTime = 0
+ID = 10950
+
+[State 903, GOOD!]
+type = Explod
+triggerall = time >= 150
+triggerall = command = "x" || command = "y" || command = "z" || command = "a" || command = "b" || command = "c"
+trigger1 = NumExplod(1)
+trigger2 = NumExplod(2)
+trigger3 = NumExplod(3)
+anim = ifelse(command="x",ifelse(facing=-1,10944,10945),ifelse(command="y",ifelse(facing=-1,10944,10945),ifelse(command="z",ifelse(facing=-1,10944,10945),ifelse(facing=-1,10945,10944))))
+ID = 10950
+pos = ifelse(command="x",70,ifelse(command="y",70,ifelse(command="z",70,190))),ifelse((command="x"||command="a"),-120,ifelse((command="y"||command="b"),-95,-70))
+postype = p1
+ontop = 1
+ownpal = 1
+facing = ifelse(facing=-1,-1,1)
+
+[State 903, ・・・・]
+type = Explod
+triggerall = time >= 150
+triggerall = NumExplod(1) = 0
+triggerall = NumExplod(2) = 0
+triggerall = NumExplod(3) = 0
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+anim = ifelse(command="x",ifelse(facing=-1,10942,10943),ifelse(command="y",ifelse(facing=-1,10942,10943),ifelse(command="z",ifelse(facing=-1,10942,10943),ifelse(facing=-1,10943,10942))))
+ID = 10950
+pos = ifelse(command="x",70,ifelse(command="y",70,ifelse(command="z",70,190))),ifelse((command="x"||command="a"),-120,ifelse((command="y"||command="b"),-95,-70))
+postype = p1
+ontop = 1
+ownpal = 1
+facing = ifelse(facing=-1,-1,1)
+
+[State 903, コマンド消去]
+type = RemoveExplod
+trigger1 = Animtime = 0
+ID = 910
+
+[State 903, 吹き出し消去（バグ防止）]
+type = RemoveExplod
+triggerall = NumExplod(10950)
+trigger1 = Animtime = 0
+ID = 10950
+
+[State 903]
+type = StopSND
+trigger1 = AnimTime = 0
+channel = 5
+
+[State 903]
+type = VarSet
+trigger1 = var(9) < 0
+var(9) = 0
+
+[State 903]
+type = VarSet
+trigger1 = AnimTime = 0
+var(10) = Ceil(var(9)*0.0018182*100)
+
+[State 903, 終了]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = ifelse(var(10)<=24,910,ifelse(var(10)<=49,911,ifelse(var(10)<=74,912,ifelse(var(10)<=94,913,914))))
+ctrl = 0
+
+;--------------------------------------------------------------------------
+;パターン3
+[Statedef 904]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 902
+sprpriority = -2
+;facep2 = 1
+hitcountpersist = 1
+
+;^^^^^^[エフェクト]^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[State 904,煙]
+type = Explod
+trigger1 = time = 0
+trigger2 = time = 1
+trigger3 = time = 2
+trigger4 = time = 3
+trigger5 = time = 4
+trigger6 = time = 5
+trigger7 = time = 6
+anim = 16000
+ID = 16000
+random = 40, 60
+pos = 0, -40
+postype = p1
+ontop = 1
+ownpal = 1
+
+[State 904, カーテン]
+type = Explod
+trigger1 = Time = 0
+anim = 10902
+pos = 130, -200
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = -1
+;ontop = 1
+ID = 901
+
+[State 904, 紐]
+type = Explod
+trigger1 = Time = 0
+anim = 10903
+pos = 0, -300
+postype = p1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = -1
+vel = 0, 5
+ID = 903
+
+[State 904]
+type = ModifyExplod
+trigger1 = time = 61
+ID = 903
+postype = p1
+ownpal = 1
+removeongethit = 1 
+vel = 0, 0
+
+[State 904]
+type = ModifyExplod
+trigger1 = time = 273
+ID = 903
+postype = p1
+ownpal = 1
+removeongethit = 1 
+vel = 0, -20
+
+[State 904, お立ち台]
+type = Explod
+trigger1 = AnimElem = 10
+anim = ifelse(facing=1,10904,10907)
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = -3
+vel = 0, 0
+ID = 905
+
+[State 904, ライト]
+type = Explod
+trigger1 = AnimElem = 10
+anim = 10905
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 0, 0, 10
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 905
+
+[State 904, 照明]
+type = Explod
+trigger1 = AnimElem = 10
+anim = 10906
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 0, 0, 10
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = -1
+vel = 0, 0
+ID = 905
+
+[State 904, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 50
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 915
+ownpal = 1
+
+[State 904, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 52
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 916
+ownpal = 1
+
+[State 904, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 54
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 917
+ownpal = 1
+
+[State 904, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 56
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 918
+ownpal = 1
+
+[State 904, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 57
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 922
+ownpal = 1
+
+[State 904, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 55
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 921
+ownpal = 1
+
+[State 904, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 53
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 920
+ownpal = 1
+
+[State 904, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 51
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 919
+ownpal = 1
+
+[State 904, READY]
+type = Explod
+trigger1 = AnimElem = 6, = 19
+anim = ifelse(facing=1,10940,10941)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+ontop = 1
+facing = ifelse(facing=1,1,-1)
+
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+;コマンド入力
+[State 904, コマンド出現]
+type = Explod
+trigger1 = AnimElem = 6, = 19
+anim = ifelse(facing=1,10910,10913)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = 4
+vel = 0, 0
+ID = 910
+
+[State 904]
+type = PlaySND
+trigger1 = AnimElem = 6, = 19
+value = 950, 2
+loop = 1
+channel = 5
+
+[State 904]
+type = PlaySND
+trigger1 = AnimElem = 10
+value = 800, 6
+
+;----お手本--------------
+[State 904, 中K]
+type = Explod
+trigger1 = time = 38
+trigger2 = time = 85
+trigger3 = time = 92
+trigger4 = time = 106
+anim = ifelse(facing=1,10912,10915)
+pos = ifelse(facing=1,16,-16), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 910
+
+[State 904, 中P]
+type = Explod
+trigger1 = time = 62
+trigger2 = time = 135
+anim = ifelse(facing=1,10911,10914)
+pos = ifelse(facing=1,16,-16), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 910
+
+;-----------------本番----------------------------
+
+[State 904, 中K]
+type = Explod
+trigger1 = time = 152
+trigger2 = time = 201
+trigger3 = time = 208
+trigger4 = time = 223
+trigger5 = time = 269
+trigger6 = time = 318
+trigger7 = time = 325
+trigger8 = time = 340
+trigger9 = time = 386
+ID = 1
+anim = ifelse(facing=1,10912,10915)
+pos = ifelse(facing=1,16,-16), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 904, 中P]
+type = Explod
+trigger1 = time = 179
+trigger2 = time = 252
+trigger3 = time = 296
+trigger4 = time = 369
+ID = 2
+anim = ifelse(facing=1,10911,10914)
+pos = ifelse(facing=1,16,-16), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 904, 隠し]
+type = Explod
+trigger1 = time = 165
+trigger2 = time = 237
+trigger3 = time = 283
+trigger4 = time = 353
+ID = 3
+anim = 10916
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 904, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [152, 158]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [152, 158]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [201, 207]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [201, 207]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [208, 214]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [208, 214]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [223, 229]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [223, 229]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [269, 275]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [269, 275]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [318, 324]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [318, 324]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [325, 331]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [325, 331]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [340, 346]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [340, 346]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [386, 392]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [386, 392]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [179, 185]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="y",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [179, 185]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [252, 258]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="y",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [252, 258]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [296, 302]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="y",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [296, 302]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 中Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [369, 375]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="y",50,30)
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [369, 375]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [165, 170]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [165, 170]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [237, 243]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [237, 243]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [283, 289]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [283, 289]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [353, 359]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 904, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [353, 359]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 904, 入力ミス]
+type = VarAdd
+triggerall = time >= 150
+triggerall = NumExplod(1) = 0
+triggerall = NumExplod(2) = 0
+triggerall = NumExplod(3) = 0
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = -20
+
+[State 904, 吹き出し消去]
+type = RemoveExplod
+triggerall = NumExplod(10950)
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+trigger3 = AnimTime = 0
+ID = 10950
+
+[State 904, GOOD!]
+type = Explod
+triggerall = time >= 150
+triggerall = command = "x" || command = "y" || command = "z" || command = "a" || command = "b" || command = "c"
+trigger1 = NumExplod(1)
+trigger2 = NumExplod(2)
+trigger3 = NumExplod(3)
+anim = ifelse(command="x",ifelse(facing=-1,10944,10945),ifelse(command="y",ifelse(facing=-1,10944,10945),ifelse(command="z",ifelse(facing=-1,10944,10945),ifelse(facing=-1,10945,10944))))
+ID = 10950
+pos = ifelse(command="x",70,ifelse(command="y",70,ifelse(command="z",70,190))),ifelse((command="x"||command="a"),-120,ifelse((command="y"||command="b"),-95,-70))
+postype = p1
+ontop = 1
+ownpal = 1
+facing = ifelse(facing=-1,-1,1)
+
+[State 904, ・・・・]
+type = Explod
+triggerall = time >= 150
+triggerall = NumExplod(1) = 0
+triggerall = NumExplod(2) = 0
+triggerall = NumExplod(3) = 0
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+anim = ifelse(command="x",ifelse(facing=-1,10942,10943),ifelse(command="y",ifelse(facing=-1,10942,10943),ifelse(command="z",ifelse(facing=-1,10942,10943),ifelse(facing=-1,10943,10942))))
+ID = 10950
+pos = ifelse(command="x",70,ifelse(command="y",70,ifelse(command="z",70,190))),ifelse((command="x"||command="a"),-120,ifelse((command="y"||command="b"),-95,-70))
+postype = p1
+ontop = 1
+ownpal = 1
+facing = ifelse(facing=-1,-1,1)
+
+[State 904, コマンド消去]
+type = RemoveExplod
+trigger1 = Animtime = 0
+ID = 910
+
+[State 904, 吹き出し消去（バグ防止）]
+type = RemoveExplod
+triggerall = NumExplod(10950)
+trigger1 = Animtime = 0
+ID = 10950
+
+[State 904]
+type = StopSND
+trigger1 = AnimTime = 0
+channel = 5
+
+[State 904]
+type = VarSet
+trigger1 = var(9) < 0
+var(9) = 0
+
+[State 904]
+type = VarSet
+trigger1 = AnimTime = 0
+var(10) = Ceil(var(9)*0.0015385*100)
+
+[State 904, 終了]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = ifelse(var(10)<=24,910,ifelse(var(10)<=49,911,ifelse(var(10)<=74,912,ifelse(var(10)<=94,913,914))))
+ctrl = 0
+
+;--------------------------------------------------------------------------
+;パターン5
+[Statedef 906]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 902
+sprpriority = -2
+;facep2 = 1
+hitcountpersist = 1
+
+;^^^^^^[エフェクト]^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[State 906,煙]
+type = Explod
+trigger1 = time = 0
+trigger2 = time = 1
+trigger3 = time = 2
+trigger4 = time = 3
+trigger5 = time = 4
+trigger6 = time = 5
+trigger7 = time = 6
+anim = 16000
+ID = 16000
+random = 40, 60
+pos = 0, -40
+postype = p1
+ontop = 1
+ownpal = 1
+
+[State 906, カーテン]
+type = Explod
+trigger1 = Time = 0
+anim = 10902
+pos = 130, -200
+postype = p1
+bindtime = -1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = -1
+;ontop = 1
+ID = 901
+
+[State 906, 紐]
+type = Explod
+trigger1 = Time = 0
+anim = 10903
+pos = 0, -300
+postype = p1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+ownpal = 1
+sprpriority = -1
+vel = 0, 5
+ID = 903
+
+[State 906]
+type = ModifyExplod
+trigger1 = time = 61
+ID = 903
+postype = p1
+ownpal = 1
+removeongethit = 1 
+vel = 0, 0
+
+[State 906]
+type = ModifyExplod
+trigger1 = time = 273
+ID = 903
+postype = p1
+ownpal = 1
+removeongethit = 1 
+vel = 0, -20
+
+[State 906, お立ち台]
+type = Explod
+trigger1 = AnimElem = 10
+anim = ifelse(facing=1,10904,10907)
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 16, 16, 16
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = -3
+vel = 0, 0
+ID = 905
+
+[State 906, ライト]
+type = Explod
+trigger1 = AnimElem = 10
+anim = 10905
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 0, 0, 10
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 905
+
+[State 906, 照明]
+type = Explod
+trigger1 = AnimElem = 10
+anim = 10906
+pos = 130, 0
+postype = p1
+scale = 0.9, 1
+shadow = 0, 0, 10
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = -1
+vel = 0, 0
+ID = 905
+
+[State 906, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 50
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 915
+ownpal = 1
+
+[State 906, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 52
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 916
+ownpal = 1
+
+[State 906, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 54
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 917
+ownpal = 1
+
+[State 906, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 56
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 918
+ownpal = 1
+
+[State 906, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 57
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 922
+ownpal = 1
+
+[State 906, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 55
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 921
+ownpal = 1
+
+[State 906, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 53
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 920
+ownpal = 1
+
+[State 906, 蝙蝠]
+type = Helper
+trigger1 = AnimElem = 6, = 51
+type = Helper
+name = "bat"
+ID = 905
+pos = 130, -100
+postype = p1
+stateno = 919
+ownpal = 1
+
+[State 906, READY]
+type = Explod
+trigger1 = AnimElem = 6, = 19
+anim = ifelse(facing=1,10940,10941)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+ontop = 1
+facing = ifelse(facing=1,1,-1)
+
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+;コマンド入力
+[State 906, コマンド出現]
+type = Explod
+trigger1 = AnimElem = 6, = 19
+anim = ifelse(facing=1,10910,10913)
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+removetime = -1
+ownpal = 1
+sprpriority = 4
+vel = 0, 0
+ID = 910
+
+[State 906]
+type = PlaySND
+trigger1 = AnimElem = 6, = 19
+value = 950, 4
+loop = 1
+channel = 5
+
+[State 906]
+type = PlaySND
+trigger1 = AnimElem = 10
+value = 800, 6
+
+;----お手本--------------
+[State 906, 中K]
+type = Explod
+trigger1 = time = 37
+trigger2 = time = 77
+trigger3 = time = 106
+trigger4 = time = 128
+anim = ifelse(facing=1,10912,10915)
+pos = ifelse(facing=1,16,-16), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 910
+
+[State 906, 強P]
+type = Explod
+trigger1 = time = 49
+trigger2 = time = 70
+trigger3 = time = 92
+trigger4 = time = 136
+anim = ifelse(facing=1,10911,10914)
+pos = ifelse(facing=1,32,-32), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+ID = 910
+
+;-----------------本番----------------------------
+
+[State 906, 中K]
+type = Explod
+trigger1 = time = 150
+trigger2 = time = 194
+trigger3 = time = 223
+trigger4 = time = 245
+trigger5 = time = 267
+trigger6 = time = 311
+trigger7 = time = 340
+trigger8 = time = 362
+trigger9 = time = 384
+ID = 1
+anim = ifelse(facing=1,10912,10915)
+pos = ifelse(facing=1,16,-16), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 906, 強P]
+type = Explod
+trigger1 = time = 164
+trigger2 = time = 187
+trigger3 = time = 209
+trigger4 = time = 253
+trigger5 = time = 281
+trigger6 = time = 304
+trigger7 = time = 326
+trigger8 = time = 370
+ID = 2
+anim = ifelse(facing=1,10911,10914)
+pos = ifelse(facing=1,32,-32), 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 906, 隠し]
+type = Explod
+trigger1 = time = 157
+trigger2 = time = 238
+trigger3 = time = 274
+trigger4 = time = 358
+ID = 3
+anim = 10916
+pos = 0, 0
+postype = p1
+scale = 1, 1
+shadow = 0, 0, 0
+removeongethit = 1
+ownpal = 1
+sprpriority = 5
+vel = 0, 0
+
+[State 906, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [150, 156]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [150, 156]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [194, 200]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [194, 200]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [223, 229]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [223, 229]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [245, 251]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [245, 251]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [267, 273]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [267, 273]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [311, 317]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [311, 317]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [340, 346]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [340, 346]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [362, 368]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [362, 368]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 中Ｋ]
+type = VarAdd
+triggerall = NumExplod(1)
+triggerall = time = [384, 390]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="b",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(1)
+triggerall = time = [384, 390]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 強Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [164, 170]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="z",50,30)
+persistent = 0
+
+[State 905, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [164, 170]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 強Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [187, 193]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="z",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [187, 193]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 強Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [209, 215]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="z",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [209, 215]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 強Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [253, 259]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="z",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [253, 259]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 強Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [281, 287]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="z",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [281, 287]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 強Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [304, 310]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="z",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [304, 310]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 強Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [326, 332]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="z",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [326, 332]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 強Ｐ入力]
+type = VarAdd
+triggerall = NumExplod(2)
+triggerall = time = [370, 376]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = ifelse(command="z",50,30)
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(2)
+triggerall = time = [370, 376]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [157, 163]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [157, 163]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [238, 244]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [238, 244]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [274, 280]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [274, 280]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 隠し入力]
+type = VarAdd
+triggerall = NumExplod(3)
+triggerall = time = [358, 364]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = 20
+persistent = 0
+
+[State 906, 音]
+type = PlaySnd
+triggerall = NumExplod(3)
+triggerall = time = [358, 364]
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+value = 200, 4
+persistent = 0
+
+[State 906, 入力ミス]
+type = VarAdd
+triggerall = time >= 150
+triggerall = NumExplod(1) = 0
+triggerall = NumExplod(2) = 0
+triggerall = NumExplod(3) = 0
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+var(9) = -20
+
+[State 906, 吹き出し消去]
+type = RemoveExplod
+triggerall = NumExplod(10950)
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+trigger3 = AnimTime = 0
+ID = 10950
+
+[State 906, GOOD!]
+type = Explod
+triggerall = time >= 150
+triggerall = command = "x" || command = "y" || command = "z" || command = "a" || command = "b" || command = "c"
+trigger1 = NumExplod(1)
+trigger2 = NumExplod(2)
+trigger3 = NumExplod(3)
+anim = ifelse(command="x",ifelse(facing=-1,10944,10945),ifelse(command="y",ifelse(facing=-1,10944,10945),ifelse(command="z",ifelse(facing=-1,10944,10945),ifelse(facing=-1,10945,10944))))
+ID = 10950
+pos = ifelse(command="x",70,ifelse(command="y",70,ifelse(command="z",70,190))),ifelse((command="x"||command="a"),-120,ifelse((command="y"||command="b"),-95,-70))
+postype = p1
+ontop = 1
+ownpal = 1
+facing = ifelse(facing=-1,-1,1)
+
+[State 906, ・・・・]
+type = Explod
+triggerall = time >= 150
+triggerall = NumExplod(1) = 0
+triggerall = NumExplod(2) = 0
+triggerall = NumExplod(3) = 0
+trigger1 = command = "x" || command = "y" || command = "z"
+trigger2 = command = "a" || command = "b" || command = "c"
+anim = ifelse(command="x",ifelse(facing=-1,10942,10943),ifelse(command="y",ifelse(facing=-1,10942,10943),ifelse(command="z",ifelse(facing=-1,10942,10943),ifelse(facing=-1,10943,10942))))
+ID = 10950
+pos = ifelse(command="x",70,ifelse(command="y",70,ifelse(command="z",70,190))),ifelse((command="x"||command="a"),-120,ifelse((command="y"||command="b"),-95,-70))
+postype = p1
+ontop = 1
+ownpal = 1
+facing = ifelse(facing=-1,-1,1)
+
+[State 906, コマンド消去]
+type = RemoveExplod
+trigger1 = Animtime = 0
+ID = 910
+
+[State 906, 吹き出し消去（バグ防止）]
+type = RemoveExplod
+triggerall = NumExplod(10950)
+trigger1 = Animtime = 0
+ID = 10950
+
+[State 906]
+type = StopSND
+trigger1 = AnimTime = 0
+channel = 5
+
+[State 906]
+type = VarSet
+trigger1 = var(9) < 0
+var(9) = 0
+
+[State 906]
+type = VarSet
+trigger1 = AnimTime = 0
+var(10) = Ceil(var(9)*0.001176471*100)
+
+[State 906, 終了]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = ifelse(var(10)<=24,910,ifelse(var(10)<=49,911,ifelse(var(10)<=74,912,ifelse(var(10)<=94,913,914))))
+ctrl = 0
+
+;--------------------------------------------------------------------------
+;0~24
+[Statedef 910]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 903
+sprpriority = -2
+;facep2 = 1
+hitcountpersist = 1
+
+[State 910, 得点表示１ケタ目]
+type = Explod
+trigger1 = AnimElem = 7
+anim = 10950+(var(10)-(Floor(var(10)*0.1)*10))
+pos = ifelse(facing=1,0,60), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 910, 得点表示２ケタ目]
+type = Explod
+trigger1 = AnimElem = 7
+anim = 10950+Floor(var(10)*0.1)
+pos = ifelse(facing=1,-8,68), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 910, 得点表示Pts]
+type = Explod
+trigger1 = AnimElem = 7
+anim = 10960
+pos = ifelse(facing=1,0,60), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 910, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 6
+value = 200, 0
+
+[State 910, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 6
+value = 100, 24
+
+[State 910, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 8
+value = 800, 1
+
+[State 910, セット消去]
+type = RemoveExplod
+trigger1 = AnimElem = 7
+ID = 905
+
+[State 910, セット消去]
+type = VarSet
+trigger1 = AnimElem = 7
+var(11) = 1
+
+[State 910,煙]
+type = Explod
+trigger1 = AnimElem = 7, = 34
+trigger2 = AnimElem = 7, = 35
+trigger3 = AnimElem = 7, = 36
+trigger4 = AnimElem = 7, = 37
+trigger5 = AnimElem = 7, = 38
+trigger6 = AnimElem = 7, = 39
+trigger7 = AnimElem = 7, = 40
+anim = 16000
+ID = 16000
+random = 40, 60
+pos = 0, -40
+postype = p1
+ontop = 1
+ownpal = 1
+
+[State 910]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;--------------------------------------------------------------------------
+;25~49
+[Statedef 911]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 904
+sprpriority = -2
+;facep2 = 1
+hitcountpersist = 1
+
+[State 911, 得点表示１ケタ目]
+type = Explod
+trigger1 = AnimElem = 13, = 5
+anim = 10950+(var(10)-(Floor(var(10)*0.1)*10))
+pos = ifelse(facing=1,0,60), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 911, 得点表示２ケタ目]
+type = Explod
+trigger1 = AnimElem = 13, = 5
+anim = 10950+Floor(var(10)*0.1)
+pos = ifelse(facing=1,-8,68), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 911, 得点表示Pts]
+type = Explod
+trigger1 = AnimElem = 13, = 5
+anim = 10960
+pos = ifelse(facing=1,0,60), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 911, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 6
+value = 200, 3
+
+[State 911, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 6
+value = 100, 25
+
+[State 911, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 14
+value = 800, 1
+
+[State 911, セット消去]
+type = RemoveExplod
+trigger1 = AnimElem = 13
+ID = 905
+
+[State 911, セット消去]
+type = VarSet
+trigger1 = AnimElem = 13
+var(11) = 1
+
+[State 911,煙]
+type = Explod
+trigger1 = AnimElem = 13, = 39
+trigger2 = AnimElem = 13, = 40
+trigger3 = AnimElem = 13, = 41
+trigger4 = AnimElem = 13, = 42
+trigger5 = AnimElem = 13, = 43
+trigger6 = AnimElem = 13, = 44
+trigger7 = AnimElem = 13, = 45
+anim = 16000
+ID = 16000
+random = 40, 60
+pos = 0, -40
+postype = p1
+ontop = 1
+ownpal = 1
+
+[State 911]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;--------------------------------------------------------------------------
+;50~74
+[Statedef 912]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 905
+sprpriority = -2
+;facep2 = 1
+hitcountpersist = 1
+
+[State 912, 得点表示１ケタ目]
+type = Explod
+trigger1 = AnimElem = 23
+anim = 10950+(var(10)-(Floor(var(10)*0.1)*10))
+pos = ifelse(facing=1,0,60), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 912, 得点表示２ケタ目]
+type = Explod
+trigger1 = AnimElem = 23
+anim = 10950+Floor(var(10)*0.1)
+pos = ifelse(facing=1,-8,68), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 912, 得点表示Pts]
+type = Explod
+trigger1 = AnimElem = 23
+anim = 10960
+pos = ifelse(facing=1,0,60), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 912, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 6, = 15
+value = 200, 1
+
+[State 912, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 6, = 15
+value = 100, 26
+
+[State 912, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 24
+value = 800, 1
+
+[State 912, セット消去]
+type = RemoveExplod
+trigger1 = AnimElem = 23
+ID = 905
+
+[State 912, セット消去]
+type = VarSet
+trigger1 = AnimElem = 23
+var(11) = 1
+
+[State 912,煙]
+type = Explod
+trigger1 = AnimElem = 23, = 34
+trigger2 = AnimElem = 23, = 35
+trigger3 = AnimElem = 23, = 36
+trigger4 = AnimElem = 23, = 37
+trigger5 = AnimElem = 23, = 38
+trigger6 = AnimElem = 23, = 39
+trigger7 = AnimElem = 23, = 40
+anim = 16000
+ID = 16000
+random = 40, 60
+pos = 0, -40
+postype = p1
+ontop = 1
+ownpal = 1
+
+[State 912]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;--------------------------------------------------------------------------
+;75~94
+[Statedef 913]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 906
+sprpriority = -2
+;facep2 = 1
+hitcountpersist = 1
+
+[State 913, 得点表示１ケタ目]
+type = Explod
+trigger1 = AnimElem = 33
+anim = 10950+(var(10)-(Floor(var(10)*0.1)*10))
+pos = ifelse(facing=1,0,60), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 913, 得点表示２ケタ目]
+type = Explod
+trigger1 = AnimElem = 33
+anim = 10950+Floor(var(10)*0.1)
+pos = ifelse(facing=1,-8,68), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 913, 得点表示Pts]
+type = Explod
+trigger1 = AnimElem = 33
+anim = 10960
+pos = ifelse(facing=1,0,60), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 913, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 6, = 30
+value = 200, 2
+
+[State 913, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 6, = 30
+value = 100, 27
+
+[State 913, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 34
+value = 800, 1
+
+[State 913, セット消去]
+type = RemoveExplod
+trigger1 = AnimElem = 33
+ID = 905
+
+[State 913, セット消去]
+type = VarSet
+trigger1 = AnimElem = 33
+var(11) = 1
+
+[State 913,煙]
+type = Explod
+trigger1 = AnimElem = 33, = 34
+trigger2 = AnimElem = 33, = 35
+trigger3 = AnimElem = 33, = 36
+trigger4 = AnimElem = 33, = 37
+trigger5 = AnimElem = 33, = 38
+trigger6 = AnimElem = 33, = 39
+trigger7 = AnimElem = 33, = 40
+anim = 16000
+ID = 16000
+random = 40, 60
+pos = 0, -40
+postype = p1
+ontop = 1
+ownpal = 1
+
+[State 913]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;--------------------------------------------------------------------------
+;95以上
+[Statedef 914]
+type    = S
+movetype= A
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 907
+sprpriority = -2
+;facep2 = 1
+hitcountpersist = 1
+
+[State 914, 得点表示１ケタ目]
+type = Explod
+trigger1 = AnimElem = 33
+anim = 10950+(var(10)-(Floor(var(10)*0.1)*10))
+pos = ifelse(facing=1,0,60), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 914, 得点表示２ケタ目]
+type = Explod
+trigger1 = AnimElem = 33
+anim = 10950+(Floor(var(10)*0.1)-ifelse(var(10)>=100,10,0))
+pos = ifelse(facing=1,-8,68), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 914, 得点表示３ケタ目]
+type = Explod
+triggerall = var(10) >= 100
+trigger1 = AnimElem = 33
+anim = 10951
+pos = ifelse(facing=1,-15,75), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 914, 得点表示Pts]
+type = Explod
+trigger1 = AnimElem = 33
+anim = 10960
+pos = ifelse(facing=1,0,60), 0
+postype = p1
+sprpriority = -1
+ownpal = 1
+facing = ifelse(facing=1,1,-1)
+
+[State 914, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 6
+value = 200, 2
+
+[State 914, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 6
+value = 100, 28
+
+[State 914, 音声]
+type = PlaySnd
+trigger1 = AnimElem = 34
+value = 800, 1
+
+[State 914, セット消去]
+type = RemoveExplod
+trigger1 = AnimElem = 33
+ID = 905
+
+[State 914, セット消去]
+type = VarSet
+trigger1 = AnimElem = 33
+var(11) = 1
+
+[State 914,煙]
+type = Explod
+trigger1 = AnimElem = 33, = 34
+trigger2 = AnimElem = 33, = 35
+trigger3 = AnimElem = 33, = 36
+trigger4 = AnimElem = 33, = 37
+trigger5 = AnimElem = 33, = 38
+trigger6 = AnimElem = 33, = 39
+trigger7 = AnimElem = 33, = 40
+anim = 16000
+ID = 16000
+random = 40, 60
+pos = 0, -40
+postype = p1
+ontop = 1
+ownpal = 1
+
+[State 914]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;--------------------------------------------------------------------------
+;蝙蝠１
+[Statedef 915]
+type    = A
+movetype= I
+physics = N
+juggle  = 1
+velset = -1.5, -1.25
+poweradd = 0
+ctrl = 0
+anim = 909
+sprpriority = -3
+facep2 = 1
+
+[State 915]
+type = VelSet
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+x = -0.5
+
+[State 915]
+type = ChangeAnim
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+value = 180
+
+[State 915]
+type = VelSet
+trigger1 = time >= 40
+x = cos(time*0.08)
+y = cos(time*0.085)
+
+[State 915]
+type = DestroySelf
+triggerall = Root,StateNo != [180, 189]
+trigger1 = Root,var(11) = 1
+
+;--------------------------------------------------------------------------
+;蝙蝠２
+[Statedef 916]
+type    = A
+movetype= I
+physics = N
+juggle  = 1
+velset = -1.5, -0.5
+poweradd = 0
+ctrl = 0
+anim = 909
+sprpriority = -3
+facep2 = 1
+
+[State 916]
+type = ChangeAnim
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+value = 180
+
+[State 916]
+type = VelSet
+trigger1 = time >= 40
+x = cos(time*0.07)
+y = cos((time-20)*0.075)
+
+[State 916]
+type = DestroySelf
+triggerall = Root,StateNo != [180, 189]
+trigger1 = Root,var(11) = 1
+
+;--------------------------------------------------------------------------
+;蝙蝠３
+[Statedef 917]
+type    = A
+movetype= I
+physics = N
+juggle  = 1
+velset = -1.5, 0.5
+poweradd = 0
+ctrl = 0
+anim = 909
+sprpriority = -3
+facep2 = 1
+
+[State 917]
+type = ChangeAnim
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+value = 180
+
+[State 917]
+type = VelSet
+trigger1 = time >= 40
+x = cos(time*0.075)
+y = cos((time-10)*0.08)
+
+[State 917]
+type = DestroySelf
+triggerall = Root,StateNo != [180, 189]
+trigger1 = Root,var(11) = 1
+
+;--------------------------------------------------------------------------
+;蝙蝠４
+[Statedef 918]
+type    = A
+movetype= I
+physics = N
+juggle  = 1
+velset = -1.5, 1.25
+poweradd = 0
+ctrl = 0
+anim = 909
+sprpriority = -3
+facep2 = 1
+
+[State 918]
+type = SprPriority
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+value = 2
+
+[State 918]
+type = VelSet
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+x = -0.5
+
+[State 918]
+type = ChangeAnim
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+value = 180
+
+[State 918]
+type = VelSet
+trigger1 = time >= 40
+x = cos(time*0.07)
+y = -cos((time-30)*0.085)
+
+[State 918]
+type = DestroySelf
+triggerall = Root,StateNo != [180, 189]
+trigger1 = Root,var(11) = 1
+
+;--------------------------------------------------------------------------
+;蝙蝠５
+[Statedef 919]
+type    = A
+movetype= I
+physics = N
+juggle  = 1
+velset = 1.5, -0.5
+poweradd = 0
+ctrl = 0
+anim = 909
+sprpriority = -3
+facep2 = 1
+
+[State 919]
+type = ChangeAnim
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+value = 180
+
+[State 919]
+type = turn
+trigger1 = time = 0
+
+[State 919]
+type = VelSet
+trigger1 = time >= 40
+x = cos(time*0.075)
+y = cos((time-10)*0.08)
+
+[State 919]
+type = DestroySelf
+triggerall = Root,StateNo != [180, 189]
+trigger1 = Root,var(11) = 1
+
+;--------------------------------------------------------------------------
+;蝙蝠６
+[Statedef 920]
+type    = A
+movetype= I
+physics = N
+juggle  = 1
+velset = 1.5, 1.25
+poweradd = 0
+ctrl = 0
+anim = 909
+sprpriority = -3
+facep2 = 1
+
+[State 920]
+type = SprPriority
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+value = 2
+
+[State 920]
+type = VelSet
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+x = 0.5
+
+[State 920]
+type = ChangeAnim
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+value = 180
+
+[State 920]
+type = turn
+trigger1 = time = 0
+
+[State 920]
+type = VelSet
+trigger1 = time >= 40
+x = cos(time*0.08)
+y = cos(time*0.085)
+
+[State 920]
+type = DestroySelf
+triggerall = Root,StateNo != [180, 189]
+trigger1 = Root,var(11) = 1
+
+;--------------------------------------------------------------------------
+;蝙蝠７
+[Statedef 921]
+type    = A
+movetype= I
+physics = N
+juggle  = 1
+velset = 1.5, -1.25
+poweradd = 0
+ctrl = 0
+anim = 909
+sprpriority = -3
+facep2 = 1
+
+[State 921]
+type = VelSet
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+x = 0.5
+
+[State 921]
+type = ChangeAnim
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+value = 180
+
+[State 921]
+type = turn
+trigger1 = time = 0
+
+[State 921]
+type = VelSet
+trigger1 = time >= 40
+x = cos(time*0.07)
+y = -cos((time-30)*0.085)
+
+[State 921]
+type = DestroySelf
+triggerall = Root,StateNo != [180, 189]
+trigger1 = Root,var(11) = 1
+
+;--------------------------------------------------------------------------
+;蝙蝠８
+[Statedef 922]
+type    = A
+movetype= I
+physics = N
+juggle  = 1
+velset = 1.5, 0.5
+poweradd = 0
+ctrl = 0
+anim = 909
+sprpriority = -3
+facep2 = 1
+
+[State 922]
+type = ChangeAnim
+triggerall = Root,StateNo = [180, 189]
+trigger1 = time = 0
+value = 180
+
+[State 922]
+type = turn
+trigger1 = time = 0
+
+[State 922]
+type = VelSet
+trigger1 = time >= 40
+x = cos(time*0.07)
+y = cos((time-20)*0.075)
+
+[State 922]
+type = DestroySelf
+triggerall = Root,StateNo != [180, 189]
+trigger1 = Root,var(11) = 1
+
+;--------------------------------------------------------------------------
+;相手
+[Statedef 950]
+type    = U
+movetype= H
+physics = N
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 5002
+sprpriority = -2
+hitcountpersist = 1
+
+[State 950]
+type = Gravity
+trigger1 = StateType = A
+
+[State 950]
+type = StateTypeSet
+trigger1 = Pos Y >= 0
+StateType = S
+
+[State 950]
+type = VelSet
+trigger1 = StateType != A
+y = 0
+
+[State 950]
+type = ChangeAnim
+triggerall = StateType = S
+triggerall = SelfAnimExist(5300) = 1
+trigger1 = Anim != 5300
+value = 5300
+
+[State 950, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 950]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 950]
+type = PosAdd
+trigger1 = FrontEdgeDist < 130
+trigger2 = (BackEdgeDist < 130) && (Enemy,BackEdgeDist < 60) && (P2BodyDist X< 30)
+x = ifelse(FrontEdgeDist<130,-3,3)
+ignorehitpause = 1
+
+[State 950]
+type = SelfState
+trigger1 = time >= 240
+value = 0
+ctrl = 1
+
+;--------------------------------------------------------------------------
+;相手(ニュートラル)
+[Statedef 951]
+type    = S
+movetype= H
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 0
+sprpriority = -2
+hitcountpersist = 1
+
+[State 951]
+type = ChangeAnim
+triggerall = Anim = 0
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+value = 9006
+
+[State 951, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 951, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 951]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 951]
+type = PosSet
+trigger1 = time = 0
+y = -40
+
+;--------------------------------------------------------------------------
+;相手(X)
+[Statedef 952]
+type    = S
+movetype= H
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 20
+sprpriority = -2
+hitcountpersist = 1
+
+[State 952]
+type = ChangeAnim
+triggerall = Anim = 20
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+value = 9000
+
+[State 952, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 952, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 952]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 952]
+type = PosSet
+trigger1 = time = 0
+y = -40
+
+[State 952]
+type = ChangeState
+trigger1 = Anim = 20
+trigger1 = time >= 20
+trigger2 = Anim = 9000
+trigger2 = AnimTime = 0
+value = 951
+
+;--------------------------------------------------------------------------
+;相手(Y)
+[Statedef 953]
+type    = S
+movetype= H
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 20
+sprpriority = -2
+hitcountpersist = 1
+
+[State 953]
+type = ChangeAnim
+triggerall = Anim = 20
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+value = 9001
+
+[State 953, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 953, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 953]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 953]
+type = PosSet
+trigger1 = time = 0
+y = -40
+
+[State 953]
+type = ChangeState
+trigger1 = Anim = 20
+trigger1 = time >= 20
+trigger2 = Anim = 9001
+trigger2 = AnimTime = 0
+value = 951
+
+;--------------------------------------------------------------------------
+;相手(Z)
+[Statedef 954]
+type    = S
+movetype= H
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 20
+sprpriority = -2
+hitcountpersist = 1
+
+[State 954]
+type = ChangeAnim
+triggerall = Anim = 20
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+value = 9002
+
+[State 954, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 954, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 954]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 954]
+type = PosSet
+trigger1 = time = 0
+y = -40
+
+[State 954]
+type = ChangeState
+trigger1 = Anim = 20
+trigger1 = time >= 20
+trigger2 = Anim = 9002
+trigger2 = AnimTime = 0
+value = 951
+
+;--------------------------------------------------------------------------
+;相手(A)
+[Statedef 955]
+type    = S
+movetype= H
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 21
+sprpriority = -2
+hitcountpersist = 1
+
+[State 955]
+type = ChangeAnim
+triggerall = Anim = 21
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+value = 9003
+
+[State 955, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 955, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 955]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 955]
+type = PosSet
+trigger1 = time = 0
+y = -40
+
+[State 955]
+type = ChangeState
+trigger1 = Anim = 21
+trigger1 = time >= 20
+trigger2 = Anim = 9003
+trigger2 = AnimTime = 0
+value = 951
+
+;--------------------------------------------------------------------------
+;相手(B)
+[Statedef 956]
+type    = S
+movetype= H
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 21
+sprpriority = -2
+hitcountpersist = 1
+
+[State 956]
+type = ChangeAnim
+triggerall = Anim = 21
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+value = 9004
+
+[State 956, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 956, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 956]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 956]
+type = PosSet
+trigger1 = time = 0
+y = -40
+
+[State 956]
+type = ChangeState
+trigger1 = Anim = 21
+trigger1 = time >= 20
+trigger2 = Anim = 9004
+trigger2 = AnimTime = 0
+value = 951
+
+;--------------------------------------------------------------------------
+;相手(C)
+[Statedef 957]
+type    = S
+movetype= H
+physics = S
+juggle  = 1
+velset = 0,0
+poweradd = 0
+ctrl = 0
+anim = 21
+sprpriority = -2
+hitcountpersist = 1
+
+[State 957]
+type = ChangeAnim
+triggerall = Anim = 21
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 =(SelfAnimExist(9005) = 1) && (SelfAnimExist(19005) = 0)
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+value = 9005
+
+[State 957]
+type = ChangeAnim
+triggerall = Anim = 21
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 =(SelfAnimExist(9005) = 1) && (SelfAnimExist(19005) = 1)
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+value = 19005
+
+[State 957, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 957, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 957]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 957]
+type = PosSet
+trigger1 = time = 0
+y = -40
+
+[State 957]
+type = ChangeState
+trigger1 = Anim = 21
+trigger1 = time >= 20
+trigger2 = Anim = 9005
+trigger2 = AnimTime = 0
+trigger3 = Anim = 19005
+trigger3 = AnimTime = 0
+value = 951
+
+;--------------------------------------------------------------------------
+;相手側(0～24)
+[Statedef 960]
+type     = S
+movetype = H
+physics  = N
+ctrl     = 0
+anim     = 5010
+velset   = 0,0
+sprpriority = -2
+
+[State 960, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 960, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 960]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 960]
+type = ChangeAnim2
+trigger1 = time = 0
+value = 911
+
+[State 960]
+type = ChangeAnim
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+trigger1 = time = 0
+value = 9007
+
+[State 960]
+type = StateTypeSet
+trigger1 = time >= 72
+StateType = A
+
+[State 960]
+type = ChangeState
+trigger1 = time >= 72
+value = 965
+
+;--------------------------------------------------------------------------
+;相手側(25～49)
+[Statedef 961]
+type     = S
+movetype = H
+physics  = N
+ctrl     = 0
+anim     = 5010
+velset   = 0,0
+sprpriority = -2
+
+[State 961, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 961, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 961]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 961]
+type = ChangeAnim2
+trigger1 = time = 0
+value = 911
+
+[State 961]
+type = ChangeAnim
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+trigger1 = time = 0
+value = 9007
+
+[State 961]
+type = VelSet
+trigger1 = Time = 59
+y = -0.5
+
+[State 961]
+type = ChangeAnim
+triggerall = SelfAnimExist(7696) = 1
+trigger1 = time = 59
+value = 7696
+
+[State 961]
+type = ChangeAnim2
+triggerall = SelfAnimExist(7696) = 0
+trigger1 = time = 59
+value = 912
+
+[State 961]
+type = PalFX
+trigger1 = Anim = 912
+time = 1
+add = 128, 128, 0
+mul = 256,256,128
+color = 128
+
+[State 961]
+type = StateTypeSet
+trigger1 = time >= 59
+StateType = A
+
+[State 961]
+type = ChangeState
+trigger1 = time >= 79
+value = 965
+
+;--------------------------------------------------------------------------
+;相手側(50～74)
+[Statedef 962]
+type     = S
+movetype = H
+physics  = N
+ctrl     = 0
+anim     = 5010
+velset   = 0,0
+sprpriority = -2
+
+[State 962, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 962, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 962]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 962]
+type = ChangeAnim2
+trigger1 = time = 0
+value = 911
+
+[State 962]
+type = ChangeAnim
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+trigger1 = time = 0
+value = 9007
+
+[State 962]
+type = ChangeAnim
+triggerall = SelfAnimExist(7696) = 1
+trigger1 = time = 59
+value = 7696
+
+[State 962]
+type = ChangeAnim2
+triggerall = SelfAnimExist(7696) = 0
+trigger1 = time = 59
+value = 912
+
+[State 962]
+type = PalFX
+trigger1 = Anim = 912
+time = 1
+add = 128, 128, 0
+mul = 256,256,128
+color = 128
+
+[State 962]
+type = StateTypeSet
+trigger1 = time >= 59
+StateType = A
+
+[State 962]
+type = ChangeAnim2
+trigger1 = time = 97
+value = 913
+
+[State 962]
+type = ChangeAnim
+triggerall = SelfAnimExist(7697) = 1
+trigger1 = time = 100
+value = 7697
+
+[State 962]
+type = PalFX
+triggerall = Anim = 913
+trigger1 = time >= 100
+time = 1
+mul = 64, 64, 64
+
+[State 962]
+type = VelSet
+trigger1 = Time = 100
+y = -1
+
+[State 962]
+type = ChangeState
+trigger1 = time >= 117
+value = 965
+
+;--------------------------------------------------------------------------
+;相手側(75～94)
+[Statedef 963]
+type     = S
+movetype = H
+physics  = N
+ctrl     = 0
+anim     = 5010
+velset   = 0,0
+sprpriority = -2
+
+[State 963, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 963, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 963]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 963]
+type = ChangeAnim2
+trigger1 = time = 0
+value = 911
+
+[State 963]
+type = ChangeAnim
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+trigger1 = time = 0
+value = 9007
+
+[State 963]
+type = ChangeAnim
+triggerall = SelfAnimExist(7696) = 1
+trigger1 = time = 78
+value = 7696
+
+[State 963]
+type = ChangeAnim2
+triggerall = SelfAnimExist(7696) = 0
+trigger1 = time = 78
+value = 912
+
+[State 963]
+type = PalFX
+trigger1 = Anim = 912
+time = 1
+add = 128, 128, 0
+mul = 256,256,128
+color = 128
+
+[State 963]
+type = StateTypeSet
+trigger1 = time >= 78
+StateType = A
+
+[State 963]
+type = ChangeAnim2
+trigger1 = time = 115
+value = 913
+
+[State 963]
+type = ChangeAnim
+triggerall = SelfAnimExist(7697) = 1
+trigger1 = time = 118
+value = 7697
+
+[State 963]
+type = PalFX
+triggerall = Anim = 913
+trigger1 = time >= 118
+time = 1
+mul = 64, 64, 64
+
+[State 963]
+type = VelSet
+trigger1 = Time = 168
+y = -1
+
+[State 963]
+type = ChangeState
+trigger1 = time >= 168
+value = 965
+
+;--------------------------------------------------------------------------
+;相手側(95～)
+[Statedef 964]
+type     = S
+movetype = H
+physics  = N
+ctrl     = 0
+anim     = 5010
+velset   = 0,0
+sprpriority = -2
+
+[State 964, 画面固定]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 964, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 964]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 964]
+type = ChangeAnim2
+trigger1 = time = 0
+value = 911
+
+[State 964]
+type = ChangeAnim
+trigger1 = SelfAnimExist(9000) = 1
+trigger1 = SelfAnimExist(9001) = 1
+trigger1 = SelfAnimExist(9002) = 1
+trigger1 = SelfAnimExist(9003) = 1
+trigger1 = SelfAnimExist(9004) = 1
+trigger1 = SelfAnimExist(9005) = 1 || SelfAnimExist(19005) = 1
+trigger1 = SelfAnimExist(9006) = 1
+trigger1 = SelfAnimExist(9007) = 1
+trigger1 = time = 0
+value = 9007
+
+[State 964]
+type = ChangeAnim
+triggerall = SelfAnimExist(7696) = 1
+trigger1 = time = 78
+value = 7696
+
+[State 964]
+type = ChangeAnim2
+triggerall = SelfAnimExist(7696) = 0
+trigger1 = time = 78
+value = 912
+
+[State 964]
+type = PalFX
+trigger1 = Anim = 912
+time = 1
+add = 128, 128, 0
+mul = 256,256,128
+color = 128
+
+[State 964]
+type = StateTypeSet
+trigger1 = time >= 78
+StateType = A
+
+[State 964]
+type = ChangeAnim2
+trigger1 = time = 115
+value = 913
+
+[State 964]
+type = ChangeAnim
+triggerall = SelfAnimExist(7697) = 1
+trigger1 = time = 118
+value = 7697
+
+[State 964]
+type = PalFX
+triggerall = Anim = 913
+trigger1 = time >= 118
+time = 1
+mul = 64, 64, 64
+
+[State 964]
+type = VelSet
+trigger1 = Time = 168
+y = -1
+
+[State 964]
+type = ChangeState
+trigger1 = time >= 168
+value = 965
+
+;--------------------------------------------------------------------------
+;相手終了
+[Statedef 965]
+type     = A
+movetype = H
+physics  = N
+ctrl     = 0
+anim     = 5030
+velset   = -2,-8
+sprpriority = -2
+
+[State 965, ムテキング]
+trigger1 = 1
+type = NotHitBy 
+value = SCA 
+
+[State 965]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 965]
+type = ChangeAnim2
+triggerall = time = 0
+trigger1 = PrevStateNo = [960, 961]
+trigger2 = PrevStateNo = 962
+trigger2 = SelfAnimExist(7697) = 0
+value = 910
+
+[State 965]
+type = ChangeAnim
+triggerall = PrevStateNo = 962
+triggerall = SelfAnimExist(7697)
+trigger1 = time = 0
+value = 7697
+
+[State 965]
+type = VelSet
+triggerall = PrevStateNo = [963, 964]
+trigger1 = time = 0
+y = -9.5
+
+[State 965]
+type = AssertSpecial
+trigger1 = PrevStateNo = [963, 964]
+flag = invisible
+
+[State 965]
+type = PalFX
+triggerall = PrevStateNo = [961,962]
+trigger1 = Anim = 910
+time = 1
+mul = 64, 64, 64
+
+[State 965]
+type = VelAdd
+trigger1 = 1
+y = 0.6
+
+[State 965]
+type = SelfState
+trigger1 = Pos Y >= 0
+value = 5100
+
+;--------------------------------------------------------------------------
+;相手終了
+[Statedef 966]
+type     = U
+movetype = I
+physics  = N
+ctrl     = 0
+velset   = 0,0
+sprpriority = -2
+
+[State 966]
+type = PosSet
+trigger1 = 1
+y = 0
+
+[State 966]
+type = SelfState
+trigger1 = time >= 0
+value = 0
+ctrl = 1
+
+
+
+
+

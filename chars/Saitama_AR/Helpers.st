@@ -53,7 +53,7 @@ projsprpriority = 4
 velocity = 0
 attr = S, NA
 animtype  = Light
-damage = enemy,const(data.life)*enemy,const(data.defence)/2000,100;250
+damage = floor(ifelse(root,stateno = 1402, 60, 30) * ifelse(root,fvar(22), 1.3, 1)), 0
 guardflag = MA
 pausetime = 8, 8
 hitsound = s1,0;random % 2
@@ -80,6 +80,21 @@ pausemovetime = 100
 ; envshake.freq = 120
 ; envshake.phase = 120
 id = 1105
+
+[State 1105, AR hit]
+;Abstract Reordered: normal HIT -> chains and cancels open (var(44))
+type = ParentVarSet
+trigger1 = ProjHit = 1
+var(44) = 1
+ignorehitpause = 1
+
+[State 1105, AR blocked]
+;Abstract Reordered: normal was BLOCKED -> Saitama is at least -8 (var(46))
+type = ParentVarSet
+trigger1 = ProjGuarded = 1
+trigger1 = parent, var(46) = 0
+var(46) = 1
+ignorehitpause = 1
 
 [State 1105, DS]
 type = DestroySelf
@@ -131,7 +146,7 @@ velocity = 0
 guardflag = MA
 attr = S, NA
 animtype = Medium
-damage = enemy,const(data.life)*enemy,const(data.defence)/950,100;100
+damage = floor(50 * ifelse(root,fvar(22), 1.3, 1)), 0
 guardflag = MA
 pausetime = 14, 13
 hitsound = s1,2;random % 2
@@ -154,6 +169,21 @@ envshake.freq = 120
 envshake.phase = 120
 id = 1106
 
+
+[State 1106, AR hit]
+;Abstract Reordered: normal HIT -> chains and cancels open (var(44))
+type = ParentVarSet
+trigger1 = ProjHit = 1
+var(44) = 1
+ignorehitpause = 1
+
+[State 1106, AR blocked]
+;Abstract Reordered: normal was BLOCKED -> Saitama is at least -8 (var(46))
+type = ParentVarSet
+trigger1 = ProjGuarded = 1
+trigger1 = parent, var(46) = 0
+var(46) = 1
+ignorehitpause = 1
 
 [State 1105, DS]
 type = DestroySelf
@@ -204,7 +234,7 @@ projsprpriority = 4
 velocity = 0
 attr = S, NA
 animtype  = Hard
-damage = enemy,const(data.life)*enemy,const(data.defence)/700,100;50
+damage = floor(70 * ifelse(root,fvar(22), 1.3, 1)), 0
 guardflag = MA
 pausetime = 12, 12
 hitsound = s1,5;random % 2
@@ -226,6 +256,21 @@ envshake.ampl = 8
 envshake.freq = 125
 envshake.phase = 125
 id = 1107
+
+[State 1107, AR hit]
+;Abstract Reordered: normal HIT -> chains and cancels open (var(44))
+type = ParentVarSet
+trigger1 = ProjHit = 1
+var(44) = 1
+ignorehitpause = 1
+
+[State 1107, AR blocked]
+;Abstract Reordered: normal was BLOCKED -> Saitama is at least -8 (var(46))
+type = ParentVarSet
+trigger1 = ProjGuarded = 1
+trigger1 = parent, var(46) = 0
+var(46) = 1
+ignorehitpause = 1
 
 [State 1105, DS]
 type = DestroySelf
@@ -269,7 +314,7 @@ attr = A, HA
 animtype = heavy
 hitflag = MAFP
 guardflag = M
-damage = enemy,const(data.life)*enemy,const(data.defence)/1500,100;250
+damage = floor(2 * ifelse(root,fvar(22), 1.3, 1)), 0
 sparkno = 0
 guard.sparkno = 40
 sparkxy = 30+random%30,-120+random%80
@@ -335,7 +380,7 @@ offset = 30,0
 projshadow = -1
 velocity = 3
 animtype  = heavy
-damage    = 30,5;enemy,const(data.life)*enemy,const(data.defence)/3000,100;250
+damage    = floor(12 * ifelse(root,fvar(22), 1.3, 1)), 1
 getpower = 40*var(7),10*var(7)
 givepower = 5*var(7),5*var(7)
 guardflag = MA
@@ -378,7 +423,7 @@ projshadow = -1
 velocity = 3
 attr = S, NA
 animtype  = Heavy
-damage    = 30,5;enemy,const(data.life)*enemy,const(data.defence)/3000,100;250
+damage    = floor(12 * ifelse(root,fvar(22), 1.3, 1)), 1
 getpower = 40*var(7),10*var(7)
 givepower = 5*var(7),5*var(7)
 guardflag = MA
@@ -446,7 +491,7 @@ ownpal = 1
 offset = 0,0
 velocity = 0
 attr = A, HA ;attr              = S, NA
-damage = enemy,const(data.life)*enemy,const(data.defence)/10,500
+damage = floor(150 * ifelse(root,fvar(22), 1.3, 1)), 15
 animtype          = Up
 ; affectteam        = B
 getpower          = 30,30
@@ -524,7 +569,7 @@ projsprpriority = 4
 velocity = 0,-15
 attr = S, NA
 animtype  = Hard
-damage = 50,30;enemy,const(data.life)*enemy,const(data.defence)/200,250
+damage = 50, 5
 guardflag = MA
 pausetime = ceil(9*(2-(Var(30)>0))/2),ceil(9*(2-(Var(30)>0))/2)
 hitsound = s1,2;random % 2
@@ -575,7 +620,7 @@ ownpal = 1
 offset = 0,-350
 velocity = 0
 attr = A, HA ;attr              = S, NA
-damage = enemy,const(data.life)*enemy,const(data.defence)/10,500
+damage = floor(150 * ifelse(root,fvar(22), 1.3, 1)), 15
 animtype          = Up
 ; affectteam        = B
 getpower          = 30,30
@@ -1060,7 +1105,7 @@ type = modifyexplod
 trigger1 = numexplod(20) && time < 16
 ID = 20
 postype = back
-pos = 160, floor((1.3333333 * gameheight / gamewidth) * 121)
+pos = GameWidth / 2, floor((1.3333333 * gameheight / gamewidth) * 121)
 scale = 1 - (0.03125 * time), 1 - (0.03125 * time)
 trans = addalpha
 alpha = (8 * time), 256
@@ -1070,7 +1115,7 @@ type = modifyexplod
 trigger1 = numexplod(21) && time < 16
 ID = 21
 postype = back
-pos = 160, floor((1.3333333 * gameheight / gamewidth) * 121)
+pos = GameWidth / 2, floor((1.3333333 * gameheight / gamewidth) * 121)
 scale = 2 - (0.09375 * time), 2 - (0.09375 * time)
 trans = addalpha
 alpha = (8 * time), 256
@@ -1080,7 +1125,7 @@ type = modifyexplod
 trigger1 = numexplod(20) && (time = [16, 32])
 ID = 20
 postype = back
-pos = 160, floor((1.3333333 * gameheight / gamewidth) * 121)
+pos = GameWidth / 2, floor((1.3333333 * gameheight / gamewidth) * 121)
 scale = 0.5, 0.5
 trans = addalpha
 alpha = 256, 256
@@ -1381,7 +1426,7 @@ anim = 8600
 ID = 8600
 ontop = 1
 postype = Left
-pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+pos = GameWidth / 2, floor((1.3333333 * GameHeight / GameWidth) * 120)
 scale = 0.5, 0.5 * (1.3333333 * GameHeight / GameWidth)
 bindTime = -1
 removeTime = 32
@@ -1402,7 +1447,7 @@ anim = 8610 + var(0)
 ID = 10
 onTop = 1
 posType = Left
-pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+pos = GameWidth / 2, floor((1.3333333 * GameHeight / GameWidth) * 120)
 scale = 0.5, 0.5 * (1.3333333 * GameHeight / GameWidth)
 bindTime = -1
 removeTime = 32
@@ -1416,7 +1461,7 @@ anim = 8610 + var(0)
 ID = 11
 onTop = 1
 posType = left
-pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+pos = GameWidth / 2, floor((1.3333333 * GameHeight / GameWidth) * 120)
 scale = 0.5, 0.5 * (1.3333333 * GameHeight / GameWidth)
 bindTime = -1
 removeTime = 8
@@ -1445,7 +1490,7 @@ anim = 8601
 ID = 8601
 under = 1
 posType = Left
-pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+pos = GameWidth / 2, floor((1.3333333 * GameHeight / GameWidth) * 120)
 bindTime = -1
 removeTime = 16
 pauseMoveTime = -1

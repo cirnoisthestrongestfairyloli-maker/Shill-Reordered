@@ -1,0 +1,47 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; KFM (Bleach Mugen Project) Base version_0.5     ;
+; Author: Alchemist                               ;
+; Mugen version: Winmugen Only                    ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;----------------------------------------------------------------------------;
+;This is Config.txt where you can change various mechanics of this chars
+;gameplay, enjoy!
+[Statedef 96443]
+type     = S
+movetype = I
+physics  = N
+anim = 96443
+;----------------------------------------------------------------------------;
+;- NOTE: this should only be changed when up against or using chars with the
+;same system, i.e in the Bleach mugen full project, you may test it but it not
+;advised switching it on during normal mugen, opponents will not behave as
+;normal!
+[State 96443, 0]
+type = ParentVarSet
+trigger1 = 1
+var(47) = 0
+;change to 0 to disable line jumping
+;change to 1 to enable line jumping
+;----------------------------------------------------------------------------;
+[State 96443, 1]
+type = ParentVarSet
+trigger1 = 1
+var(48) = 0
+;change to 0 to enable English Voice
+;change to 1 to enable Japanese Voice
+;----------------------------------------------------------------------------;
+;- NOTE: This changes the handling of the char, when enabled to BleachDS
+;movement holding back no longer blocks but turns to walk the other way, block
+;is now the "c" button, all backward movement(walk back,backward jumping)
+;is now replaced with turning the other way. N/A yet.
+[State 96443, 2]
+type = ParentVarSet
+trigger1 = 1
+var(49) = 1
+;change to 0 to enable traditional movement
+;change to 1 to enable BleachDS movement
+;----------------------------------------------------------------------------;
+[State 96443, DestroySelf]
+type = DestroySelf
+trigger1 = time >= 1
+

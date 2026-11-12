@@ -233,7 +233,7 @@ type = HitDef
 trigger1 = enemynear,movetype != A
 trigger1 = !movecontact && !movereversed
 attr = A, SP
-damage    = ceil(75),3
+damage    = 50, 0
 hitflag = MAFD
 guardflag = MA
 priority = 3
@@ -259,7 +259,7 @@ type = HitDef
 trigger1 = enemynear,movetype = A
 trigger1 = !movecontact && !movereversed
 attr = A, SP
-damage    = ceil(95),3
+damage    = 60, 0
 hitflag = MAFD
 guardflag = MA
 priority = 3
@@ -4205,3 +4205,360 @@ time = 1
 facing = 1
 pos =0,-2
 ignorehitpause = 1 
+
+;=== GBVSR Reginleiv H (3 hits) and U (Ultimate) projectiles ===
+[Statedef 9250]
+type = A
+movetype = A
+physics = N
+Anim = 61001
+ctrl = 0
+sprpriority = 5
+powerAdd = 0
+[State 0, VelSet]
+type = VelSet
+trigger1 = 1
+x = 8.5
+ignorehitpause = 0
+;persistent = 
+
+[State 1001,]
+type = playsnd
+trigger1 = !time
+value = 400,4
+
+[State 1001,]
+type = playsnd
+trigger1 = !time
+value = 400,0
+
+[State 1001,]
+type = parentvarSet
+trigger1 = !time
+var(16) = 1
+
+[State 0, AngleDraw]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256,256
+
+[State 1001,]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+ignorehitpause = 1
+persistent = 1
+
+[State 1001,]
+type = HitBy
+trigger1 = 1
+value = SCA,AP
+time = -1
+ignorehitpause = 1
+
+[State 1001,]
+type = Hitoverride
+trigger1 = 1
+attr = SCA,AP
+stateno = 1052
+time = -1
+ignorehitpause = 1
+
+
+[State 600, 2]
+type = HitDef
+trigger1 = enemynear,movetype != A
+trigger1 = time%3=0
+attr = A, SP
+damage    = 25,3
+hitflag = MAFD
+guardflag = MA
+priority = 3
+pausetime = 6,12
+sparkno = 3
+sparkxy = -10,0
+hitsound   = S5,7
+guardsound = S6,0
+animtype = Med
+ground.type = High
+ground.slidetime = 6
+ground.hittime  = ceil(24*(root,fvar(11)))
+guard.ctrltime = 14
+ground.velocity =  -7.75,-6.56
+air.velocity =-7.75,-5.56
+air.hittime = 16
+air.fall = 1
+fall=1
+fall.recovertime = ceil(33+(10*(root,fvar(11))))
+guard.kill = 0
+getpower = 0,0
+
+[State 600, 2]
+type = HitDef
+trigger1 = enemynear,movetype = A
+trigger1 = time%3=0
+attr = A, SP
+damage    = 30,3
+hitflag = MAFD
+guardflag = MA
+priority = 3
+pausetime = 6,15
+sparkno = 3
+sparkxy = -10,0
+hitsound   = S5,7
+guardsound = S6,0
+animtype = Med
+ground.type = High
+ground.slidetime = 6
+ground.hittime  = ceil(28*(root,fvar(11)))
+guard.ctrltime = 22
+ground.velocity =  -7.75,-6.56
+air.velocity =-7.75,-5.56
+air.hittime = 16
+fall = 1
+fall.recover = 0
+guard.kill = 0
+getpower = 0,0
+
+[State 200,]
+type = varadd
+trigger1 = movecontact = 1
+var(5) = 1
+ignorehitpause = 1
+persistent = 1
+
+[State 200, Damage Scaling]
+type = parentvarset
+trigger1 = movehit
+fvar(4) = root,fvar(4)*0.95
+ignorehitpause = 1
+persistent = 0
+
+[State -2, Ultra Bust Active]
+type = attackmulset
+triggerall = root,fvar(19) > 0
+trigger1 = 1
+value = 1.2
+ignorehitpause = 1
+
+[State -2, Explod]
+type = Explod
+triggerall = numenemy
+triggerall = root,var(56) = 1 && numexplod(13000) = 0 && teamside = 1
+triggerall = enemy, movetype = h
+trigger1 = movehit
+anim = 9888
+pos = 5,75
+postype = left
+removetime = -2
+supermove = 1
+scale = 0.25,0.25
+sprpriority = 0
+id = 13000
+bindtime = -1
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+pausemovetime = -1
+
+[State -2, Explod]
+type = Explod
+triggerall = numenemy
+triggerall = root,var(56) = 1 && numexplod(13000) = 0 && teamside = 2
+triggerall = enemy, movetype = h
+trigger1 = movehit
+anim = 9888
+pos = -65,75
+postype = right
+removetime = -2
+supermove = 1
+scale = 0.25,0.25
+sprpriority = 0
+id = 13000
+bindtime = -1
+ontop = 1
+ownpal = 1
+ignorehitpause = 1
+pausemovetime = -1
+
+[State 1300]
+type = helper
+trigger1 = movecontact = 1
+helpertype = normal
+stateno = 7777
+ID = 7777
+name = "You May Rapid"
+postype = p1
+pos = 0, 0
+ownpal = 1
+ignorehitpause = 1
+pausemovetime = 9999
+
+[State 200, 2]
+type = varset
+trigger1 = Movecontact = 1
+var(1) = 1
+ignorehitpause = 1
+
+[State 1001,]
+type = ChangeState
+trigger1 = movecontact
+trigger1 = var(5) >= 3
+value = 1349
+
+
+
+[State 1001,]
+type = parentvarSet
+trigger1 = FrontEdgeDist <= -40
+var(16) = 0
+
+[State 1001,]
+type = Destroyself
+trigger1 = FrontEdgeDist <= -40
+
+;---------------------------------------------------------------------------
+;Reginleiv Contact
+
+[Statedef 9251]
+type = A
+movetype = A
+physics = N
+Anim = 61001
+ctrl = 0
+sprpriority = 5
+velset = 6,0
+
+
+[State 1001,]
+type = parentvarSet
+trigger1 = !time
+var(16) = 1
+
+[State 0, AngleDraw]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256,256
+
+[State 1001,]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+ignorehitpause = 1
+persistent = 1
+
+[State 1001,]
+type = HitBy
+trigger1 = 1
+value = SCA,AP
+time = -1
+ignorehitpause = 1
+
+[State 1001,]
+type = Hitoverride
+trigger1 = 1
+attr = SCA,AP
+stateno = 1349
+time = -1
+ignorehitpause = 1
+
+[State 600, 2]
+type = HitDef
+trigger1 = enemynear,movetype != A
+trigger1 = !movecontact && !movereversed
+attr = A, SP
+damage    = 100, 0
+hitflag = MAF
+guardflag = MA
+priority = 3
+pausetime = 0,12
+sparkno = 3
+sparkxy = -10,0
+hitsound   = S5,7
+guardsound = S6,0
+animtype = Med
+ground.type = High
+ground.hittime = 25
+ground.slidetime = 26
+guard.ctrltime = 14
+ground.velocity =  -5.75
+air.velocity = -5.75,-3
+air.hittime = 16
+air.fall = 1
+fall.recovertime = 35
+guard.kill = 0
+fall = 1
+fall.recover = 0
+[State 600, 2]
+type = HitDef
+trigger1 = enemynear,movetype = A
+trigger1 = !movecontact && !movereversed
+attr = A, SP
+damage    = 120, 0
+hitflag = MAF
+guardflag = MA
+priority = 3
+pausetime = 0,15
+sparkno = 3
+sparkxy = -10,0
+hitsound   = S5,7
+guardsound = S6,0
+animtype = Med
+ground.type = High
+ground.hittime = 25
+ground.slidetime = 26
+guard.ctrltime = 22
+ground.velocity =  -5.75
+air.velocity = -5.75,-3
+air.hittime = 16
+fall = 1
+fall.recover = 0
+guard.kill = 0
+
+[State 200, Damage Scaling]
+type = parentvarset
+trigger1 = movehit
+fvar(4) = root,fvar(4)*0.93
+ignorehitpause = 1
+persistent = 0
+
+[State 1300]
+type = helper
+trigger1 = movecontact = 1
+helpertype = normal
+stateno = 7777
+ID = 7777
+name = "You May Rapid"
+postype = p1
+pos = 0, 0
+ownpal = 1
+ignorehitpause = 1
+pausemovetime = 9999
+
+
+[State 1001,]
+type = ChangeState
+trigger1 = movecontact
+value = 1349
+
+[State 1001,]
+type = parentvarSet
+trigger1 = FrontEdgeDist <= -40
+var(16) = 0
+
+[State 1001,]
+type = Destroyself
+trigger1 = FrontEdgeDist <= -40
+
+;---------------------------------------------------------------------------
+;EX Reigenleiv
+
+[State 9251, GBVSR corner wall bounce]
+type = TargetState
+trigger1 = MoveHit = 1
+trigger1 = NumEnemy
+trigger1 = EnemyNear, BackEdgeBodyDist < 30
+value = 5800
+

@@ -1,295 +1,590 @@
 ;---------------------------------------------------------------------------
 ; States that are always executed (use statedef -2)
 ;-------------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+; States that are always executed (use statedef -2)
+;Abstract Reordered: the original -2 (no guard, damage armour helper, damage cap via LifeSet, projectile
+;immunity helper, palette 11/12 god mode) was removed. Saitama blocks and takes damage like everyone else.
+;---------------------------------------------------------------------------
 [Statedef -2]
 
-;===============================================================================
-;This CODE was taken from the original saitama char and rare akuma character, a good and old school mugen character
-;Many thanks to "Phantom.of.the.Server" creator of rare akuma and many more
-;for making these amazing codes, credits to him for the amazing work
-;never forget to give credit to the original creators, they take a bunch of time
-;to make stuff really good and funtional, this code was edited and change from the
-;original code, so it works diferent on this character
-;Don't touch anything if you don't know what are you doing.
-;===============================================================================
-
-[State -2, hitby]
-type = hitby
-triggerall = enemy,name != "Anpanman"
-trigger1 = !(palno = [11,12])
-value = SCA, AA
-time = -1
-ignorehitpause = 1
-[State -2, hitby]
-type = hitoverride
-triggerall = enemy,name != "Anpanman"
-trigger1 = !(palno = [11,12])
-attr = SCA, AA, AP, AT
-time = -1
-[State -2, eye for an eye]
-type = nothitby
-triggerall = enemy,name != "Anpanman"
-trigger1 = !(palno = [11,12])
-trigger1 = var(35)
-value = SCA, AA, AP, AT
-time = -1
-ignorehitpause = 1
-
-
-[State -2, HandsOff]
-type = NotHitBy
-triggerall=(stateno!=[120,155])
-triggerall=stateno!=[5000,5150]
-triggerall = 1
-trigger1 = !(palno = [11,12])
-trigger1=movetype!=H&&var(13)<=5 && var(51) = 0&&var(50) = 0
-trigger2=movetype!=H&&var(13)<=10 && var(51) > 0&&var(50) = 0
-trigger3=movetype!=H&&var(13)<=20 && var(50) =1
-value=  SCA,AA,NA,SA,HA,AP,NP,SP,HP,AT,NT,ST,HT
-time=1
-IgnoreHitPause = 1
-;----------------------------------------------------------------
-[State -2, Armor]
-type = Helper
-trigger1=!NumHelper(60100)
-triggerall = !(palno = [11,12])
-trigger1=Alive
-name="Armor"
-ID=60100
-StateNo=60100
-PauseMoveTime=9999999
-SuperMoveTime=9999999
-
-[State -2, VarSet]
-type=VarSet
-trigger1=stateno=[5000,5150]
-triggerall = !(palno = [11,12])
-trigger1=!animtime
-var(13)=0
-[State -2, VarSet]
-type=VarSet
-triggerall = !(palno = [11,12])
-trigger1=var(20)
-trigger2=var(13)=8
-var(6)=0
-
-[State -2, Damage]
-type = LifeAdd
-trigger1=var(20)&&StateNo!=[120,155]
-triggerall = !(palno = [11,12])
-value=-var(20)
-
-[State -2, Armor Reset]
+;normal-contact flag: cleared when he changes state; the hitbox helpers set it when they hit or are blocked
+[State -2, AR contact reset]
 type = VarSet
-triggerall = !(palno = [11,12])
-trigger1=1
-var(20)=0
-;Basic:
+triggerall = !IsHelper
+trigger1 = StateNo != var(45)
+var(44) = 0
+ignorehitpause = 1
 
-[State -2, NoGuard]
-type = AssertSpecial
+[State -2, AR contact state]
+type = VarSet
+triggerall = !IsHelper
 trigger1 = 1
-flag = NoStandGuard
-flag2 = NoCrouchGuard
-flag3 = NoAirGuard
+var(45) = StateNo
 ignorehitpause = 1
-;Virtual insanity
-[State -2, useless]
-type = varadd
-triggerall = (palno = [11,12])
-trigger1 = var(35) > 0
-var(35) = 1
-[State -2, useless]
-type = varset
-triggerall = (palno = [11,12])
-trigger1 = roundstate != 2 || movecontact
-var(35) = 0
-[State -2, useless]
-type = varset
-triggerall = (palno = [11,12])
+
+;=== AR BLOCKED = -8 (user, 2026-11-12) ===
+;var(46): 0 nothing | 1 a normal was just blocked | 2 the opponent is in block stun | 100+n = n ticks of lock left.
+;While it is set Saitama gets no control once his normal ends, until 8 ticks after the opponent's block stun ends.
+;var(49) = ticks spent waiting at 1 (gives up after 12).
+[State -2, AR blocked confirm]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(46) = 1
+trigger1 = NumEnemy
+trigger1 = EnemyNear, StateNo = [150, 155]
+var(46) = 2
+ignorehitpause = 1
+
+[State -2, AR blocked wait]
+type = VarAdd
+triggerall = !IsHelper
+trigger1 = var(46) = 1
+var(49) = 1
+ignorehitpause = 1
+
+[State -2, AR blocked give up]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(46) = 1 && var(49) > 12
+trigger2 = var(46) > 0 && (MoveType = H || RoundState != 2 || !NumEnemy)
+var(46) = 0
+ignorehitpause = 1
+
+[State -2, AR blocked wait reset]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(46) != 1
+var(49) = 0
+ignorehitpause = 1
+
+[State -2, AR blocked countdown]
+type = VarAdd
+triggerall = !IsHelper
+trigger1 = var(46) > 100
+var(46) = -1
+
+[State -2, AR blocked done]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(46) = 100
+var(46) = 0
+
+[State -2, AR blocked stun over]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(46) = 2
+trigger1 = NumEnemy
+trigger1 = !(EnemyNear, StateNo = [150, 155])
+var(46) = 108
+
+[State -2, AR blocked lock]
+type = CtrlSet
+triggerall = !IsHelper
+trigger1 = var(46) > 0
+trigger1 = MoveType = I && Ctrl
+value = 0
+;=== END AR BLOCKED ===
+
+;barrage (Normal Punches) only once per combo: var(48) is set while it runs and cleared when the opponent recovers
+[State -2, AR barrage used]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = StateNo = [1050, 1052]
+var(48) = 1
+ignorehitpause = 1
+
+[State -2, AR barrage reset]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(48)
+trigger1 = StateNo != [1050, 1052]
+trigger1 = !NumEnemy || EnemyNear, MoveType != H
+var(48) = 0
+ignorehitpause = 1
+
+;=== AR SERIOUS ===
+;fvar(20) gauge 0-3000 (3 stocks), fvar(21) a stock is armed (X), fvar(22) the current move is Serious,
+;fvar(23) armour defence is set, fvar(24) enemy life last tick, fvar(25) own life last tick
+[State -2, AR serious round reset]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = RoundState < 2
+fvar(20) = 0
+ignorehitpause = 1
+
+[State -2, AR serious round reset armed]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = RoundState < 2
+fvar(21) = 0
+ignorehitpause = 1
+
+[State -2, AR serious gain dealt]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = RoundState = 2 && NumEnemy
+triggerall = fvar(22) = 0
+trigger1 = EnemyNear, Life < fvar(24)
+trigger1 = EnemyNear, MoveType = H
+fvar(20) = (fvar(24) - EnemyNear, Life) * 2.5
+ignorehitpause = 1
+
+[State -2, AR serious gain taken]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = RoundState = 2
+trigger1 = Life < fvar(25)
+fvar(20) = (fvar(25) - Life) * 2
+ignorehitpause = 1
+
+[State -2, AR serious gain time]
+type = VarAdd
+triggerall = !IsHelper
+trigger1 = RoundState = 2
+trigger1 = fvar(22) = 0
+fvar(20) = 0.4
+
+[State -2, AR serious clamp]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = fvar(20) > 3000
+fvar(20) = 3000
+ignorehitpause = 1
+
+[State -2, AR serious enemy life]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = NumEnemy
+fvar(24) = EnemyNear, Life
+ignorehitpause = 1
+
+[State -2, AR serious own life]
+type = VarSet
+triggerall = !IsHelper
 trigger1 = 1
-var(35) = -1
-; 
-; ;--------------------------------------------------
-[state -2,]
-type = nothitby
-triggerall = numhelper(10015)>=1
-trigger1 = stateno !=[120,159]
-trigger1 = (palno = [11,12])
-value = ,AA,AP,AT
-
-[state -2,]
-type = lifeadd
-triggerall = numhelper(10015)>=1
-triggerall = var(55)
-trigger1 = stateno !=[120,159]
-trigger1 = stateno !=[5000,5199]
-trigger1 = (palno = [11,12])
-value = -(Ceil(var(55)*0))
+fvar(25) = Life
 ignorehitpause = 1
 
-;for the 11,12 pallete only
-[state -2,]
-type = varset
-triggerall = (palno = [11,12])
-trigger1 = var(55)
-var(55) = 0
+;an armed stock is spent by the next special or super: fvar(22) = 2 on its first tick, then 1
+[State -2, AR serious on]
+type = VarSet
+triggerall = !IsHelper
+triggerall = fvar(21) && fvar(22) = 0
+trigger1 = stateno = 1000 || stateno = 1010 || stateno = 1020 || stateno = 1030 || stateno = [1050, 1052] || stateno = [1400, 1402] || stateno = [1600, 1601] || stateno = [1700, 1702] || stateno = [3100, 3102]
+fvar(22) = 2
 ignorehitpause = 1
 
+[State -2, AR serious spend]
+type = VarAdd
+triggerall = !IsHelper
+trigger1 = fvar(22) = 2
+fvar(20) = -1000
+ignorehitpause = 1
 
-;-------------------------------------------------------
+[State -2, AR serious flash]
+type = PalFX
+triggerall = !IsHelper
+trigger1 = fvar(22) = 2
+time = 12
+add = 200, 120, 40
+ignorehitpause = 1
 
-;this helper works for the pallete 11 and 12, you can only activated by holding the start (enter) button and chose character
-;wich makes the character inmune to everything
-[state -2]
-type = Helper
-triggerall = numhelper(10015)<=0
-triggerall = (palno = [11,12])
-;trigger1 = stateno !=[120,159]
-trigger1 = MoveType !=H
-id = 10015
-name = "armor2"
-sprpriority = -1
-pos = 0,0
-postype = p1
-stateno = 10015
-helpertype = normal
-pausemovetime = 0
+[State -2, AR serious sound]
+type = PlaySnd
+triggerall = !IsHelper
+trigger1 = fvar(22) = 2
+value = 8500, 0
+ignorehitpause = 1
+
+[State -2, AR serious disarm]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = fvar(22) = 2
+fvar(21) = 0
+ignorehitpause = 1
+
+[State -2, AR serious running]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = fvar(22) = 2
+fvar(22) = 1
+ignorehitpause = 1
+
+[State -2, AR serious end]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = fvar(22)
+trigger1 = !(stateno = 1000 || stateno = 1010 || stateno = 1020 || stateno = 1030 || stateno = [1050, 1052] || stateno = [1400, 1402] || stateno = [1600, 1601] || stateno = [1700, 1702] || stateno = [3100, 3102])
+trigger2 = RoundState != 2
+fvar(22) = 0
+ignorehitpause = 1
+
+;armour: hits do not interrupt the Serious move and do half damage. Throws are not armoured.
+[State -2, AR serious armour]
+type = HitOverride
+triggerall = !IsHelper
+trigger1 = fvar(22)
+trigger1 = MoveType != H
+attr = SCA, NA, SA, HA, NP, SP, HP
+stateno = 0
+keepstate = 1
+slot = 0
+time = 2
+ignorehitpause = 1
+
+[State -2, AR serious armour defence]
+type = DefenceMulSet
+triggerall = !IsHelper
+trigger1 = fvar(22)
+trigger1 = MoveType != H
+value = 2
+ignorehitpause = 1
+
+[State -2, AR serious armour defence flag]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = fvar(22)
+trigger1 = MoveType != H
+fvar(23) = 1
+ignorehitpause = 1
+
+[State -2, AR serious armour defence off]
+type = DefenceMulSet
+triggerall = !IsHelper
+trigger1 = fvar(23)
+trigger1 = fvar(22) = 0 || MoveType = H
+value = 1
+ignorehitpause = 1
+
+[State -2, AR serious armour defence flag off]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = fvar(23)
+trigger1 = fvar(22) = 0 || MoveType = H
+fvar(23) = 0
+ignorehitpause = 1
+
+[State -2, AR serious glow]
+type = PalFX
+triggerall = !IsHelper
+trigger1 = fvar(22)
+time = 2
+add = 90, 30, 0
+sinadd = 60, 20, 0, 20
+ignorehitpause = 1
+
+[State -2, AR serious armed pulse]
+type = PalFX
+triggerall = !IsHelper
+trigger1 = fvar(21)
+trigger1 = GameTime % 40 = 0
+time = 14
+add = 120, 20, 20
+ignorehitpause = 1
+
+;Abstract Reordered: mechanic meter HUD - Kuroko's MAGIC CIRCUIT bar, fill in the parry colour,
+;bottom of the screen (P1 left, P2 right). Only the look changed; the meter logic is untouched.
+[State -2, AR meter HUD frame P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7790) = 0
+trigger1 = 1
+anim = 7790
+ID = 7790
+pos = 32, GameHeight - (33)
+postype = left
 bindtime = -1
-keyctrl = 0
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
 ownpal = 1
-
-;This makes the character have the effect of being invulnerable to some types of protectiles attacks
-;this state was taken from rare akuma and modified to work on this character
-[State -2]
-type = helper
-trigger1 = !numhelper(75)
-helpertype = normal
-stateno = 75
-ID = 75
-name = "Holinessness"
-postype = p1
-pausemovetime = 65535
-supermovetime = 65535
-;-------------------------------------------------------------------------------
-;-----------------------------------------------------
-[State a]
-type = TargetLifeAdd; one punch man
-triggerall = NumTarget > 0
-trigger1 = (palno = [11,12])
-value = -99999999999
-absolute = 1
-kill = 0
+scale = .5,.5
+removeongethit = 0
 ignorehitpause = 1
 
-[State a]
-type = TargetLifeAdd
-triggerall = NumTarget > 0
-trigger1 = (palno = [11,12])
-value = -721438172649817238692179238197264817283712*10298309821098309810982
-ID = -1
-kill = 1
-absolute = 1
-ignorehitpause = 1
-supermovetime = 9999999999
-pausemovetime = 9999999999
-
-
-; [State -2, Juggle]
-; type = assertspecial
-; trigger1 = 1
-; flag = nojugglecheck
-; ignorehitpause = 1
-[State -2, ] ;posibility of break oponent guard
-type = assertspecial
-triggerall = (palno = [11,12])
-trigger1 = random < 500
-flag = unguardable
-ignorehitpause = 1
-; [State -2, ]
-; type = assertspecial
-; trigger1 = 1
-; flag = nostandguard
-; flag2 = nocrouchguard
-; flag3 = noairguard
-; ignorehitpause = 1
-
-;No hitby mades by phamtom.of.the.server
-[State -2]
-type = assertspecial
-trigger1 = gethitvar(damage) >= var(39)
-flag = noko
-ignorehitpause = 1
-
-
-[State -2]
-type = varset
-trigger1 = var(39) < life
-var(39) = life
-ignorehitpause = 1
-[State -2]
-type = varset
-trigger1 = roundstate != 2 && !alive
-trigger2 = var(39) < 0
-var(39) = 0
-ignorehitpause = 1
-
-[State -2, damage]
-type = varadd
-trigger1 = var(37)
-var(39) = var(37)
-ignorehitpause = 1
-[State -2, damage]
-type = varset
+[State -2, AR meter HUD back P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7792) = 0
 trigger1 = 1
-var(37) = 0
+anim = 7792
+ID = 7792
+pos = 40, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
 ignorehitpause = 1
 
-[State -2, damage]
-type = varadd
-trigger1 = gethitvar(damage) ;&& stateno != 700 && numenemy
-var(37) = -gethitvar(damage) / ifelse(gethitvar(hitcount) <= 1, 1, gethitvar(hitcount))
-ignorehitpause = 1
-[State -2, damage]
-type = varset
-trigger1 = var(37) < -5
-var(37) = -5
-ignorehitpause = 1
-
-[State -2, limit]
-type = varset
-trigger1 = p2movetype = H
-var(36) = 0
-[State -2, limit]
-type = varadd
-trigger1 = var(36) && hitshakeover
-var(36) = ifelse(var(36) > 0, -1, 1)
-[State -2, limit]
-type = varadd
-trigger1 = var(37)
-var(36) = -var(37)
-ignorehitpause = 1
-[State -2, limit]
-type = varset
-trigger1 = var(36) > 500 || var(36) < 0 || movetype = A
-var(36) = ifelse(var(36) > 10, 10, 0);500
+[State -2, AR meter HUD fill 7791 P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7791) = 0
+trigger1 = fvar(21) = 0
+anim = 7791
+ID = 7791
+pos = 40, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
 ignorehitpause = 1
 
-[State -2]
-type = lifeset
+[State -2, AR meter HUD fill 7796 P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7796) = 0
+trigger1 = fvar(21) = 1
+anim = 7796
+ID = 7796
+pos = 40, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, AR meter HUD tick 0 P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7803) = 0
 trigger1 = 1
-value = var(39)
-ignorehitpause = 1
-[State -2]
-type = lifeset
-trigger1 = var(35) = -1
-value = lifemax
+anim = 7793
+ID = 7803
+pos = 70.7, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 13
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
 ignorehitpause = 1
 
-;-------------------------------------------------------------------------------
-; States that are executed when in self's state file (use statedef -3)
-; Mostly SND players for basic movement like jumping and runing and voice clips
-;-------------------------------------------------------------------------------
+[State -2, AR meter HUD tick 1 P1]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 1
+trigger1 = NumExplod(7813) = 0
+trigger1 = 1
+anim = 7793
+ID = 7813
+pos = 101.3, GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 13
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, AR meter HUD frame P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7790) = 0
+trigger1 = 1
+anim = 7790
+ID = 7790
+pos = GameWidth - (140), GameHeight - (33)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, AR meter HUD back P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7792) = 0
+trigger1 = 1
+anim = 7792
+ID = 7792
+pos = GameWidth - (132), GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, AR meter HUD fill 7791 P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7791) = 0
+trigger1 = fvar(21) = 0
+anim = 7791
+ID = 7791
+pos = GameWidth - (40), GameHeight - (22)
+postype = left
+facing = -1
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, AR meter HUD fill 7796 P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7796) = 0
+trigger1 = fvar(21) = 1
+anim = 7796
+ID = 7796
+pos = GameWidth - (40), GameHeight - (22)
+postype = left
+facing = -1
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 12
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, AR meter HUD tick 0 P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7803) = 0
+trigger1 = 1
+anim = 7793
+ID = 7803
+pos = GameWidth - (70.7), GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 13
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, AR meter HUD tick 1 P2]
+type = Explod
+triggerall = !IsHelper
+triggerall = RoundState >= 1
+triggerall = TeamSide = 2
+trigger1 = NumExplod(7813) = 0
+trigger1 = 1
+anim = 7793
+ID = 7813
+pos = GameWidth - (101.3), GameHeight - (22)
+postype = left
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 13
+ontop = 1
+ownpal = 1
+scale = .5,.5
+removeongethit = 0
+ignorehitpause = 1
+
+[State -2, AR meter HUD off 7791]
+type = RemoveExplod
+triggerall = !IsHelper
+trigger1 = NumExplod(7791)
+trigger1 = !(fvar(21) = 0)
+ID = 7791
+ignorehitpause = 1
+
+[State -2, AR meter HUD off 7796]
+type = RemoveExplod
+triggerall = !IsHelper
+trigger1 = NumExplod(7796)
+trigger1 = !(fvar(21) = 1)
+ID = 7796
+ignorehitpause = 1
+
+[State -2, AR meter HUD scale 7791]
+type = ModifyExplod
+triggerall = !IsHelper
+trigger1 = NumExplod(7791)
+ID = 7791
+scale = 0.5 * (ifelse((fvar(20) / 3000.0) < 0, 0, ifelse((fvar(20) / 3000.0) > 1, 1, (fvar(20) / 3000.0)))) + 0.00005, .5
+ignorehitpause = 1
+
+[State -2, AR meter HUD scale 7796]
+type = ModifyExplod
+triggerall = !IsHelper
+trigger1 = NumExplod(7796)
+ID = 7796
+scale = 0.5 * (ifelse((fvar(20) / 3000.0) < 0, 0, ifelse((fvar(20) / 3000.0) > 1, 1, (fvar(20) / 3000.0)))) + 0.00005, .5
+ignorehitpause = 1
+
+;=== END AR SERIOUS ===
+
 [Statedef -3]
 
 [State -3, Landing Sound]
@@ -327,13 +622,6 @@ trigger2 = stateno = 105
 value = 40, 4
 
 ;this will make the character teleport when he gets hit by a combo
-[State -3, c -c -c -combo breaker]
-type = changestate
-value = 1042
-trigger1 = movetype = H && alive
-trigger1 = !hitshakeover && time = 1
-trigger1 = gethitvar(hitcount) > 4 && random < (400 * gethitvar(hitcount))
-
 ; [State 40, Voice]
 ; type = PlaySnd
 ; triggerall = time = 1 && Random <= 500
@@ -413,13 +701,6 @@ trigger3 = stateno != [0,51]
 value = 5001, random%3
 volumescale = 130
 channel = 0
-
-[State -3, Auto Recover]
-type = changestate
-trigger1 = stateno = 5050
-trigger1 = time && alive
-value = 5040
-ctrl = 1
 
 ;SND stops
 [State -3]

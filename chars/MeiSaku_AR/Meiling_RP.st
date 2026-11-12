@@ -215,6 +215,13 @@ ctrl = 0
 anim = 190
 velset = 0,0
 
+[State 191, AR DIO intro]
+type = ChangeState
+trigger1 = RoundsExisted = 0
+trigger1 = NumEnemy
+trigger1 = EnemyNear, Name = "dio"
+value = 7820
+
 [State 191, AR Sakuya on point]
 type = ChangeState
 trigger1 = var(47) = 1

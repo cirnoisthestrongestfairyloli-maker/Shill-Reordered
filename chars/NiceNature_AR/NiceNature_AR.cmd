@@ -63,7 +63,50 @@ name = "c"
 command = c
 time = 1
 
+[Command]
+name = "qcf_a"
+command = ~D, DF, F, a
+time = 15
+
+[Command]
+name = "qcf_b"
+command = ~D, DF, F, b
+time = 15
+
+[Command]
+name = "qcf_c"
+command = ~D, DF, F, c
+time = 15
+
 [Statedef -1]
+
+[State -1, 236 Dismantle H (EX)]
+type = ChangeState
+value = 1002
+triggerall = command = "qcf_c"
+triggerall = power >= 500
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = (stateno = [200, 225]) || (stateno = [400, 420])
+trigger2 = movecontact
+
+[State -1, 236 Dismantle M]
+type = ChangeState
+value = 1001
+triggerall = command = "qcf_b"
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = (stateno = [200, 225]) || (stateno = [400, 420])
+trigger2 = movecontact
+
+[State -1, 236 Dismantle L]
+type = ChangeState
+value = 1000
+triggerall = command = "qcf_a"
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = (stateno = [200, 225]) || (stateno = [400, 420])
+trigger2 = movecontact
 
 [State -1, Black Flash]
 type = ChangeState
@@ -186,6 +229,14 @@ trigger1 = var(32) > 0
 trigger1 = numenemy
 trigger1 = enemynear, movetype != H
 v = 32
+value = 0
+
+[State -1, 5C launch count resets once the opponent is out of hitstun]
+type = VarSet
+trigger1 = var(33) > 0
+trigger1 = numenemy
+trigger1 = enemynear, movetype != H
+v = 33
 value = 0
 
 

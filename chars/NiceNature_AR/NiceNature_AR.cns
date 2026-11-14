@@ -615,8 +615,8 @@ ground.type = High
 ground.slidetime = 22
 ground.hittime = 23
 ground.velocity = -4
-air.velocity = -2.2,-8.5
-air.fall = 1
+air.velocity = ifelse(var(33) < 2, -2.2, -4.25), ifelse(var(33) < 2, -8.5, -2.4)
+air.fall = ifelse(var(33) < 2, 1, 0)
 
 [State 225, 5H high kick (vs a bouncing opponent)]
 type = HitDef
@@ -636,9 +636,19 @@ ground.type = High
 ground.slidetime = 22
 ground.hittime = 23
 ground.velocity = -4
-air.velocity = -2.2,-8.5
+air.velocity = ifelse(var(33) < 2, -2.2, -4.25), ifelse(var(33) < 2, -8.5, -2.4)
 fall = 1
 air.fall = 1
+
+[State 225, count the launch (airborne hit)]
+type = VarAdd
+trigger1 = movehit
+trigger1 = numenemy
+trigger1 = enemynear, statetype = A
+v = 33
+value = 1
+persistent = 0
+ignorehitpause = 1
 
 [State 225, end]
 type = ChangeState
@@ -1079,3 +1089,232 @@ type = ChangeState
 trigger1 = Pos Y >= 0 && Vel Y > 0
 value = 52
 
+
+; ---------------------------------------------------------------- 236 Dismantle
+[Statedef 1000]
+type = S
+movetype = A
+physics = S
+anim = 1000
+ctrl = 0
+velset = 0, 0
+sprpriority = 2
+
+[State 1000, particles gather at the hand]
+type = Explod
+trigger1 = time = 0
+anim = 1600
+postype = p1
+pos = 25, -76
+bindtime = -1
+removetime = 9
+sprpriority = 3
+ownpal = 1
+
+[State 1000, the cut 1]
+type = Projectile
+trigger1 = AnimElem = 3
+projid = 1000
+projanim = 1610
+projhitanim = 1620
+projremanim = 1620
+projcancelanim = 1620
+projremovetime = 12
+projscale = 0.7, 0.7
+projpriority = 1
+projhits = 1
+offset = 29, -82
+velocity = 9, 0
+attr = S, SP
+damage = 30, 4
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 8
+sparkno = -1
+hitsound = F5, 1
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 14
+ground.velocity = -3
+air.velocity = -2, -3
+
+[State 1000, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 1001]
+type = S
+movetype = A
+physics = S
+anim = 1001
+ctrl = 0
+velset = 0, 0
+sprpriority = 2
+
+[State 1001, particles gather at the hand]
+type = Explod
+trigger1 = time = 0
+anim = 1600
+postype = p1
+pos = 25, -76
+bindtime = -1
+removetime = 20
+sprpriority = 3
+ownpal = 1
+
+[State 1001, the cut 1]
+type = Projectile
+trigger1 = AnimElem = 3
+projid = 1001
+projanim = 1610
+projhitanim = 1620
+projremanim = 1620
+projcancelanim = 1620
+projremovetime = 30
+projscale = 0.7, 0.7
+projpriority = 1
+projhits = 1
+offset = 29, -82
+velocity = 5.5, 0
+attr = S, SP
+damage = 45, 4
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 8
+sparkno = -1
+hitsound = F5, 1
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 14
+ground.velocity = -3
+air.velocity = -2, -3
+
+[State 1001, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 1002]
+type = S
+movetype = A
+physics = S
+anim = 1002
+ctrl = 0
+velset = 0, 0
+sprpriority = 2
+
+[State 1002, EX cost]
+type = PowerAdd
+trigger1 = time = 0
+value = -500
+
+[State 1002, particles gather at the hand]
+type = Explod
+trigger1 = time = 0
+anim = 1600
+postype = p1
+pos = 25, -76
+bindtime = -1
+removetime = 14
+sprpriority = 3
+ownpal = 1
+
+[State 1002, the cut 1]
+type = Projectile
+trigger1 = AnimElem = 3
+projid = 1002
+projanim = 1610
+projhitanim = 1620
+projremanim = 1620
+projcancelanim = 1620
+projremovetime = 22
+projscale = 0.7, 0.7
+projpriority = 1
+projhits = 1
+offset = 29, -82
+velocity = 7, -1.4
+attr = S, SP
+damage = 25, 4
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 8
+sparkno = -1
+hitsound = F5, 1
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 14
+ground.velocity = -3
+air.velocity = -2, -3
+
+[State 1002, the cut 2]
+type = Projectile
+trigger1 = AnimElem = 3
+projid = 1002
+projanim = 1610
+projhitanim = 1620
+projremanim = 1620
+projcancelanim = 1620
+projremovetime = 22
+projscale = 0.7, 0.7
+projpriority = 1
+projhits = 1
+offset = 29, -82
+velocity = 7, 0
+attr = S, SP
+damage = 25, 4
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 8
+sparkno = -1
+hitsound = F5, 1
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 14
+ground.velocity = -3
+air.velocity = -2, -3
+
+[State 1002, the cut 3]
+type = Projectile
+trigger1 = AnimElem = 3
+projid = 1002
+projanim = 1610
+projhitanim = 1620
+projremanim = 1620
+projcancelanim = 1620
+projremovetime = 22
+projscale = 0.7, 0.7
+projpriority = 1
+projhits = 1
+offset = 29, -82
+velocity = 7, 1.4
+attr = S, SP
+damage = 25, 4
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+pausetime = 0, 8
+sparkno = -1
+hitsound = F5, 1
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 14
+ground.velocity = -3
+air.velocity = -2, -3
+
+[State 1002, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1

@@ -43,6 +43,7 @@ AR.data = {
 	['sailor_moon_ar'] = {n = 30, plate_w = 330, bio_w = 1727, q = 3, win = {181, 10}},
 	['lilith_ar'] = {n = 31, plate_w = 146, bio_w = 1904, q = 3, win = {181, 0}},
 	['yoruichi_ar'] = {n = 32, plate_w = 238, bio_w = 2000, q = 3, win = {181, 0}},
+	['nicenature_ar'] = {n = 33, plate_w = 330, bio_w = 1378, q = 3, win = {181, 0}},
 }
 AR.random = {n = 99, plate_w = 185, bio_w = 758}
 AR.timeW = 169

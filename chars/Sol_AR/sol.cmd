@@ -1246,6 +1246,10 @@ trigger6 = stateno = 1050 && AnimElemTime(6) >= 0
 type = ChangeState
 value = 3500
 triggerall = !ishelper
+;Abstract Reordered: Tyrant Rave is ground only (in the air it left him hanging) and cannot be
+;cancelled into from Volcanic Viper
+triggerall = statetype != A
+triggerall = stateno != [1100,1199]
 triggerall = var(40) = 0
 triggerall = var(59) <= 0
 triggerall = var(58) != 2

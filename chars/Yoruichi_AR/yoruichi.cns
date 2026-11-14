@@ -77,8 +77,8 @@ FloatPersistIndex = 40  ;reset to 0 between rounds or matches. There are 60 int 
 
 
 [Size]
-xscale = 1		;Horizontal scaling factor.
-yscale = 1			;Vertical scaling factor.
+xscale = 1.1	;Abstract Reordered: a tad taller (was 1)	;Horizontal scaling factor.
+yscale = 1.1	;Abstract Reordered: a tad taller (was 1)	;Vertical scaling factor.
 ground.back = 15		;Player width (back, ground)
 ground.front = 16		;Player width (front, ground)
 air.back = 12		;Player width (back, air)
@@ -2776,6 +2776,13 @@ velset = 2.5,0
 sprpriority = 0
 ctrl = 0
 
+;Abstract Reordered: failsafe so the shadow clone can never stay on screen
+[State 0, AR clone failsafe]
+type = DestroySelf
+trigger1 = time > 150
+trigger2 = time > 20 && animtime = 0
+ignorehitpause = 1
+
 [State 0, BindToParent]
 type = BindToParent
 trigger1 = 1
@@ -2972,6 +2979,14 @@ movetype= A
 physics = N
 velset = 0,0
 ctrl = 0
+
+;Abstract Reordered: lock the strength to the animation that is playing. Another special input during the kick
+;used to change var(3), which switched off its gravity and let her rise forever.
+[State 1050, AR strength lock]
+type = VarSet
+trigger1 = time > 0
+var(3) = cond(anim = 1050, 0, cond(anim = 1051, 1, 2))
+ignorehitpause = 1
 
 [State 0, PlaySnd]
 type = PlaySnd
@@ -3801,6 +3816,13 @@ anim = 96443
 sprpriority = 0
 ctrl = 0
 
+;Abstract Reordered: failsafe so the shadow clone can never stay on screen
+[State 0, AR clone failsafe]
+type = DestroySelf
+trigger1 = time > 400
+trigger2 = time > 20 && animtime = 0
+ignorehitpause = 1
+
 [State 3002, AR Lv3 power]
 type = AttackMulSet
 trigger1 = Time = 0
@@ -3933,6 +3955,14 @@ ignorehitpause = 1
 ; States that are always executed (use statedef -2)
 ;---------------------------------------------------------------------------
 [Statedef -2]
+
+;Abstract Reordered: a shadow clone that left its own state (it got hit, parried or grabbed) used to
+;fall back to standing idle and stay forever as a second Yoruichi. Remove it instead.
+[State -2, AR stray clone]
+type = DestroySelf
+trigger1 = ishelper(1026) && stateno != 1026
+trigger2 = ishelper(3002) && stateno != 3002
+ignorehitpause = 1
 
 [State -2, Debug Info]
 Type = Displaytoclipboard

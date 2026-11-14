@@ -31,9 +31,9 @@ shadowoffset = 0
 draw.offset = 0,0
 
 [Velocity]
-walk.fwd = 2.0
-walk.back = -1.8
-run.fwd = 4.6, 0
+walk.fwd = 1.6
+walk.back = -1.45
+run.fwd = 6.0, 0
 run.back = -4.5,-3.8
 jump.neu = 0,-8.4
 jump.back = -2.55
@@ -52,7 +52,7 @@ air.gethit.airrecover.up = -2
 air.gethit.airrecover.down = 1.5
 
 [Movement]
-airjump.num = 1
+airjump.num = 0
 airjump.height = 35
 yaccel = .44
 stand.friction = .85
@@ -71,3 +71,1011 @@ down.bounce.groundlevel = 12
 down.friction.threshold = .05
 
 [Statedef -2]
+
+; ---------------------------------------------------------------- X: Black Flash
+; var(20) cooldown (6 s, 3 s after a perfect hit), var(21) perfect, var(22) X pressed too early
+[State -2, Black Flash cooldown]
+type = VarAdd
+trigger1 = var(20) > 0
+v = 20
+value = -1
+ignorehitpause = 1
+
+[State -2, Black Flash cooldown icon: step]
+type = VarSet
+trigger1 = 1
+v = 26
+value = ceil(var(20) * 16.0 / ifelse(var(25) > 0, var(25), 360))
+ignorehitpause = 1
+
+[State -2, Black Flash cooldown icon: drop old]
+type = RemoveExplod
+trigger1 = var(26) != var(27)
+id = 1560
+ignorehitpause = 1
+
+[State -2, Black Flash cooldown icon: draw]
+type = Explod
+trigger1 = var(26) != var(27) || NumExplod(1560) = 0
+id = 1560
+anim = 1560 + var(26)
+postype = left
+pos = ifelse(TeamSide = 1, 24, GameWidth - 24), GameHeight - 24
+facing = 1
+scale = 0.45, 0.45
+bindtime = -1
+removetime = -1
+sprpriority = 10
+ontop = 1
+pausemovetime = 65535
+supermovetime = 65535
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, Black Flash cooldown icon: remember]
+type = VarSet
+trigger1 = 1
+v = 27
+value = var(26)
+ignorehitpause = 1
+
+[Statedef 1500]
+type = S
+movetype = A
+physics = S
+anim = 1500
+ctrl = 0
+velset = 0,0
+sprpriority = 2
+
+; var(21) perfect this swing, var(22) X pressed too early, var(23) perfects landed in this chain (max 3)
+[State 1500, reset perfect]
+type = VarSet
+trigger1 = time = 0
+v = 21
+value = 0
+
+[State 1500, reset early press]
+type = VarSet
+trigger1 = time = 0
+v = 22
+value = 0
+
+[State 1500, cooldown starts]
+type = VarSet
+trigger1 = time = 0
+trigger1 = prevstateno != 1500
+v = 20
+value = 360
+
+[State 1500, cooldown length]
+type = VarSet
+trigger1 = time = 0
+trigger1 = prevstateno != 1500
+v = 25
+value = 360
+
+[State 1500, chained follow-up: cooldown starts again if this one is not perfect]
+type = VarSet
+trigger1 = time = 21
+trigger1 = prevstateno = 1500
+trigger1 = var(21) = 0
+v = 20
+value = 360
+
+[State 1500, chained follow-up: cooldown length]
+type = VarSet
+trigger1 = time = 21
+trigger1 = prevstateno = 1500
+trigger1 = var(21) = 0
+v = 25
+value = 360
+
+[State 1500, reset perfect-hit flag]
+type = VarSet
+trigger1 = time = 0
+v = 28
+value = 0
+
+[State 1500, new chain]
+type = VarSet
+trigger1 = time = 0
+trigger1 = prevstateno != 1500
+v = 23
+value = 0
+
+[State 1500, early press locks out the perfect]
+type = VarSet
+trigger1 = time >= 2 && time <= 16
+trigger1 = command = "x"
+v = 22
+value = 1
+
+[State 1500, fist glint = the window]
+type = Explod
+trigger1 = time = 17
+anim = 1540
+postype = p1
+pos = 19, -68
+bindtime = -1
+removetime = -2
+sprpriority = 6
+ownpal = 1
+trans = add
+
+[State 1500, timing window: she fades black (tick 17)]
+type = PalFX
+trigger1 = time = 17
+time = 1
+mul = 90, 90, 90
+
+[State 1500, timing window: she fades black (ticks 18-19)]
+type = PalFX
+trigger1 = time = 18
+time = 2
+mul = 25, 25, 25
+
+[State 1500, perfect]
+type = VarSet
+trigger1 = time >= 17 && time <= 19
+trigger1 = command = "x"
+trigger1 = var(22) = 0
+v = 21
+value = 1
+
+[State 1500, step in]
+type = VelSet
+trigger1 = time >= 16 && time <= 23
+x = 3.5
+
+[State 1500, stop]
+type = VelSet
+trigger1 = time = 24
+x = 0
+
+[State 1500, HitDef normal]
+type = HitDef
+trigger1 = time = 20
+trigger1 = var(21) = 0
+attr = S, HA
+damage = floor(EnemyNear, LifeMax * 0.03), 0
+animtype = Heavy
+guardflag = MA
+hitflag = MAF
+pausetime = 12, 12
+sparkno = -1
+guard.sparkno = 40
+hitsound = F5, 3
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 16
+ground.velocity = -7
+air.velocity = -4, -3
+givepower = 0, 0
+
+[State 1500, HitDef perfect 1-2 (keeps them standing for the chain)]
+type = HitDef
+trigger1 = time = 20
+trigger1 = var(21) = 1
+trigger1 = var(23) < 2
+attr = S, HA
+damage = floor(EnemyNear, LifeMax * 0.033), 0
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+pausetime = 22, 24
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1500, 0
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 48
+ground.velocity = -2
+air.velocity = -2, -4
+envshake.time = 16
+envshake.ampl = 5
+givepower = 0, 0
+
+[State 1500, HitDef perfect 3 (finisher: hard knockdown)]
+type = HitDef
+trigger1 = time = 20
+trigger1 = var(21) = 1
+trigger1 = var(23) = 2
+attr = S, HA
+damage = floor(EnemyNear, LifeMax * 0.10) - 2 * floor(EnemyNear, LifeMax * 0.033), 0
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+pausetime = 30, 34
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1500, 0
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 20
+ground.velocity = -6, -6
+air.velocity = -6, -6
+fall = 1
+air.fall = 1
+fall.recover = 0
+envshake.time = 30
+envshake.ampl = 8
+givepower = 0, 0
+
+[State 1500, perfect hit landed]
+type = VarSet
+trigger1 = movehit
+trigger1 = var(21) = 1
+v = 28
+value = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 1500, count the perfect]
+type = VarAdd
+trigger1 = movehit
+trigger1 = var(21) = 1
+v = 23
+value = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 1500, drain normal]
+type = TargetPowerAdd
+trigger1 = movehit
+trigger1 = var(21) = 0
+value = -250
+persistent = 0
+
+[State 1500, drain perfect]
+type = TargetPowerAdd
+trigger1 = movehit
+trigger1 = var(21) = 1
+value = -500
+persistent = 0
+
+[State 1500, perfect: chain continues, cooldown refills]
+type = VarSet
+trigger1 = var(28) = 1
+trigger1 = var(23) < 3
+v = 20
+value = 0
+ignorehitpause = 1
+
+[State 1500, perfect: shorter cooldown after the chain]
+type = VarSet
+trigger1 = movehit
+trigger1 = var(21) = 1
+trigger1 = var(23) >= 3
+v = 20
+value = 180
+persistent = 0
+
+[State 1500, perfect: shorter cooldown length]
+type = VarSet
+trigger1 = movehit
+trigger1 = var(21) = 1
+v = 25
+value = 180
+persistent = 0
+
+[State 1500, black flash at the fist]
+type = Explod
+trigger1 = movehit
+anim = 1510
+postype = p1
+pos = 46, -65
+scale = ifelse(var(21), 2.2, 1.2), ifelse(var(21), 2.2, 1.2)
+bindtime = 1
+removetime = -2
+sprpriority = 5
+ownpal = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 1500, perfect: red lightning]
+type = Explod
+trigger1 = movehit
+trigger1 = var(21) = 1
+anim = 1520
+postype = p1
+pos = 42, -62
+scale = 1.5, 1.5
+bindtime = 1
+removetime = -2
+sprpriority = 6
+ownpal = 1
+trans = add
+persistent = 0
+ignorehitpause = 1
+
+[State 1500, perfect: green lightning]
+type = Explod
+trigger1 = movehit
+trigger1 = var(21) = 1
+anim = 1530
+postype = p1
+pos = 52, -70
+scale = 1.5, 1.5
+bindtime = 1
+removetime = -2
+sprpriority = 6
+ownpal = 1
+trans = add
+persistent = 0
+ignorehitpause = 1
+
+[State 1500, perfect: screen flashes black]
+type = EnvColor
+trigger1 = movehit
+trigger1 = var(21) = 1
+value = 0, 0, 0
+time = 6
+under = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 1500, 3rd perfect: All Seeing Eyes]
+type = Explod
+trigger1 = movehit
+trigger1 = var(21) = 1
+trigger1 = var(23) = 3
+anim = 1550
+postype = left
+pos = GameWidth / 2, GameHeight / 2
+scale = 0.68, 0.68
+bindtime = -1
+removetime = -2
+sprpriority = 20
+ontop = 1
+pausemovetime = 255
+supermovetime = 255
+ownpal = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 1500, chain: a perfect 1 or 2 rolls straight into the next Black Flash]
+type = ChangeState
+trigger1 = time >= 24
+trigger1 = var(28) = 1
+trigger1 = var(23) < 3
+value = 1500
+
+[State 1500, end]
+type = ChangeState
+trigger1 = animtime = 0
+value = 0
+ctrl = 1
+
+; ---------------------------------------------------------------- debuff-landed banner
+; var(31) = 1 -> show the banner once (set by the 22 glare when it lands)
+[State -2, debuff banner]
+type = Explod
+trigger1 = var(31) = 1
+anim = ifelse(TeamSide = 1, 1580, 1581)
+postype = left
+pos = ifelse(TeamSide = 1, 6, GameWidth - 6), 58
+facing = 1
+scale = 0.65, 0.65
+bindtime = -1
+removetime = -2
+sprpriority = 10
+ontop = 1
+pausemovetime = 65535
+supermovetime = 65535
+ownpal = 1
+ignorehitpause = 1
+
+[State -2, debuff banner shown]
+type = VarSet
+trigger1 = var(31) = 1
+v = 31
+value = 0
+ignorehitpause = 1
+
+; ---------------------------------------------------------------- normals (after Kamijo_AR)
+[Statedef 200]
+type = S
+movetype = A
+physics = S
+anim = 200
+ctrl = 0
+velset = 0, 0
+sprpriority = 2
+
+[State 200, 5L jab]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = !numenemy || enemynear, stateno != 5101
+attr = S, NA
+damage = 22, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+pausetime = 5, 5
+sparkxy = -10, -60
+hitsound = F5,0
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 10
+ground.velocity = -4.25
+air.velocity = -1.9,-1.2
+
+[State 200, 5L jab (vs a bouncing opponent)]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = numenemy
+trigger1 = enemynear, stateno = 5101
+attr = S, NA
+damage = 22, 0
+animtype = Light
+guardflag = MA
+hitflag = MAFD
+pausetime = 5, 5
+sparkxy = -10, -60
+hitsound = F5,0
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 10
+ground.velocity = -4.25
+air.velocity = -1.9,-1.2
+fall = 1
+air.fall = 1
+
+[State 200, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 215]
+type = S
+movetype = A
+physics = S
+anim = 215
+ctrl = 0
+velset = 0, 0
+sprpriority = 2
+
+[State 215, 5M low kick]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = !numenemy || enemynear, stateno != 5101
+attr = S, NA
+damage = 35, 0
+animtype = Medium
+guardflag = L
+hitflag = MAF
+pausetime = 9, 9
+sparkxy = -10, -60
+hitsound = F5,1
+guardsound = F6, 0
+ground.type = Low
+ground.slidetime = 16
+ground.hittime = 14
+ground.velocity = -1.5
+air.velocity = -2.75,-2.5
+
+[State 215, 5M low kick (vs a bouncing opponent)]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = numenemy
+trigger1 = enemynear, stateno = 5101
+attr = S, NA
+damage = 35, 0
+animtype = Medium
+guardflag = L
+hitflag = MAFD
+pausetime = 9, 9
+sparkxy = -10, -60
+hitsound = F5,1
+guardsound = F6, 0
+ground.type = Low
+ground.slidetime = 16
+ground.hittime = 14
+ground.velocity = -1.5
+air.velocity = -2.75,-2.5
+fall = 1
+air.fall = 1
+
+[State 215, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 225]
+type = S
+movetype = A
+physics = S
+anim = 225
+ctrl = 0
+velset = 0, 0
+sprpriority = 2
+
+[State 225, 5H high kick]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = !numenemy || enemynear, stateno != 5101
+attr = S, NA
+damage = 60, 0
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+pausetime = 14, 14
+sparkxy = -10, -60
+hitsound = F5,2
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 22
+ground.hittime = 23
+ground.velocity = -4
+air.velocity = -2.2,-8.5
+air.fall = 1
+
+[State 225, 5H high kick (vs a bouncing opponent)]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = numenemy
+trigger1 = enemynear, stateno = 5101
+attr = S, NA
+damage = 60, 0
+animtype = Hard
+guardflag = MA
+hitflag = MAFD
+pausetime = 14, 14
+sparkxy = -10, -60
+hitsound = F5,2
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 22
+ground.hittime = 23
+ground.velocity = -4
+air.velocity = -2.2,-8.5
+fall = 1
+air.fall = 1
+
+[State 225, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 400]
+type = C
+movetype = A
+physics = C
+anim = 400
+ctrl = 0
+velset = 0, 0
+sprpriority = 2
+
+[State 400, 2L crouching jab (Kenshiro 2A)]
+type = HitDef
+trigger1 = AnimElem = 2
+trigger1 = !numenemy || enemynear, stateno != 5101
+attr = C, NA
+damage = 22, 0
+animtype = Light
+guardflag = L
+hitflag = MAF
+pausetime = 6, 6
+sparkxy = -10, -60
+hitsound = F5,0
+guardsound = F6, 0
+ground.type = Low
+ground.slidetime = 14
+ground.hittime = 13
+ground.velocity = -3
+air.velocity = -2,-2
+
+[State 400, 2L crouching jab (Kenshiro 2A) (vs a bouncing opponent)]
+type = HitDef
+trigger1 = AnimElem = 2
+trigger1 = numenemy
+trigger1 = enemynear, stateno = 5101
+attr = C, NA
+damage = 22, 0
+animtype = Light
+guardflag = L
+hitflag = MAFD
+pausetime = 6, 6
+sparkxy = -10, -60
+hitsound = F5,0
+guardsound = F6, 0
+ground.type = Low
+ground.slidetime = 14
+ground.hittime = 13
+ground.velocity = -3
+air.velocity = -2,-2
+fall = 1
+air.fall = 1
+
+[State 400, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 410]
+type = C
+movetype = A
+physics = C
+anim = 410
+ctrl = 0
+velset = 0, 0
+sprpriority = 2
+
+[State 410, 2M crouching elbow (NT Touma 2B)]
+type = HitDef
+trigger1 = AnimElem = 4
+trigger1 = !numenemy || enemynear, stateno != 5101
+attr = C, NA
+damage = 38, 0
+animtype = Medium
+guardflag = M
+hitflag = MAF
+pausetime = 9, 9
+sparkxy = -10, -60
+hitsound = F5,1
+guardsound = F6, 0
+ground.type = Low
+ground.slidetime = 12
+ground.hittime = 12
+ground.velocity = -1.5
+air.velocity = -1.5,-3
+
+[State 410, 2M crouching elbow (NT Touma 2B) (vs a bouncing opponent)]
+type = HitDef
+trigger1 = AnimElem = 4
+trigger1 = numenemy
+trigger1 = enemynear, stateno = 5101
+attr = C, NA
+damage = 38, 0
+animtype = Medium
+guardflag = M
+hitflag = MAFD
+pausetime = 9, 9
+sparkxy = -10, -60
+hitsound = F5,1
+guardsound = F6, 0
+ground.type = Low
+ground.slidetime = 12
+ground.hittime = 12
+ground.velocity = -1.5
+air.velocity = -1.5,-3
+fall = 1
+air.fall = 1
+
+[State 410, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 420]
+type = C
+movetype = A
+physics = N
+anim = 420
+ctrl = 0
+velset = 0, 0
+sprpriority = 2
+
+[State 420, 2H dropkick (CvS Karin 2HK)]
+type = HitDef
+trigger1 = AnimElem = 4
+trigger1 = !numenemy || enemynear, stateno != 5101
+attr = C, NA
+damage = 65, 0
+animtype = Hard
+guardflag = L
+hitflag = MAF
+pausetime = 12, 12
+sparkxy = -10, -60
+hitsound = F5,2
+guardsound = F6, 0
+ground.type = Trip
+ground.slidetime = 22
+ground.hittime = 20
+ground.velocity = -2,-3
+air.velocity = -1.5,-3
+fall = 1
+
+[State 420, 2H dropkick (CvS Karin 2HK) (vs a bouncing opponent)]
+type = HitDef
+trigger1 = AnimElem = 4
+trigger1 = numenemy
+trigger1 = enemynear, stateno = 5101
+attr = C, NA
+damage = 65, 0
+animtype = Hard
+guardflag = L
+hitflag = MAFD
+pausetime = 12, 12
+sparkxy = -10, -60
+hitsound = F5,2
+guardsound = F6, 0
+ground.type = Trip
+ground.slidetime = 22
+ground.hittime = 20
+ground.velocity = -2,-3
+air.velocity = -1.5,-3
+fall = 1
+air.fall = 1
+
+[State 420, launch forward]
+type = VelSet
+trigger1 = AnimElem = 3
+x = 5.5
+
+[State 420, slide slows]
+type = VelSet
+trigger1 = AnimElem = 6
+x = 3
+
+[State 420, stop]
+type = VelSet
+trigger1 = AnimElem = 8
+x = 0
+
+[State 420, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 600]
+type = A
+movetype = A
+physics = A
+anim = 600
+ctrl = 0
+sprpriority = 2
+
+[State 600, jL flying knee]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = !numenemy || enemynear, stateno != 5101
+attr = A, NA
+damage = 30, 0
+animtype = Light
+guardflag = HA
+hitflag = MAF
+pausetime = 8, 8
+sparkxy = -10, -60
+hitsound = F5,0
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 14
+ground.velocity = -5
+air.velocity = -2,-3
+
+[State 600, jL flying knee (vs a bouncing opponent)]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = numenemy
+trigger1 = enemynear, stateno = 5101
+attr = A, NA
+damage = 30, 0
+animtype = Light
+guardflag = HA
+hitflag = MAFD
+pausetime = 8, 8
+sparkxy = -10, -60
+hitsound = F5,0
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 14
+ground.velocity = -5
+air.velocity = -2,-3
+fall = 1
+air.fall = 1
+
+[State 600, control back once she is falling]
+type = CtrlSet
+trigger1 = AnimElem = 7
+value = 1
+
+[Statedef 610]
+type = A
+movetype = A
+physics = A
+anim = 610
+ctrl = 0
+sprpriority = 2
+
+[State 610, jM air punch]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = !numenemy || enemynear, stateno != 5101
+attr = A, NA
+damage = 40, 0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+pausetime = 8, 8
+sparkxy = -10, -60
+hitsound = F5,1
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 14
+ground.velocity = -4
+air.velocity = -1.3,-3
+
+[State 610, jM air punch (vs a bouncing opponent)]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = numenemy
+trigger1 = enemynear, stateno = 5101
+attr = A, NA
+damage = 40, 0
+animtype = Medium
+guardflag = HA
+hitflag = MAFD
+pausetime = 8, 8
+sparkxy = -10, -60
+hitsound = F5,1
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 14
+ground.velocity = -4
+air.velocity = -1.3,-3
+fall = 1
+air.fall = 1
+
+[State 610, control back once she is falling]
+type = CtrlSet
+trigger1 = AnimElem = 7
+value = 1
+
+[Statedef 620]
+type = A
+movetype = A
+physics = A
+anim = 620
+ctrl = 0
+sprpriority = 2
+
+[State 620, jH flying kick]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = !numenemy || enemynear, stateno != 5101
+attr = A, NA
+damage = 55, 0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+pausetime = 12, 12
+sparkxy = -10, -60
+hitsound = F5,2
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 22
+ground.hittime = 20
+ground.velocity = -5
+air.velocity = -3,-3.5
+
+[State 620, jH flying kick (vs a bouncing opponent)]
+type = HitDef
+trigger1 = AnimElem = 3
+trigger1 = numenemy
+trigger1 = enemynear, stateno = 5101
+attr = A, NA
+damage = 55, 0
+animtype = Medium
+guardflag = HA
+hitflag = MAFD
+pausetime = 12, 12
+sparkxy = -10, -60
+hitsound = F5,2
+guardsound = F6, 0
+ground.type = High
+ground.slidetime = 22
+ground.hittime = 20
+ground.velocity = -5
+air.velocity = -3,-3.5
+fall = 1
+air.fall = 1
+
+[State 620, control back once she is falling]
+type = CtrlSet
+trigger1 = AnimElem = 7
+value = 1
+
+[Statedef 630]
+type = A
+movetype = A
+physics = N
+anim = 630
+ctrl = 0
+sprpriority = 2
+
+[State 630, j2C forward leap (Touma j.2C)]
+type = HitDef
+trigger1 = AnimElem = 8
+trigger1 = !numenemy || enemynear, stateno != 5101
+attr = A, NA
+damage = 70, 0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+pausetime = 12, 12
+sparkxy = -10, -60
+hitsound = F5,2
+guardsound = F6, 0
+ground.type = Low
+ground.slidetime = 22
+ground.hittime = 20
+ground.velocity = 0
+air.velocity = -3.75,10
+air.fall = 1
+fall.yvelocity = ifelse(var(32) < 2, -7, 0)
+
+[State 630, j2C forward leap (Touma j.2C) (vs a bouncing opponent)]
+type = HitDef
+trigger1 = AnimElem = 8
+trigger1 = numenemy
+trigger1 = enemynear, stateno = 5101
+attr = A, NA
+damage = 70, 0
+animtype = Medium
+guardflag = HA
+hitflag = MAFD
+pausetime = 12, 12
+sparkxy = -10, -60
+hitsound = F5,2
+guardsound = F6, 0
+ground.type = Low
+ground.slidetime = 22
+ground.hittime = 20
+ground.velocity = 0
+air.velocity = -3.75,10
+fall = 1
+air.fall = 1
+fall.yvelocity = ifelse(var(32) < 2, -7, 0)
+
+[State 630, count the ground bounce]
+type = VarAdd
+trigger1 = movehit
+trigger1 = var(32) < 2
+v = 32
+value = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 630, control back after the hit]
+type = CtrlSet
+trigger1 = movehit
+trigger1 = AnimElemNo(0) >= 9
+value = 1
+
+[State 630, hang]
+type = VelSet
+trigger1 = time = 0
+y = 0
+
+[State 630, hold in the air until the heel lands]
+type = PosFreeze
+trigger1 = AnimElemNo(0) <= 8
+value = 1
+
+[State 630, drop]
+type = VelAdd
+trigger1 = AnimElemNo(0) >= 9
+y = 0.5
+
+[State 630, land]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+

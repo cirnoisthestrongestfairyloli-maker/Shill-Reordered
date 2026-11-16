@@ -1,0 +1,126 @@
+==========================================================================================
+Dracula
+From Castlevania
+Version 1.01
+For M.U.G.E.N 1.0 and above (Patch required for 1.0)
+==========================================================================================
+==========================================================================================
+For MUGEN 1.0
+==========================================================================================
+Dracula requires a patch in order for him to be usable in MUGEN 1.0, which you can get here:
+
+https://drive.google.com/file/d/1Il-txwp9cpF81rZwBUn7BYE_FeW2fn8m/view?usp=sharing
+
+==========================================================================================
+Notes
+==========================================================================================
+-This character was made with only single and turns mode in mind, so using this in simul mode is probably not a good idea.
+
+-It is recommended that you set the WavChannels to 64 or higher in mugen.cfg. This will prevent sound effects from cutting each other off.
+
+-Due to the custom fall states, Stupa's Training character will not realize that they can recover despite "recover" being turned on. To fix this, Paste this code at the bottom of Training's config file:
+
+[State 5050, 4] ;Recover near ground
+type = SelfState
+triggerall = stateno = 6050
+triggerall = Vel Y > 0
+triggerall = Pos Y >= -20
+triggerall = alive
+triggerall = CanRecover
+trigger1 = Command = "recovery"
+trigger2 = var(16) = 1
+trigger2 = var(23)>=var(22)
+value = 5200 ;HITFALL_RECOVER
+
+[State -2]; Recover in mid air
+type = selfState
+triggerall = stateno = 6050
+triggerall = Vel Y > -1
+triggerall = alive
+triggerall = CanRecover
+trigger1 = Command = "recovery"
+trigger2 = var(16) = 1
+trigger2 = var(23)>=var(22)
+value = 5210 ;HITFALL_AIRRECOVER
+
+-Downloading this character from Mugen Guild or OHMSBY's Mugen site ensures that this is the latest version.
+
+==========================================================================================
+Change log
+==========================================================================================
+08/20/2023 - 1.01
+- Fixed an error where the camera would zoom out after KOing Dracula on a stage that uses tensionhigh and tensionlow
+- Dark Blaze's hitbox is slightly thinner
+- During Dark Blaze, Dracula will become completely invulnerable after the super pause
+- The default wait time between attacks during phase 1 is now slightly faster
+- Dracula will now use his reversal a little more often during Phase 1
+- The Phase 1 variant of Dark Blaze will now have Dracula reappear a little sooner
+- Other Minor Bugfixes
+
+08/20/2023 - 1.00
+- First Release
+==========================================================================================
+
+==========================================================================================
+Introduction
+==========================================================================================
+Dracula is a boss character in the same vein as Apocalypse in Marvel vs. Street Fighter or Takemikazuchi in Blazblue Chronophantasma. He is specifically designed to be controlled by the AI, although he is playable.
+==========================================================================================
+
+==========================================================================================
+Movelist for player control
+==========================================================================================
+A: Hellfire
+
+A+Down / Z: Cape Swipe
+
+B: Dark Inferno
+
+B+Down: Circular Fire
+
+C: Fatal Ray / Destruction Ray
+
+C+Down: Flame Pillars
+
+Y+Left or Right: Teleport
+
+A+B: Dark Blaze
+
+B+C: Lightning Crash
+
+Automatic: Demonic Megiddo
+==========================================================================================
+
+==========================================================================================
+Misc. Info
+==========================================================================================
+-After Dracula loses a round, He will start using his Lightning Crash attack, each of his other attacks will be upgraded in some way, and he will generally become more aggressive. Under Player control, Dracula can use his Lightning Crash even before losing a round.
+
+-Once Dracula loses all of his health during phase 2. He will regain his health and teleport to center of the screen to charge up his power. Once his power has been fully charged, he will attack with Demonic Megiddo, which covers the whole stage and cannot be blocked. Dracula has less defense while charging, and can also be KOed by an Astral Heat once the conditions have been met.
+
+-Fatal Ray is replaced by Destruction Ray during phase 2. This also remains true even under player control
+
+-Fatal Ray and Destruction Ray are overhead attacks, The Flame Pillars are low attacks.
+
+-The projectiles from Hellfire and Circular Fire can be broken by just about any attack that isn't a throw
+
+-Hitting Dracula with an Ultra Burst at any given time, except for when he is charging up power for Demonic Megiddo, will stun him.
+
+-Dracula has access to the Not Over Yet mechanic, which boosts the damage dealt by Dark Blaze and Lightning Crash by 20% when active.
+
+-Under player control, holding down diagonally in either direction will shorten the distance of the teleport.
+
+-Various aspects on Dracula can be adjusted in his Config file to make him a more suitable challenge for your roster.
+
+==========================================================================================
+
+==========================================================================================
+Thanks to:
+- EnigmaticVocaloid, for teaching me how to use blender
+- CozySquirtle, for teaching me how to make small ports like he does
+- Mister Fael, Nep Heart, ZolidSone, and Alchemist of Atlas for testing
+- Elecbyte and Mugen Guild, for their very helpful references and documentation on how the Mugen code works
+- Mugen Guild again for providing feedback for my characters
+- You, for checking this character out, Have fun
+==========================================================================================
+

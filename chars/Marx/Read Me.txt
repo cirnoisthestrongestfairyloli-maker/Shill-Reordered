@@ -1,0 +1,119 @@
+==========================================================================================
+Marx
+From Kirby
+Version 1.011
+For M.U.G.E.N 1.0 and above (Patch required for 1.0)
+==========================================================================================
+==========================================================================================
+For MUGEN 1.0
+==========================================================================================
+Marx requires a patch in order for him to be usable in MUGEN 1.0, which you can get here:
+https://drive.google.com/file/d/1PtTnAYGaIlup7q5hcBtKlVJpxD-j7Yw4/view?usp=sharing
+
+==========================================================================================
+Notes
+==========================================================================================
+-This character was made with only single and turns mode in mind, so using this in simul mode is probably not a good idea.
+
+-It is recommended that you set the WavChannels to 64 or higher in mugen.cfg. This will prevent sound effects from cutting each other off.
+
+-Due to the custom fall states, Stupa's Training character will not realize that they can recover despite "recover" being turned on. To fix this, Paste this code at the bottom of Training's config file:
+
+[State 5050, 4] ;Recover near ground
+type = SelfState
+triggerall = stateno = 6050
+triggerall = Vel Y > 0
+triggerall = Pos Y >= -20
+triggerall = alive
+triggerall = CanRecover
+trigger1 = Command = "recovery"
+trigger2 = var(16) = 1
+trigger2 = var(23)>=var(22)
+value = 5200 ;HITFALL_RECOVER
+
+[State -2]; Recover in mid air
+type = selfState
+triggerall = stateno = 6050
+triggerall = Vel Y > -1
+triggerall = alive
+triggerall = CanRecover
+trigger1 = Command = "recovery"
+trigger2 = var(16) = 1
+trigger2 = var(23)>=var(22)
+value = 5210 ;HITFALL_AIRRECOVER
+
+-Downloading this character from Mugen Guild or OHMSBY's Mugen site ensures that this is the latest version.
+
+==========================================================================================
+Change log
+==========================================================================================
+04/21/2023
+- Fixed an error where Marx would revert back to his large form if he were to exit a custom state without dying while in small form
+
+05/23/2022 - 1.01
+- Reduced Pausetime, Hitstun, and Fall Recovertime from Eyeballs
+- Fixed an error where certain attacks are unblockable at point blank
+- Fixed an error where Ice Bomb won't detonate if Marx spits it out while outside of the screen
+- Fixed an error where the Screen zooms out after Marx is defeated on a stage that uses tensionhigh and tensionlow
+- (Hopefully) fixed an error where Marx would sometimes not bounce around the screen properly on defeat
+- Added Config options for Black Hole Pull Resistance and Phase 2 Activation (See Config file for details)
+
+05/22/2022 - 1.00
+- First Release
+==========================================================================================
+
+==========================================================================================
+Introduction
+==========================================================================================
+Marx is a boss character in the same vein as Apocalypse in Marvel vs. Street Fighter or Takemikazuchi in Blazblue Chronophantasma. He is specifically designed to be controlled by the AI, although he is playable.
+==========================================================================================
+
+==========================================================================================
+Movelist for player control
+==========================================================================================
+A: Cutter Blades
+
+A+Down: Eye Dropper
+
+B: Seeds
+
+C: Ice Bomb
+
+Y+Any Direction: Teleport
+
+Z: Portal Crawl
+
+A+B: Laser
+
+B+C: Black Hole
+==========================================================================================
+
+==========================================================================================
+Misc. Info
+==========================================================================================
+-After Marx loses a round, Marx will start using his Black Hole attack, each of his other attacks will be upgraded in some way, and he will generally become more aggressive. Under Player control, Marx can use his Black Hole even before losing a round.
+
+-Black Hole is immediately followed up with Marx's Astral Heat if the opponent's health is low enough.
+
+-The projectiles from Eye Dropper can be broken by just about any attack that isn't a throw
+
+-Dealing enough damage to Marx while he is charging his laser will cause him to flinch.
+
+-Hitting Marx with an Ultra Burst at any given time will immediately cause him to flinch.
+
+-Marx has access to the Not Over Yet mechanic, which boosts the damage dealt by his Laser and Black Hole by 20% when active.
+
+-Various aspects on Marx can be adjusted in his Config file to make him a more suitable challenge for your roster.
+
+==========================================================================================
+
+==========================================================================================
+Thanks to:
+- EnigmaticVocaloid, for teaching me how to use blender
+- CozySquirtle, for teaching me how to make small ports like he does
+- Mister Fael, Nep Heart, ZolidSone, and Alchemist of Atlas for testing
+- Elecbyte and Mugen Guild, for their very helpful references and documentation on how the Mugen code works
+- Mugen Guild again for providing feedback for my characters
+- You, for checking this character out, Have fun
+==========================================================================================
+

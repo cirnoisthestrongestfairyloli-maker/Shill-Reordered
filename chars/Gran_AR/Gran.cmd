@@ -1208,6 +1208,7 @@ trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9102 || StateNo = 9103
 trigger3 = StateNo = 1000 || StateNo = 1001 || StateNo = 9240 || StateNo = 9241 || StateNo = 1100 || StateNo = 9230 || StateNo = 9231 || StateNo = 9210 || StateNo = 1201 || StateNo = 9220 || StateNo = 9221 || StateNo = 1215 && MoveContact
 
 [State -1, GBVSR Ultimate Overdrive Surge]
+triggerall = 0   ;Abstract Reordered: 214X removed
 type = ChangeState
 value = 1215
 triggerall = !IsHelper
@@ -1505,7 +1506,7 @@ triggerall = command != "holddown"
 triggerall = StateType != A
 triggerall = P2BodyDist X < 22
 trigger1 = ctrl
-trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106) && MoveContact && var(46) < 3
+trigger2 = StateNo = 9106 && MoveContact && var(46) < 3   ;Abstract Reordered: 5L no longer chains into 5L
 
 [State -1, GBVSR f.L]
 type = ChangeState
@@ -1516,7 +1517,7 @@ triggerall = command = "a"
 triggerall = command != "holddown"
 triggerall = StateType != A
 trigger1 = ctrl
-trigger2 = (StateNo = 9100 || StateNo = 9101 || StateNo = 9106) && MoveContact && var(46) < 3
+trigger2 = StateNo = 9106 && MoveContact && var(46) < 3   ;Abstract Reordered: 5L no longer chains into 5L
 
 [State -1, GBVSR jH]
 type = ChangeState

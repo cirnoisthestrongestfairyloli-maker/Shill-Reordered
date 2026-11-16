@@ -1,0 +1,16 @@
+#===============================================================================
+# Abstract Reordered: BOSS RUSH rules that have to run inside the fight
+# (the mode itself is external/mods/ar_bossrush.lua).
+#
+# Bosses (the CPU side, team 2) build meter 50% faster: every tick, whatever meter the boss
+# gained since the last tick is topped up by half as much again.
+#===============================================================================
+[StateDef -4]
+
+ignorehitpause if gameMode = "bossrush" && !isHelper && teamSide = 2 {
+	if roundState = 2 && map(_br_lastPower) > 0 && power + 1 > map(_br_lastPower) {
+		powerAdd{value: floor((power + 1 - map(_br_lastPower)) * 0.5)}
+	}
+	# +1 so that an empty meter (0) is still told apart from "not set yet"
+	map(_br_lastPower) := power + 1;
+}

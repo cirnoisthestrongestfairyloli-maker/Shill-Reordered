@@ -8596,6 +8596,10 @@ channel = 0
 
 [State 600, 2]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 triggerall = enemynear,stateno != [5200,5210]
 trigger1 = !movecontact && !movereversed
 trigger1 = enemynear,movetype != A
@@ -8622,6 +8626,10 @@ nochainID = 8000
 
 [State 600, 2]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 triggerall = enemynear,stateno != [5200,5210]
 trigger1 = !movecontact && !movereversed
 trigger1 = enemynear,movetype = A
@@ -8773,6 +8781,10 @@ value = 102, 0
 
 [State 201, 1]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 trigger1 = enemynear,movetype != A
 trigger1 = !MoveContact && !MoveReversed
 attr = S, SA                     ;Attribute: Standing, Normal Attack
@@ -8792,7 +8804,6 @@ guardsound = S6, 0                ;Sound to play on guard
 ground.type = low              ;Type: High, Low, Trip (def: Normal)
 ground.slidetime = 5             ;Time that the opponent slides back
 ground.hittime  = 24             ;Time opponent is in hit state
-guard.ctrltime = 12
 ground.velocity = -6.65,ifelse(prevstateno=1200,-5,0)            ;Velocity at which opponent is pushed
 air.type = low                  ;Type: High, Low, Trip (def: same as ground.type)
 air.velocity = -5.2,-3.6            ;X-velocity at which opponent is pushed,
@@ -8800,11 +8811,14 @@ air.velocity = -5.2,-3.6            ;X-velocity at which opponent is pushed,
 air.hittime = 15                 ;Time before opponent regains control in air
 air.fall = 1
 fall.recovertime = 35
-guard.ctrltime = 22
 nochainID = 8000
 fall = ifelse(prevstateno=1200,1,0)
 [State 201, 1]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 trigger1 = enemynear,movetype = A
 trigger1 = !MoveContact && !MoveReversed
 attr = S, SA                     ;Attribute: Standing, Normal Attack
@@ -8831,7 +8845,6 @@ air.velocity = -5.2,-3.6          ;X-velocity at which opponent is pushed,
 air.hittime = 15                 ;Time before opponent regains control in air
 air.fall = 1
 fall.recover = 0
-guard.ctrltime = 22
 nochainID = 8000
 fall = ifelse(prevstateno=1200,1,0)
 
@@ -8985,6 +8998,10 @@ value = 102, 0
 
 [State 210, 2]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 trigger1 = enemynear,movetype !=A
 trigger1 = !movecontact && !movereversed
 attr = S, SA
@@ -9007,12 +9024,15 @@ air.fall = 1
 fall = 1
 fall.recover = 1
 fall.recovertime = ifelse(var(33)<1,75,15)
-guard.ctrltime = 45
 nochainID = 8000 
 p2facing = 1
 
 [State 210, 2]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 trigger1 = enemynear,movetype =A
 trigger1 = !movecontact && !movereversed
 attr = S, SA
@@ -9033,7 +9053,6 @@ air.velocity = -5.75,-6
 air.fall = 1
 fall = 1
 fall.recover = 0
-guard.ctrltime = 15
 nochainID = 8000 
 p2facing = 1
 
@@ -23815,6 +23834,10 @@ channel = 0
 
 [State 600, 2]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 triggerall = enemynear,stateno != [5200,5210]
 trigger1 = !movecontact && !movereversed
 trigger1 = enemynear,movetype != A
@@ -23841,6 +23864,10 @@ nochainID = 8000
 
 [State 600, 2]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 triggerall = enemynear,stateno != [5200,5210]
 trigger1 = !movecontact && !movereversed
 trigger1 = enemynear,movetype = A
@@ -24010,6 +24037,10 @@ value = 102, 0
 
 [State 210, 2]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 trigger1 = enemynear,movetype !=A
 trigger1 = !movecontact && !movereversed
 attr = S, SA
@@ -24032,12 +24063,15 @@ air.fall = 1
 fall = 1
 fall.recover = 1
 fall.recovertime = ifelse(var(33)<1,75,15)
-guard.ctrltime = 45
 nochainID = 8000 
 p2facing = 1
 
 [State 210, 2]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 trigger1 = enemynear,movetype =A
 trigger1 = !movecontact && !movereversed
 attr = S, SA
@@ -24058,7 +24092,6 @@ air.velocity = -5.75,-6
 air.fall = 1
 fall = 1
 fall.recover = 0
-guard.ctrltime = 15
 nochainID = 8000 
 p2facing = 1
 
@@ -24232,6 +24265,10 @@ value = 102, 0
 
 [State 210, 2]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 trigger1 = enemynear,movetype !=A
 trigger1 = !movecontact && !movereversed
 attr = S, SA
@@ -24254,12 +24291,15 @@ air.fall = 1
 fall = 1
 fall.recover = 1
 fall.recovertime = ifelse(var(33)<1,75,15)
-guard.ctrltime = 45
 nochainID = 8000 
 p2facing = 1
 
 [State 210, 2]
 type = HitDef
+;Abstract Reordered: short block stun so every 214 is minus on block
+guard.hittime = 10
+guard.slidetime = 10
+guard.ctrltime = 10
 trigger1 = enemynear,movetype =A
 trigger1 = !movecontact && !movereversed
 attr = S, SA
@@ -24280,7 +24320,6 @@ air.velocity = -5.75,-6
 air.fall = 1
 fall = 1
 fall.recover = 0
-guard.ctrltime = 15
 nochainID = 8000 
 p2facing = 1
 

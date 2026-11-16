@@ -1,0 +1,133 @@
+;---------------------------------------------------------------------------
+; Initialize (at the start of the round)
+[Statedef 5900]
+type = S
+
+[State 5900, 1] ;Clear all int variables
+type = VarRangeSet
+trigger1 = roundsexisted = 0
+value = 0
+
+[State 5900, 2] ;Clear all float variables
+type = VarRangeSet
+trigger1 = roundsexisted = 0
+fvalue = 0
+
+[State 191, 2]
+type = AssertSpecial
+trigger1 = roundsexisted = 0
+flag = nomusic
+
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;;EDITING STARTS HERE;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;Which Engine are you using?
+[State 5900, 1] 
+type = Varset
+trigger1 = 1
+var(54) = 0
+;set this value to 0 for Mugen
+;set this value to 1 for Ikemen GO
+;This will determine Dracula's positioning for his stage specific intro, as it is handled differently between engines
+;This can be ignored if the stage specific intro is turned off
+
+;Stage Specific Intro
+[State 5900, 1] 
+type = Varset
+trigger1 = 1
+var(41) = 0
+;setting this value to 1 will have Dracula use his intro made specifically for his throne room stage. Keep this at 0 if you intend on using Dracula in any stage other than his own.
+
+;Phase 2 Activation
+[State 5900, 1] 
+type = Varset
+trigger1 = 1
+var(42) = 1
+;Determines how many rounds Dracula must lose in order to activate phase 2, which is also when he attempts to use demonic Megiddo upon losing all of his health
+;Adjust this if your round count is anything other than the standard best to 2
+;Default value is 1
+
+;Lightning Crash Space Width
+[State 5900, 1] 
+type = Varset
+trigger1 = 1
+var(44) = 400
+;This value determines how much space is in between each Lighting Pillar
+;Default value is 400
+
+;Timer Toggle
+[State 5900, 1] 
+type = Varset
+trigger1 = 1
+var(45) = 1
+;Setting this value to 0 will allow the timer to count down while fighting Dracula
+;The timer will still freeze during certain instances
+;Default value is 1
+
+;Attack Wait Time (Phase 1)
+[State 5900, 1] 
+type = Varset
+trigger1 = 1
+var(47) = 75 
+;This value determines how much time in frames Dracula waits between attacks when controlled by the AI
+;60 frames is equal to 1 second
+;Default value is 75
+
+;Attack Wait Time (Phase 2)
+[State 5900, 1] 
+type = Varset
+trigger1 = 1
+var(48) = 60 
+;Same as above, except this value applies during Phase 2
+;Default value is 60
+
+;Demonic Megido Charge time
+[State 5900, 1] 
+type = Varset
+trigger1 = 1
+var(49) = 900 
+;This value determines how much time in frames it takes for Dracula to charge up Demonic Megiddo
+;Default value is 900
+
+;Lightning Crash time
+[State 5900, 1] 
+type = Varset
+trigger1 = 1
+var(51) = 900
+;This value determines how much time in frames the pillars from lightning crash will stay
+;Default value is 900
+
+;Phase 2 Orb Attack Rounds
+[State 5900, 1] 
+type = Varset
+trigger1 = 1
+var(58) = 2
+;This value determines how many additional times the summoned fire orb will attack during phase 2 before disappearing
+;Default value is 2
+
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;;DO NOT EDIT ANYTHING BELOW THIS LINE;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+[State 5900, 3] ;Change palette
+type = RemapPal
+trigger1 = 1
+source = 1,1
+dest = 1,palno
+
+[State 5900, 4] ;Intro for round 1
+type = ChangeState
+trigger1 = 1
+;trigger1 = roundno = 1
+;trigger2 = TeamMode = Turns 
+;trigger2 = RoundsExisted = 0 
+;trigger2 = RoundNo > 0 
+value = 190
+
+[State 5900, 5] ;All other rounds
+type = ChangeState
+trigger1 = 1
+value = 0

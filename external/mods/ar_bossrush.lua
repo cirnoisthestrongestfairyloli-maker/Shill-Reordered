@@ -32,6 +32,7 @@ BR.ai = 8                -- hardest CPU level
 BR.healPct = 25          -- % of max life healed after every win
 BR.maxContinues = 1      -- continues for the whole run
 BR.intro = 'data/AbstractReordered/bossrush_intro.def'
+BR.outro = 'data/AbstractReordered/bossrush_win.def'   -- win cutscene, after the last boss
 BR.pathScript = 'data/AbstractReordered/bossrush_path.lua'
 BR.saveFile = 'save/ar_bossrush.txt'
 
@@ -107,10 +108,17 @@ end
 
 --------------------------------------------------------------------- reward colour
 -- character folder (lower case) -> the colour slot holding its boss rush colour (bossrush.act, always the
--- highest slot). cadenza.lua hides that slot on the colour menu until BR.unlocked() says yes.
+-- highest slot). cadenza.lua asks BR.unlocked() whether to show that slot on the colour menu.
 BR.bossPal = {['cureblack_ar'] = 6, ['haruhi_ar'] = 12, ['homura_ar'] = 9, ['ichigo_ar'] = 13, ['ippo_ar'] = 13, ['kamijo_ar'] = 12, ['kumagawa_ar'] = 11, ['lilith_ar'] = 13, ['madoka_ar'] = 13, ['panty_ar'] = 13, ['ryuko_ar'] = 13, ['saber_ar'] = 8, ['saitama_ar'] = 8, ['satsuki_ar'] = 13, ['sayaka_ar'] = 13, ['sol_ar'] = 13, ['stocking_ar'] = 13, ['taiga_ar'] = 13, ['yoruichi_ar'] = 9}
 
+-- The colour used to be a reward (hidden until that character cleared boss rush). It is now open to
+-- everyone: set this to false to bring the lock back.
+BR.coloursOpen = true
+
 function BR.unlocked(key)
+	if BR.coloursOpen then
+		return true
+	end
 	-- online both players must see the same colour list or the two games drift apart, so the lock only
 	-- applies offline
 	local gm = type(gameMode) == 'function' and tostring(gameMode() or '') or ''

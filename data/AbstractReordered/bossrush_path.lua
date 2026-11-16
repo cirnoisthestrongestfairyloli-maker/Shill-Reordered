@@ -46,4 +46,9 @@ if sel ~= nil then
 	BR.recordClear(start.f_getCharData(sel.ref).char)
 end
 BR.log('run cleared')
+-- win cutscene (stop the fight theme first: the video has its own sound)
+if not (BR.test and BR.test.skipIntro) then
+	pcall(stopBgm)
+	launchStoryboard(BR.outro)
+end
 setMatchNo(-1)

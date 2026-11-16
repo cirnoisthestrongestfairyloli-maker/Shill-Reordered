@@ -1,4 +1,13 @@
 [Statedef -2]
+;Abstract Reordered: apply the colour slot that was picked. This character never did, so every
+;alternate colour (including the boss rush colour) showed as the default one.
+[State -2, AR colour slot]
+type = RemapPal
+trigger1 = !ishelper
+source = 1,1
+dest = 1,palno
+ignorehitpause = 1
+
 
 
 [State 0, Width]

@@ -14,18 +14,20 @@ local BR = AR_BR
 -- but the lifebar shows an epithet instead of the name.
 -- Entry fields: char = folder (or def path) under chars/, stage = stage def,
 -- music = optional track for that fight only (overrides BR.theme)
+-- rounds = how many times the player has to beat that boss (default 1). The boss still only needs one win.
 local BOUNDARY = 'stages/Collapsed Boundary.def'
 BR.bosses = {
 	{char = 'Haruhi_AR/Haruhi_Boss.def', stage = BOUNDARY},
 	{char = 'Broly_AR/Broly_Boss.def', stage = BOUNDARY},
 	{char = 'Yujiro/yujiro.def', stage = BOUNDARY},
 	{char = 'DIO_AR/DIO_Boss.def', stage = BOUNDARY},
-	{char = 'Marx', stage = 'stages/Marx_Stage.def'},
+	{char = 'Marx', stage = 'stages/Marx_Stage.def', rounds = 2},
 	{char = 'Accelerator', stage = BOUNDARY},
 	{char = 'Kumagawa_AR/Kumagawa_Boss.def', stage = BOUNDARY},
-	{char = 'Dracula', stage = BOUNDARY},
+	{char = 'Dracula', stage = BOUNDARY, rounds = 2},
 }
 BR.theme = 'sound/bossrush_theme.mp3'   -- plays through the whole run, every boss included
+BR.selectMusic = 'sound/bossrush_select.mp3'   -- character select of boss rush
 BR.ai = 8                -- hardest CPU level
 BR.healPct = 25          -- % of max life healed after every win
 BR.maxContinues = 1      -- continues for the whole run
@@ -100,6 +102,25 @@ function BR.recordClear(def)
 		f:close()
 	end
 	log('clear recorded: ' .. k)
+	BR.clearCache = nil   -- re-read on the next colour menu
+end
+
+--------------------------------------------------------------------- reward colour
+-- character folder (lower case) -> the colour slot holding its boss rush colour (bossrush.act, always the
+-- highest slot). cadenza.lua hides that slot on the colour menu until BR.unlocked() says yes.
+BR.bossPal = {['cureblack_ar'] = 6, ['haruhi_ar'] = 12, ['homura_ar'] = 9, ['ichigo_ar'] = 13, ['ippo_ar'] = 13, ['kamijo_ar'] = 12, ['kumagawa_ar'] = 11, ['lilith_ar'] = 13, ['madoka_ar'] = 13, ['panty_ar'] = 13, ['ryuko_ar'] = 13, ['saber_ar'] = 8, ['saitama_ar'] = 8, ['satsuki_ar'] = 13, ['sayaka_ar'] = 13, ['sol_ar'] = 13, ['stocking_ar'] = 13, ['taiga_ar'] = 13, ['yoruichi_ar'] = 9}
+
+function BR.unlocked(key)
+	-- online both players must see the same colour list or the two games drift apart, so the lock only
+	-- applies offline
+	local gm = type(gameMode) == 'function' and tostring(gameMode() or '') or ''
+	if gm:match('^netplay') then
+		return true
+	end
+	if BR.clearCache == nil then
+		BR.clearCache = BR.loadClears()
+	end
+	return BR.clearCache[key] == true
 end
 
 --------------------------------------------------------------------- run state
@@ -110,6 +131,7 @@ function BR.resetRun()
 	BR.music = nil
 	BR.healedIdx = 0
 	BR.p1power = nil
+	BR.selTick = 0
 end
 
 -- called by the path script right before each launchFight
@@ -131,6 +153,18 @@ hook.add('launchFight', 'arBossRush', function(common, t, data)
 	t.quickcontinue = true
 	log('fight ' .. tostring(matchNo()) .. ' pass ' .. BR.loops .. ' continuesUsed ' .. tostring(BR.continuesUsed)
 		.. ' p1life ' .. tostring(start.p[1].t_selected[1] and start.p[1].t_selected[1].life))
+end)
+
+-- boss rush has its own character select music. Started on the second frame, after the select screen's
+-- own music pick has run, so this one wins.
+hook.add('start.f_selectScreen', 'arBossRushSelectMusic', function()
+	if not isBR() then
+		return
+	end
+	BR.selTick = (BR.selTick or 0) + 1
+	if BR.selTick == 2 then
+		pcall(playBgm, {bgm = BR.selectMusic, loop = 1, interrupt = true})
+	end
 end)
 
 -- remember the player's meter while a fight runs, so the next fight can start with it

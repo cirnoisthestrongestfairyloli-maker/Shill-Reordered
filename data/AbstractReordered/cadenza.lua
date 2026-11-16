@@ -517,11 +517,28 @@ end
 -- with Config.PaletteMax = 100 the select screen offered all of them, so only keep the real colours
 AR.palLimit = {['broly_ar'] = 12}
 
+-- boss rush reward colour (external/mods/ar_bossrush.lua): it is each character's highest colour slot, and it
+-- stays off the colour menu until that character has cleared boss rush
+local function palLimitOf(key)
+	local lim = AR.palLimit[key]
+	local br = rawget(_G, 'AR_BR')
+	if br ~= nil and br.bossPal ~= nil and br.bossPal[key] ~= nil and type(br.unlocked) == 'function' then
+		local ok, open = pcall(br.unlocked, key)
+		if not (ok and open) then
+			local l2 = br.bossPal[key] - 1
+			if lim == nil or l2 < lim then
+				lim = l2
+			end
+		end
+	end
+	return lim
+end
+
 local function trimPals(ch)
 	if ch == nil or ch.pal == nil or ch.char == nil then
 		return
 	end
-	local lim = AR.palLimit[tostring(ch.char):lower():gsub('[/\\].*$', '')]
+	local lim = palLimitOf(tostring(ch.char):lower():gsub('[/\\].*$', ''))
 	if lim == nil or #ch.pal <= lim then
 		return
 	end
@@ -545,7 +562,7 @@ if type(getCharInfo) == 'function' and not AR.charInfoWrapped then
 			if info ~= nil and info.pal ~= nil and main ~= nil and main.t_selChars ~= nil then
 				for _, ch in ipairs(main.t_selChars) do
 					if ch.char_ref == ref and ch.char ~= nil then
-						local lim = AR.palLimit[tostring(ch.char):lower():gsub('[/\\].*$', '')]
+						local lim = palLimitOf(tostring(ch.char):lower():gsub('[/\\].*$', ''))
 						if lim ~= nil and #info.pal > lim then
 							local keep = {}
 							for _, p in ipairs(info.pal) do
@@ -571,7 +588,7 @@ if type(validatePal) == 'function' and not AR.validatePalWrapped then
 	validatePal = function(pal, ref, ...)
 		local ok, lim = pcall(function()
 			local ch = main.t_selChars[ref + 1]
-			return ch ~= nil and ch.char ~= nil and AR.palLimit[tostring(ch.char):lower():gsub('[/\\].*$', '')] or nil
+			return ch ~= nil and ch.char ~= nil and palLimitOf(tostring(ch.char):lower():gsub('[/\\].*$', '')) or nil
 		end)
 		if ok and lim ~= nil and type(pal) == 'number' and pal > lim then
 			pal = 1

@@ -82,6 +82,7 @@ end
 -- lobby background (1280x720, "ONLINE" top left) and music
 L.bgSff = 'data/AbstractReordered/lobby/lobby.sff'
 L.bgm = 'sound/Railgun_JudgementNoKatsudou.mp3'
+L.rankedBgm = 'sound/Ranked_Queue_SpatialAwareness.mp3'   -- plays while searching in RANKED (BLUELOCK OST)
 
 -- sprites in lobby.sff: 0,0 background; 10,k button; 11,k highlighted button (k: 0 LOBBIES, 1 MATCHMAKING, 2 BACK,
 -- 3 RANKED). The hub shows them in the order of L.buttons.
@@ -705,6 +706,7 @@ end
 -- search other RANKED players; returns 'played' after a netplay session, 'back' on ESC
 function L.rankedSearch(pick)
 	local rating = L.rankedRating()
+	pcall(playBgm, {bgm = L.rankedBgm, loop = 1, interrupt = true})   -- queue song; L.ranked/the hub put the lobby music back
 	command('rsearch', pick.char .. '|' .. pick.pal .. '|' .. rating)
 	local t, st, acceptedAt, waitT = 0, readState(), nil, 0
 	local name = charName(pick.ref)

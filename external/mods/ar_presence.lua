@@ -238,5 +238,7 @@ pcall(function()
 	local f = io.open(script, 'r')
 	if not f or not os.execute then return end
 	f:close()
-	os.execute('where pythonw >nul 2>nul && start "" pythonw ' .. script .. ' --attach')
+	-- no empty "" window title here: when the engine hands this string to cmd the empty quotes get escaped and
+	-- 'start' tries to open a program called '\' (the "Windows cannot find '\'" popup on every launch)
+	os.execute('where pythonw >nul 2>nul && start /b pythonw ' .. script .. ' --attach')
 end)

@@ -48,6 +48,9 @@ local function readState()
 			st.search = {secs = tonumber(p[2]) or 0, searching = tonumber(p[3]) or 0}
 		elseif p[1] == 'match' and #p >= 3 then
 			st.match = {role = p[2], name = p[3], auto = p[4] == '1'}
+		elseif p[1] == 'ranked' and #p >= 7 then
+			st.ranked = {side = tonumber(p[2]) or 0, name = p[3], char = p[4], pal = tonumber(p[5]) or 1,
+				rating = tonumber(p[6]) or 1000, seed = tonumber(p[7]) or 0}
 		end
 	end
 	return st
@@ -80,7 +83,9 @@ end
 L.bgSff = 'data/AbstractReordered/lobby/lobby.sff'
 L.bgm = 'sound/Railgun_JudgementNoKatsudou.mp3'
 
--- sprites in lobby.sff: 0,0 background; 10,k button; 11,k highlighted button (k: 0 LOBBIES, 1 MATCHMAKING, 2 BACK)
+-- sprites in lobby.sff: 0,0 background; 10,k button; 11,k highlighted button (k: 0 LOBBIES, 1 MATCHMAKING, 2 BACK,
+-- 3 RANKED). The hub shows them in the order of L.buttons.
+L.buttons = {0, 1, 3, 2}
 L.anims = {}
 local function lobbySprite(g, i)
 	local k = g .. ',' .. i
@@ -113,9 +118,9 @@ local function drawScreen(text, withBg, buttons)
 	if art then
 		main.f_animPosDraw(art, 0, 0, 1)
 		if buttons then
-			for k = 0, 2 do
-				local b = lobbySprite(k + 1 == buttons.sel and 11 or 10, k)
-				if b then main.f_animPosDraw(b, 40, 250 + k * 90, 1) end
+			for i, k in ipairs(L.buttons) do
+				local b = lobbySprite(i == buttons.sel and 11 or 10, k)
+				if b then main.f_animPosDraw(b, 40, 250 + (i - 1) * 90, 1) end
 			end
 		end
 	else
@@ -184,7 +189,7 @@ end
 
 -- host (server == '') or join (server = IP), then the synced netplay menu, like NETWORK > HOST/JOIN
 -- oppId / label identify the opponent, for the automatic rollback delay
-local function netplay(server, label, oppId, autoVersus)
+local function netplay(server, label, oppId, autoVersus, rk)
 	local okD, userDelay = pcall(gameOption, 'Netplay.Rollback.FrameDelay')
 	pcall(function() setDelay(opponentPing(readState(), oppId, label), 'connecting to ' .. tostring(label)) end)
 	L.inNet = true
@@ -201,8 +206,10 @@ local function netplay(server, label, oppId, autoVersus)
 				-- matchmaking: straight into VERSUS 2P, the same calls the netplay menu makes for that item
 				main.f_default()
 				local mode = main.t_itemname.netplayversus({{itemname = 'netplayversus', displayname = 'VERSUS 2P'}}, 1)
+				if rk then L.rankedSetup(rk) end   -- RANKED: both picks and the stage are forced, the same on both PCs
 				main.f_unlock(false)
 				if mode ~= nil then mode() end
+				if rk then rk.active = false end
 				main.f_default()
 				main.f_unlock(false)
 			else
@@ -504,7 +511,275 @@ function L.matchmaking()
 	end
 end
 
--- hub: LOBBIES / MATCHMAKING / BACK buttons over the lobby picture
+-------------------------------------------------------------------------- RANKED
+-- Pick a character offline (the normal select screen, P1 only), then search only other RANKED players. The lobby
+-- helpers swap both pre-picks, ratings and a stage seed before connecting; both games then force the same two
+-- characters (main.forceChar), palettes and stage, so the synced select screen only shows "RANKED MATCH" and the
+-- opponent's pick appears on the VS screen. One match, then the result and "search again".
+-- The rating (one per player, any character) is in save/ar_ranked.txt; cadenza.lua's rank block updates it at the
+-- KO (Elo + grade bonus) and shows it on the win overlay. A match that never finishes changes nothing.
+-- While a ranked match runs, the global arRanked holds: side (1 host = P1, 2 joiner = P2), refs/pals/ratings/names
+-- per side, stage, active, launched, and result (set by cadenza.lua).
+L.rankedFile = 'save/ar_ranked.txt'
+L.tierNames = {'BRONZE', 'SILVER', 'GOLD', 'PLATINUM', 'DIAMOND', 'MASTER'}
+
+function L.rankedRating()
+	local f = io.open(L.rankedFile, 'r')
+	if not f then return 1000 end
+	local text = f:read('*a') or ''
+	f:close()
+	return tonumber(text:match('rating=(%-?%d+)')) or 1000
+end
+
+local function charRefOf(def)
+	if def == nil or def == '' then return nil end
+	def = def:lower()
+	return main.t_charDef[def] or main.t_charDef[(def:gsub('/', '\\'))] or main.t_charDef[(def:gsub('\\', '/'))]
+end
+
+local function charName(ref)
+	local ok, n = pcall(getCharName, ref)
+	if ok and n ~= nil and n ~= '' then return tostring(n) end
+	local c = main.t_selChars[ref + 1]
+	return c and tostring(c.char) or '?'
+end
+
+-- the game's own select screen with only P1 picking; returns {ref, pal, char} or nil (ESC)
+function L.rankedPick()
+	local ok, res = pcall(function()
+		main.f_default()
+		main.teamMenu[1].single = true
+		main.selectMenu[1], main.selectMenu[2] = true, false
+		main.stageMenu = false
+		setGameMode('rankedpick')
+		textImgSetText(motif.select_info.title.TextSpriteData, 'RANKED: CHOOSE YOUR CHARACTER')
+		start.f_selectReset(true)
+		if gameOption('Config.BootLoadingMode') == 1 then
+			main.f_waitForPreloads()
+		end
+		if not start.f_selectScreen() then
+			return nil
+		end
+		local sel = start.p[1].t_selected[1]
+		local ch = sel and sel.ref and main.t_selChars[sel.ref + 1]
+		if ch == nil or ch.char == nil then
+			return nil
+		end
+		return {ref = sel.ref, pal = sel.pal or 1, char = (tostring(ch.char):gsub('\\', '/'))}
+	end)
+	pcall(function()
+		start.f_selectReset(true)
+		main.f_default()
+	end)
+	if not ok then
+		if tostring(res):find('<game end>', 1, true) then error(res, 0) end
+		local fh = io.open('save/ar_lobby_error.txt', 'w')
+		if fh then fh:write('ranked pick: ' .. tostring(res) .. '\n') fh:close() end
+		return nil
+	end
+	return res
+end
+
+-- the opponent's line from the helper -> the arRanked table (nil + reason if their character is not in this build)
+local function rankedInfo(st, pick, rating)
+	local r = st.ranked
+	if r == nil or (r.side ~= 1 and r.side ~= 2) then return nil, 'No ranked data from the opponent.' end
+	local oppRef = charRefOf(r.char)
+	if oppRef == nil then return nil, r.name .. "'s character is not in your build." end
+	local me, op = r.side, 3 - r.side
+	local rk = {side = me, refs = {}, pals = {}, ratings = {}, names = {}, seed = r.seed, active = false}
+	rk.refs[me], rk.pals[me], rk.ratings[me] = pick.ref, pick.pal, rating
+	rk.names[me] = (st.me and st.me.name) or 'You'
+	rk.refs[op], rk.pals[op], rk.ratings[op], rk.names[op] = oppRef, r.pal, r.rating, r.name
+	return rk
+end
+
+-- called by netplay() after the VERSUS 2P mode is set up, on both PCs with the same data
+function L.rankedSetup(rk)
+	arRanked = rk
+	rk.active, rk.launched, rk.palsSet, rk.result = true, false, false, nil
+	main.stageMenu = false
+	main.orderSelect = {false, false}
+	main.forceChar = {{rk.refs[1]}, {rk.refs[2]}}
+	for side = 1, 2 do
+		for k in pairs(main.teamMenu[side]) do main.teamMenu[side][k] = false end   -- no team menu: single
+	end
+	local pool = main.t_selectableStages
+	if pool ~= nil and #pool > 0 then
+		rk.stage = pool[(math.floor(rk.seed or 0) % #pool) + 1]
+	end
+	pcall(textImgSetText, motif.select_info.title.TextSpriteData, 'RANKED MATCH')
+end
+
+local function rankedOn()
+	return arRanked ~= nil and arRanked.active
+end
+
+if hook and hook.add then
+	-- no cursor art on the ranked select screen (start.c keeps the last hovered character otherwise)
+	hook.add('start.f_selectReset', 'arRankedReset', function()
+		if rankedOn() then
+			for _, c in ipairs(start.c or {}) do c.selRef = nil end
+		end
+	end)
+	-- forced picks come with a default palette: put the pre-picked ones back (same on both PCs)
+	hook.add('start.f_selectScreen', 'arRankedPals', function()
+		local rk = arRanked
+		if not rankedOn() or rk.palsSet or not start.p[1].selEnd or not start.p[2].selEnd then return end
+		local a, b = start.p[1].t_selected[1], start.p[2].t_selected[1]
+		if a == nil or b == nil then return end
+		rk.palsSet = true
+		a.pal = rk.pals[1]
+		b.pal = rk.pals[2]
+		if a.ref == b.ref and a.pal == b.pal then
+			b.pal = a.pal == 1 and 2 or 1     -- mirror match with the same colour: P2 changes
+		end
+	end)
+	-- one match, then leave (start.exit) instead of the next round of select screens
+	hook.add('start.postMatch', 'arRankedPostMatch', function()
+		if rankedOn() then return 'menu' end
+		return nil
+	end)
+end
+
+if start ~= nil and start.f_setStage ~= nil and not L.stageWrapped then
+	L.stageWrapped = true
+	local setStageOrig = start.f_setStage
+	start.f_setStage = function(num, assigned)
+		if rankedOn() and arRanked.stage ~= nil then
+			arRanked.launched = true
+			return setStageOrig(arRanked.stage, true)
+		end
+		return setStageOrig(num, assigned)
+	end
+end
+if start ~= nil and start.f_selectScreen ~= nil and not L.selectWrapped then
+	L.selectWrapped = true
+	local selectScreenOrig = start.f_selectScreen
+	start.f_selectScreen = function(...)
+		if rankedOn() and arRanked.launched then
+			return false              -- the ranked match was played (or broke off): leave like ESC
+		end
+		return selectScreenOrig(...)
+	end
+end
+
+-- result after the netplay session; returns true to search again with the same character
+local function rankedAfter(rk, pick)
+	local t = 0
+	local lines = {'RANKED', ''}
+	local res = rk and rk.result
+	if res and res.sides and rk.side and res.sides[rk.side] then
+		local e = res.sides[rk.side]
+		local op = res.sides[3 - rk.side]
+		table.insert(lines, (res.w == rk.side and 'WIN' or 'LOSS') .. '  vs  ' .. (rk.names[3 - rk.side] or '?'))
+		table.insert(lines, string.format('Your rating: %d -> %d  (%s%d)   %s', e.old, e.new, e.delta >= 0 and '+' or '',
+			e.delta, L.tierNames[e.tier] or ''))
+		if e.tier > e.tierOld then table.insert(lines, 'RANK UP!') elseif e.tier < e.tierOld then table.insert(lines, 'RANK DOWN') end
+		if op then
+			table.insert(lines, string.format('%s: %d -> %d', rk.names[3 - rk.side] or '?', op.old, op.new))
+		end
+	else
+		table.insert(lines, 'Match cancelled - no rating change.')
+		table.insert(lines, 'Your rating: ' .. L.rankedRating())
+	end
+	table.insert(lines, '')
+	table.insert(lines, 'CONFIRM: search again with ' .. charName(pick.ref))
+	table.insert(lines, 'ESC: back to the lobby')
+	local text = table.concat(lines, '\\n')
+	while true do
+		t = t + 1
+		drawScreen(text, true)
+		if t > 30 then
+			if pressed('done') then
+				sound('done')
+				return true
+			elseif pressed('cancel') then
+				sound('cancel')
+				return false
+			end
+		end
+	end
+end
+
+-- search other RANKED players; returns 'played' after a netplay session, 'back' on ESC
+function L.rankedSearch(pick)
+	local rating = L.rankedRating()
+	command('rsearch', pick.char .. '|' .. pick.pal .. '|' .. rating)
+	local t, st, acceptedAt, waitT = 0, readState(), nil, 0
+	local name = charName(pick.ref)
+	local function go(server, label, oppId, s)
+		local rk, why = rankedInfo(s, pick, rating)
+		-- one command per frame: the helper only sees the latest line of the command file
+		command(server == '' and 'clear_match' or 'clear')
+		if rk == nil then
+			for _ = 1, 150 do drawScreen('RANKED\\n\\nCould not start the match:\\n' .. why, true) end
+			command('clear_ranked')
+			return 'back'
+		end
+		netplay(server, label, oppId, true, rk)
+		command('clear_ranked')
+		arRanked = nil
+		return 'played', rk
+	end
+	while true do
+		t = t + 1
+		if t % 10 == 1 then st = readState() end
+		local out = st.outgoing
+		if st.match and t > 10 then   -- we were picked and host (P1)
+			if st.ranked then
+				return go('', st.match.name, nil, st)
+			end
+			waitT = waitT + 1
+			if waitT > 120 then        -- matched by a helper without ranked data: give up on this one
+				command('clear_match')
+				return 'back'
+			end
+		end
+		local lines = {'RANKED', ''}
+		if not st.running then
+			table.insert(lines, 'The lobby helper is not running.')
+		elseif out and out.state == 'accepted' then
+			table.insert(lines, 'Opponent found: ' .. out.name .. '!')
+			table.insert(lines, 'Connecting...')
+			acceptedAt = acceptedAt or t
+			if t - acceptedAt > 60 + (out.wait or 0) * 60 then   -- give the host a moment to start listening
+				local ip, oname, oid = out.ip, out.name, out.id
+				return go(ip, oname, oid, st)
+			end
+		else
+			local secs = st.search and st.search.secs or 0
+			table.insert(lines, 'Your character: ' .. name .. '      Rating: ' .. rating)
+			table.insert(lines, '')
+			table.insert(lines, 'Searching for a ranked opponent' .. string.rep('.', math.floor(t / 20) % 4))
+			table.insert(lines, string.format('Time: %d:%02d', math.floor(secs / 60), secs % 60))
+			table.insert(lines, 'Players online: ' .. #st.peers .. '    in ranked queue: ' .. (st.search and st.search.searching or 0))
+			table.insert(lines, '')
+			table.insert(lines, 'ESC: stop searching')
+		end
+		drawScreen(table.concat(lines, '\\n'), true)
+		if t > 15 and not acceptedAt and not st.match and pressed('cancel') then
+			sound('cancel')
+			command('search', '0')
+			return 'back'
+		end
+	end
+end
+
+-- RANKED button: pick, search, play, result, repeat
+function L.ranked()
+	local pick = L.rankedPick()
+	lobbyMusic(true)
+	if pick == nil then return 'back' end
+	while true do
+		local r, rk = L.rankedSearch(pick)
+		if r ~= 'played' then return 'back' end
+		lobbyMusic(true)
+		if not rankedAfter(rk, pick) then return 'back' end
+	end
+end
+
+-- hub: LOBBIES / MATCHMAKING / RANKED / BACK buttons over the lobby picture
 function L.lobby()
 	command('lobby', '1')
 	lobbyMusic(true)
@@ -524,19 +799,28 @@ function L.lobby()
 		if not st.running then info = 'The lobby helper is not running (needs Python + discord_presence).' end
 		drawScreen(info, true, {sel = sel})
 		if t > 15 then
+			local n = #L.buttons
 			if pressed('next') then
-				sel = sel % 3 + 1
+				sel = sel % n + 1
 				sound('move')
 			elseif pressed('previous') then
-				sel = (sel - 2) % 3 + 1
+				sel = (sel - 2) % n + 1
 				sound('move')
-			elseif pressed('cancel') or (sel == 3 and pressed('done')) then
+			elseif pressed('cancel') or (sel == n and pressed('done')) then
 				sound('cancel')
 				command('lobby', '0')
 				return
 			elseif pressed('done') then
 				sound('done')
-				local r = sel == 1 and L.lobbyList() or L.matchmaking()
+				local r
+				if sel == 1 then
+					r = L.lobbyList()
+				elseif sel == 2 then
+					r = L.matchmaking()
+				else
+					r = L.ranked()
+					lobbyMusic(true)
+				end
 				if r == 'done' then
 					command('lobby', '0')
 					return

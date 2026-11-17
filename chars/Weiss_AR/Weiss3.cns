@@ -1,0 +1,4314 @@
+;--------------------------------------------------------------------------
+;Ice Shard Glyph
+[Statedef 90300]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 161,]
+type = Turn
+trigger1 = time = 0
+trigger1 = P2Dist X < 0
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+
+[State 0, Helper]
+type = Helper
+trigger1 = time = 30
+helpertype = normal
+ID = 80300
+stateno = 80300
+pos = 30,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = .355
+size.yscale = .355
+
+[State 0, Helper]
+type = Helper
+triggerall = time >= 45
+triggerall = root,var(3) > 0
+trigger1 = numhelper(70300) && numhelper(70301) && numhelper(70302) && !numhelper(70303)
+helpertype = normal
+ID = 70303
+stateno = 70300
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = const(size.xscale)
+size.yscale = const(size.yscale)
+
+[State 0, Helper]
+type = Helper
+triggerall = time >= 45
+triggerall = root,var(3) > 0
+trigger1 = numhelper(70300) && numhelper(70301) && !numhelper(70302)
+helpertype = normal
+ID = 70302
+stateno = 70300
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = const(size.xscale)
+size.yscale = const(size.yscale)
+
+[State 0, Helper]
+type = Helper
+triggerall = time >= 45
+triggerall = root,var(3) > 0
+trigger1 = numhelper(70300) && !numhelper(70301)
+helpertype = normal
+ID = 70301
+stateno = 70300
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = const(size.xscale)
+size.yscale = const(size.yscale)
+
+[State 0, Helper]
+type = Helper
+triggerall = time >= 45
+triggerall = root,var(3) > 0
+trigger1 = !numhelper(70300)
+helpertype = normal
+ID = 70300
+stateno = 70300
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = const(size.xscale)
+size.yscale = const(size.yscale)
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S100,03
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = time >= 45
+trigger2 = root,movetype = H
+value = 99999
+;--------------------------------------------------------------------------
+;Ice Shard
+[Statedef 80300]
+type    = U
+movetype = A
+physics = N
+anim = 90300
+ctrl = 0
+sprpriority = 2
+
+[State 1010, Helper Attack Scale]
+type = AttackMulSet
+trigger1 = ishelper
+value = root,fvar(6)
+ignorehitpause = 1
+
+[State ]
+type = Angleadd
+Trigger1 = 1
+value = 0
+
+[State ]
+type = AngleDraw
+trigger1 = 1
+scale = 1,1
+
+[State ]
+type = VarSet
+trigger1 = time = 0
+fvar(7) = ifelse((P2dist x=[0,1]),1,ifelse((P2dist x=[-1,0]),-1,P2dist x))
+
+[State ]
+type = VarSet
+trigger1 = time = 0
+fvar(8) = ifelse((P2dist y=[0,1]),1,ifelse((P2dist y=[-1,0]),-1,P2dist y))-40
+
+[State ]
+type = VarSet
+trigger1 = time = 0
+fvar(6) = atan(fvar(7)/fvar(8))-(.5*pi*ifelse(P2dist Y <20,-1,1))
+
+[State ]
+type = Veladd
+trigger1 = time = 0
+trigger1 = root,var(3) = 0
+x = abs(10*cos(fvar(6)))
+y = -10*sin(fvar(6))
+
+[State ]
+type = Veladd
+trigger1 = time = 0
+trigger1 = root,var(3) > 0
+x = abs(15*cos(fvar(6)))
+y = -15*sin(fvar(6))
+
+[State ]
+type = AngleSet
+Trigger1 = 1
+value = ATan(Vel Y/Vel X)*(-180.0/Pi)+((Vel X<0)*180)
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = timemod = 4,0
+anim = 10006
+ID = 10006
+pos = -20+random%40,-20+random%40
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 27
+pausemovetime = 0
+scale = const(size.xscale),const(size.yscale)
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 200, 1]
+type = HitDef
+trigger1 = !movecontact
+attr = , SP
+damage = 12, 3
+animtype = Medium
+guardflag = MA                   
+priority = 3, Hit                
+pausetime = 0, 8+(P2MoveType=A*2)
+getpower = 0,11
+sparkno = 0                      
+sparkxy = 0, -67
+hitsound = S1, 5
+guardsound = S5, 0+random%3                
+ground.type = Low
+ground.slidetime = 17+((P2MoveType=A)*4)+((P2StateType=C)*2)           
+ground.hittime  = 17+((P2MoveType=A)*4)+((P2StateType=C)*2)
+guard.hittime  = 16+((P2MoveType=A)*4)+((P2StateType=C)*2) 
+air.hittime  = 40+((P2MoveType=A)*5)
+ground.velocity = -2.5
+air.velocity = -2,-5
+air.fall = 1
+fall.recover = 1   
+fall.recovertime = 60+((P2MoveType=A)*12)
+palfx.time = 17
+palfx.add = 184,184,200
+Palfx.mul = 220,220,255
+palfx.invertall = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = frontedgebodydist < -50
+trigger2 = backedgebodydist < -50
+;--------------------------------------------------------------------------
+;Black Glyph
+[Statedef 70300]
+type    = U
+physics = N
+anim = 10012
+ctrl = 0
+sprpriority = 2
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S100,01
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim = 10012 && animtime = 0
+value = 10002
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist-20
+
+[State 0, ChangeState]
+type = ChangeState
+triggerall = (root,stateno = [320,323]) && root,time = [0,1]
+triggerall = root,var(34) = 1 
+trigger1 = root,var(30) = 1 && ishelper(70300)
+trigger2 = root,var(31) = 1 && ishelper(70301)
+trigger3 = root,var(32) = 1 && ishelper(70302)
+trigger4 = root,var(33) = 1 && ishelper(70303)
+value = 99999
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = root,stateno = 4001
+value = 99999
+;--------------------------------------------------------------------------
+[Statedef 90301]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+ignorehitpause = 1
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = time >= 24
+value = 99999
+;--------------------------------------------------------------------------
+[Statedef 90310]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = !time
+time = 14
+pos = -30,-85
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = -45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+trigger2 = time >= 28 
+scale = .1,.1
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+trigger2 = time >= 27 && time < 28
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+trigger2 = time >= 26 && time < 27
+scale = .3,.3
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 25 && time < 26
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+trigger2 = time >= 24 && time < 25
+scale = .5,.5
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+trigger2 = time >= 23 && time < 24
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+trigger2 = time >= 22 && time < 23
+scale = .7,.7
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+trigger2 = time >= 21 && time < 22
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+trigger2 = time >= 20 && time < 21
+scale = .9,.9
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time > 29
+ignorehitpause = 1
+;--------------------------------------------------------------------------
+[Statedef 90311]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = !time
+time = 14
+pos = -30,-85
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = -45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+trigger2 = time >= 38 
+scale = .1,.1
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+trigger2 = time >= 37 && time < 38
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+trigger2 = time >= 36 && time < 37
+scale = .3,.3
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 35 && time < 36
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+trigger2 = time >= 34 && time < 35
+scale = .5,.5
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+trigger2 = time >= 33 && time < 34
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+trigger2 = time >= 32 && time < 33
+scale = .7,.7
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+trigger2 = time >= 31 && time < 32
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+trigger2 = time >= 30 && time < 31
+scale = .9,.9
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time > 39
+ignorehitpause = 1
+;--------------------------------------------------------------------------
+[Statedef 90320]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = -30
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = !time
+time = 5
+pos = 0,0
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+trigger2 = time >= 23 && time < 24
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+trigger2 = time >= 22 && time < 23
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+trigger2 = time >= 21 && time < 22
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 20 && time < 21
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time >= 24
+trigger2 = root,stateno != [320,323]
+trigger2 = root,stateno != 811
+trigger2 = root,stateno != 3000
+ignorehitpause = 1
+;--------------------------------------------------------------------------
+[Statedef 90321]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = 45
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = !time
+time = 5
+pos = -30,-85
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+trigger2 = time >= 23 && time < 24
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+trigger2 = time >= 22 && time < 23
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+trigger2 = time >= 21 && time < 22
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 20 && time < 21
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time >= 24
+trigger2 = root,stateno != [320,323]
+trigger2 = root,stateno != 811
+trigger2 = root,stateno != 3000
+ignorehitpause = 1
+;--------------------------------------------------------------------------
+[Statedef 90322]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = -45
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = root,anim = 361
+pos = -30,-85
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 10
+scale = 1,1
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = time >= 35
+trigger2 = root,stateno != 321
+value = 99999
+;--------------------------------------------------------------------------
+[Statedef 80322]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = 45
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = !time
+time = 5
+pos = 45,-35
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+trigger2 = time >= 23 && time < 24
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+trigger2 = time >= 22 && time < 23
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+trigger2 = time >= 21 && time < 22
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 20 && time < 21
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time >= 24
+trigger2 = root,stateno != 321
+ignorehitpause = 1
+;--------------------------------------------------------------------------
+[Statedef 90323]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = root,anim = 361
+pos = -30,-85
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 10
+scale = 1,1
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = time >= 25
+trigger2 = root,stateno != 323
+trigger2 = root,stateno != 3000
+value = 99999
+;--------------------------------------------------------------------------
+[Statedef 90800]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 3
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = root,anim = 800 || root,anim = 830
+pos = 70,-90
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+trigger2 = root,stateno = 800
+trigger2 = root,time >= 31
+scale = .1,.1
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+trigger2 = root,stateno = 800
+trigger2 = root,time >= 30 && root,time < 31
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+trigger2 = root,stateno = 800
+trigger2 = root,time >= 29 && root,time < 30
+scale = .3,.3
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = root,stateno = 800
+trigger2 = root,time >= 28 && root,time < 29
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+trigger2 = root,stateno = 800
+trigger2 = root,time >= 27 && root,time < 28
+scale = .5,.5
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+trigger2 = root,stateno = 800
+trigger2 = root,time >= 26 && root,time < 27
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+trigger2 = root,stateno = 800
+trigger2 = root,time >= 25 && root,time < 26
+scale = .7,.7
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+trigger2 = root,stateno = 800
+trigger2 = root,time >= 24 && root,time < 25
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+trigger2 = root,stateno = 800
+trigger2 = root,time >= 23 && root,time < 24
+scale = .9,.9
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = root,stateno = 800
+trigger1 = time >= 10 && root,time < 23
+scale = 1,1
+ignorehitpause = 1
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim = 10001
+trigger1 = root,stateno = 810 && root,anim = 813
+value = 10012
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim = 10012
+trigger1 = animtime = 0
+value = 10002
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = (root,stateno != [800,802]) && root,stateno != 810
+value = 99999
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S100,03
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = root,stateno = 800
+trigger1 = time >= 32
+;--------------------------------------------------------------------------
+;Ice Pillar A
+[Statedef 91000]
+type    = U
+movetype = I
+physics = N
+anim = 99999
+ctrl = 0
+sprpriority = 2
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = !time
+var(36) = 1
+persistent = 0
+
+[State 0, VarAdd]
+type = VarAdd
+triggerall = numhelper(81000)
+trigger1 = helper(81000),stateno = 71000
+var(36) = -1
+ignorehitpause = 1
+persistent = 1
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = !time
+value = S100,2
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist-20
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist-20
+
+[State 0, Helper]
+type = Helper
+trigger1 = !time
+helpertype = normal
+ID = 81000
+stateno = 81000
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.ground.back = 18
+size.ground.front = 22
+size.air.back = 18
+size.air.front = 22
+size.height = 85
+size.xscale = const(size.xscale)*1
+size.yscale = const(size.yscale)*1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time > 200
+trigger2 = var(36) = 0
+trigger3 = root,stateno = 4001
+trigger4 = root,stateno = 1001 && root,anim = 1000
+;--------------------------------------------------------------------------
+[Statedef 81000]
+type    = U
+movetype = A
+physics = N
+ctrl = 0
+sprpriority = 2
+
+[State 0, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
+[State 0, BindToParent]
+type = BindToParent
+trigger1 = numhelper(91000)
+ignorehitpause = 1
+
+[State 1010, Helper Attack Scale]
+type = AttackMulSet
+trigger1 = ishelper
+value = root,fvar(6)
+ignorehitpause = 1
+
+[State 0, PlayerPush]
+type = PlayerPush
+trigger1 = 1
+value = 1
+ignorehitpause = 1
+
+[State 0, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA,NA,SA,HA,AA,NP,SP,HP,AP,NT,ST,HT,AT
+ignorehitpause = 1
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim != 81000 && anim != 91000
+value = 91000
+ignorehitpause = 1
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim = 91000 && animtime = 0
+value = 81000
+ignorehitpause = 1
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist-20
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist-20
+
+[State 0, PosFreeze]
+type = PosFreeze
+trigger1 = 1
+value = 1
+ignorehitpause = 1
+persistent = 1
+
+[State 0, ReversalDef]
+type = ReversalDef
+trigger1 = !enemy,movereversed
+reversal.attr = SCA,NA,SA,HA,AA,NP,SP,HP,AP,NT,ST,HT,AT
+sparkno = 40
+sparkxy = 0,0
+pausetime = 0,6
+hitsound = S5, 0+random%3 
+p1stateno = 71000
+
+[State 0, StateTypeSet]
+type = StateTypeSet
+trigger1 = anim = 81000
+movetype = I
+
+[State 200, 1]
+type = HitDef
+trigger1 = anim = 91000
+trigger1 = !movecontact
+attr = S, SP
+damage = 25, 2
+animtype = Medium
+hitflag = HAFD
+guardflag = MA
+priority = 3, Hit                
+pausetime = 0, 18+(P2MoveType=A*2)
+getpower = 0,11
+sparkno = 0                      
+sparkxy = 0, -67
+hitsound = S1, 5
+guardsound = S5, 0+random%3                
+ground.type = Low
+ground.slidetime = 19+((P2MoveType=A)*4)+((P2StateType=C)*2)           
+ground.hittime  = 19+((P2MoveType=A)*4)+((P2StateType=C)*2)
+guard.hittime  = 18+((P2MoveType=A)*4)+((P2StateType=C)*2) 
+air.hittime  = 30+((P2MoveType=A)*5)
+down.hittime = 30
+ground.velocity = -2.5,-5.75
+air.velocity = -2,-6.25
+down.velocity = -1.5,-6.75
+fall = 1
+air.fall = 1
+down.bounce = 1
+yaccel = .35
+fall.recover = 1   
+fall.recovertime = 50+((P2MoveType=A)*12)
+palfx.time = 30
+palfx.add = 184,184,200
+Palfx.mul = 220,220,255
+palfx.invertall = 1
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = !numhelper(91000)
+value = 61000
+;---------------------------------------------------------------------------
+;Ice Pillar get-hit (shaking)
+[Statedef 71000]
+type    = U
+movetype= H
+physics = N
+velset = 0,0
+
+[State 0, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
+[State 0, BindToParent]
+type = BindToParent
+trigger1 = numhelper(91000)
+ignorehitpause = 1
+
+[State 0, PlayerPush]
+type = PlayerPush
+trigger1 = 1
+value = 1
+ignorehitpause = 1
+
+[State 0, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA,NA,SA,HA,AA,NP,SP,HP,AP,NT,ST,HT,AT
+ignorehitpause = 1
+
+[State 0, ChangeState]
+type = ChangeState
+triggerall = ishelper(81001)
+trigger1 = numhelper(91001)
+value = 81001
+
+[State 0, ChangeState]
+type = ChangeState
+triggerall = ishelper(81000)
+trigger1 = numhelper(91000)
+value = 81000
+
+[State 0, ChangeState]
+type = ChangeState
+triggerall = ishelper(81001)
+trigger1 = !numhelper(91001)
+value = 61000
+
+[State 0, ChangeState]
+type = ChangeState
+triggerall = ishelper(81000)
+trigger1 = !numhelper(91000)
+value = 61000
+;---------------------------------------------------------------------------
+;Ice Pillar get-hit (destroyed)
+[Statedef 61000]
+type    = U
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+triggerall = anim != 10004
+trigger1 = hitshakeover
+value = 10004
+
+[State 0, PlaySnd]
+type = PlaySnd
+triggerall = anim = 10004
+trigger1 = animelem = 1
+value = S100,22
+
+[State 0, DestroySelf]
+type = DestroySelf
+triggerall = anim = 10004
+trigger1 = !animtime
+;--------------------------------------------------------------------------
+;Ice Pillar B
+[Statedef 91001]
+type    = U
+movetype = I
+physics = N
+anim = 99999
+ctrl = 0
+sprpriority = 2
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = !time
+var(36) = 2
+persistent = 0
+
+[State 0, VarAdd]
+type = VarAdd
+triggerall = numhelper(81001)
+trigger1 = helper(81001),stateno = 71000
+var(36) = -1
+ignorehitpause = 1
+persistent = 1
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = !time
+value = S100,2
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist-20
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist-20
+
+[State 0, Helper]
+type = Helper
+trigger1 = !time
+helpertype = normal
+ID = 81001
+stateno = 81001
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.ground.back = 26
+size.ground.front = 30
+size.air.back = 26
+size.air.front = 30
+size.height = 100
+size.xscale = const(size.xscale)*1.35
+size.yscale = const(size.yscale)*1.35
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time > 350
+trigger2 = var(36) = 0
+trigger3 = root,stateno = 4001
+trigger4 = root,stateno = 1001 && root,anim = 1000
+;--------------------------------------------------------------------------
+[Statedef 81001]
+type    = U
+movetype = A
+physics = N
+ctrl = 0
+sprpriority = 2
+
+[State 0, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 0,0
+ignorehitpause = 1
+
+[State 0, BindToParent]
+type = BindToParent
+trigger1 = numhelper(91001)
+ignorehitpause = 1
+
+[State 1010, Helper Attack Scale]
+type = AttackMulSet
+trigger1 = ishelper
+value = root,fvar(6)
+ignorehitpause = 1
+
+[State 0, PlayerPush]
+type = PlayerPush
+trigger1 = 1
+value = 1
+ignorehitpause = 1
+
+[State 0, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA,NA,SA,HA,AA,NP,SP,HP,AP,NT,ST,HT,AT
+ignorehitpause = 1
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim != 81001 && anim != 91001
+value = 91001
+ignorehitpause = 1
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim = 91001 && animtime = 0
+value = 81001
+ignorehitpause = 1
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist-20
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist-20
+
+[State 0, PosFreeze]
+type = PosFreeze
+trigger1 = 1
+value = 1
+ignorehitpause = 1
+persistent = 1
+
+[State 0, ReversalDef]
+type = ReversalDef
+trigger1 = !enemy,movereversed
+reversal.attr = SCA,NA,SA,HA,AA,NP,SP,HP,AP,NT,ST,HT,AT
+sparkno = 40
+sparkxy = 0,0
+pausetime = 0,12
+hitsound = S5, 0+random%3 
+p1stateno = 71000
+
+[State 0, StateTypeSet]
+type = StateTypeSet
+trigger1 = anim = 81001
+movetype = I
+
+[State 200, 1]
+type = HitDef
+trigger1 = anim = 91001
+trigger1 = !movecontact
+attr = S, SP
+damage = 25, 2
+animtype = Hard
+hitflag = HAFD
+guardflag = MA
+priority = 3, Hit                
+pausetime = 0, 22+(P2MoveType=A*2)
+getpower = 0,11
+sparkno = 0                      
+sparkxy = 0, -67
+hitsound = S1, 5
+guardsound = S5, 0+random%3                
+ground.type = Low
+ground.slidetime = 26+((P2MoveType=A)*4)+((P2StateType=C)*2)           
+ground.hittime  = 26+((P2MoveType=A)*4)+((P2StateType=C)*2)
+guard.hittime  = 25+((P2MoveType=A)*4)+((P2StateType=C)*2) 
+air.hittime  = 37+((P2MoveType=A)*5)
+down.hittime = 37
+ground.velocity = -2.5,-5.75
+air.velocity = -2,-6.25
+down.velocity = -1.5,-6.75
+fall = 1
+air.fall = 1
+down.bounce = 1
+yaccel = .4
+fall.recover = 1   
+fall.recovertime = 57+((P2MoveType=A)*12)
+palfx.time = 30
+palfx.add = 184,184,200
+Palfx.mul = 220,220,255
+palfx.invertall = 1
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = !numhelper(91001)
+value = 61000
+;--------------------------------------------------------------------------
+[Statedef 91200]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 3
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = !time
+pos = 35,-90
+
+[State 0, PalFXWiz]
+type = PalFX
+trigger1 = 1
+add = 0,50,240
+mul = 256,256,256
+sinadd = 85,85,85,15
+invertall = 0
+color = 256
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+ignorehitpause = 1
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S100,03
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = root,stateno != 1200 && root,anim != 1200
+value = 99999
+ignorehitpause = 0
+;--------------------------------------------------------------------------
+;Distortion Ice Shard Glyph
+[Statedef 93150]
+type    = U
+movetype = A
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+ignorehitpause = 1
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 161,]
+type = Turn
+trigger1 = time = 0
+trigger1 = P2Dist X < 0
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+
+[State 0, Helper]
+type = Helper
+trigger1 = time = 20
+trigger2 = time = 40
+trigger3 = time = 60
+helpertype = normal
+ID = 83150
+stateno = 83150
+pos = 30,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = .355
+size.yscale = .355
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S100,03
+
+[State 0, Helper]
+type = Helper
+triggerall = time >= 80
+trigger1 = numhelper(70300) && numhelper(70301) && numhelper(70302) && !numhelper(70303)
+helpertype = normal
+ID = 70303
+stateno = 70300
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = const(size.xscale)
+size.yscale = const(size.yscale)
+
+[State 0, Helper]
+type = Helper
+triggerall = time >= 80
+trigger1 = numhelper(70300) && numhelper(70301) && !numhelper(70302)
+helpertype = normal
+ID = 70302
+stateno = 70300
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = const(size.xscale)
+size.yscale = const(size.yscale)
+
+[State 0, Helper]
+type = Helper
+triggerall = time >= 80
+trigger1 = numhelper(70300) && !numhelper(70301)
+helpertype = normal
+ID = 70301
+stateno = 70300
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = const(size.xscale)
+size.yscale = const(size.yscale)
+
+[State 0, Helper]
+type = Helper
+triggerall = time >= 80
+trigger1 = !numhelper(70300)
+helpertype = normal
+ID = 70300
+stateno = 70300
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = const(size.xscale)
+size.yscale = const(size.yscale)
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = time >= 80
+value = 99999
+;--------------------------------------------------------------------------
+;Distortion Ice Shard 
+[Statedef 83150]
+type    = U
+movetype = A
+physics = N
+anim = 90300
+ctrl = 0
+sprpriority = 2
+
+[State ]
+type = Angleadd
+Trigger1 = 1
+value = 0
+
+[State ]
+type = AngleDraw
+trigger1 = 1
+scale = 1,1
+
+[State ]
+type = VarSet
+trigger1 = time = 0
+fvar(7) = ifelse((P2dist x=[0,1]),1,ifelse((P2dist x=[-1,0]),-1,P2dist x))
+
+[State ]
+type = VarSet
+trigger1 = time = 0
+fvar(8) = ifelse((P2dist y=[0,1]),1,ifelse((P2dist y=[-1,0]),-1,P2dist y))-40
+
+[State ]
+type = VarSet
+trigger1 = time = 0
+fvar(6) = atan(fvar(7)/fvar(8))-(.5*pi*ifelse(P2dist Y <20,-1,1))
+
+[State ]
+type = Veladd
+trigger1 = time = 0
+x = abs(10*cos(fvar(6)))
+y = -10*sin(fvar(6))
+
+[State ]
+type = AngleSet
+Trigger1 = 1
+value = ATan(Vel Y/Vel X)*(-180.0/Pi)+((Vel X<0)*180)
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 200, 1]
+type = HitDef
+trigger1 = !movecontact
+attr = , HP
+damage = 12, 3
+animtype = Medium
+guardflag = MA                   
+priority = 3, Hit                
+pausetime = 0, 4+(P2MoveType=A*2)
+getpower = 0,11
+sparkno = 0                      
+sparkxy = 0, -67
+hitsound = S1, 5
+guardsound = S5, 0+random%3                
+ground.type = Low
+ground.slidetime = 17+((P2MoveType=A)*4)+((P2StateType=C)*2)           
+ground.hittime  = 17+((P2MoveType=A)*4)+((P2StateType=C)*2)
+guard.hittime  = 16+((P2MoveType=A)*4)+((P2StateType=C)*2) 
+air.hittime  = 40+((P2MoveType=A)*5)
+ground.velocity = -1.5
+air.velocity = -1,-3
+air.fall = 1
+fall.recover = 1   
+fall.recovertime = 60+((P2MoveType=A)*12)
+palfx.time = 17
+palfx.add = 184,184,200
+Palfx.mul = 220,220,255
+palfx.invertall = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = frontedgebodydist < -50
+trigger2 = backedgebodydist < -50
+;--------------------------------------------------------------------------
+[Statedef 93000]
+type    = U
+physics = N
+anim = 93002
+ctrl = 0
+sprpriority = 2
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = !time
+time = 4
+pos = 0,const(size.mid.pos.y)
+ignorehitpause = 1
+
+[State 0, Turn]
+type = Turn
+trigger1 = !time
+trigger1 = root,facing != facing
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = 30
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = !time
+value = S100,05
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = !animtime
+;--------------------------------------------------------------------------
+[Statedef 83000]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 1
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+ignorehitpause = 1
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = time >= 60
+value = 99999
+;--------------------------------------------------------------------------
+[Statedef 73000]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 1
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = !time
+time = 5
+pos = 0,0
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 64 && time < 65
+scale = .1,.1
+value = -30
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+trigger2 = time >= 63 && time < 64
+scale = .2,.2
+value = -30
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 62 && time < 63
+scale = .3,.3
+value = -30
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+trigger2 = time >= 61 && time < 62
+scale = .4,.4
+value = -30
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 60 && time < 61
+scale = .5,.5
+value = -30
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+trigger2 = time >= 59 && time < 60
+scale = .6,.6
+value = -30
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 58 && time < 59
+scale = .7,.7
+value = -30
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 57 && time < 58
+scale = .8,.8
+value = -30
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 56 && time < 57
+scale = .9,.9
+value = -30
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 56
+scale = 1,1
+value = -30
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time >= 65
+ignorehitpause = 1
+;--------------------------------------------------------------------------
+[Statedef 63000]
+type    = U
+physics = N
+anim = 93001
+ctrl = 0
+sprpriority = 2
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = !time
+time = 4
+pos = 0,const(size.mid.pos.y)
+ignorehitpause = 1
+
+[State 0, Turn]
+type = Turn
+trigger1 = !time
+trigger1 = root,facing != facing
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = 90
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = !time
+value = S100,05
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = !animtime
+;--------------------------------------------------------------------------
+[Statedef 93050]
+type     = U
+movetype = A
+physics  = N
+anim = 73050
+ctrl = 0
+sprpriority = 2
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 1
+anim = 63050
+ID = 63050
+pos = 60,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale),const(size.yscale)
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 2
+anim = 63050
+ID = 63050
+pos = 110,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*1.1,const(size.yscale)*1.1
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 3
+anim = 63050
+ID = 63050
+pos = 160,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*1.2,const(size.yscale)*1.2
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 4
+anim = 63050
+ID = 63050
+pos = 210,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*1.3,const(size.yscale)*1.3
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 5
+anim = 63050
+ID = 63050
+pos = 260,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*1.4,const(size.yscale)*1.4
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 6
+anim = 63050
+ID = 63050
+pos = 310,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*1.5,const(size.yscale)*1.5
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 7
+anim = 63050
+ID = 63050
+pos = 360,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*1.6,const(size.yscale)*1.6
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 8
+anim = 63050
+ID = 63050
+pos = 410,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*1.7,const(size.yscale)*1.7
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 9
+anim = 63050
+ID = 63050
+pos = 460,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*1.8,const(size.yscale)*1.8
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 10
+anim = 63050
+ID = 63050
+pos = 510,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*1.9,const(size.yscale)*1.9
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 11
+anim = 63050
+ID = 63050
+pos = 560,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*2,const(size.yscale)*2
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 12
+anim = 63050
+ID = 63050
+pos = 610,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*2.1,const(size.yscale)*2.1
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 13
+anim = 63050
+ID = 63050
+pos = 660,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*2.2,const(size.yscale)*2.2
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 14
+anim = 63050
+ID = 63050
+pos = 710,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*2.3,const(size.yscale)*2.3
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 15
+anim = 63050
+ID = 63050
+pos = 760,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*2.4,const(size.yscale)*2.4
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 16
+anim = 63050
+ID = 63050
+pos = 810,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*2.5,const(size.yscale)*2.5
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 17
+anim = 63050
+ID = 63050
+pos = 860,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*2.6,const(size.yscale)*2.6
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 18
+anim = 63050
+ID = 63050
+pos = 910,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*2.7,const(size.yscale)*2.7
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 19
+anim = 63050
+ID = 63050
+pos = 960,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*2.8,const(size.yscale)*2.8
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = time = 20
+anim = 63050
+ID = 63050
+pos = 1010,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 90
+pausemovetime = 0
+scale = const(size.xscale)*2.9,const(size.yscale)*2.9
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = animelem = 5
+value = S100,22
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = !animtime
+;--------------------------------------------------------------------------
+[Statedef 83050]
+type    = U
+physics = N
+anim = 10003
+ctrl = 0
+sprpriority = -2
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+ignorehitpause = 1
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = root,anim != 3000 && root,anim != 3100
+value = 99999
+;--------------------------------------------------------------------------
+[Statedef 73050]
+type     = U
+movetype = A
+physics  = N
+anim = 83101
+ctrl = 0
+sprpriority = 2
+
+[State 1010, Helper Attack Scale]
+type = AttackMulSet
+trigger1 = ishelper
+value = root,fvar(6)
+ignorehitpause = 1
+
+[State 0, Trans]
+type = Trans
+trigger1 = 1
+trans = add
+alpha = time*10,256
+ignorehitpause = 1
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim = 83101
+trigger1 = root,anim = 3101
+value = 73101
+ignorehitpause = 1
+
+[State 0, PosSet]
+type = PosSet
+trigger1 = numhelper(83050)
+x = helper(83050),pos x
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = !time
+value = S100,10
+
+[State 0, Explod]
+type = Explod
+trigger1 = anim = 73101
+trigger1 = animelem = 5
+anim = 93101
+ID = 93101
+pos = 0,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = -1
+removetime = 10
+pausemovetime = 0
+scale = const(size.xscale)*1.5,const(size.yscale)
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 0
+
+[State 230, 2]
+type = HitDef
+trigger1 = !movecontact
+attr = S, HP
+animtype  = Hard
+damage    = 125,10
+guardflag = MA
+pausetime = 0,20+(P2MoveType=A*2)
+getpower = 0,4
+sparkno = 2
+sparkxy = 0,-65
+hitsound = S1, 9
+guardsound = S5, 0+random%3
+ground.type = Low
+ground.slidetime = 60+((P2MoveType=A)*4)+((P2StateType=C)*2)
+ground.hittime  = 60+((P2MoveType=A)*4)+((P2StateType=C)*2)
+guard.hittime  = 20+((P2MoveType=A)*4)+((P2StateType=C)*2)
+air.hittime = 60+((P2MoveType=A)*5)
+ground.velocity = -1,-5.5
+air.velocity = -1,-5.5
+fall = 1
+air.fall = 1
+fall.recovertime = 80+((P2MoveType=A)*12) 
+fall.recover = 1
+id = 73050
+p2stateno = 5400
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = anim = 73101
+trigger1 = root,anim != 3101
+value = 63050
+;--------------------------------------------------------------------------
+[Statedef 63050]
+type     = U
+movetype = A
+physics  = N
+ctrl = 0
+sprpriority = 2
+
+[State 0, Trans]
+type = Trans
+trigger1 = 1
+trans = add
+alpha = 256-time*16,256
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time > 16
+ignorehitpause = 1
+;--------------------------------------------------------------------------
+;Ice Shard Glyph
+[Statedef 93900]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 161,]
+type = Turn
+trigger1 = time = 0
+trigger1 = P2Dist X < 0
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+trigger2 = time >= 44 && time < 45
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 64 && time < 65
+trigger3 =  numhelper(9300)
+scale = .1,.1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+trigger2 = time >= 43 && time < 44
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 63 && time < 64
+trigger3 =  numhelper(9300)
+scale = .2,.2
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+trigger2 = time >= 42 && time < 43
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 62 && time < 63
+trigger3 =  numhelper(9300)
+scale = .3,.3
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 41 && time < 42
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 61 && time < 62
+trigger3 =  numhelper(9300)
+scale = .4,.4
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 40 && time < 41
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 60 && time < 61
+trigger3 =  numhelper(9300)
+scale = .5,.5
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+trigger2 = time >= 39 && time < 40
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 59 && time < 60
+trigger3 =  numhelper(9300)
+scale = .6,.6
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+trigger2 = time >= 38 && time < 39
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 58 && time < 59
+trigger3 =  numhelper(9300)
+scale = .7,.7
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+trigger2 = time >= 37 && time < 38
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 57 && time < 58
+trigger3 =  numhelper(9300)
+scale = .8,.8
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+trigger2 = time >= 36 && time < 37
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 56 && time < 57
+trigger3 =  numhelper(9300)
+scale = .9,.9
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 10 && time < 36
+trigger1 =  !numhelper(9300)
+trigger2 = time >= 10 && time < 56
+trigger2 =  numhelper(9300)
+scale = 1,1
+
+[State 0, Helper]
+type = Helper
+trigger1 = time = 15
+trigger2 = numhelper(9300)
+trigger2 = time = 30
+helpertype = normal
+ID = 63900
+stateno = 63900
+pos = 30,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = .355
+size.yscale = .355
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S100,03
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger2 =  !numhelper(9300)
+trigger1 = time >= 45
+trigger2 =  numhelper(9300)
+trigger2 = time >= 65
+;--------------------------------------------------------------------------
+;Ice Shard Glyph
+[Statedef 83900]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 161,]
+type = Turn
+trigger1 = time = 0
+trigger1 = P2Dist X < 0
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+trigger2 = time >= 44 && time < 45
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 64 && time < 65
+trigger3 =  numhelper(9300)
+scale = .1,.1
+value = 135
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+trigger2 = time >= 43 && time < 44
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 63 && time < 64
+trigger3 =  numhelper(9300)
+scale = .2,.2
+value = 135
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+trigger2 = time >= 42 && time < 43
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 62 && time < 63
+trigger3 =  numhelper(9300)
+scale = .3,.3
+value = 135
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 41 && time < 42
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 61 && time < 62
+trigger3 =  numhelper(9300)
+scale = .4,.4
+value = 135
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 40 && time < 41
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 60 && time < 61
+trigger3 =  numhelper(9300)
+scale = .5,.5
+value = 135
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+trigger2 = time >= 39 && time < 40
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 59 && time < 60
+trigger3 =  numhelper(9300)
+scale = .6,.6
+value = 135
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+trigger2 = time >= 38 && time < 39
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 58 && time < 59
+trigger3 =  numhelper(9300)
+scale = .7,.7
+value = 135
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+trigger2 = time >= 37 && time < 38
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 57 && time < 58
+trigger3 =  numhelper(9300)
+scale = .8,.8
+value = 135
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+trigger2 = time >= 36 && time < 37
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 56 && time < 57
+trigger3 =  numhelper(9300)
+scale = .9,.9
+value = 135
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 10 && time < 36
+trigger1 =  !numhelper(9300)
+trigger2 = time >= 10 && time < 56
+trigger2 =  numhelper(9300)
+scale = 1,1
+value = 135
+
+[State 0, Helper]
+type = Helper
+trigger1 = time = 15
+trigger2 = numhelper(9300)
+trigger2 = time = 30
+helpertype = normal
+ID = 63900
+stateno = 63900
+pos = 30,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = .355
+size.yscale = .355
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S100,03
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = !numhelper(9300)
+trigger1 = time >= 45
+trigger2 = numhelper(9300)
+trigger2 = time >= 65
+;--------------------------------------------------------------------------
+;Ice Shard Glyph
+[Statedef 73900]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = 2
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = !time
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+
+[State 161,]
+type = Turn
+trigger1 = time = 0
+trigger1 = P2Dist X < 0
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+trigger2 = time >= 44 && time < 45
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 64 && time < 65
+trigger3 =  numhelper(9300)
+scale = .1,.1
+value = 45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+trigger2 = time >= 43 && time < 44
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 63 && time < 64
+trigger3 =  numhelper(9300)
+scale = .2,.2
+value = 45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+trigger2 = time >= 42 && time < 43
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 62 && time < 63
+trigger3 =  numhelper(9300)
+scale = .3,.3
+value = 45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 41 && time < 42
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 61 && time < 62
+trigger3 =  numhelper(9300)
+scale = .4,.4
+value = 45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+trigger2 = time >= 40 && time < 41
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 60 && time < 61
+trigger3 =  numhelper(9300)
+scale = .5,.5
+value = 45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+trigger2 = time >= 39 && time < 40
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 59 && time < 60
+trigger3 =  numhelper(9300)
+scale = .6,.6
+value = 45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+trigger2 = time >= 38 && time < 39
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 58 && time < 59
+trigger3 =  numhelper(9300)
+scale = .7,.7
+value = 45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+trigger2 = time >= 37 && time < 38
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 57 && time < 58
+trigger3 =  numhelper(9300)
+scale = .8,.8
+value = 45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+trigger2 = time >= 36 && time < 37
+trigger2 =  !numhelper(9300)
+trigger3 = time >= 56 && time < 57
+trigger3 =  numhelper(9300)
+scale = .9,.9
+value = 45
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 10 && time < 36
+trigger1 =  !numhelper(9300)
+trigger2 = time >= 10 && time < 56
+trigger2 =  numhelper(9300)
+scale = 1,1
+value = 45
+
+[State 0, Helper]
+type = Helper
+trigger1 = time = 10
+trigger2 = numhelper(9300)
+trigger2 = time = 30
+helpertype = normal
+ID = 63900
+stateno = 63900
+pos = 30,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = .355
+size.yscale = .355
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S100,03
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = !numhelper(9300)
+trigger1 = time >= 45
+trigger2 = numhelper(9300)
+trigger2 = time >= 65
+;--------------------------------------------------------------------------
+;Ice Shard
+[Statedef 63900]
+type    = U
+movetype = A
+physics = N
+anim = 90300
+ctrl = 0
+sprpriority = -9
+
+[State 1010, Helper Attack Scale]
+type = AttackMulSet
+trigger1 = ishelper
+value = root,fvar(6)
+ignorehitpause = 1
+
+[State ]
+type = Angleadd
+Trigger1 = 1
+value = 0
+
+[State ]
+type = AngleDraw
+trigger1 = 1
+scale = 1,1
+
+[State ]
+type = VarSet
+trigger1 = time = 0
+fvar(7) = ifelse((P2dist x=[0,1]),1,ifelse((P2dist x=[-1,0]),-1,P2dist x))
+
+[State ]
+type = VarSet
+trigger1 = time = 0
+fvar(8) = ifelse((P2dist y=[0,1]),1,ifelse((P2dist y=[-1,0]),-1,P2dist y))-40
+
+[State ]
+type = VarSet
+trigger1 = time = 0
+fvar(6) = atan(fvar(7)/fvar(8))-(.5*pi*ifelse(P2dist Y <20,-1,1))
+
+[State ]
+type = VarSet
+trigger1 = time = 1
+fvar(9) = ATan(Vel Y/Vel X)*(-180.0/Pi)+((Vel X<0)*180)
+
+[State ]
+type = AngleSet
+Trigger1 = time > 1
+value = fvar(9)
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+triggerall = anim = 90300
+triggerall = numhelper(43900)
+trigger1 = helper(43900),movehit
+value = 10004
+
+[State ]
+type = Veladd
+trigger1 = time = 0
+x = abs(10*cos(fvar(6)))
+y = -10*sin(fvar(6))
+
+[State 0, VelMul]
+type = VelMul
+trigger1 = movehit
+x = .9
+y = .9
+
+[State 0, Explod]
+type = Explod
+trigger1 = timemod = 4,0
+anim = 10006
+ID = 10006
+pos = -20+random%40,-20+random%40
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+removetime = 27
+pausemovetime = 0
+scale = const(size.xscale),const(size.yscale)
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 200, 1]
+type = HitDef
+trigger1 = timemod = 2,1
+trigger1 = !movecontact
+attr = , HP
+damage = 10
+animtype = Medium
+guardflag =                 
+priority = 3, Hit                
+pausetime = 0, 8+(P2MoveType=A*2)
+getpower = 0,11
+sparkno = 0                      
+sparkxy = 0, -67
+hitsound = S1, 5
+guardsound = S5, 0+random%3                
+ground.type = High
+ground.slidetime = 17+((P2MoveType=A)*4)+((P2StateType=C)*2)           
+ground.hittime  = 99999+((P2MoveType=A)*4)+((P2StateType=C)*2)
+air.hittime  = 99999+((P2MoveType=A)*5)
+ground.velocity = -1
+kill = 0
+fall.recover = 0
+
+[State 200, 1]
+type = HitDef
+trigger1 = timemod = 2,0
+trigger1 = !movecontact
+attr = , HP
+damage = 10
+animtype = Hard
+guardflag =                 
+priority = 3, Hit                
+pausetime = 0, 8+(P2MoveType=A*2)
+getpower = 0,11
+sparkno = 0                      
+sparkxy = 0, -67
+hitsound = S1, 5
+guardsound = S5, 0+random%3                
+ground.type = Low
+ground.slidetime = 17+((P2MoveType=A)*4)+((P2StateType=C)*2)           
+ground.hittime  = 99999+((P2MoveType=A)*4)+((P2StateType=C)*2)
+air.hittime  = 99999+((P2MoveType=A)*5)
+ground.velocity = -1
+kill = 0
+fall.recover = 0
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = anim = 10004
+trigger1 = !animtime
+;--------------------------------------------------------------------------
+;Camera Focus
+[Statedef 53900]
+type    = U
+physics = N
+anim = 99999
+ctrl = 0
+sprpriority = 2
+
+[State 0, BindToTarget]
+type = null;BindToTarget
+trigger1 = 1
+ID = -1
+pos = -100,0,Foot
+ignorehitpause = 1
+
+[State 0, ScreenBound]
+type = null;ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,0
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = root,anim != [300,302]
+;--------------------------------------------------------------------------
+[Statedef 43900]
+type    = U
+movetype = A
+physics = N
+anim = 4007
+ctrl = 0
+sprpriority = 2
+
+[State 0, Explod]
+type = Explod
+trigger1 = !time
+anim = 93001
+ID = 93001
+pos = 0,enemynear,const(size.mid.pos.y)
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 9
+removetime = 21
+pausemovetime = 0
+scale = const(size.xscale),const(size.yscale)
+sprpriority = 1
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+
+[State 200, 1]
+type = HitDef
+trigger1 = !movecontact
+attr = S, HA                     
+damage = 100
+animtype = Hard
+guardflag = 
+priority = 3, Hit                
+pausetime = 0, 10+(P2MoveType=A*1)
+getpower = 0,11
+sparkno = -1
+sparkxy = 0, -70
+hitsound = S1, 8
+guardsound = S5, 0+random%3                
+ground.type = Low
+ground.slidetime = 50+((P2MoveType=A)*4)        
+ground.hittime  = 50+((P2MoveType=A)*4)
+ground.velocity = 0
+p2stateno = 5300
+envshake.time = 20
+envshake.freq = 60
+envshake.ampl = -4
+envshake.phase = 90
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = root,anim = 364
+;--------------------------------------------------------------------------
+[Statedef 33900]
+type    = U
+movetype = A
+physics = N
+anim = 4007
+ctrl = 0
+sprpriority = 2
+
+[State 1010, Helper Attack Scale]
+type = AttackMulSet
+trigger1 = ishelper
+value = root,fvar(6)
+ignorehitpause = 1
+
+[State 0, Helper]
+type = Helper
+trigger1 = timemod = 3,0
+helpertype = normal
+ID = 23900
+stateno = 23900
+pos = (enemynear,const(size.mid.pos.x)-7)+random%15,(enemynear,const(size.mid.pos.y)-15)+random%30
+postype = p2
+facing = ifelse(random<500,1,-1)
+keyctrl = 0
+ownpal = 1
+size.xscale = const(size.xscale)
+size.yscale = const(size.yscale)
+ignorehitpause = 1
+
+[State 200, 1]
+type = HitDef
+trigger1 = timemod = 3,0
+attr = S, HA                     
+damage = 20
+animtype = Hard
+guardflag = 
+priority = 3, Hit                
+pausetime = 0, 0+(P2MoveType=A*1)
+getpower = 0,11
+sparkno = 0                      
+sparkxy = 0, -70
+hitsound = S1, 6
+guardsound = S5, 0+random%3                
+ground.type = Low
+ground.slidetime = 99999+((P2MoveType=A)*4)        
+ground.hittime  = 99999+((P2MoveType=A)*4)
+ground.velocity = 0
+envshake.time = 10
+envshake.freq = 30
+envshake.ampl = -2
+envshake.phase = 45
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time > 15
+;--------------------------------------------------------------------------
+[Statedef 23900]
+type    = U
+physics = N
+anim = 93002
+ctrl = 0
+sprpriority = 2
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = 5+random%30
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = !animtime
+;--------------------------------------------------------------------------
+;Astral Glyph
+[Statedef 94000]
+type    = U
+movetype = A
+physics = N
+anim = 94000
+ctrl = 0
+sprpriority = -9
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = movehit
+pos = 150,0
+ignorehitpause = 1
+
+[State 0, TargetBind]
+type = TargetBind
+triggerall = movehit
+trigger1 = root,anim = 4000
+pos = 0,0
+ignorehitpause = 1
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = frontedgebodydist < 0
+x = frontedgebodydist
+ignorehitpause = 1
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = backedgebodydist < 0
+x = backedgebodydist
+ignorehitpause = 1
+
+[State 0, PosAdd]
+type = PosAdd
+triggerall = movehit
+trigger1 = enemynear,backedgedist < 60
+x = -6*(pos x/pos x)
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+ignorehitpause = 1
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+triggerall = anim = 94000
+trigger1 = root,anim = 4002
+value = 84000
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim = 84000 && animtime = 0
+value = 94000
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S100,03
+
+[State 230, 2]
+type = HitDef
+triggerall = time >= 30 && anim = 94000
+trigger1 = !movecontact
+attr = S, AA
+animtype  = Hard
+damage    = 0,10
+guardflag = MA
+hitflag = MFD
+pausetime = 12,12+(P2MoveType=A*2)
+getpower = 0,4
+sparkno = 2
+sparkxy = 0,0
+hitsound = S1, 3
+guardsound = S5, 0+random%3
+ground.type = Low
+ground.slidetime = 19
+ground.hittime  = 99999
+guard.hittime  = 18
+air.hittime  = 99999
+down.hittime = 99999
+ground.velocity = 0
+p2stateno = 5300
+kill = 0
+guard.kill = 0
+forcestand = 1
+
+[State 230, 2]
+type = HitDef
+trigger1 = anim = 84000
+attr = S, AA
+animtype  = Hard
+damage    = 0
+guardflag = 
+hitflag = MFD
+pausetime = 0,3+(P2MoveType=A*2)
+getpower = 0,4
+sparkno = 2
+sparkxy = 0,0
+hitsound = S1, 3
+guardsound = S5, 0+random%3
+ground.type = Low
+ground.slidetime = 0
+ground.hittime  = 99999
+air.hittime = 99999
+ground.velocity = 0,-8
+air.velocity = 0,-8
+fall = 1
+air.fall = 1 
+fall.recover = 0
+yaccel = .3
+hitonce = 1
+kill = 0
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = anim = 94000 && time >= 51 && !movehit
+trigger2 = anim = 84000 && animtime = 0
+trigger3 = anim = 94000 && root,anim = 4002 && movehit
+value = 99999
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = anim = 84000 && animtime = 0
+value = 99999
+;--------------------------------------------------------------------------
+[Statedef 84000]
+type    = U
+physics = N
+anim = 10001
+ctrl = 0
+sprpriority = -9
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+ignorehitpause = 1
+
+[State 0, Explod]
+type = Explod
+trigger1 = root,anim = 4003 && root,animelem = 6
+anim = 7001
+ID = 7001
+pos = 0,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = -1
+vel = 0,0
+accel = 0,0
+random = 0,0
+removetime = 42
+pausemovetime = 0
+scale = .22,.22
+sprpriority = 0
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+
+[State 0, VelSet]
+type = VelSet
+trigger1 = root,anim = 4003 && root,animelemtime(7) >= 0
+x = 10
+y = 20
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = root,anim = 4004
+;--------------------------------------------------------------------------
+[Statedef 74000]
+type    = U
+movetype = A
+physics = N
+anim = 10003
+ctrl = 0
+sprpriority = -9
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, ScreenBound]
+type = ScreenBound
+trigger1 = root,anim = 4006
+value = 0
+movecamera = 0,0
+
+[State 0, Helper]
+type = Helper
+trigger1 = time = 15
+helpertype = normal
+ID = 64000
+stateno = 64000
+pos = 0,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = .3
+size.yscale = .3
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .1,.1
+value = 300
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .2,.2
+value = 300
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .3,.3
+value = 300
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .4,.4
+value = 300
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+value = 300
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .6,.6
+value = 300
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .7,.7
+value = 300
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .8,.8
+value = 300
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .9,.9
+value = 300
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 10
+scale = 1,1
+value = 300
+ignorehitpause = 1
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = !time
+value = S100,3
+
+[State 0, VelSet]
+type = VelSet
+trigger1 = anim = 4005
+x = -1
+y = -.5
+
+[State 0, VelSet]
+type = VelSet
+trigger1 = root,anim = 4006
+x = -20
+y = -40
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = root,anim = 363
+
+[Statedef 64000]
+type    = U
+movetype = A
+physics = N
+anim = 94004
+ctrl = 0
+sprpriority = -8
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = root,anim = 4006
+pos = 0,0
+ignorehitpause = 1
+
+[State 0, BindToRoot]
+type = null;BindToRoot
+trigger1 = root,anim = 363
+pos = -20,0
+ignorehitpause = 1
+
+[State 0, ScreenBound]
+type = ScreenBound
+trigger1 = (root,anim = [4005,4006])
+value = 1
+movecamera = 0,0
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = anim = 94004
+value = 225
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = anim = 83101
+value = 45
+ignorehitpause = 1
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim = 94004 && root,anim = 4006
+value = 83101
+
+[State 0, ChangeAnim]
+type = ChangeAnim
+trigger1 = anim = 83101 && root,anim = 363
+value = 84004
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = !time
+value = S100,10
+
+[State 0, PosSet]
+type = PosSet
+trigger1 = (root,stateno != [4001,4999])
+y = 0
+
+[State 0, Explod]
+type = Explod
+trigger1 = !numExplod(10005)
+trigger1 = root,anim = 363
+anim = 10005
+ID = 10005
+pos = 60,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = -1
+removetime = -1
+pausemovetime = 0
+scale = const(size.xscale),const(size.yscale)
+sprpriority = -9
+ontop = 0
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 0
+
+[State 0, Explod]
+type = Explod
+trigger1 = root,anim = 363 && root,animelem = 1
+anim = 7003
+ID = 7003
+pos = 0,0
+postype = p1
+facing = 1
+vfacing = 1
+bindtime = 0
+vel = 0,0
+accel = 0,0
+random = 0,0
+removetime = 26
+pausemovetime = 0
+scale = const(size.xscale),const(size.yscale)
+sprpriority = 0
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+removeongethit = 1
+
+[State 0, EnvShake]
+type = EnvShake
+trigger1 = root,anim = 363 && root,animelem = 1
+time = 40
+freq = 120
+ampl = -8
+phase = 180
+;--------------------------------------------------------------------------
+[Statedef 54000]
+type    = U
+physics = N
+anim = 93001
+ctrl = 0
+sprpriority = 3
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = 45
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = !animtime
+;--------------------------------------------------------------------------
+[Statedef 44000]
+type    = U
+physics = N
+anim = 93001
+ctrl = 0
+sprpriority = 3
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = 45
+ignorehitpause = 1
+
+[State 0, Helper]
+type = Helper
+trigger1 = !time
+helpertype = normal
+ID = 34000
+stateno = 34000
+pos = 0,0
+postype = p2
+facing = 1
+keyctrl = 0
+ownpal = 1
+size.xscale = const(size.xscale)
+size.yscale = const(size.yscale)
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = !animtime
+;--------------------------------------------------------------------------
+[Statedef 34000]
+type     = U
+movetype = A
+physics  = N
+anim = 4007
+ctrl = 0
+sprpriority = 3
+
+[State 200, 1]
+type = HitDef
+trigger1 = !movecontact
+attr = A, AA
+damage = 350   ;Abstract Reordered: was an instant kill
+animtype = Hard
+guardflag = 
+priority = 99999, Hit                
+pausetime = 0, 30+(P2MoveType=A*2)
+getpower = 0,11
+sparkno = 0                      
+sparkxy = 0, -67
+hitsound = S-1, 0
+guardsound = S5, 0+random%3                
+ground.type = Low
+ground.slidetime = 20           
+ground.hittime  = 40
+air.hittime  = 40
+ground.velocity = 0,-10
+air.velocity = 0,-10
+fall = 1
+air.fall = 1
+fall.recover = 0
+yaccel = .3
+palfx.time = 60
+palfx.add = 184,184,200
+Palfx.mul = 220,220,255
+palfx.invertall = 1
+envshake.time = 20
+envshake.freq = 60
+envshake.ampl = -4
+envshake.phase = 90
+fall.envshake.time = 20
+fall.envshake.freq = 60
+fall.envshake.ampl = -4
+fall.envshake.phase = 90
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = movehit
+;--------------------------------------------------------------------------
+[Statedef 24000]
+type     = U
+physics  = N
+anim = 30005
+ctrl = 0
+sprpriority = 9
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = root,anim = 4006
+pos = 80,0
+ignorehitpause = 1
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = -45
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = (root,stateno != [4000,4999])
+;--------------------------------------------------------------------------
+[Statedef 24001]
+type     = U
+physics  = N
+anim = 30005
+ctrl = 0
+sprpriority = 3
+
+[State 0, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+pos = 80,0
+ignorehitpause = 1
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+value = 100
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = root,anim != 4003
+;--------------------------------------------------------------------------
+[Statedef 14000]
+type     = U
+physics  = N
+anim = 99999
+ctrl = 0
+sprpriority = -9
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = (root,stateno != [4000,4999])
+;--------------------------------------------------------------------------
+[Statedef 99999]
+type    = U
+physics = N
+ctrl = 0
+
+[State 0,]
+type = Assertspecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+persistent = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time < 2
+scale = .9,.9
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 2 && time < 3
+scale = .8,.8
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 3 && time < 4
+scale = .7,.7
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 4 && time < 5
+scale = .6,.6
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 5 && time < 6
+scale = .5,.5
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 6 && time < 7
+scale = .4,.4
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 7 && time < 8
+scale = .3,.3
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 8 && time < 9
+scale = .2,.2
+ignorehitpause = 1
+
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 = time >= 9 && time < 10
+scale = .1,.1
+ignorehitpause = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = time >= 10

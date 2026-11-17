@@ -1,0 +1,338 @@
+[statedef 20100]
+anim=99999
+
+[state ]
+type=changestate
+value=var(0)+(var(0):=0)
+triggerall=time
+trigger1=ishelper(20100)
+trigger1=1||var(0):=20105
+trigger2=ishelper(20120)
+trigger2=1||var(0):=20120
+trigger3=ishelper(20150)
+trigger3=1||var(0):=20150
+
+[state ]
+type=palfx
+time=-1
+mul=var(1),var(2),var(3)
+invertall=var(4)
+trigger1=ishelper(20100)
+
+;; portrait anim config
+;;
+trigger1=1||var(58):=var(58)+(root,stateno=2000)*20111
+trigger1=1||var(58):=var(58)+(root,stateno=2100)*20110
+trigger1=1||var(58):=var(58)+(root,stateno=2110)*20110
+trigger1=1||var(58):=var(58)+(root,stateno=3000)*20111
+trigger1=1||var(58):=var(58)+(root,stateno=3100)*20110
+trigger1=1||var(58):=var(58)+(root,stateno=4000)*20112
+;;
+;; end of portrait anim config
+
+trigger1=1||var(1):=var(2):=256||var(4):=1
+trigger2=ishelper(20120)
+
+;; lightshow color config
+;;
+trigger2=1||var(1):=256+256*(root,stateno>2999)+512*(root,stateno>3999)		;red
+trigger2=1||var(2):=256                                                         ;green
+trigger2=1||var(3):=256+256*(root,stateno<4000)					;blue
+;;
+;; end of lightshow color config
+
+trigger3=ishelper(20150)
+
+;; Super Finish color config
+;;
+trigger3=1||var(1):=768		;red
+trigger3=1||var(2):=495									;green
+trigger3=1||var(3):=256				;blue
+;;
+;; end of Super Finish color config
+
+[state ]
+type=helper
+stateno=20100
+id=20120
+ownpal=1
+pausemovetime=99999999
+supermovetime=99999999
+trigger1=ishelper(20100)
+
+[state ]
+type=superpause
+anim=-1
+sound=-1
+darken=0
+time=189
+movetime=189
+trigger1=ishelper(20150)
+
+[state ]
+type=playsnd
+value=s20000,0
+abspan=0
+trigger1=ishelper(20150)
+Channel = 1
+
+[statedef 20105]
+[state ]
+type=changestate
+value=var(1)
+trigger1=time
+trigger1=var(59):=var(59)+1&&var(0):=0
+trigger2=(root,movetype=h)+(var(59)>59)
+trigger2=var(1):=20199
+trigger3=numexplod(var(0))
+trigger3=var(1):=20115
+trigger4=var(59)<4
+trigger4=(var(0)<=2*var(59))*(var(0)<6)
+trigger4=var(1):=20110
+trigger5=var(59)=8
+trigger5=var(0)<10
+trigger5=var(1):=20110
+
+[state ]
+type=assertspecial
+flag=nofg
+trigger1=1
+
+[state ]
+type=assertspecial
+flag=nobg
+trigger1=var(59)>15
+
+[statedef 20110]
+[state ]
+type=explod
+id=var(0)
+anim=var(1)
+ownpal=var(2)
+sprpriority=var(3)
+removetime=var(4)
+pausemovetime=-1
+supermovetime=-1
+trigger1=ishelper(20120)
+trigger1=1||var(1):=20108||var(2):=0||var(3):=-1||var(4):=-1
+trigger2=!var(0)
+trigger2=1||var(1):=20102+!!numexplod(0)||var(2):=0||var(3):=-8+4*numexplod(0)||var(4):=-1
+trigger3=var(0)<6
+trigger3=1||var(1):=20100+(var(0)<4)*(var(0)%2)||var(2):=1||var(3):=-2||var(4):=18-var(59)
+trigger4=var(0)=6
+trigger4=1||var(1):=var(58)||var(2):=1||var(3):=-5||var(4):=-1
+trigger5=var(0)>6
+trigger5=1||var(1):=20105+(facing<0)||var(2):=0||var(3):=-7||fvar(var(0)-7):=.25*(2.-(random+1)/1000.)||var(10+3*(var(0)-7)):=random%20||var(11+3*(var(0)-7)):=random%80||var(12+3*(var(0)-7)):=(480+random)*(1-2*(random%2))||var(4):=-1
+
+[state ]
+type=changestate
+value=var(1)
+trigger1=ishelper(20120)
+trigger1=var(1):=20115
+trigger2=!var(0)
+trigger2=numexplod(0)<2
+trigger2=var(1):=20110
+trigger3=var(1):=20115
+
+[statedef 20115]
+[state ]
+type=modifyexplod
+id=var(0)
+postype=back
+pos=var(1),var(2)
+scale=fvar(38),fvar(39)
+trigger1=ishelper(20120)
+trigger1=1||fvar(38):=fvar(39):=(160-401*var(0))/640.+.12*(var(59)>51)*(1-2*var(0))*(1-cos((var(59)-51)*pi/16))||var(1):=320*var(0)||var(2):=240*var(0)
+trigger2=0;var(0)=[1,2]
+trigger2=var(59)>51
+trigger2=1||var(1):=240-161*(1-2*(var(0)%2))||fvar(38):=fvar(39):=(2-cos((var(59)-51)*pi/16))/4.||var(2):=0
+trigger3=var(0)<6
+trigger3=1||var(1):=var(59)-(var(0)+1)/2>7||fvar(38):=fvar(39):=(1+!var(0))/4.*(var(1)+!var(1)*sin((var(59)+1-(var(0)+1)/2)*pi/16))**.9||var(1):=var(0)<4||var(1):=240+(1-2*var(1)*(var(0)%2))*(var(1)*((var(0)+1)/2)+!var(1)*(var(0)-2))*80||var(2):=0
+trigger4=var(0)=6
+trigger4=1||var(1):=floor(.5+240*(sin((var(59)-7)*pi/105)**.2-1))||var(2):=0||fvar(38):=fvar(39):=.5
+trigger5=var(0)>6
+trigger5=1||var(3):=var(0)-7||fvar(39):=fvar(var(3))||fvar(38):=fvar(39)*facing||var(2):=floor(.5+var(11+3*var(3))+(1-sin((52+2*(var(59)-7))*pi/312))**1.4*var(12+3*var(3)))||var(1):=150+60*var(3)+var(10+3*var(3))-var(2)
+
+[state ]
+type=changestate
+value=var(1)
+trigger1=ishelper(20120)
+trigger1=1||var(0):=var(0)+1||var(1):=20120-5*!!numexplod(var(0))
+trigger2=1||var(0):=var(0)+1+5*!var(0)*(var(59)>18)||var(1):=20105+10*!!numexplod(var(0))
+
+[statedef 20199]
+[state ]
+type=removeexplod
+trigger1=1
+
+[state ]
+type=destroyself
+trigger1=1
+
+[statedef 20120]
+[state ]
+type=changestate
+value=var(1)
+trigger1=time
+trigger1=var(59):=var(59)+1&&var(0):=0
+trigger2=(root,movetype=h)+(var(59)>59)
+trigger2=var(1):=20199
+trigger3=numexplod(var(0))
+trigger3=var(1):=20115
+trigger4=var(59)=8
+trigger4=numexplod<2
+trigger4=var(1):=20110
+
+[statedef 20150]
+sprpriority=-5
+
+[state ]
+type=changestate
+value=20199
+trigger1=time>188
+
+[state ]
+type=changeanim
+value=var(9)
+trigger1=!time
+trigger1=1||var(7):=1-2*(random%2)||var(8):=1-2*(random%2)||var(9):=20150
+trigger2=time=117
+trigger2=1||var(9):=20160
+trigger3=time=141
+trigger3=1||var(9):=99999
+
+[state ]
+type=posadd
+x=var(9)-screenpos x
+y=var(10)-screenpos y
+trigger1=time>116
+trigger1=1||var(9):=var(10):=0
+trigger2=random%4
+trigger2=1||var(9):=160||var(10):=120
+trigger3=1||var(9):=155+random%11||var(10):=115+random%11
+
+[state ]
+type=palfx
+time=-1
+mul=var(1),var(2),var(3)
+add=var(4),var(5),var(6)
+trigger1=time=[87,116]
+trigger1=1||var(4):=var(5):=var(6):=floor(.5+255*sin((time-86)*pi/60.))
+
+[state ]
+type=allpalfx
+time=1
+mul=var(1),var(2),var(3)
+add=1,1,1
+trigger1=time>140
+trigger1=1||var(1):=var(2):=var(3):=floor(.5+256+65280*(1-sin((time-140)*pi/96.)))
+trigger2=time>116
+trigger2=1||var(1):=var(2):=var(3):=floor(.5+256+65280*(1-cos((time-116)*pi/48.)))
+
+[state ]
+type=explod
+id=20150
+anim=20161
+ontop=1
+ownpal=1
+postype=left
+pos=0,0
+bindtime=-1
+scale=320,240
+pausemovetime=-1
+supermovetime=-1
+trigger1=time=118
+
+[state ]
+type=assertspecial
+flag=nofg
+flag2=nobg
+flag3=globalnoshadow
+trigger1=time<133
+
+[state ]
+type=assertspecial
+flag=nobardisplay
+flag2=nomusic
+trigger1=1
+
+[state ]
+type=angleset
+value=fvar(0)
+trigger1=!time
+trigger1=1||fvar(0):=360*random/1000.
+trigger2=time=117
+trigger2=1||fvar(0):=0
+
+[state ]
+type=angledraw
+scale=fvar(0),fvar(1)
+trigger1=time<117
+trigger1=1||fvar(0):=.5*var(7)||fvar(1):=.5*var(8)
+trigger2=1||fvar(0):=320||fvar(1):=240
+
+[state ]
+type=helper
+stateno=20151
+id=var(9)
+ownpal=0
+pausemovetime=99999999
+supermovetime=99999999
+triggerall=time<117
+trigger1=numhelper(20151)<4
+trigger1=time%4=0
+trigger1=var(9):=20151
+trigger2=numhelper(20152)<3
+trigger2=time>7
+trigger2=random%4=0
+trigger2=var(9):=20152
+
+[statedef 20151]
+sprpriority=-4+ishelper(20152)
+anim=99999
+
+[state ]
+type=changestate
+value=20199
+trigger1=numhelper(20150)
+trigger1=helper(20150),time>116
+
+[state ]
+type=bindtoparent
+time=-1
+trigger1=!time
+
+[state ]
+type=trans
+trans=add
+trigger1=1
+
+[state ]
+type=changeanim
+value=var(4)
+trigger1=ishelper(20151)
+trigger1=time%16=0
+trigger1=1||var(0):=1-2*(random%2)||var(1):=1-2*(random%2)||var(4):=20151+(random%5)
+trigger2=ishelper(20152)
+trigger2=anim=99999
+trigger2=random%4=0||!time
+trigger2=1||var(0):=1||var(1):=1-2*(random%2)||var(2):=0||var(3):=4+random%12||fvar(0):=.4+random/5000.||var(4):=20156+(random%4)
+trigger3=ishelper(20152)
+trigger3=(var(2):=var(2)+1)>=var(3)
+trigger3=var(4):=99999
+
+[state ]
+type=angleset
+value=360*random/1000.
+trigger1=ishelper(20151)
+trigger1=time%16=0
+trigger2=ishelper(20152)
+trigger2=!var(2)
+
+[state ]
+type=angledraw
+scale=var(0)*fvar(0),var(1)*fvar(1)
+trigger1=ishelper(20151)
+trigger1=1||fvar(0):=fvar(1):=.05+.95*(1-cos((time%16+1)*pi/32.))
+trigger2=ishelper(20152)
+trigger2=1||fvar(1):=.5*cos(var(2)*pi/(2.*var(3)))

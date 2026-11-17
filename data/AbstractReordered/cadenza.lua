@@ -45,6 +45,10 @@ AR.data = {
 	['yoruichi_ar'] = {n = 32, plate_w = 238, bio_w = 2000, q = 3, win = {181, 0}},
 	['nicenature_ar'] = {n = 33, plate_w = 330, bio_w = 1378, q = 3, win = {181, 0}},
 	['mitsuru_ar'] = {n = 34, plate_w = 192, bio_w = 2069, q = 3, win = {181, 0}},
+	['giorno_ar'] = {n = 35, plate_w = 316, bio_w = 2087, q = 3, win = {181, 0}},
+	['weiss_ar'] = {n = 36, plate_w = 328, bio_w = 2211, q = 3, win = {181, 0}},
+	['shana_ar'] = {n = 37, plate_w = 146, bio_w = 2031, q = 3, win = {181, 0}},
+	['rentaro_ar'] = {n = 38, plate_w = 238, bio_w = 2056, q = 3, win = {181, 0}},
 }
 AR.random = {n = 99, plate_w = 185, bio_w = 758}
 AR.timeW = 169
@@ -516,7 +520,7 @@ end
 
 -- characters whose SFF keeps effect palettes in group 1 (Broly: 1,13+ are transformation/flash palettes):
 -- with Config.PaletteMax = 100 the select screen offered all of them, so only keep the real colours
-AR.palLimit = {['broly_ar'] = 12}
+AR.palLimit = {['broly_ar'] = 12, ['giorno_ar'] = 10}   -- giorno: palettes 11/12 are joke modes
 
 -- boss rush reward colour (external/mods/ar_bossrush.lua): it is each character's highest colour slot, and it
 -- stays off the colour menu until that character has cleared boss rush
@@ -817,6 +821,369 @@ local function fightView()
 	return (W - vw) / 2, vw, vw / W
 end
 
+
+
+-- ==== AR rank system ====
+-- Match grade + character rank ladder (build_rank.py). Stats are tracked every fight frame by AR.rankTrack();
+-- AR.rankFinish() grades the winner once per match and saves rank points (save/ar_ranks.txt, human sides only).
+AR.rank = {gw = {108, 93, 95, 103, 85, 158}, gh = {103, 107, 103, 103, 107, 107}, tw = {126, 105, 87, 163, 157, 128}, sw = {23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 27, 18, 52, 32}, lw = {130, 91, 90, 84, 85, 99, 132, 28, 28, 71, 45}}
+AR.rank.tiers = {0, 200, 500, 900, 1400, 2000}
+AR.rank.bonus = {0, 4, 8, 13, 20, 30}
+AR.rank.modes = {'versus', 'teamversus', 'freebattle', 'arcade', 'netplayversus'}
+AR.rank.file = 'save/ar_ranks.txt'
+-- RANKED (online, one rating per player): arRanked is set by external/mods/ar_lobby.lua for a ranked match
+AR.ranked = {file = 'save/ar_ranked.txt', start = 1000, k = 32, tiers = {0, 1100, 1250, 1400, 1550, 1700},
+	bonus = {0, 0, 0, 2, 4, 6}}
+
+local function rcall(names)
+	for _, n in ipairs(names) do
+		local f = _G[n]
+		if type(f) == 'function' then
+			local ok, v = pcall(f)
+			if ok and v ~= nil then
+				return tonumber(v) or v
+			end
+		end
+	end
+	return nil
+end
+
+local function rankReset()
+	local r = AR.rank
+	r.st = {}
+	for s = 1, 2 do
+		r.st[s] = {dealt = 0, taken = 0, roundTaken = 0, combo = 0, parries = 0, perfect = 0, lost = 0,
+			human = false, life = nil, lmax = 1000, state = -1}
+	end
+	r.frames, r.rounds, r.prevRs, r.done, r.result = 0, 0, -1, false, nil
+end
+
+function AR.rankTrack()
+	local r = AR.rank
+	local oldid = id()
+	if not player(1) then
+		return
+	end
+	local rs = tonumber(roundState()) or -1
+	local over = matchOver()
+	over = (over == true or over == 1)
+	if r.st == nil or (r.wasOver and not over) then   -- a new match started
+		rankReset()
+	end
+	r.wasOver = over
+	for s = 1, 2 do
+		if player(s) then
+			local st = r.st[s]
+			local l = rcall({'life'})
+			st.lmax = rcall({'lifeMax', 'lifemax'}) or st.lmax
+			if l ~= nil and st.life ~= nil and l < st.life and rs == 2 then
+				local d = st.life - l
+				st.taken, st.roundTaken = st.taken + d, st.roundTaken + d
+				r.st[3 - s].dealt = r.st[3 - s].dealt + d
+			end
+			st.life = l
+			local c = rcall({'comboCount', 'combocount'}) or 0
+			if c > st.combo then
+				st.combo = c
+			end
+			local sn = rcall({'stateNo', 'stateno'}) or -1
+			if sn == 7741 and st.state ~= 7741 then
+				st.parries = st.parries + 1
+			end
+			st.state = sn
+			local ai = rcall({'ailevel', 'aiLevel'})
+			if ai ~= nil and ai == 0 and rs == 2 then
+				st.human = true
+			end
+		end
+	end
+	if rs == 2 then
+		r.frames = r.frames + 1
+	end
+	if rs >= 3 and r.prevRs == 2 then                 -- a round just ended
+		r.rounds = r.rounds + 1
+		local a, b = r.st[1], r.st[2]
+		if a.life ~= nil and b.life ~= nil and a.life ~= b.life then
+			local w = a.life > b.life and 1 or 2
+			r.st[3 - w].lost = r.st[3 - w].lost + 1
+			if r.st[w].roundTaken == 0 then
+				r.st[w].perfect = r.st[w].perfect + 1
+			end
+		end
+	end
+	if rs < 2 then
+		r.st[1].roundTaken, r.st[2].roundTaken = 0, 0
+	end
+	r.prevRs = rs
+	-- RANKED: settle the rating at the KO, not when the overlay shows (a disconnect after the KO keeps it)
+	if over and not r.done and arRanked ~= nil and arRanked.active then
+		local w = winnerSide()
+		if w == 1 or w == 2 then
+			AR.rankFinish(w)
+		end
+	end
+	playerId(oldid)
+end
+
+local function rankKey(side)
+	local d = selectedEntry(side)
+	if d == nil then
+		return nil
+	end
+	for k, v in pairs(AR.data) do
+		if v == d then
+			return k
+		end
+	end
+	return nil
+end
+
+local function rankLoad()
+	local t = {}
+	local f = io.open(AR.rank.file, 'r')
+	if f then
+		for line in f:lines() do
+			local k, v = line:match('^([%w_]+)=(%-?%d+)')
+			if k then
+				t[k] = tonumber(v)
+			end
+		end
+		f:close()
+	end
+	return t
+end
+
+local function rankSave(t)
+	local f = io.open(AR.rank.file, 'w')
+	if f then
+		local keys = {}
+		for k in pairs(t) do
+			table.insert(keys, k)
+		end
+		table.sort(keys)
+		for _, k in ipairs(keys) do
+			f:write(k .. '=' .. t[k] .. '\n')
+		end
+		f:close()
+	end
+end
+
+function AR.rankTier(p)
+	local tier = 1
+	for k, v in ipairs(AR.rank.tiers) do
+		if p >= v then
+			tier = k
+		end
+	end
+	return tier
+end
+
+function AR.rankedTier(p)
+	local tier = 1
+	for k, v in ipairs(AR.ranked.tiers) do
+		if p >= v then
+			tier = k
+		end
+	end
+	return tier
+end
+
+local function rankedLoad()
+	local c = AR.ranked
+	local t = {rating = c.start, wins = 0, losses = 0, peak = c.start}
+	local f = io.open(c.file, 'r')
+	if f then
+		for line in f:lines() do
+			local k, v = line:match('^([%w_]+)=(%-?%d+)')
+			if k then
+				t[k] = tonumber(v)
+			end
+		end
+		f:close()
+	end
+	return t
+end
+
+local function rankedSave(t)
+	pcall(os.remove, AR.ranked.file)          -- io.open 'w' may not truncate in Ikemen
+	local f = io.open(AR.ranked.file, 'w')
+	if f then
+		for _, k in ipairs({'rating', 'wins', 'losses', 'peak'}) do
+			f:write(k .. '=' .. math.floor(t[k] or 0) .. '\n')
+		end
+		f:close()
+	end
+end
+
+-- Elo + the winner's grade bonus for both sides (same numbers on both PCs); saves only our own side
+function AR.rankedFinish(w, g, rk)
+	local c = AR.ranked
+	local function delta(mine, theirs, won)
+		local e = 1 / (1 + 10 ^ ((theirs - mine) / 400))
+		local d = math.floor(c.k * ((won and 1 or 0) - e) + 0.5)
+		if won then
+			d = d + c.bonus[g]
+		end
+		return d
+	end
+	local out = {w = w, grade = g, me = rk.side, sides = {}}
+	for s = 1, 2 do
+		local old = rk.ratings[s] or c.start
+		local new = math.max(0, old + delta(old, rk.ratings[3 - s] or c.start, s == w))
+		out.sides[s] = {old = old, new = new, delta = new - old, tierOld = AR.rankedTier(old), tier = AR.rankedTier(new)}
+	end
+	local t = rankedLoad()
+	local me = out.sides[rk.side]
+	t.rating = me.new
+	if rk.side == w then
+		t.wins = (t.wins or 0) + 1
+	else
+		t.losses = (t.losses or 0) + 1
+	end
+	t.peak = math.max(t.peak or 0, me.new)
+	rankedSave(t)
+	rk.result = out
+	return out
+end
+
+-- grade 1..6 = D, C, B, A, S, SS
+function AR.rankGrade(w)
+	local r = AR.rank
+	local me, op = r.st[w], r.st[3 - w]
+	local score = 30 * math.max(0, (me.life or 0)) / math.max(1, me.lmax)
+	score = score + (me.lost == 0 and 10 or 0) + math.min(20, 10 * me.perfect)
+	score = score + 1.2 * math.min(25, me.combo) + math.min(9, 3 * me.parries)
+	score = score + math.min(10, 3 * me.dealt / math.max(1, me.taken))
+	if r.rounds > 0 and r.frames / r.rounds < 40 * 60 then
+		score = score + 5
+	end
+	local g = 1
+	for k, v in ipairs({0, 30, 45, 60, 75, 88}) do
+		if score >= v then
+			g = k
+		end
+	end
+	return g, score
+end
+
+function AR.rankFinish(w)
+	local r = AR.rank
+	if r.done or r.st == nil then
+		return r.result
+	end
+	r.done = true
+	local on = false
+	for _, m in ipairs(r.modes) do
+		on = on or gameMode(m)
+	end
+	local g = AR.rankGrade(w)
+	local res = {grade = g, w = w, sides = {}}
+	local rk = arRanked
+	if rk ~= nil and rk.active and (rk.side == 1 or rk.side == 2) then
+		res.ranked = AR.rankedFinish(w, g, rk)   -- ranked: the player rating instead of character points
+	elseif on then
+		local t = rankLoad()
+		for s = 1, 2 do
+			local k = rankKey(s)
+			if k ~= nil and r.st[s].human then
+				local old = t[k] or 0
+				local delta = s == w and (20 + r.bonus[g]) or -15
+				local new = math.max(0, old + delta)
+				t[k] = new
+				res.sides[s] = {old = old, new = new, delta = new - old,
+					tierOld = AR.rankTier(old), tier = AR.rankTier(new)}
+			end
+		end
+		rankSave(t)
+	end
+	r.result = res
+	return res
+end
+
+-- draws a number with the 7722 digit sprites; returns the width drawn
+local function rankNum(n, x, y, s, sign)
+	local str = (sign and n > 0 and '+' or '') .. tostring(math.floor(n + 0.5))
+	local cx = x
+	for ch in str:gmatch('.') do
+		local k = ch == '+' and 10 or ch == '-' and 11 or tonumber(ch)
+		if k ~= nil then
+			local a = anim(7722, k, 2)
+			animSetScale(a, s, s)
+			main.f_animPosDraw(a, cx, y, 1)
+			animSetScale(a, 1, 1)
+			cx = cx + AR.rank.sw[k + 1] * s
+		end
+	end
+	return cx - x
+end
+
+local function rankSprite(g, i, x, y, s, wtab)
+	local a = anim(g, i, 2)
+	animSetScale(a, s, s)
+	main.f_animPosDraw(a, x, y, 1)
+	animSetScale(a, 1, 1)
+	return wtab[i + 1] * s
+end
+
+-- the rank panel (in place of the win quote): stats, grade letter beside the name plate, rank lines
+function AR.drawRank(w, d, t, tx, k)
+	local res = AR.rankFinish(w)
+	if res == nil then
+		return
+	end
+	local r = AR.rank
+	local me = r.st[w]
+	local fade = math.min(1, (t - 20) / 10)
+	if fade <= 0 then
+		return
+	end
+	-- grade letter: big, middle of the screen on the side away from the winner's art; pops in
+	local x0, vw = fightView()
+	local g = res.grade
+	local gs = 2.2 * k * (1 + 0.5 * (1 - easeOut((t - 20) / 12)))
+	local gx = x0 + (w == 1 and 0.76 or 0.24) * vw
+	rankSprite(7720, g - 1, gx - r.gw[g] * gs / 2, 320 - r.gh[g] * gs / 2, gs, r.gw)
+	-- stats line
+	local y, x, s = 530 + 82 * k, tx, 0.8 * k
+	x = x + rankSprite(7723, 0, x, y + 4 * k, k, r.lw) + 8 * k
+	x = x + rankNum(me.combo, x, y, s) + 26 * k
+	x = x + rankSprite(7723, 1, x, y + 4 * k, k, r.lw) + 8 * k
+	x = x + rankNum(100 * me.dealt / math.max(1, r.st[3 - w].lmax), x, y, s)
+	x = x + rankSprite(7722, 13, x, y, s, r.sw) + 26 * k
+	x = x + rankSprite(7723, 2, x, y + 4 * k, k, r.lw) + 8 * k
+	x = x + rankNum(100 * math.max(0, me.life or 0) / math.max(1, me.lmax), x, y, s)
+	x = x + rankSprite(7722, 13, x, y, s, r.sw) + 26 * k
+	if me.perfect > 0 then
+		rankSprite(7723, 4, x, y + 4 * k, k, r.lw)
+	end
+	-- rank lines (human sides only): winner first. Ranked: tier, new rating, change, YOU on our own line
+	y = 530 + 122 * k
+	local lines = res.ranked and res.ranked.sides or res.sides
+	for _, s2 in ipairs({w, 3 - w}) do
+		local e = lines[s2]
+		if e ~= nil and t >= 34 then
+			x = tx
+			x = x + rankSprite(7723, s2 + 6, x, y + 6 * k, k, r.lw) + 10 * k
+			x = x + rankSprite(7721, e.tier - 1, x, y, k, r.tw) + 12 * k
+			if res.ranked then
+				x = x + rankNum(e.new, x, y, 0.8 * k) + 14 * k
+			end
+			x = x + rankNum(e.delta, x, y, 0.8 * k, true)
+			x = x + rankSprite(7722, 12, x, y, 0.8 * k, r.sw) + 16 * k
+			if e.tier > e.tierOld then
+				x = x + rankSprite(7723, 5, x, y + 6 * k, k, r.lw) + 14 * k
+			elseif e.tier < e.tierOld then
+				x = x + rankSprite(7723, 6, x, y + 6 * k, k, r.lw) + 14 * k
+			end
+			if res.ranked and res.ranked.me == s2 then
+				rankSprite(7723, 10, x, y + 6 * k, k, r.lw)
+			end
+			y = y + 40 * k
+		end
+	end
+end
+-- ==== AR rank system end ====
+
 function AR.drawVictory()
 	local rs, over, w = fightInfo()
 	over = (over == true or over == 1)       -- the engine may return a bool or 0/1 (0 is true in Lua)
@@ -851,11 +1218,8 @@ function AR.drawVictory()
 	animSetScale(plate, k, k)
 	main.f_animPosDraw(plate, tx - dir * 300 * k * (1 - eb), 530, 1)
 	animSetScale(plate, 1, 1)
-	if AR.vic.quote >= 0 and t >= 20 then
-		local q = anim(7680, d.n * 50 + AR.vic.quote, 2)
-		animSetScale(q, k, k)
-		main.f_animPosDraw(q, tx, 530 + 80 * k, 1)
-		animSetScale(q, 1, 1)
+	if t >= 20 then                          -- rank panel instead of the win quote (AR.drawRank, build_rank.py)
+		pcall(AR.drawRank, w, d, t, tx, k)
 	end
 end
 
@@ -987,6 +1351,9 @@ hook.add('loop', 'abstractReorderedVictory', function()
 				end
 			end
 		end
+		local rid = id()
+		pcall(AR.rankTrack)
+		pcall(playerId, rid)
 		local ok = pcall(AR.drawVictory)
 		if not ok then
 			AR.vic.t = 0
@@ -1064,7 +1431,7 @@ AR.movelistChars = {['saber_ar'] = true, ['reimu_ar'] = true, ['haruhi_ar'] = tr
 	['meisaku_ar'] = true, ['stocking_ar'] = true, ['sailor_mercury_ar'] = true, ['cureblack_ar'] = true, ['aoko_ar'] = true,
 	['jotaro_ar'] = true, ['ippo_ar'] = true, ['kamijo_ar'] = true, ['gokublack_ar'] = true, ['vegeta_ar'] = true,
 	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true, ['shiki_ar'] = true, ['taiga_ar'] = true, ['panty_ar'] = true,
-	['saitama_ar'] = true, ['gran_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['yoruichi_ar'] = true, ['mitsuru_ar'] = true}
+	['saitama_ar'] = true, ['gran_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['yoruichi_ar'] = true, ['mitsuru_ar'] = true, ['giorno_ar'] = true, ['weiss_ar'] = true, ['shana_ar'] = true, ['rentaro_ar'] = true}
 AR.movelistArtX = 1040
 AR.movelistArtY = 712
 AR.movelistArtScale = 1.0

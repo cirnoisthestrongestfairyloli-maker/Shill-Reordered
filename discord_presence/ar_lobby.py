@@ -50,6 +50,8 @@ class Lobby(threading.Thread):
         self.searching = False   # matchmaking on
         self.search_since = 0.0
         self.match = None        # matchmaking found us an opponent and we host: {name, ip}
+        self.ranked = None       # RANKED search: our pre-picked {"char": def path, "pal": n, "rating": n}
+        self.rmatch = None       # RANKED opponent found: {"side", "opp", "char", "pal", "rating", "seed"}
         self.mm_skip = {}        # peer id -> time; don't re-try a peer that just failed
         self.online = None       # last match set up here: {"opp": name, "id": peer id, "side": 1 host / 2 joiner}
         self.next_ping = 0.0
@@ -97,7 +99,7 @@ class Lobby(threading.Thread):
         if self.hosting:
             return "online" if self.room_taken else "hosting"
         if self.searching:
-            return "searching"
+            return "ranked" if self.ranked else "searching"
         if self.lobby_open:
             return "lobby"
         try:
@@ -274,17 +276,24 @@ class Lobby(threading.Thread):
                 self.log(f"lobby: heard {name} ({ip}) status={p['status']} build={p['build']}")
                 # answer straight from the lobby socket: they learn us at once, and it lets their replies in
                 self.send({"t": "hello", "status": self.game_status(), "build": self.build}, ip)
-            if p["status"] != "searching":
+            if p["status"] not in ("searching", "ranked"):
                 p.pop("searching_since", None)
             else:
                 p.setdefault("searching_since", now)
         elif t == "challenge" and msg.get("mm"):
             # matchmaking: accept automatically if we are still searching
             cid = str(msg.get("cid", ""))
-            if self.searching and not self.match and not self.outgoing:
+            theirs = msg.get("ranked") if isinstance(msg.get("ranked"), dict) else None
+            # ranked only pairs with ranked (and the same build: forced picks must load the same files)
+            fits = bool(theirs) == bool(self.ranked) and (not self.ranked or self.same_build_id(pid))
+            if self.searching and not self.match and not self.outgoing and fits:
                 auto = bool(msg.get("auto"))
-                self.send({"t": "reply", "cid": cid, "answer": "accept", "port": self.listen_port_of_game(),
-                           "auto": auto}, ip)
+                reply = {"t": "reply", "cid": cid, "answer": "accept", "port": self.listen_port_of_game(), "auto": auto}
+                if self.ranked:
+                    seed = random.randrange(1, 1 << 30)
+                    reply.update(ranked=self.ranked, seed=seed)
+                    self.set_rmatch(1, name, theirs, seed)
+                self.send(reply, ip)
                 self.match = {"name": name, "ip": ip, "auto": auto}
                 self.online = {"opp": name, "id": pid, "side": 1}
                 self.searching = False
@@ -313,6 +322,8 @@ class Lobby(threading.Thread):
                     if o.get("mm"):
                         self.searching = False
                         o["auto"] = bool(msg.get("auto"))
+                        if self.ranked and isinstance(msg.get("ranked"), dict):
+                            self.set_rmatch(2, o["name"], msg["ranked"], msg.get("seed", 0))
                 elif o.get("mm"):
                     self.mm_skip[o["id"]] = now      # they stopped searching; keep looking
                     self.outgoing = None
@@ -354,7 +365,16 @@ class Lobby(threading.Thread):
                 self.incoming = None
         elif cmd == "clear":
             self.outgoing = None
-        elif cmd == "search":
+        elif cmd in ("search", "rsearch"):
+            self.rmatch = None
+            self.ranked = None
+            if cmd == "rsearch":           # arg: char def path | palette | rating
+                parts = arg.split("|")
+                try:
+                    self.ranked = {"char": parts[0][:120], "pal": int(parts[1]), "rating": int(parts[2])}
+                except (IndexError, ValueError):
+                    self.ranked = None
+                arg = "1" if self.ranked else "0"
             if arg == "1":
                 o = self.outgoing
                 if o and o["state"] == "waiting":
@@ -385,6 +405,24 @@ class Lobby(threading.Thread):
             self.joining = None
         elif cmd == "clear_match":
             self.match = None
+        elif cmd == "clear_ranked":
+            self.rmatch = None
+            self.ranked = None
+
+    def same_build_id(self, pid):
+        b = self.peers.get(pid, {}).get("build")
+        return not self.build or not b or b == self.build
+
+    def set_rmatch(self, side, opp, theirs, seed):
+        """RANKED: remember the opponent's pre-pick and rating (side 1 = we host = P1)."""
+        try:
+            self.rmatch = {"side": side, "opp": opp, "char": _clean(theirs.get("char", ""), 120),
+                           "pal": int(theirs.get("pal", 1)), "rating": int(theirs.get("rating", 1000)),
+                           "seed": int(seed or 0)}
+            self.log(f"lobby: ranked match vs {opp}: their pick {self.rmatch['char']} pal {self.rmatch['pal']} "
+                     f"rating {self.rmatch['rating']}, we are P{side}")
+        except (TypeError, ValueError, AttributeError):
+            self.rmatch = None
 
     def matchmake(self):
         """While searching: the player with the lower id challenges a searching peer; the other auto-accepts."""
@@ -394,8 +432,11 @@ class Lobby(threading.Thread):
         def same_build(p):
             return not self.build or not p.get("build") or p["build"] == self.build
 
+        want = "ranked" if self.ranked else "searching"
         for pid, p in sorted(self.peers.items(), key=lambda kv: (not same_build(kv[1]), kv[0])):
-            if p.get("status") != "searching" or now - self.mm_skip.get(pid, 0) <= 10:
+            if p.get("status") != want or now - self.mm_skip.get(pid, 0) <= 10:
+                continue
+            if self.ranked and not same_build(p):
                 continue
             # normally the lower id challenges; after 6 s of both searching the other side does (older versions
             # of this helper refuse to challenge a different build, so they would never start it)
@@ -404,7 +445,10 @@ class Lobby(threading.Thread):
                 cid = "%08x" % random.getrandbits(32)
                 self.outgoing = {"cid": cid, "id": pid, "name": p["name"], "ip": p["ip"],
                                  "state": "waiting", "port": 0, "t": now, "mm": True}
-                self.send({"t": "challenge", "cid": cid, "mm": True, "auto": True}, p["ip"])
+                ch = {"t": "challenge", "cid": cid, "mm": True, "auto": True}
+                if self.ranked:
+                    ch["ranked"] = self.ranked
+                self.send(ch, p["ip"])
                 note = "" if same_build(p) else " [different build]"
                 self.log(f"lobby: matchmaking -> {p['name']} ({p['ip']}){note}")
                 return
@@ -437,8 +481,11 @@ class Lobby(threading.Thread):
             opp = self.peers.get(self.online.get("id"), {})
             lines.append(f"online\t{self.online['opp']}\t{self.online['side']}\t{int(opp.get('rtt') or 0)}")
         if self.searching:
-            n = sum(1 for p in self.peers.values() if p.get("status") == "searching")
+            n = sum(1 for p in self.peers.values() if p.get("status") == ("ranked" if self.ranked else "searching"))
             lines.append(f"search	{int(now - self.search_since)}	{n}")
+        if self.rmatch:
+            r = self.rmatch
+            lines.append(f"ranked	{r['side']}	{r['opp']}	{r['char']}	{r['pal']}	{r['rating']}	{r['seed']}")
         if self.match:
             lines.append(f"match\thost\t{self.match['name']}\t{1 if self.match.get('auto') else 0}")
         if self.outgoing:

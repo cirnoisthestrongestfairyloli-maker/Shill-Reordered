@@ -18,6 +18,7 @@ for i = matchNo(), #BR.bosses do
 		-- automated test only: force the fighter for the first fight, then keep it like a real run does
 		p1char = (BR.test and i == 1) and {BR.test.char} or nil,
 		p2char = {b.char},
+		p2pal = b.pal,
 		p2numchars = 1,
 		p2teammode = 'single',
 		p1rounds = b.rounds or 1,   -- round wins the player needs (Marx and Dracula have two lives)

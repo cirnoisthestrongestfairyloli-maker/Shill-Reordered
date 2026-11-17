@@ -14,12 +14,13 @@ local BR = AR_BR
 -- but the lifebar shows an epithet instead of the name.
 -- Entry fields: char = folder (or def path) under chars/, stage = stage def,
 -- music = optional track for that fight only (overrides BR.theme)
+-- pal = force the boss's colour slot (Yujiro: his colours 7-12 add armor, damage cuts and invincibility)
 -- rounds = how many times the player has to beat that boss (default 1). The boss still only needs one win.
 local BOUNDARY = 'stages/Collapsed Boundary.def'
 BR.bosses = {
 	{char = 'Haruhi_AR/Haruhi_Boss.def', stage = BOUNDARY},
 	{char = 'Broly_AR/Broly_Boss.def', stage = BOUNDARY},
-	{char = 'Yujiro/yujiro.def', stage = BOUNDARY},
+	{char = 'Yujiro/yujiro.def', stage = BOUNDARY, pal = 1},   -- colours 7-12 turn on his own boss modes
 	{char = 'DIO_AR/DIO_Boss.def', stage = BOUNDARY},
 	{char = 'Marx', stage = 'stages/Marx_Stage.def', rounds = 2},
 	{char = 'Accelerator', stage = BOUNDARY},

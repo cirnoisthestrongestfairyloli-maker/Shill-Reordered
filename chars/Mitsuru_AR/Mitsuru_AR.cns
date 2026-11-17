@@ -1,0 +1,322 @@
+;---------------------------------------------------------------------------
+; Abstract Reordered additions for Mitsuru: parry (Z), ice gauge Shatter (X with a full chill gauge)
+; (the grab is her own throw, state 700 / 705, on Y; the burst is her defensive burst, state 6001)
+;---------------------------------------------------------------------------
+
+;---------------------------------------------------------------------------
+; Shatter: X with a full ice gauge (var(21) = 100). A rapier thrust that freezes the target in place
+; for about a second (the target is held in hit pause, she is free to act), then launches. Spends the gauge.
+[Statedef 7900]
+type     = S
+movetype = A
+physics  = S
+ctrl     = 0
+velset   = 0, 0
+anim     = 1000
+sprpriority = 3
+poweradd = 0
+
+[State 7900, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = S1000, 0
+channel = 8
+
+[State 7900, Charge flash]
+type = PalFX
+trigger1 = Time = 0
+time = 12
+add = 40, 90, 160
+sinadd = 40, 60, 90, 6
+
+[State 7900, Thrust]
+type = ChangeState
+trigger1 = Time >= 6
+value = 7901
+ctrl = 0
+
+[Statedef 7901]
+type     = S
+movetype = A
+physics  = S
+ctrl     = 0
+velset   = 0, 0
+anim     = 1001
+sprpriority = 3
+
+[State 7901, Lunge]
+type = VelSet
+trigger1 = Time = 0
+x = 14
+
+[State 7901, Hit]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SA
+damage = 90, 20
+animtype = Hard
+air.animtype = Back
+guardflag = MA
+hitflag = MAF
+priority = 10, Hit
+pausetime = 0, 70
+guard.pausetime = 6, 6
+sparkno = -1
+guard.sparkno = -1
+sparkxy = -10, -70
+ground.type = High
+ground.slidetime = 20
+ground.hittime = 22
+ground.velocity = -3, -8
+air.velocity = -3, -8
+guard.velocity = -6
+fall = 1
+fall.recover = 0
+getpower = 0
+givepower = 40, 20
+id = 7900
+
+[State 7901, Chill spent]
+type = VarSet
+trigger1 = MoveContact
+var(21) = 0
+ignorehitpause = 1
+
+[State 7901, Ice flash]
+type = EnvColor
+trigger1 = MoveHit
+value = 120, 190, 255
+time = 6
+under = 0
+
+[State 7901, Whiff glow off]
+type = VelSet
+trigger1 = Time = 4
+x = 0
+
+[State 7901, End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Parry (Z): catches any attack in a short window. A whiff costs 80 meter and leaves her open.
+[Statedef 7740]
+type     = U
+movetype = I
+physics  = N
+ctrl     = 0
+anim     = ifelse(StateType = C, 131, ifelse(StateType = A, 132, 130))
+sprpriority = 2
+
+[State 7740, Air physics]
+type = StateTypeSet
+trigger1 = StateType = A
+physics = A
+ignorehitpause = 1
+persistent = 1
+
+[State 7740, Catch]
+type = ReversalDef
+trigger1 = Time = 0
+reversal.attr = SCA, NA, SA, HA, NP, SP, HP, AA, AP
+pausetime = 0, 13
+numhits = 0
+sparkno = -1
+sparkxy = 0, 0
+hitsound = -1, -1
+p1stateno = 7741
+
+[State 7740, Catch window]
+type = HitOverride
+trigger1 = Time = [3, 12]
+time = 1
+attr = SCA, NA, SA, HA, NP, SP, HP, AA, AP
+stateno = 7741
+ignorehitpause = 1
+
+[State 7740, Flash]
+type = PalFX
+trigger1 = Time = 3
+time = 9
+add = 120, 190, 255
+sinadd = 40, 70, 90, 31
+
+[State 7740, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 7740, Stay put]
+type = VelSet
+trigger1 = StateType != A
+x = 0
+y = 0
+
+[State 7740, Ground whiff]
+type = ChangeState
+trigger1 = StateType != A
+trigger1 = Time >= 13
+value = 7748
+
+[State 7740, Air whiff]
+type = ChangeState
+trigger1 = StateType = A
+trigger1 = Time >= 20
+value = 7749
+
+;---------------------------------------------------------------------------
+; Parry success
+[Statedef 7741]
+type     = U
+movetype = I
+physics  = N
+ctrl     = 0
+velset   = 0, 0
+anim     = ifelse(StateType = C, 131, ifelse(StateType = A, 132, 130))
+
+[State 7741, Air physics]
+type = StateTypeSet
+trigger1 = StateType = A
+physics = A
+ignorehitpause = 1
+persistent = 1
+
+[State 7741, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = F6, 0
+
+[State 7741, Meter]
+type = PowerAdd
+trigger1 = Time = 0
+value = 40
+ignorehitpause = 1
+persistent = 1
+
+[State 7741, Life]
+type = LifeAdd
+trigger1 = Time = 0
+value = 4
+ignorehitpause = 1
+persistent = 1
+
+[State 7741, Safe]
+type = NotHitBy
+trigger1 = Time = 0
+value = SCA
+time = 18
+
+[State 7741, Freeze]
+type = Pause
+trigger1 = Time = 0
+time = 15
+movetime = 15
+ignorehitpause = 1
+persistent = 1
+
+[State 7741, Flash]
+type = EnvColor
+trigger1 = Time = 0
+value = 200, 230, 255
+time = 1
+
+[State 7741, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 7741, Stop in air]
+type = VelSet
+trigger1 = StateType = A
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 7741, Free to act]
+type = CtrlSet
+trigger1 = Time = 3
+value = 1
+
+[State 7741, Ground end]
+type = ChangeState
+trigger1 = StateType != A
+trigger1 = Time >= 15
+value = ifelse(StateType = C, 11, 0)
+ctrl = 1
+
+[State 7741, Air end]
+type = ChangeState
+trigger1 = StateType = A
+trigger1 = Time >= 20
+value = 50
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Parry whiffed on the ground: -80 meter, stuck for 18 frames (minus)
+[Statedef 7748]
+type     = U
+movetype = I
+physics  = U
+ctrl     = 0
+velset   = 0, 0
+
+[State 7748, Cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -80
+
+[State 7748, Failed]
+type = PalFX
+trigger1 = Time = 0
+time = 18
+add = -40, -40, -40
+mul = 200, 200, 200
+
+[State 7748, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 7748, Recover]
+type = ChangeState
+trigger1 = Time >= 18
+value = ifelse(StateType = C, 11, 0)
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Parry whiffed in the air: -80 meter, no control until she lands
+[Statedef 7749]
+type     = A
+movetype = I
+physics  = A
+ctrl     = 0
+
+[State 7749, Cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -80
+
+[State 7749, Failed]
+type = PalFX
+trigger1 = Time = 0
+time = 18
+add = -40, -40, -40
+mul = 200, 200, 200
+
+[State 7749, Hold pose]
+type = ChangeAnim
+trigger1 = AnimTime = 0
+value = Anim
+elem = AnimElemNo(0)
+
+[State 7749, Land]
+type = ChangeState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0

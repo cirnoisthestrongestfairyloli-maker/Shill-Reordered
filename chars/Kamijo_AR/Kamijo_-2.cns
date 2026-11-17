@@ -23,18 +23,18 @@ trigger1 = var(26) != stateno
 var(26) = stateno
 ignorehitpause = 1
 
-;Triple Swipe chain: +8 per hit
+;Triple Swipe chain: +16 per hit. Air 214 (Tooo / Geternak / Todomedaaaa): +12 per hit
 [State -2, AR luck rekka hit]
 type = VarAdd
-triggerall = stateno = 1000 || stateno = 1050 || stateno = 1075 || stateno = 1100 || stateno = 1125 || stateno = 1150 || stateno = 1200
+triggerall = stateno = 1000 || stateno = 1050 || stateno = 1075 || stateno = 1100 || stateno = 1125 || stateno = 1150 || stateno = 1200 || stateno = 1700 || stateno = 1701 || stateno = 1750 || stateno = 2100 || stateno = 2101
 trigger1 = MoveHit
 trigger1 = HitCount > var(25)
-var(5) = 8 * (HitCount - var(25))
+var(5) = ifelse(stateno < 1700, 16, 12) * (HitCount - var(25))
 ignorehitpause = 1
 
 [State -2, AR luck rekka count]
 type = VarSet
-triggerall = stateno = 1000 || stateno = 1050 || stateno = 1075 || stateno = 1100 || stateno = 1125 || stateno = 1150 || stateno = 1200
+triggerall = stateno = 1000 || stateno = 1050 || stateno = 1075 || stateno = 1100 || stateno = 1125 || stateno = 1150 || stateno = 1200 || stateno = 1700 || stateno = 1701 || stateno = 1750 || stateno = 2100 || stateno = 2101
 trigger1 = HitCount > var(25)
 var(25) = HitCount
 ignorehitpause = 1

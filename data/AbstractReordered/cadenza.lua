@@ -44,6 +44,7 @@ AR.data = {
 	['lilith_ar'] = {n = 31, plate_w = 146, bio_w = 1904, q = 3, win = {181, 0}},
 	['yoruichi_ar'] = {n = 32, plate_w = 238, bio_w = 2000, q = 3, win = {181, 0}},
 	['nicenature_ar'] = {n = 33, plate_w = 330, bio_w = 1378, q = 3, win = {181, 0}},
+	['mitsuru_ar'] = {n = 34, plate_w = 192, bio_w = 2069, q = 3, win = {181, 0}},
 }
 AR.random = {n = 99, plate_w = 185, bio_w = 758}
 AR.timeW = 169
@@ -1063,7 +1064,7 @@ AR.movelistChars = {['saber_ar'] = true, ['reimu_ar'] = true, ['haruhi_ar'] = tr
 	['meisaku_ar'] = true, ['stocking_ar'] = true, ['sailor_mercury_ar'] = true, ['cureblack_ar'] = true, ['aoko_ar'] = true,
 	['jotaro_ar'] = true, ['ippo_ar'] = true, ['kamijo_ar'] = true, ['gokublack_ar'] = true, ['vegeta_ar'] = true,
 	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true, ['shiki_ar'] = true, ['taiga_ar'] = true, ['panty_ar'] = true,
-	['saitama_ar'] = true, ['gran_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['yoruichi_ar'] = true}
+	['saitama_ar'] = true, ['gran_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['yoruichi_ar'] = true, ['mitsuru_ar'] = true}
 AR.movelistArtX = 1040
 AR.movelistArtY = 712
 AR.movelistArtScale = 1.0

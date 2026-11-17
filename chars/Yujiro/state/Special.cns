@@ -92,7 +92,7 @@ velocity = 0, 0
 
 [State 1000, 食らい上書き]
 type = HitOverRide
-triggerall = (Time < 19)
+triggerall = (Time < 9)   ;Abstract Reordered: armor window 19 -> 9 frames
 trigger1 = (Time > 0)
 time = 1                         ;上書き出来る時間（フレーム）
 attr = SCA, AA,AP,AT                ;上書き出来る相手の攻撃属性を指定
@@ -810,7 +810,7 @@ Persistent = 1
 type = LifeAdd
 triggerall = (var(1) = 0)
 trigger1 = Time = 0
-value = -(GetHitVar(Damage)/3)
+value = -GetHitVar(Damage)   ;Abstract Reordered: armor no longer cuts damage to a third
 IgnoreHitPause = 1
 Persistent = 1
 

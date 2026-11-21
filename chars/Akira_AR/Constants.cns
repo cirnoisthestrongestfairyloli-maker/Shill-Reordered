@@ -1,0 +1,328 @@
+;====================<VARIABLE LIST>====================
+
+;var(2)  : Air Gravity Timer
+;var(3)  : Jump Type (0 = Normal; 1 = Low Jump; 2 = Long Low Jump; 3 = Long Jump)
+;var(4)  : Chain Combo (0 = Off; 1 = On)
+;var(5)  : Command Cancel Flag
+;var(6)  : Cancel Flag
+;var(7)  : Super Cancel Flag
+;var(8)  : Hyper Cancel Flag
+;var(9)  : Counter Flag
+;var(10) : Button Detect (0 = Light; 1 = Medium; 2 = Heavy)
+;var(11) : 
+;var(12) : 
+;var(13) : Hit Count
+;var(14) : Followup Detection (0 = Off; 55 = High Jump Cancel; 228 = Kaihosho; 229 = Renkan Ko; 258 = Totenshu; 428 = Rekan Tsutenda; 1310 = Senshubu)
+;var(15) : Juggle Points
+;var(16) : Juggle Flag
+;var(17) : Ticks UnGuardable
+;var(18) : ProjContact (0 = No; 1 = Yes)
+;var(19) : Throw Escape
+;var(20) : Custom Combo Time
+;var(21) : Super Cancel Flag
+;var(22) : Hyper Cancel Flag
+;var(23) : Super Finish Type (900 = Custom Combo; 3000 = Go Kiko Kai; 3100 = Ha no Renbu; 3150 = Ten no Renbu; 3200 = Haten Mueishu; 3300 = Dannochunodan; 3400 = Seijo no Tetsui)
+;var(24) :
+;var(25) : Ticks to Apply EX FX
+;var(26) : Ticks Unable to Walk
+;var(27) : 
+;var(28) :
+;var(29) :
+;var(30) : Hit Detection
+;var(31) : Hit Sound (0 = Light Punch; 1 = Medium Punch; 2 = Heavy Punch; 3 = Light Kick; 4 = Medium Kick; 5 = Heavy Kick; 6 = Projectile Hit; 800 = Grab)
+;var(32) : Guard Sound
+;var(33) : Hit Spark (8010 = Light; 8011 = Medium; 8012 = Heavy; 8013 = Special; 8014 = Super)
+;var(34) : Guard Spark (8000 = Normal; 8001 = Special; 8005 = Normal Guard Break; 8006 = Special Guard Break)
+;var(35) : Spark xPos
+;var(36) : Spark yPos
+;var(37) : Special/Super Throws (0 = Allowed; 1 = Not Allowed)
+;var(38) : Throw (0 = Allowed; 1 = Not Allowed)
+;var(39) : Projectile Flag (0 = Off; 1 = On)
+;var(40) : 
+;var(41) : 
+;var(42) :
+;var(43) : 
+;var(44) : 
+;var(45) : 
+;var(46) : 
+;var(47) :
+;var(48) :
+;var(49) :
+;var(50) : High Jump Cancel Flag (0 = No; 1 = Yes)
+;var(51) : Senshubu Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(52) : MAX Go Kiko Kai Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(53) : 
+;var(54) :
+;var(55) :
+;var(56) :
+;var(57) :
+;var(58) : Game Time
+
+
+;fvar(5) : Amount of Corner Push
+;fvar(10): Damage Dampener
+;fvar(11): Damage Dampener with Counter Multiplier Added
+
+
+
+; ________________________________________________
+;| Akira Kazama by KarmaCharmeleon && Rabano	|
+; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+;====================<CONSTANTS>====================
+[Data]
+life = 950
+power = 5000
+attack = 90
+defence = 100
+fall.defence_up = 50
+lieDown.time = 30
+airJuggle = 15
+sparkNo = s8010
+guard.sparkNo = s8000
+KO.echo = 0
+volume = 128
+IntPersistIndex = 0
+FloatPersistIndex = 0
+
+[Size]
+xScale = 1
+yScale = 1
+ground.back = 18
+ground.front = 18
+air.back = 18
+air.front = 18
+height = 78
+attack.dist = 160
+proj.attack.dist = 90
+proj.doScale = 0
+head.pos = -6, -92
+mid.pos = -6, -60
+shadowOffset = 0
+draw.offset = 0, 0
+
+[Velocity]
+walk.fwd = 3.35195530726
+walk.back = -2.51396648045
+run.fwd = 5.72625698324, 0
+run.back = -6.14525139665, 0
+jump.neu = 0, -8.90625
+jump.fwd = 3.35195530726
+jump.back = -3.91061452514
+runJump.fwd = 5.16759776536, -10.2421760559
+runJump.back = -5.97206703911, -10.2421760559
+airjump.neu = 0,-6.5
+airjump.back = -2.8
+airjump.fwd = 2.8
+
+[Movement]
+airJump.num = 0
+airJump.height = 0
+yAccel = 0.48828125
+stand.friction = 0.85
+crouch.friction = 0.85
+stand.friction.threshold = 1.0
+crouch.friction.threshold = 1.0
+air.gethit.groundLevel = 25
+air.gethit.groundRecover.ground.threshold = -20
+air.gethit.groundRecover.groundLevel = 10
+air.gethit.airRecover.threshold = -1
+air.gethit.airRecover.yAccel = 0.35
+air.gethit.trip.groundLevel = 15
+down.bounce.offset = 0, 20
+down.bounce.yAccel = 0.4
+down.bounce.groundLevel = 12
+down.friction.threshold = 0.5
+
+
+;====================<WINQUOTES>====================
+[Quotes]
+victory0 = "You fought with spirit, but my passion burns brighter. Maybe next time, give it your all from the start!"
+victory1 = "The toughest battles can't compare to the challenges of the open road. Keep revving up, and you might catch up."
+victory2 = "A win feels good, but the real victory is forging bonds with those who share the path of honor and justice."
+victory3 = "Your technique was impressive, but it takes more than skill to ride the winds of justice."
+victory4 = "You tried to match my fire, but I ride with the flames of determination. Don't get burned on the way out."
+victory5 = "Win or lose, every fight teaches me something new. Thanks for the lesson. Maybe next time, we'll both grow."
+victory6 = "In the world of fighting, just like on the road, it's not about the destination but the journey. Keep moving forward."
+victory7 = "Justice is like a well-tuned engine   it requires constant maintenance. Your gears were a bit rusty today."
+victory8 = "Fighting with honor is a two-way street. If you're lost, I'll help you find your way back to the path of righteousness."
+victory9 = "You thought you could outspeed justice, but my determination is the fastest thing on two wheels. Try again when you catch your breath."
+
+;Akira Kazama
+victory10 = "A-Agh! Imposters! My brother's a lot cooler looking than that!"
+
+;Daigo Kazama
+victory11 = "I never imagined I'd facing you, brother... Today, defeat wore a familiar face."
+
+;Abigail
+victory12 = "Horsepower's important, but so is technique. That's true for bikes AND fights!"
+
+;Alex
+victory13 = "My friend is a huge fan. Do you think I could get your autograph?"
+
+;Asuka Kazama
+victory14 = "I wonder why brother doesn't want me to get in touch with your side of the family... You're pretty fun!"
+
+;Balrog (Claw)
+victory15 = "How can you talk about true beauty, when you don't know anything about love and friendship?!"
+
+;Batsu Ichimonji
+victory16 = "Well-fought! I can feel heat in your techniques! Never bring the intensity down!"
+
+;Birdie
+victory17 = "I know someone who's way better with a chain than you. She could teach you a thing or two."
+
+;Blanka
+victory18 = "A Blanka-chan doll? How cute! I'll chain it to my bag and take it with me everywhere!"
+
+;Boman Delgado
+victory19 = "Your commitment to non-violence is unwavering... You can't beat me if that's all you've got, though."
+
+;Cammy White
+victory20 = "You shouldn't look so serious all the time. Maybe a nice piece of cake'll cheer you up!"
+
+;Chun-Li
+victory21 = "Finally, I got to go up against a real Kung Fu fighter. I feel like I've learned a lot!"
+
+;Cody Travers
+victory22 = "You're going to have to do better than that to beat me. I know my way around a knife fight."
+
+;Dan Hibiki
+victory23 = "Wow, so the rumors were true. Saikyo-Style really is a knockoff version of Master's Karate."
+
+;Dhalsim
+victory24 = "I've got a fire so hot inside me, I barely felt your flames."
+
+;Ed
+victory25 = "I don't lose to punches with no soul or passion in them! Try fighting like you mean it!"
+
+;Edge (Eiji Yamada)
+victory26 = "W-Wah... Ninja arts are always amazing. Keep techniques sharp, Edge!"
+
+;F.A.N.G.
+victory27 = "I fight fair and square with love and passion! Of course a no-good cheater like you lost!"
+
+;Falke
+victory28 = "I've got my friends and I got my enemies! And now, starting today, I've got a new rival!"
+
+;G
+victory29 = "You're the President of the World? Never heard of that. My brother's a better leader than you!"
+
+;Gan Isurugi
+victory30 = "S-Sorry! I went harder than usual! Would a bowl of rice help us make amends?"
+
+;Gill
+victory31 = "Not much of an emperor, are you? I've had teachers who are more emperor-like than you."
+
+;Gouki
+victory32 = "Your scary face's got nothing on my brother's when he's mad!"
+
+;Guile
+victory33 = "Wow, that hair... How do you put a helmet on?"
+
+;Hinako Shijo
+victory34 = "Hey, your sumo style is great, but Gan's overwhelming strength sets a different standard!"
+
+;Hinata Wakaba
+victory35 = "Your energy is infectious! Keep the spirit high and bring even more warmth to the battle next time!"
+
+;Edmond Honda
+victory36 = "Um, are you really a sumo wrestler, or do you only work as a punching bag for the real ones?"
+
+;Ibuki
+victory37 = "Wait, where have I seen that uniform before...?"
+
+;Jin Kazama
+victory38 = "Brother warned me not to get involved with that side of the family... Now I get it..."
+
+;Juri Han
+victory39 = "Wow, you're kinda mean. Seijun High'll teach you some manners!"
+
+;Kage
+victory40 = "Ryu? W-Wait, have you been... brainwashed...? No, that can't be it..."
+
+;Karin Kanzuki
+victory41 = "So is it a hard-and-fast rule that all high-class ladies like you have that hairstyle?"
+
+;Ken Masters
+victory42 = "Y'know, I thought my friend was stronger than me from taking the Masters Online Karate course. Guess I was wrong."
+
+;Kolin
+victory43 = "Brr! I'm freezing! Where'd I put my bike gear...?"
+
+;Kyosuke Kagami
+victory44 = "Behind those cold glasses, I sensed a spark... A little passion can go a long way, Kyosuke."
+
+;Laura Matsuda
+victory45 = "Matsuda Jiu-Jitsu? Sorry, but my jam's the legendary Daigo Kazama Style!"
+
+;Lucia Morgan
+victory46 = "W-Wait, I have a motorcycle license! I swear I didn't break any traffic laws, officer!"
+
+;Luke Sullivan
+victory47 = "Nobody beats me in a test of nerve!"
+
+;M. Bison (Boxer)
+victory48 = "Hey, even a bike with no brakes eventually runs outta gas!"
+
+;Menat
+victory49 = "You're a fortune teller, huh? What should I ask you...? Oh, I know! Ask your crystal ball what I should ask you!"
+
+;Charlie Nash
+victory50 = "Hey cheer up! Could be worse. You could be dead!"
+
+;Necalli
+victory51 = "You keep going about 'devouring'. If you're hungry, I can show you where to get some awesome cakes!"
+
+;Oro
+victory52 = "You may be tough, but my brother's way tougher!"
+
+;Poison
+victory53 = "Don't give up! It's a burning desire and passion that keeps fighters going and helps them understand each another."
+
+;R. Mika
+victory54 = "Wow, I love your passion and energy! You almost made me lose focus!"
+
+;Rashid
+victory55 = "You call that a turbulent wind? I've taken on stronger headwinds on my bike."
+
+;Rose
+victory56 = "If my brother goes running off somewhere again, please use your powers to tell me where he is!"
+
+;Roy Bromwell
+victory57 = "Muscles meet finesse, finesse takes the prize!"
+
+;Ryu
+victory58 = "So you're who Sakura keeps going on about. It was an honor to fight you!"
+
+;Sagat
+victory59 = "Looks like you need more training. I'll let my brother know you're going to need his help."
+
+;Sakura Kasugano
+victory60 = "Heh heh! I'm a lot stronger now, right? I've got you to thank for that!"
+
+;Seth
+victory61 = "Your punches lack soul. Do you even have one?"
+
+;Tiffany Lords
+victory62 = "Should've spent less time dancing and more time training!"
+
+;Urien
+victory63 = "That tough-guy shtick is so outdated. I'd keep quiet if I were you!"
+
+;Vega (Dictator)
+victory64 = "Stare at me like that all you want. I've got justice on my side!"
+
+;Yuri Sakazaki
+victory65 = "Nice try, but my brother's discipline is just something else."
+
+;Yurika Kirishima 
+victory66 = "Play it Yurika! For old time's sake..."
+
+;Zaki (Aoi Himezaki)
+victory67 = "You may master the shadows, but I ride in the open!"
+
+;Zangief
+victory68 = "You think I should bulk up...? Nah, I'm fine like this."
+
+;Zeku
+victory69 = "I mean, like, what? Y-You can transform into your younger self? You ninjas are full of surprises..."

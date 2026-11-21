@@ -1,0 +1,29 @@
+; ________________________________________________
+;| Evil Ash by KarmaCharmeleon && FeLo_Llop	|
+; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+;==============================================================================================
+;=======================================<INITIALIZE>===========================================
+;==============================================================================================
+[StateDef 5900]
+type = S
+
+[State 5900, Int VarReset]
+type = VarRangeSet
+trigger1 = !RoundsExisted
+value = 0
+
+[State 5900, Float VarReset]
+type = VarRangeSet
+trigger1 = !RoundsExisted
+fvalue = 0
+
+[State 5900, Mode Detection: 0 = Normal || 1 = Evil]
+type = VarSet
+trigger1 = 1
+var(40) = 1
+ignoreHitPause = 1
+
+[State 5900, End]
+type = ChangeState
+trigger1 = 1
+value = 5901

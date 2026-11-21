@@ -1,0 +1,354 @@
+;====================<VARIABLE LIST>====================
+
+;var(2)  : Air Gravity Timer
+;var(3)  : Jump Type (0 = Normal; 1 = Low Jump; 2 = Long Low Jump; 3 = Long Jump)
+;var(4)  : Chain Combo (0 = Off; 1 = On)
+;var(5)  : Command Cancel Flag
+;var(6)  : Cancel Flag
+;var(7)  : Super Cancel Flag
+;var(8)  : Hyper Cancel Flag
+;var(9)  : Counter Flag
+;var(10) : Button Detect (0 = Light; 1 = Medium; 2 = Heavy)
+;var(11) : 
+;var(12) : 
+;var(13) : Hit Count
+;var(14) : Followup Detection (0 = Off; 249 = Standing Close Medium Kick; 259 = Révolution)
+;var(15) : Juggle Points
+;var(16) : Juggle Flag
+;var(17) : Ticks UnGuardable
+;var(18) : ProjContact (0 = No; 1 = Yes)
+;var(19) : Throw Escape
+;var(20) : Custom Combo Time
+;var(21) : Super Cancel Flag
+;var(22) : Hyper Cancel Flag
+;var(23) : Super Finish Type (900 = Custom Combo; 3000 = Thermidor; 3100 = Pluviose; 3200 = Sans-Culottes; 3250 = Germinal; 3300 = Fructidor; 3350 = Frimaire; 3400 = Espoir; 3500 = Ancien Regime)
+;var(24) :
+;var(25) : Ticks to Apply EX FX
+;var(26) : Ticks Unable to Walk
+;var(27) : 
+;var(28) :
+;var(29) : Alternate Projectile Flag (0 = Off; 1 = On)
+;var(30) : Hit Detection
+;var(31) : Hit Sound (0 = Light Punch; 1 = Medium Punch; 2 = Heavy Punch; 3 = Light Kick; 4 = Medium Kick; 5 = Heavy Kick; 6 = Projectile Hit; 800 = Grab)
+;var(32) : Guard Sound
+;var(33) : Hit Spark (8010 = Light; 8011 = Medium; 8012 = Heavy; 8013 = Special; 8014 = Super)
+;var(34) : Guard Spark (8000 = Normal; 8001 = Special; 8005 = Normal Guard Break; 8006 = Special Guard Break)
+;var(35) : Spark xPos
+;var(36) : Spark yPos
+;var(37) : Special/Super Throws (0 = Allowed; 1 = Not Allowed)
+;var(38) : Throw (0 = Allowed; 1 = Not Allowed)
+;var(39) : Projectile Flag (0 = Off; 1 = On)
+;var(40) : Mode (0 = Normal; 1 = Evil Ash)
+;var(41) : KO Sound
+;var(42) :
+;var(43) : Player ID to apply flames to
+;var(44) : Flame particles timer
+;var(45) : 
+;var(46) : 
+;var(47) : Ticks Back is held down
+;var(48) : Back Charge Buffer
+;var(49) : Ticks Down is held down
+;var(50) : Down Charge Buffer
+;var(51) : ??? Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(52) : Genie Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(53) : EX Germinal Caprice (0 = Can't juggle; 1 = Can juggle)
+;var(54) : 
+;var(55) : Sans-Culotte Time
+;var(56) : Power Check
+;var(57) : Boss Mode (0 = Disabled; 1 = Enabled)
+;var(58) : Game Time
+
+
+;fvar(5) : Amount of Corner Push
+;fvar(10): Damage Dampener
+;fvar(11): Damage Dampener with Counter Multiplier Added
+
+
+
+; ________________________________________________
+;| Ash Crimson by KarmaCharmeleon && FeLo_Llop	|
+; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+;====================<CONSTANTS>====================
+[Data]
+life = 980
+power = 3000
+attack = 100
+defence = 100
+fall.defence_up = 50
+lieDown.time = 30
+airJuggle = 15
+sparkNo = s8010
+guard.sparkNo = s8000
+KO.echo = 0
+volume = 128
+IntPersistIndex = 0
+FloatPersistIndex = 0
+
+[Size]
+xScale = 1
+yScale = 1
+ground.back = 18
+ground.front = 18
+air.back = 18
+air.front = 18
+height = 78
+attack.dist = 160
+proj.attack.dist = 90
+proj.doScale = 0
+head.pos = -2, -94
+mid.pos = -6, -64
+shadowOffset = 0
+draw.offset = 0, 0
+
+[Velocity]
+walk.fwd = 3.21229050279
+walk.back = -2.51396648045
+run.fwd = 5.58659217877, 0
+run.back = -6.00558659218, -3.75
+jump.neu = 0, -8.59375
+jump.fwd = 2.93296089385
+jump.back = -3.07262569832
+runJump.fwd = 4.39944134078, -9.8828125
+runJump.back = -4.60893854749, -9.8828125
+airjump.neu = 0,-6.5
+airjump.back = -2.8
+airjump.fwd = 2.8
+
+[Movement]
+airJump.num = 0
+airJump.height = 0
+yAccel = 0.439453125
+stand.friction = 0.85
+crouch.friction = 0.85
+stand.friction.threshold = 1.0
+crouch.friction.threshold = 1.0
+air.gethit.groundLevel = 25
+air.gethit.groundRecover.ground.threshold = -20
+air.gethit.groundRecover.groundLevel = 10
+air.gethit.airRecover.threshold = -1
+air.gethit.airRecover.yAccel = 0.35
+air.gethit.trip.groundLevel = 15
+down.bounce.offset = 0, 20
+down.bounce.yAccel = 0.4
+down.bounce.groundLevel = 12
+down.friction.threshold = 0.5
+
+
+;====================<WINQUOTES>====================
+[Quotes]
+victory0 = "Tch. I chipped my nail polish. I'll have to reapply it..."
+victory1 = "Tch. You only play your trump card at the last moment, silly!"
+victory2 = "Another round? Sorry, but I'm far too busy."
+victory3 = "Is that really all you can offer? What a letdown."
+victory4 = "I suggest you stay down. I'm sure an ambulance will be here shortly."
+victory5 = "I hear what you're saying and it sounds like 'whimper, whimper, whimper'."
+victory6 = "Don't you feel embarassed to lose so easily?"
+victory7 = "Are you going to complain to the judges? How embarassing for you."
+victory8 = "Hmm. That was actually rather stimulating."
+victory9 = "I should've know there was no point in fighting you. You're no Shen or Duo Lon."
+victory10 = "Oops, did I play too rough?"
+victory11 = "You entering the tournament hasn't improved it in any way."
+victory12 = "Tell me. What's it like to crawl along the ground in front of all these people?"
+victory13 = "You must have a screw loose if you're willing to fight me at your level."
+victory14 = "Where were the thrills and spills...? Such a drab fight!"
+victory15 = "I'm impressed you managed to keep up me as much as you did."
+victory16 = "... Sorry, did you say something? Your voice is so meek, I can barely hear you."
+victory17 = "You must have a screw loose if you're willing to fight me at your level."
+victory18 = "Weak, annoying, irritating, humdrum... Aren't you ashamed to be alive?"
+victory19 = "Ahahaha. It's been a while since I felt so exhilarated."
+
+;Ash Crimson
+victory20 = "You really do a good me. An 'A' for effort! Ha, ha!"
+victory21 = "What do you think this is all about? Could this be Miss Kagura's doing?"
+victory22 = "Whatever you're trying to do, it's really not becoming."
+
+;Evil Ash
+victory23 = "What’s mine is mine... I'm not sharing with anyone else."
+
+;Elisabeth Blanctorche
+victory24 = "You let your guard down, Betty. And I'm not the Ash I used to be."
+victory25 = "Why don't you just leave me be, Betty? Consider that a friendly tip, okay?"
+victory26 = "Yeeowch. One thing you never lacked is strength. I mean that... Merci, Betty!"
+victory27 = "OW! What the heck?! This is me, here! You could ease it up a smidge!"
+
+;Duo Lon
+victory28 = "You've let yourself go, Duo Lon! Less revenge and more training, eh?!"
+victory29 = "What's the story, Duo Lon? You trying to make fun of me or something?"
+
+;Duo Lon / Shen Woo
+victory30 = "You know... You're good at giving me the heebie-jeebies."
+
+;Shen Woo
+victory31 = "Owee... Lighten up a bit, would you, Shen? I could have broken a nail!"
+victory32 = "Ouch, ow... Gee, Shen. You could've gone a little easier on me!"
+
+;Kyo Kusanagi
+victory33 = "Kyo, that was pathetic. Why don't we call it a day?" 
+victory34 = "Your powers to purify may come in handy one day. So I'll just let you live for now."
+victory35 = "I feel sorry that Miss Kagura is surrounded by helpless idiots like you."
+
+;Iori Yagami
+victory36 = "Wooh, that's the stuff, Yagami... We should play paddy-cake again soon. Ha, ha!"
+victory37 = "Your time is up! Time for the uninvited visitor to leave!"
+victory38 = "You're pathetic, you know that? Kusanagi this and Kusanagi that... what are you? His crazy ex?!"
+
+;Chizuru Kagura
+victory39 = "So sorry, but I have absolutely nothing to tell you. So long."
+victory40 = "Don't fret me. I don't care about your power anymore. Oh, silly me... You've forgotten, haven't you?"
+
+;Chris
+victory41 = "You and I will never get along. Ha! Perhaps familiarity breeds contempt!"
+
+;Shermie
+victory42 = "Hah, if it weren't for Orochi, I bet you and I would get on like a dream."
+
+;Yashiro Nanakase
+victory43 = "You simply will not do. You need to be as fierce as Shen, to be worth my while."
+
+;Orochi Chris / Orochi Shermie / Orochi Yashiro
+victory44 = "Relax. You guys and Orochi can take a back seat now."
+victory45 = "Poor little Orochi. How ever will he wake up with these chumps working for him?"
+
+;Saiki
+victory46 = "Adieu, my ancestor! Sorry for being such a poor descendant. Teeheehee..."
+victory47 = "Did you think I wasn't ready for you or something? I can hold my own."
+
+;Andy Bogard
+victory48 = "Were you underestimating me? Or was that it? Either way, you sure suck!"
+
+;Athena Asamiya
+victory49 = "Don't think you can read people's minds just like that, you silly girl."
+
+;Benimaru Nikaido
+victory50 = "Wow, you're really getting the hang of this clowning business, aren't you?"
+
+;Billy Kane
+victory51 = "That staff of yours is like a matchstick! Look at it burn! Oh, and your body as well."
+
+;Chin Gentsai
+victory52 = "Huh? You're still alive? Shen was right, you really are a monster."
+
+;Clark Still
+victory53 = "Say hello to that scary older guy, too! Hee hee hee!"
+
+;Goro Daimon
+victory54 = "Can a former Judo medalist be this weak? The Olympics sure have low standards."
+
+;Gato
+victory55 = "So, did you enjoy having your ass handed to you by a nobody? Ahahaha!"
+
+;Geese Howard
+victory56 = "Not much of an evil emperor, are you? You give South Town a bad name."
+
+;Haohmaru
+victory57 = "You should see yourself swinging your sword all crazy like that. Were my flames to your liking, monsieur?"
+
+;Hwa Jai
+victory58 = "I'd rather not meet you again. Did evolution play a cruel joke on you?"
+
+;Isla
+victory59 = "One minute, you're being reckless, and the next you're buried in flames! I think you learned a valuable lesson today, hm?"
+
+;B. Jenet
+victory60 = "Hey, I like your nails...! And that's about it!"
+
+;Joe Higashi
+victory61 = "I've never seen a Champion who looks so at home lying on the floor!"
+
+;K'
+victory62 = "So have you learned to master those imitation flames? Oh, I suppose if you had, I wouldn't be standing here victorious."
+
+;Sie Kensou
+victory63 = "Do you see now? No amount training will ever be enough for you! Ahaha."
+
+;Kim Kaphwan
+victory64 = "If you're gonna talk about grand things like justice, you better have the strength to back it up."
+
+;King
+victory65 = "For failing to entertain me, I expect you to pick up the tab next time I party at your bar."
+
+;Kukri
+victory66 = "It's not that I hate you, Kooky... It's just I find sand in my face and clothes SUCH an inconvenience."
+
+;Kula Diamond
+victory67 = "Scared of my flames? You're like an animal. Now run home before I skin you."
+
+;Leona Heidern
+victory68 = "I'm sure you'd love to see Orochi die, but it's just not going to happen!"
+
+;Mai Shiranui
+victory69 = "Such a naughty mademoiselle, playing with fire like that."
+
+;Mature
+victory70 = "Hey, miss, shall I paint your nails for you? Let me get some embalming fluid!"
+
+;Maxima
+victory71 = "If I'd punched widly I might have chipped a nail. The last thing I want to do is fight you head on."
+
+;Mr. Karate
+victory72 = "Good thing you were wearing that mask, old man. At least, it'll hide some of the shame of losing."
+
+;Raiden
+victory73 = "You're weak, loud and a nuisance. Why are you even alive?"
+
+;Ralf Jones
+victory74 = "Hey, can I ask you something? How does it feel to lose to a kid?"
+
+;Robert Garcia
+victory75 = "I was shocked at how weak you are. Maybe you’re not cut out to be a fighter."
+
+;Ryo Sakazaki
+victory76 = "Wait, did you think you could win? That was all an act... I mean, how could I lose?"
+
+;Shingo Yabuki
+victory77 = "If you want Kusanagi's flames, then take 'em! If you can even do that."
+
+;Shun'ei
+victory78 = "Your worry and tension is written all over your face. A skilled opponent like me can really take advantage."
+
+;Takuma Sakazaki
+victory79 = "Put on your mask! You don't want anyone to see your face like this, do you?"
+
+;Terry Bogard
+victory80 = "If you burn up and turn to ashes, maybe you won't be such an eyesore anymore!"
+
+;Vice
+victory81 = "Who would've thought the infamous Hakkeshu would be such pushovers?"
+
+;Yuri Sakazaki
+victory82 = "Your power and speed are sub-par, but at least you make a great Pierrot!"
+
+
+
+;====================<EVIL ASH WINQUOTES>====================
+victory83 = "You vermin aren't even worth dominating! You'll be erased alongside the timeline itself!"
+victory84 = "Tell me, did you really think you stood a chance with that street performance?"
+victory85 = "Rejoice! Your pain and fear will soon end, along with the world you built!"
+victory86 = "That's good! I like how you hit the ground there! You're an excellent actor!"
+victory87 = "Are you done? Then die already. You're wasting matter that could be comprising useful things."
+victory88 = "So, what does despair feel like? It's something I'll never feel, so I'm curious."
+victory89 = "Dying, in a way, is the easiest way out. ...But I won't let you die that quickly!"
+victory90 = "Geez... If that's all you've got, why even be born in the first place?!"
+victory91 = "Do you need some more time to wallow in self-pity? Too bad, there's no time left!"
+victory92 = "You should stay out of the fighting business... You'll live a lot longer."
+
+;Ash Crimson
+victory93 = "The punishment for opposing your creator will be quite severe, Ash Crimson!"
+
+;Elisabeth Blanctorche
+victory94 = "This is the power to control time! Behold, despair and regret! This is your punishment!"
+
+;Duo Lon
+victory95 = "Your memories and mankind's entire history shall be wiped away! An aeon where time turns to ash is here!"
+
+;Shen Woo
+victory96 = "Those eyes are what I hate about you. Get out of here before I get really angry!"
+
+;Kyo Kusanagi
+victory97 = "That purifying power of yours looks like trouble. I'd best make sure to care of it right away."
+
+;Iori Yagami
+victory98 = "Heheheh... Cry! Scream! And die! The perfect ending to a pathetic loser like you!"
+
+;Saiki
+victory99 = "Surely YOU would know that I have better things to do?"

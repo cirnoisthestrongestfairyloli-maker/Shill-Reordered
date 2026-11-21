@@ -7,48 +7,61 @@
 --; keep their own portraits and simply show no art/bio.
 --;===========================================================
 local AR = {}
+AR.vphdLua = true   -- portraits now live in each character's own sff as sprite 9000,25; set true to draw the old 7470/7471 sprites from here
+AR.vphd = true   -- V-HD Bars lifebar (data/AbstractReordered/vphd): characters listed with vphd = true in AR.data get the new portrait
+
 
 -- character folder name (lower case) -> sprite index in cadenza.sff and sprite widths
 AR.data = {
-	['haruhi_ar'] = {n = 0, plate_w = 227, bio_w = 2079, q = 7, win = {180, 2}},
-	['ichigo_ar'] = {n = 1, plate_w = 197, bio_w = 1849, q = 4, win = {10, 40}, art_y = 700},
-	['homura_ar'] = {n = 2, plate_w = 229, bio_w = 1794, q = 3, win = {5, 11}},
-	['broly_ar'] = {n = 3, plate_w = 183, bio_w = 1643, q = 16, win = {3, 14}},
-	['kuroko_ar'] = {n = 4, plate_w = 184, bio_w = 1797, q = 3, win = {9, 0}},
-	['meisaku_ar'] = {n = 5, plate_w = 313, bio_w = 1624, q = 29, win = {181, 1}},
+	['haruhi_ar'] = {n = 0, plate_w = 227, bio_w = 2079, q = 7, win = {180, 2, vphd = true}, vphd = true},
+	['ichigo_ar'] = {n = 1, plate_w = 197, bio_w = 1849, q = 4, win = {10, 40, vphd = true}, art_y = 700},
+	['homura_ar'] = {n = 2, plate_w = 229, bio_w = 1794, q = 3, win = {5, 11}, vphd = true},
+	['broly_ar'] = {n = 3, plate_w = 183, bio_w = 1643, q = 16, win = {3, 14}, vphd = true},
+	['kuroko_ar'] = {n = 4, plate_w = 184, bio_w = 1797, q = 3, win = {9, 0}, vphd = true},
+	['meisaku_ar'] = {n = 5, plate_w = 313, bio_w = 1624, q = 29, win = {181, 1}, vphd = true},
 	['homer_ar'] = {n = 6, plate_w = 323, bio_w = 1631, q = 0, win = {0, 9}},
-	['stocking_ar'] = {n = 7, plate_w = 281, bio_w = 1604, q = 3, win = {181, 0}},
-	['sailor_mercury_ar'] = {n = 8, plate_w = 324, bio_w = 1554, q = 9, win = {181, 10}},
-	['cureblack_ar'] = {n = 9, plate_w = 318, bio_w = 1567, q = 3, win = {0, 64}},
-	['aoko_ar'] = {n = 10, plate_w = 189, bio_w = 1579, q = 13, win = {181, 0}},
-	['jotaro_ar'] = {n = 11, plate_w = 234, bio_w = 1707, q = 3, win = {181, 0}},
-	['ippo_ar'] = {n = 12, plate_w = 236, bio_w = 1531, q = 3, win = {0, 5}},
-	['saber_ar'] = {n = 13, plate_w = 186, bio_w = 1834, q = 3, win = {3, 0}},
-	['reimu_ar'] = {n = 14, plate_w = 189, bio_w = 1739, q = 40, win = {180, 0}},
-	['kamijo_ar'] = {n = 15, plate_w = 193, bio_w = 2122, q = 3, win = {180, 0}},
-	['gokublack_ar'] = {n = 16, plate_w = 317, bio_w = 1889, q = 40, win = {181, 0}},
-	['vegeta_ar'] = {n = 17, plate_w = 184, bio_w = 1798, q = 40, win = {181, 0}},
-	['madoka_ar'] = {n = 18, plate_w = 236, bio_w = 1992, q = 3, win = {10, 0}},
-	['sayaka_ar'] = {n = 19, plate_w = 235, bio_w = 1845, q = 3, win = {10, 0}},
-	['sol_ar'] = {n = 20, plate_w = 316, bio_w = 1859, q = 3, win = {181, 0}},
-	['panty_ar'] = {n = 21, plate_w = 189, bio_w = 1827, q = 30, win = {181, 0}},
-	['shiki_ar'] = {n = 22, plate_w = 189, bio_w = 1841, q = 16, win = {181, 0}},
-	['taiga_ar'] = {n = 23, plate_w = 189, bio_w = 1658, q = 8, win = {180, 0}},
-	['kumagawa_ar'] = {n = 24, plate_w = 226, bio_w = 1595, q = 3, win = {180, 0}},
-	['saitama_ar'] = {n = 25, plate_w = 192, bio_w = 1844, q = 3, win = {190, 0}},
+	['stocking_ar'] = {n = 7, plate_w = 281, bio_w = 1604, q = 3, win = {181, 0}, vphd = true},
+	['sailor_mercury_ar'] = {n = 8, plate_w = 324, bio_w = 1554, q = 9, win = {181, 10}, vphd = true},
+	['cureblack_ar'] = {n = 9, plate_w = 318, bio_w = 1567, q = 3, win = {0, 64}, vphd = true},
+	['aoko_ar'] = {n = 10, plate_w = 189, bio_w = 1579, q = 13, win = {181, 0}, vphd = true},
+	['jotaro_ar'] = {n = 11, plate_w = 234, bio_w = 1707, q = 3, win = {181, 0}, vphd = true},
+	['ippo_ar'] = {n = 12, plate_w = 236, bio_w = 1531, q = 3, win = {0, 5}, vphd = true},
+	['saber_ar'] = {n = 13, plate_w = 186, bio_w = 1834, q = 3, win = {3, 0}, vphd = true},
+	['reimu_ar'] = {n = 14, plate_w = 189, bio_w = 1739, q = 40, win = {180, 0}, vphd = true},
+	['kamijo_ar'] = {n = 15, plate_w = 193, bio_w = 2122, q = 3, win = {180, 0}, vphd = true},
+	['gokublack_ar'] = {n = 16, plate_w = 317, bio_w = 1889, q = 40, win = {181, 0}, vphd = true},
+	['vegeta_ar'] = {n = 17, plate_w = 184, bio_w = 1798, q = 40, win = {181, 0}, vphd = true},
+	['madoka_ar'] = {n = 18, plate_w = 236, bio_w = 1992, q = 3, win = {10, 0}, vphd = true},
+	['sayaka_ar'] = {n = 19, plate_w = 235, bio_w = 1845, q = 3, win = {10, 0}, vphd = true},
+	['sol_ar'] = {n = 20, plate_w = 316, bio_w = 1859, q = 3, win = {181, 0}, vphd = true},
+	['panty_ar'] = {n = 21, plate_w = 189, bio_w = 1827, q = 30, win = {181, 0}, vphd = true},
+	['shiki_ar'] = {n = 22, plate_w = 189, bio_w = 1841, q = 16, win = {181, 0}, vphd = true},
+	['taiga_ar'] = {n = 23, plate_w = 189, bio_w = 1658, q = 8, win = {180, 0}, vphd = true},
+	['kumagawa_ar'] = {n = 24, plate_w = 226, bio_w = 1595, q = 3, win = {180, 0}, vphd = true},
+	['saitama_ar'] = {n = 25, plate_w = 192, bio_w = 1844, q = 3, win = {190, 0}, vphd = true},
 	['gran_ar'] = {n = 26, plate_w = 146, bio_w = 1896, q = 3, win = {181, 0}},
-	['dio_ar'] = {n = 27, plate_w = 314, bio_w = 1938, q = 3, win = {181, 0}},
-	['ryuko_ar'] = {n = 28, plate_w = 159, bio_w = 1753, q = 3, win = {181, 0}},
-	['satsuki_ar'] = {n = 29, plate_w = 238, bio_w = 1876, q = 3, win = {181, 0}},
-	['sailor_moon_ar'] = {n = 30, plate_w = 330, bio_w = 1727, q = 3, win = {181, 10}},
-	['lilith_ar'] = {n = 31, plate_w = 146, bio_w = 1904, q = 3, win = {181, 0}},
+	['dio_ar'] = {n = 27, plate_w = 314, bio_w = 1938, q = 3, win = {181, 0}, vphd = true},
+	['ryuko_ar'] = {n = 28, plate_w = 159, bio_w = 1753, q = 3, win = {181, 0}, vphd = true},
+	['satsuki_ar'] = {n = 29, plate_w = 238, bio_w = 1876, q = 3, win = {181, 0}, vphd = true},
+	['sailor_moon_ar'] = {n = 30, plate_w = 330, bio_w = 1727, q = 3, win = {181, 10}, vphd = true},
+	['lilith_ar'] = {n = 31, plate_w = 146, bio_w = 1904, q = 3, win = {181, 0}, vphd = true},
 	['yoruichi_ar'] = {n = 32, plate_w = 238, bio_w = 2000, q = 3, win = {181, 0}},
-	['nicenature_ar'] = {n = 33, plate_w = 330, bio_w = 1378, q = 3, win = {181, 0}},
-	['mitsuru_ar'] = {n = 34, plate_w = 192, bio_w = 2069, q = 3, win = {181, 0}},
-	['giorno_ar'] = {n = 35, plate_w = 316, bio_w = 2087, q = 3, win = {181, 0}},
-	['weiss_ar'] = {n = 36, plate_w = 328, bio_w = 2211, q = 3, win = {181, 0}},
-	['shana_ar'] = {n = 37, plate_w = 146, bio_w = 2031, q = 3, win = {181, 0}},
-	['rentaro_ar'] = {n = 38, plate_w = 238, bio_w = 2056, q = 3, win = {181, 0}},
+	['nicenature_ar'] = {n = 33, plate_w = 330, bio_w = 1378, q = 3, win = {181, 0}, vphd = true},
+	['mitsuru_ar'] = {n = 34, plate_w = 192, bio_w = 2069, q = 3, win = {181, 0}, vphd = true},
+	['giorno_ar'] = {n = 35, plate_w = 316, bio_w = 2087, q = 3, win = {181, 0}, vphd = true},
+	['weiss_ar'] = {n = 36, plate_w = 328, bio_w = 2211, q = 3, win = {181, 0}, vphd = true},
+	['shana_ar'] = {n = 37, plate_w = 146, bio_w = 2031, q = 3, win = {181, 0}, vphd = true},
+	['rentaro_ar'] = {n = 38, plate_w = 238, bio_w = 2056, q = 3, win = {181, 0}, vphd = true},
+	['batman_ar'] = {n = 39, plate_w = 238, bio_w = 2055, q = 3, win = {181, 0}, vphd = true},
+	['yang_ar'] = {n = 40, plate_w = 328, bio_w = 1984, q = 3, win = {181, 0}, vphd = true},
+	['johnny_ar'] = {n = 41, plate_w = 316, bio_w = 2280, q = 3, win = {181, 0}, vphd = true},
+	['alucard_ar'] = {n = 42, plate_w = 238, bio_w = 1556, q = 3, win = {181, 0}, vphd = true},
+	['ryu_ar'] = {n = 43, plate_w = 146, bio_w = 1738, q = 3, win = {181, 0}, vphd = true},
+	['akira_ar'] = {n = 44, plate_w = 171, bio_w = 1771, q = 3, win = {181, 0}, vphd = true},
+	['angel_ar'] = {n = 45, plate_w = 192, bio_w = 1651, q = 3, win = {181, 0}, vphd = true},
+	['terry_ar'] = {n = 46, plate_w = 328, bio_w = 1762, q = 3, win = {181, 0}, vphd = true},
+	['alex_ar'] = {n = 47, plate_w = 238, bio_w = 1814, q = 3, win = {181, 0}, vphd = true},
+	['ash_ar'] = {n = 48, plate_w = 328, bio_w = 1717, q = 3, win = {181, 0}, vphd = true},
 }
 AR.random = {n = 99, plate_w = 185, bio_w = 758}
 AR.timeW = 169
@@ -478,6 +491,7 @@ AR.music = {
 	{path = 'Music/Granblue Fantasy - Dark Silver Wings.mp3', w = 373, wh = 404},
 	{path = 'Music/RWBY - Crossing Fate.mp3', w = 246, wh = 278},
 	{path = 'Music/Conciliation.mp3', w = 168, wh = 200},
+	{path = 'Music/Johnny - SPIN.mp3', w = 175, wh = 208},
 }
 AR.musicSel = 1          -- index into AR.music: 1 = random Music track (default), 2 = the stage's own music
 AR.randomPick = nil      -- the track RANDOM resolved to for this match
@@ -1234,7 +1248,7 @@ AR.introGap = 230            -- each art's distance from the centre before the s
 local hudAnims = {}
 
 local function mbaaHud()
-	return motif.files ~= nil and type(motif.files.fight) == 'string' and motif.files.fight:lower():find('mbaa') ~= nil
+	return motif.files ~= nil and type(motif.files.fight) == 'string' and (motif.files.fight:lower():find('mbaa') ~= nil or motif.files.fight:lower():find('vphd') ~= nil)
 end
 
 -- corner portraits: same set-up as the victory overlay (motif space, layer 2). The 640x480 lifebar is shown at 2x
@@ -1318,7 +1332,12 @@ function AR.drawHud()
 		end
 		for side = 1, 2 do
 			local d = selectedEntry(side)
-			if d ~= nil then
+			if d ~= nil and AR.vphd and d.vphd and AR.vphdLua then
+				-- V-HD Bars portrait (Port_Temp1 layout): one 1130 x 135 sprite with both faces, drawn at the lifebar's own coordinates
+				local a = hudAnim(side == 1 and 7470 or 7471, d.n, 2)   -- 7470 = P1 art (axis 0,0), 7471 = P2 art mirrored (axis at its right edge)
+				animSetScale(a, k, k)
+				main.f_animPosDraw(a, side == 1 and x0 or x0 + vw, 0, 1)
+			elseif d ~= nil and not AR.vphd then
 				local a = hudAnim(7460, d.n, 2)
 				animSetScale(a, k, k)
 				main.f_animPosDraw(a, side == 1 and x0 or x0 + vw, 0, side == 1 and 1 or -1)
@@ -1431,7 +1450,7 @@ AR.movelistChars = {['saber_ar'] = true, ['reimu_ar'] = true, ['haruhi_ar'] = tr
 	['meisaku_ar'] = true, ['stocking_ar'] = true, ['sailor_mercury_ar'] = true, ['cureblack_ar'] = true, ['aoko_ar'] = true,
 	['jotaro_ar'] = true, ['ippo_ar'] = true, ['kamijo_ar'] = true, ['gokublack_ar'] = true, ['vegeta_ar'] = true,
 	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true, ['shiki_ar'] = true, ['taiga_ar'] = true, ['panty_ar'] = true,
-	['saitama_ar'] = true, ['gran_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['yoruichi_ar'] = true, ['mitsuru_ar'] = true, ['giorno_ar'] = true, ['weiss_ar'] = true, ['shana_ar'] = true, ['rentaro_ar'] = true}
+	['saitama_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['mitsuru_ar'] = true, ['giorno_ar'] = true, ['weiss_ar'] = true, ['shana_ar'] = true, ['rentaro_ar'] = true, ['batman_ar'] = true, ['yang_ar'] = true, ['johnny_ar'] = true, ['alucard_ar'] = true}
 AR.movelistArtX = 1040
 AR.movelistArtY = 712
 AR.movelistArtScale = 1.0

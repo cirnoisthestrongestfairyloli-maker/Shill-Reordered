@@ -1,0 +1,625 @@
+;====================<VARIABLE LIST>====================
+
+;var(2)  : Air Gravity Timer
+;var(3)  : Jump Type (0 = Normal; 1 = Low Jump; 2 = Long Low Jump; 3 = Long Jump)
+;var(4)  : Chain Combo (0 = Off; 1 = On)
+;var(5)  : Command Cancel Flag
+;var(6)  : Cancel Flag
+;var(7)  : Super Cancel Flag
+;var(8)  : Hyper Cancel Flag
+;var(9)  : Counter Flag
+;var(10) : Button Detect (0 = Light; 1 = Medium; 2 = Heavy)
+;var(11) : 
+;var(12) : 
+;var(13) : Hit Count
+;var(14) : Followup Detection (0 = Off; 105 = Dash Backward; 110 = Dash Forwards; 221 = Kikokuzuki; 251 = Kikokuretsuzan)
+;var(15) : Juggle Points
+;var(16) : Juggle Flag
+;var(17) : Ticks UnGuardable
+;var(18) : ProjContact (0 = No; 1 = Yes)
+;var(19) : Throw Escape
+;var(20) : Custom Combo Time
+;var(21) : Super Cancel Flag
+;var(22) : Hyper Cancel Flag
+;var(23) : Super Finish Type (900 = Custom Combo; 3000 = Shinku Hadoken; 3020 = Rakuyo Hadoken; 3100 = Denjin Hadoken; 3200 = Shinku Tatsumaki Senpukyaku; 3300 = Shin Shoryuken; 3400 = Messatsu Goshoryu; 3500 = Metsu Hadoken; 3600 = Shun Goku Satsu; 3700 = Misogi; 3800 = Messatsu Ryukosai; 3900 = Taigyaku Mudo; 4000 = ???)
+;var(24) : Power Check
+;var(25) : Ticks to Apply EX FX
+;var(26) : Ticks Unable to Walk
+;var(27) : Lv3 Super Finish Detection
+;var(28) :
+;var(29) :
+;var(30) : Hit Detection
+;var(31) : Hit Sound (0 = Light Punch; 1 = Medium Punch; 2 = Heavy Punch; 3 = Light Kick; 4 = Medium Kick; 5 = Heavy Kick; 6 = Projectile Hit; 800 = Grab)
+;var(32) : Guard Sound
+;var(33) : Hit Spark (8010 = Light; 8011 = Medium; 8012 = Heavy; 8013 = Special; 8014 = Super)
+;var(34) : Guard Spark (8000 = Normal; 8001 = Special; 8005 = Normal Guard Break; 8006 = Special Guard Break)
+;var(35) : Spark xPos
+;var(36) : Spark yPos
+;var(37) : Special/Super Throws (0 = Allowed; 1 = Not Allowed)
+;var(38) : Throw (0 = Allowed; 1 = Not Allowed)
+;var(39) : Projectile Flag (0 = Off; 1 = On)
+;var(40) : Mode (0 = Normal; 1 = Evil; 2 = Shadow; 3 = EX; 4 = Shin)
+;var(41) : KO Sound
+;var(42) :
+;var(43) : Player ID to apply flames to
+;var(44) : Flame particles timer
+;var(45) : Player ID to apply electric sparks to
+;var(46) : Electric particles timer
+;var(47) :
+;var(48) :
+;var(49) :
+;var(50) : Taigyaku Mudo Time
+;var(51) : Jumping Medium Punch Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(52) : EX Shakunetsu Hadoken Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(53) : EX Jodan Sokuto Geri Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(54) : EX Kurekijin Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(55) : ??? Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(56) : Rakuyo Hadoken Crumple Flag (0 = Can't crumple; 1 = Can crumple)
+;var(57) : Metsu Hadoken Stun Flag (0 = Can't stun; 1 = Can stun)
+;var(58) : Game Time
+
+
+;fvar(5) : Amount of Corner Push
+;fvar(10): Damage Dampener
+;fvar(11): Damage Dampener with Counter Multiplier Added
+
+
+
+; ________________________________________________
+;| Ryu by KarmaCharmeleon			|
+; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+;====================<CONSTANTS>====================
+[Data]
+life = 950
+power = 5000
+attack = 90
+defence = 100
+fall.defence_up = 50
+lieDown.time = 30
+airJuggle = 15
+sparkNo = s8010
+guard.sparkNo = s8000
+KO.echo = 0
+volume = 128
+IntPersistIndex = 0
+FloatPersistIndex = 0
+
+[Size]
+xScale = 1
+yScale = 1
+ground.back = 18
+ground.front = 18
+air.back = 18
+air.front = 18
+height = 78
+attack.dist = 160
+proj.attack.dist = 90
+proj.doScale = 0
+head.pos = 3, -88
+mid.pos = -2, -61
+shadowOffset = 0
+draw.offset = 0, 0
+
+[Velocity]
+walk.fwd = 3.35195530726
+walk.back = -2.23463687151
+run.fwd = 5.72625698324, 0
+run.back = -5.02793296089, 0
+jump.neu = 0, -8.90625
+jump.fwd = 3.91061452514
+jump.back = -4.46927374302
+runJump.fwd = 5.86592178771, -10.2421760559
+runJump.back = -6.70391061453, -10.2421760559
+airjump.neu = 0,-6.5
+airjump.back = -2.8
+airjump.fwd = 2.8
+
+[Movement]
+airJump.num = 0
+airJump.height = 0
+yAccel = 0.48828125
+stand.friction = 0.85
+crouch.friction = 0.85
+stand.friction.threshold = 1.0
+crouch.friction.threshold = 1.0
+air.gethit.groundLevel = 25
+air.gethit.groundRecover.ground.threshold = -20
+air.gethit.groundRecover.groundLevel = 10
+air.gethit.airRecover.threshold = -1
+air.gethit.airRecover.yAccel = 0.35
+air.gethit.trip.groundLevel = 15
+down.bounce.offset = 0, 20
+down.bounce.yAccel = 0.4
+down.bounce.groundLevel = 12
+down.friction.threshold = 0.5
+
+
+;====================<WINQUOTES>====================
+[Quotes]
+victory0 = "That look in your eyes... Never forget the fighting spirit you feel now."
+victory1 = "I'm ready for a rematch should we cross paths again."
+victory2 = "I've a better understanding now of what it means to be a true warrior..."
+victory3 = "A clenched fist speaks louder than a hundred words."
+victory4 = "What a fight! You have my gratitude."
+victory5 = "You must defeat my Shoryuken to stand a chance!"
+victory6 = "I walk my own path, regardless of what direction other men take."
+victory7 = "This is the power of Hado! The spirit channeled through the fist!"
+victory8 = "Don't forget the training you've had until now! Get up and fight again!"
+victory9 = "Shoes? No, I can't certainly afford them. I go barefoot for comfort."
+
+;Ryu
+victory10 = "The greatest struggle is against oneself..."
+
+;Evil Ryu
+victory11 = "What a nightmare... Please, wake up!"
+
+;Ken Masters
+victory12 = "One more time. Let's see how far we can both go!"
+
+;Gouki
+victory13 = "Even if I won, I'm not sure I have what I'm looking for..."
+
+;Shin Gouki
+victory14 = "... I have no regrets. I hope... That you find your peace."
+
+;Gouken
+victory15 = "Thank you, Master!"
+
+;Athena Asamiya
+victory16 = "Good luck to you too. I'll continue my own way!"
+
+;Balrog (Claw)
+victory17 = "A sharp needle easily breaks. You weren't focused enough on the fight!"
+
+;Batsu Ichimonji
+victory18 = "Getting ahead doesn't come by charging in headfirst. Focus your thoughts, then attack!"
+
+;Benimaru Nikaido
+victory19 = "What you call your 'masculine appeal' isn't limited to your looks alone, I see."
+
+;M. Bison (Boxer)
+victory20 = "Your fist is clouded. Their true 'weight' is being held back!"
+
+;Blanka
+victory21 = "The power of the wild. I can't afford to treat it lightly."	
+
+;Cammy White
+victory22 = "Against a soulless fist, I can claim no victory!"
+
+;Chang Koehan
+victory23 = "There's nothing in this world that's worth losing your freedom over..."
+
+;Casshern
+victory24 = "Half a step can be the difference between victory and defeat. Today, victory is mine."
+
+;Chun-Li
+victory25 = "No matter how often we fight, I'm always amazed at the depth of the Chinese Martial Arts."
+
+;Dan Hibiki
+victory26 = "You know what you need to do. You can start by simply standing up."	
+
+;Deadpool
+victory27 = "Huh? You stole my Shoryuken!? When did you...?!"
+
+;Dhalsim
+victory28 = "Thank you for your advice. But... I already know the path I must take."
+
+;E. Honda
+victory29 = "The power of Sumo; I'm truly impressed!"
+
+;Eaqle
+victory30 = "In a fight, you need to give your all. Getting distracted means you've already lost!"
+
+;Frank West
+victory31 = "You've taught me a valuable lesson. I've met hundreds of the world's best fighters, but this is the first time I've met one that's a cameraman!"
+
+;Geese Howard
+victory32 = "Using advanced techniques, without understanding them fully, will just threaten your life!"
+
+;Guile
+victory33 = "The techniques I use were developed in a time of war. But I would never use them with the intent to kill!"	
+
+;Haohmaru
+victory34 = "You swung without hesitation. Did my fists meet your expectations?"
+
+;Heihachi Mishima
+victory35 = "Your strength betrays your age! Is it because your spirit is so fierce?"	
+
+;Hibiki Takane
+victory36 = "I've had my own share of worries. What I learned was that the best thing to do is to simply walk forward."
+
+;Iori Yagami
+victory37 = "Your rage is something to respect... But you'll never gain true victory if that's all you rely on!"
+
+;Jin Kazama
+victory38 = "I would never give up, no matter how tough things were. What will you do?"
+
+;Joe Higashi
+victory39 = "As I thought, from a Muay Thai fighter. I could have lost from just a single blow."
+
+;Kazuya Mishima
+victory40 = "The Devil Gene and Satsui no Hado... Am I wrong in feeling that these powers are somehow similar?"
+
+;Kim Kaphwan
+victory41 = "Fighting for what's right is admirable. But... be careful it doesn't become an obsession!"
+
+;King
+victory42 = "Don't give up until the very end! You never know what you're capable of in a pinch!"
+
+;Kyo Kusanagi
+victory43 = "'Man of fire', huh. You remind me a lot of a good friend."
+
+;Kyosuke Kagami
+victory44 = "You're pretty good at studying movements. But there's a big difference between studying and training!"
+
+;Mai Shiranui
+victory45 = "You're as fast as a hornet. I could barely even keep track of you."
+
+;Maki Genryusai
+victory46 = "I'm sure you'll find the man that you're looking for. Just keep fighting with your heart!"
+
+;Morrigan Aensland
+victory47 = "Even if my body turns to dust, my spirit will never bow to your whims!"
+
+;Nakoruru
+victory48 = "It's not the same as the will to fight, but... I felt a strong 'spirit' from you all the same..."
+
+;Raiden
+victory49 = "I wasn't putting on a show. Withstanding your blows took more than I thought I had."
+
+;Rock Howard
+victory50 = "The bigger the wall, the more rewarding it is to break through. I've no doubt that you'll do so!"
+
+;Rolento F. Schugerg
+victory51 = "Creating a nation, huh... That's a dream too big for me to understand."
+
+;Rugal Bernstein
+victory52 = "Learning all martial arts is very different from mastering a single fist!"
+
+;Ryo Sakazaki
+victory53 = "We both seek to find our own limits. I think you walk a road as long as my own..."
+
+;Sakura Kasugano
+victory54 = "All right, let's go again. If I rest easy, I feel like you'll overtake me before I know it."
+
+;Sagat
+victory55 = "That strength is the real deal... It's truly an inspiration!"
+
+;Terry Bogard
+victory56 = "Your fist spoke as clear as day... It's rare to see a conviction as strong as yours!"	
+
+;Ryuhaku Todoh
+victory57 = "To bring just a single technique to such a high level... I still have much to learn."	
+
+;Vega (Dictator)
+victory58 = "The strength I'm searching for has nothing to do with your corrupt power!"
+
+;Vice
+victory59 = "I never attained my strength by taking it easy. All I've learned is from hard work and constant training!"	
+
+;Yang
+victory60 = "Only by finding yourself can you truly live. Remember this."
+
+;Ryuji Yamazaki
+victory61 = "Disappointing. Still, you're strong enough, even if you're holding back."	
+
+;Yun
+victory62 = "When you're young, you'll improve with each fight. I look forward to seeing you again."
+
+;Yuri Sakazaki
+victory63 = "Learning the martial arts with such a cheerful attitude is great. You'll be much stronger with time."	
+
+;Zangief
+victory64 = "Just as I'd expect! You answered my fist with an indomitable spirit!"	
+
+;Zero
+victory65 = "If I had let up for just one second, I would have lost... My journey to be the greatest warrior is still not complete..."
+
+
+
+;====================<EVIL RYU WINQUOTES>====================
+victory66 = "It's hot! The murderous intent is crawling all over my body!"
+victory67 = "Is... Is this the murderous impulse I wanted?"
+victory68 = "These eyes can't help but destroy everything it sees!"
+victory69 = "This is a battle to be the strongest warrior! Where only one is left standing!"
+victory70 = "Your blood is flowing... I'll stop it!"
+
+;Ryu
+victory71 = "This is it! If I defeat myself, I am complete!"
+
+;Evil Ryu
+victory72 = "Satsui no Hado... Only one man can possess such power!"
+
+;Ken
+victory73 = "It's over, Ken. Now, not even you can stop me!"
+
+;Gouki
+victory74 = "The time has come.... We will see who is stronger once and for all!"
+
+;Gouken
+victory75 = "Stop me? Death will welcome you with a cold embrace!"
+
+
+
+;====================<SHADOW RYU WINQUOTES>====================
+victory76 = "I am the answer! I am power!"
+victory77 = "Your journey ends here!"
+victory78 = "The power to defeat, crush, and kill is the only power there is!"
+victory79 = "All shall perish and be forgotten!"
+victory80 = "Death is all!"
+
+;Ryu
+victory81 = "Say it! Your strength comes from me!"
+
+;Ken
+victory82 = "Is that it?"
+
+;Gouki
+victory83 = "I am the power you seek!"
+
+
+
+;====================<EX RYU WINQUOTES>====================
+victory84 = "I will keep on fighting. I know the answer lies ahead."
+victory85 = "The path to becoming a true martial artist never ends."
+victory86 = "What I seek is to use my power beyond fighting."
+victory87 = "I will never forget this fight."
+victory88 = "Prove yourself."
+
+;Ryu
+victory89 = "No matter how far I come, the one I must face... is myself."
+
+;Ken
+victory90 = "You know talking has never been my strong suit. I prefer to let my fists speak for me."
+
+;Gouki
+victory91 = "The path of a true fighter never ends. We can only move forward one step at a time."
+
+
+
+;====================<SHIN RYU WINQUOTES>====================
+victory92 = "This was a battle of spirits, not fists. Search your soul if you want to beat me!"
+victory93 = "I really broke a sweat! How about another round?"
+victory94 = "Blind pride can only hold you back. There are fighters out there stronger than either of us!"
+victory95 = "If you want to be a true fighter... Go and train!"
+victory96 = "I know you can do better! Get up and try again!"
+
+;Ryu
+victory97 = "This power is not to defeat... This is the power to push forward!"
+
+;Ken
+victory98 = 
+
+;Gouki
+victory99 = 
+
+
+
+;====================<EXTRA WINQUOTES>====================
+;Abel
+;victory100 = "The answers you seek will come to you during your journey, my friend."
+
+;Abigail
+;victory101 = "If judging by the force behind your fists, you're the strongest opponent I've yet faced... but, you lack any sort of discipline."
+
+;Adon
+;victory102 = "You have a long way to go if you ever hope to defeat Sagat!"	
+
+;Akira Kazama
+;victory103 = "So your bond with your brother gives you strength? There is much to learn on a warrior's path..."
+
+;Alex
+;victory104 = "Your fists show a lot of potential. I wait for the day we meet again."
+
+;Avenger
+;victory105 = "Sometimes standing together, sometimes opposed, always forcing each other up to great heights. You Avengers are a good team."
+
+;Birdie
+;victory106 = "If you were a wrestler, you may be able to win in a decent way."
+
+;Chris Redfield
+;victory107 = "Your attacks were proof of your military discipline. But too much discipline leads to predictability."
+
+;Cody Travers
+;victory108 = "You cannot run from who you are. The fight won't provide the solace you seek."
+
+;C. Viper
+;victory109 = "Your devices make for interesting moves, but they are easily avoided."
+
+;Decapre
+;victory110 = "Strange...you don't hesitate. Yet, I can see you trembling."
+
+;Dee Jay
+;victory111 = "There's no depth in how you fight, but no darkness either. That's for the best, I think."
+
+;Dudley
+;victory112 = "I am grateful, for you have shown me the grace inherent in the art of boxing."
+
+;Ed
+;victory113 = "Stay true to yourself, and move forward! I'll accept your challenge anytime."
+
+;Elena
+;victory114 = "Listen to the sound of the wind, eh? I think I know what you mean by that."
+
+;Falke
+;victory115 = "I could sense your strong conviction in every one of your attacks."
+
+;F.A.N.G.
+;victory116 = "You rely too much on poison. There's no power in your punches."
+
+;Fei Long
+;victory117 = "There is an artistic quality to your moves. You are a true master!"
+
+;El Fuerte
+;victory118 = "I have no likes or dislikes when it comes to food. I'll eat anything."	
+
+;G
+;victory119 = "I'm not sure how I should feel about this victory..."
+
+;Gen
+;victory120 = "You may be strong, but you lack the drive for self-improvement."
+
+;Gill
+;victory121 = "I'm not sure how I should feel about this victory..."
+
+;Guy
+;victory122 = "Bushin-ryu is an incredible art. Your speed is without rival!"
+
+;Hakan
+;victory123 = "I look forward to seeing what other moves you have in store next time!"
+
+;Hugo
+;victory124 = "You need strength to win, but there is no point to strength alone."
+
+;Ibuki
+;victory125 = "You're speedy, but you have to keep an eye on your opponent if you want to win!"
+
+;Orochi Iori
+;victory126 = "Are you relying on madness? Then I don't consider you as an opponent!"
+
+;Iron Fist
+;victory127 = "It was my pleasure to meet a warrior who fights with honor. I hope that our paths will cross again."
+
+;Jamie Siu
+;victory128 = "Drunken Boxing might be a tricky fighting style, but I can tell you're honest at heart."
+
+;Jean Grey
+;victory129 = "I see you are battling your inner demons. You must prove that you are stronger than they are."
+
+;JP
+;victory130 = "Your strength defies explanation... But I am who I am. I will not waver."
+
+;Juli
+;victory131 = "Precise aim, lean movement... It's like a machine."
+
+;Juni
+;victory132 = "You can't be strong until you feel frustration."	
+
+;Juri Han
+;victory133 = "You can't bring too much baggage into a fight. Not unless you want to drive yourself to madness."
+
+;Kage
+;victory134 = "If you want to exist, then exist. If you want to leave, then leave."
+
+;Karin Kanzuki
+;victory135 = "You strike without hesitation. That is your strength."
+
+;Kimberly Jackson
+;victory136 = "Your take on Bushinryu is unique. Cherish those differences."
+
+;Kolin
+;victory137 = "You have to find your true self before you can hope to beat me!"
+
+;Laura Matsuda
+;victory138 = "Matsuda Jiu-Jitsu...? I seem to remember my master mentioning it."
+
+;Lily Hawk
+;victory139 = "I've sensed this wind before. Is this... A spirit?"
+
+;Lucia Morgan
+;victory140 = "No need to take me in for questioning. I'm just a martial artist looking for answers."
+
+;Luke Sullivan
+;victory141 = "Your fists show you the path forward. I see my younger self in you."
+
+;Makoto
+;victory142 = "You're still wet behind the ears, but I sense great potential within you."
+
+;Manon Legrand
+;victory143 = "Graceful, yet truly powerful. Your throws are superb."
+
+;Marisa Rossetti
+;victory144 = "I could tell you were giving it your all. An excellent fight-and a refreshing one."
+
+;Menat
+;victory145 = "Fate, huh. Whatever it may be, all I can do is keep moving forward."
+
+;Charlie Nash
+;victory146 = "The path of vengeance may not lead to the answers you seek."
+
+;Necalli
+;victory147 = "I felt absolutely nothing from your fists. This has never happened before..."
+
+;Necro
+;victory148 = "You'll never be landing a hit, even if it came from my blind spots."
+
+;Nemesis
+;victory149 = "Face your anger enough times, and eventually you'll overcome it. So come on, let's go for another round!"
+
+;Nina Williams
+;victory150 = "I fight for self-enlightenment. There's no need to take a life for that."
+
+;Oni
+;victory151 = "We have different philosophies on how to acquire power. This much I know."
+
+;Oro
+;victory152 = "Senjutsu? Sounds interesting, but I prefer to walk my own path."
+
+;Paul Phoenix
+;victory153 = "Your goal is to be the best in the universe? I’m looking forward to seeing your progress next time!"
+
+;Poison
+;victory154 = "Though you and I seek a different strength, you are strong in your own right."
+
+;Phoenix Wright
+;victory155 = "Your sense of justice is strong, but a warrior's fist is always stronger than his mouth."
+
+;Q
+;victory156 = "... What a suspicious guy. Don't think you're much of a 'guy' to begin with, though."
+
+;R. Mika
+;victory157 = "Fighting wrestlers is about range. You win or lose on one step alone."
+
+;Rashid
+;victory158 = "We need a rematch where you're more serious. I know you're capable of much more."
+
+;Remy
+;victory159 = "Your fists won't grow stronger while harboring hatred against others."
+
+;Roll
+;victory160 = "No need to lose heart. You too are a great fighter."
+
+;Rose
+;victory161 = "My future may be decided, but I will not stray from my path."
+
+;Rufus
+;victory162 = "So you're looking for Ken, are you? I'll be sure to let him know."
+
+;God Rugal
+;victory163 = "Even when things seem hopeless, I have faith. The path to true mastery means pushing ahead, no matter what!"
+
+;Saki Omokane
+;victory164 = "I hope this fight has reminded you what you are fighting for. Thank me by returning to your own path!"
+
+;Sean
+;victory165 = "Don't give up so easily after 10, or even 20 failures!"
+
+;Seth
+;victory166 = "Fighting makes us stronger, but what does it make you?"
+
+;Sodom
+;victory167 = "Throw away your weapons and armor. I want to fight with my bare hands"
+
+;Hideyasu "Soki" Yuki
+;victory168 = "Your blade is as sharp as my fist is strong. We are true equals in power!"
+
+;T. Hawk
+;victory169 = "There exists no obstacle that cannot be overcome. Experience has taught me this."
+
+;Twelve
+;victory170 = "You have me at a loss... I can't get a fix on your emotions at all."
+
+;Urien
+;victory171 = "There's no doubt you're strong, but your fists lack an essential ingredient."
+
+;Viewtiful Joe
+;victory172 = "You won't defeat me with those weak punches, even if you hit me ten thousand times!"
+
+;Rock Volnutt
+;victory173 = "If you give up now, then you're finished. Could you be satisfied with yourself then?"
+
+;Wolverine
+;victory174 = "And I thought facing someone with one claw was bad enough. You really put me to the test. Thank you."
+
+;Zeku
+;victory175 = "There's definitely a sense of depth to techniques from a long-standing discipline."

@@ -1,0 +1,364 @@
+;====================<VARIABLE LIST>====================
+
+;var(2)  : Air Gravity Timer
+;var(3)  : Jump Type (0 = Normal; 1 = Low Jump; 2 = Long Low Jump; 3 = Long Jump)
+;var(4)  : Chain Combo (0 = Off; 1 = On)
+;var(5)  : Command Cancel Flag
+;var(6)  : Cancel Flag
+;var(7)  : Super Cancel Flag
+;var(8)  : Hyper Cancel Flag
+;var(9)  : Counter Flag
+;var(10) : Button Detect (0 = Light; 1 = Medium; 2 = Heavy)
+;var(11) : 
+;var(12) : 
+;var(13) : Hit Count
+;var(14) :
+;var(15) : Juggle Points
+;var(16) : Juggle Flag
+;var(17) : Ticks UnGuardable
+;var(18) : 
+;var(19) : Throw Escape
+;var(20) : Custom Combo Time
+;var(21) : Super Cancel Flag
+;var(22) : Hyper Cancel Flag
+;var(23) : Super Finish Type (900 = Custom Combo; 3000 = Boomerang Raid; 3100 = Stun Gun Headbutt; 3200 = Sledge Hammer; 3300 = Hyper Bomb; 3320 = Hyper Drop)
+;var(24) :
+;var(25) : Ticks to Apply EX FX
+;var(26) : Ticks Unable to Walk
+;var(27) : 
+;var(28) :
+;var(29) :
+;var(30) : Hit Detection
+;var(31) : Hit Sound (0 = Light Punch; 1 = Medium Punch; 2 = Heavy Punch; 3 = Light Kick; 4 = Medium Kick; 5 = Heavy Kick; 6 = Projectile Hit; 800 = Grab)
+;var(32) : Guard Sound
+;var(33) : Hit Spark (8010 = Light; 8011 = Medium; 8012 = Heavy; 8013 = Special; 8014 = Super)
+;var(34) : Guard Spark (8000 = Normal; 8001 = Special; 8005 = Normal Guard Break; 8006 = Special Guard Break)
+;var(35) : Spark xPos
+;var(36) : Spark yPos
+;var(37) : Special/Super Throws (0 = Allowed; 1 = Not Allowed)
+;var(38) : Throw (0 = Allowed; 1 = Not Allowed)
+;var(39) : 
+;var(40) : Overhaul Flag (0 = Off; 1 = On)
+;var(41) : 
+;var(42) :
+;var(43) : 
+;var(44) : 
+;var(45) : 
+;var(46) : 
+;var(47) : Ticks Back is held down
+;var(48) : Back Charge Buffer
+;var(49) : Ticks Down is held down
+;var(50) : Down Charge Buffer
+;var(51) : Crouching Heavy Punch Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(52) : Slash Elbow Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(53) :
+;var(54) :
+;var(55) : Stun Gun Headbutt Stun Flag (0 = Can't stun; 1 = Can stun)
+;var(56) : 
+;var(57) :
+;var(58) : Game Time
+
+
+;fvar(5) : Amount of Corner Push
+;fvar(10): Damage Dampener
+;fvar(11): Damage Dampener with Counter Multiplier Added
+
+
+
+; ________________________________________________
+;| Alex by KarmaCharmeleon			|
+; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+;====================<CONSTANTS>====================
+[Data]
+life = 950
+power = 5000
+attack = 90
+defence = 100
+fall.defence_up = 50
+lieDown.time = 30
+airJuggle = 15
+sparkNo = s8010
+guard.sparkNo = s8000
+KO.echo = 0
+volume = 128
+IntPersistIndex = 43   ;Abstract Reordered: var(43) grip gauge (and up) carries over between rounds
+FloatPersistIndex = 0
+
+[Size]
+xScale = 0.83333333333
+yScale = 1
+ground.back = 21
+ground.front = 21
+air.back = 21
+air.front = 21
+height = 80
+attack.dist = 160
+proj.attack.dist = 90
+proj.doScale = 0
+head.pos = 12, -92
+mid.pos = 0, -68
+shadowOffset = 0
+draw.offset = 0, 0
+
+[Velocity]
+walk.fwd = 2.79329608939
+walk.back = -1.95530726257
+run.fwd = 4.05027932961, 0
+run.back = -6.14525139665, -2.265625
+jump.neu = 0, -8.59375
+jump.fwd = 3.77094972067
+jump.back = -4.12011173184
+runJump.fwd = 5.58659217877, -10
+runJump.back = -5.79608938547, -10
+airjump.neu = 0,-6.5
+airjump.back = -2.8
+airjump.fwd = 2.8
+
+[Movement]
+airJump.num = 0
+airJump.height = 0
+yAccel = 0.5859375
+stand.friction = 0.85
+crouch.friction = 0.85
+stand.friction.threshold = 1.0
+crouch.friction.threshold = 1.0
+air.gethit.groundLevel = 25
+air.gethit.groundRecover.ground.threshold = -20
+air.gethit.groundRecover.groundLevel = 10
+air.gethit.airRecover.threshold = -1
+air.gethit.airRecover.yAccel = 0.35
+air.gethit.trip.groundLevel = 15
+down.bounce.offset = 0, 20
+down.bounce.yAccel = 0.4
+down.bounce.groundLevel = 12
+down.friction.threshold = 0.5
+
+;====================<WINQUOTES>====================
+[Quotes]
+victory0 = "Jeez... Are you the gutsy type or just someone who doesn't know when to pack it up..."
+victory1 = "You're up for another round, for real? No can do, you're starting to rub off some strange habits onto me."
+victory2 = "It doesn't matter how many of those weak attacks you throw at me, none of them will get the job done."
+victory3 = "Don't think too deep into it. It's not as if I'm doing anything precise."
+victory4 = "I can't tangle with ya' anymore. I'd have to retrain myself even more if I did."
+victory5 = "You're strong, that's for sure... You were worth beating."
+victory6 = "If it's training we're talking about here, I'm training till I drop everyday."
+victory7 = "You overestimated your own capabilities."
+
+;Alex
+victory8 = "Well, well. It seems I've still got a ways to go yet."
+
+;Abigail
+victory9 = "You got the power. But you need a lot more skill to back it up."
+
+;Akira Kazama
+victory10 = "If you want my autograph, you gotta earn it. Start by putting up a decent fight."
+
+;Angel
+victory11 = "You're tough, but all that clowning around cost ya. Next time, take me seriously."
+
+;Balrog (Claw)
+victory12 = "If your face is so important, maybe you shouldn't show it in public."
+
+;Batsu Ichimonji
+victory13 = "Thought you could win on guts alone? You obviously didn't know who you were dealing with!"
+
+;Birdie
+victory14 = "You're not a heel, just a glorified jobber!"
+
+;Blanka
+victory15 = "It's kinda fun going up against beastly guys like you once in a while."
+
+;Cammy White
+victory16 = "Your speed might serve you well on the battlefield, but you won't beat me if that's all you got."
+
+;Casshern
+victory17 = "I can read all of your moves, kid. You thought that helmet was gonna save you, huh? Thought wrong!"
+
+;Chun-Li
+victory18 = "Your kicks are something else. Did you hone them on the battlefield?"
+
+;Cody Travers
+victory19 = "I would've liked to have fought you back when you were just a young scrappy guy on the streets."
+
+;Dan Hibiki
+victory20 = "The world's full of people. Some are strong, and some are like you."
+
+;Dhalsim
+victory21 = "What the...? How can your arms and legs extend like that?"
+
+;Dudley
+victory22 = "A clean fight's all well and good, but there's not much of a point to it if you lose."
+
+;Ed
+victory23 = "You have to obtain your own freedom. Seems you already get that, though."
+
+;Elena
+victory24 = "Yeah, I had fun, especially with how I felt great after winning."
+
+;F.A.N.G.
+victory25 = "You've got height and reach, but you're not making it work for you."
+
+;Falke
+victory26 = "Your style reeks of desperation. That doesn't make for a very fun fight."
+
+;Frank West
+victory27 = "Cripes, you're one tough customer. Are all cameramen like you?"
+
+;G
+victory28 = "President? Pretty sure I never voted for you."
+
+;Gill
+victory29 = "Enough talk. Show me your power."
+
+;Gouki
+victory30 = "So there are strong fighters out there after all."
+
+;The Griffon Mask
+victory31 = "You're built like a mountain with a mask. But I chop mountains down with the edge of my hand."
+
+;Guile
+victory32 = "For a so-called army man, you don't fare too well in actual battle."
+
+;E. Honda
+victory33 = "Pretty sure you coulda done better. Get back to training, buddy."
+
+;Hugo
+victory34 = "I ain't that much of a goofball to just take all of those massive blows."
+
+;Ibuki
+victory35 = "You won't get any better if you keep this up. Focus a little more on the fight."
+
+;Juri Han
+victory36 = "If you're gonna dish it out, you gotta be ready to take it, too."
+
+;K'
+victory37 = "You act like you don't care, but you fight like hell. Guess we ain't that different after all."
+
+;Karin Kanzuki
+victory38 = "You're good at putting on the pressure. Catching you was tough."
+
+;Ken Masters
+victory39 = "Just what I'd expect from a US martial arts tournament champ. You're in a different league."
+
+;Kolin
+victory40 = "Never seen anyone fight like you. Can't tell if you're strong or not..."
+
+;Laura Matsuda
+victory41 = "You want me to join your school? Even though I just beat you?"
+
+;Lucia Morgan
+victory42 = "Do I like to fight? Yeah... Against strong opponents."
+
+;Luke Sullivan
+victory43 = "Unfortunately for you, it takes more than that to defeat me!"
+
+;M. Bison (Boxer)
+victory44 = "You make a pretty good heel! I won't hold back when I send you flying!"
+
+;Makoto
+victory45 = "So you're the type who rushes in headfirst, huh. Now that's someone who's pretty easy to deal with."
+
+;Menat
+victory46 = "Sorry, I don't really buy into astrology or whatever."
+
+;Morrigan Aensland
+victory47 = "You're one creepy lady, you know. There ain't gonna be a second date, that's for sure!"
+
+;Charlie Nash
+victory48 = "What are those scars on your arm and face? There's no way you got them in that last match."
+
+;Necalli
+victory49 = "My soul won't be taken that easily, no matter what you are!"
+
+;Necro
+victory50 = "Both freedom and victory are things you earn with your own two hands."
+
+;Oro
+victory51 = "I can't afford to get careless with you, otherwise I'm in trouble. That's why I didn't hold back against you."
+
+;Poison
+victory52 = "I hope for your sake, you're a better promoter than you are a fighter."
+
+;PTX-40A
+victory53 = "Those big guns of yours are strong, but slow. Too bad my fists are lightning fast!"
+
+;Q
+victory54 = "I have no clue who you are, but how about you show me that mug of yours?"
+
+;R. Mika
+victory55 = "You don't have what it takes to be a face. Not the power, nor the technique."
+
+;Raiden
+victory56 = "Can't catch these hands if you can't see 'em, punk!"
+
+;Rashid
+victory57 = "You're fast, but your blows are weak. You could hit me a thousand times and still not win."
+
+;Remy
+victory58 = "At the end of the day, the only thing to learn from a street fight is who's strong and who's weak."
+
+;Rock Howard
+victory59 = "You're fighting to prove something... I respect that. Come find me when you're ready to go all out."
+
+;Rock Volnutt
+victory60 = "Sorry, kid. Going easy on ya wouldn't make me much of a man, now would it?"
+
+;Roll
+victory61 = "... This girl is like a hardware shop and an armory all rolled into one!"
+
+;Rose
+victory62 = "Rough times ahead, huh? Sounds like fun."
+
+;Ryu
+victory63 = "You're an interesting one... What is it that your eyes see?"
+
+;Shadow Ryu
+victory64 = "You're not weak, but no way would I call you strong."
+
+;Sagat
+victory65 = "The thicker the wall, the more satisfying to break through."
+
+;Saki Omokane
+victory66 = "Wait, this chick's defending peace on earth? Is this some kind of sick joke?"
+
+;Sakura Kasugano
+victory67 = "Well, this is a surprise. Seems like we're both looking for the same guy."
+
+;Sean Matsuda
+victory68 = "What happened to all of that vigor you had at the start? I guess you already lost the will to act tough."
+
+;Seth
+victory69 = "Data, huh...? Boring."
+
+;Hideyasu 'Soki' Yuki
+victory70 = "All that armor to eat attacks you could just dodge. You got your priorities mixed up, buddy."
+
+;Twelve
+victory71 = "Are there even more of you guys out there in the world?"
+
+;Urien
+victory72 = "Can you still be king or emperor or whatever if you lose this badly?"
+
+;Vega
+victory73 = "Fighting you was worth it, but something feels off..."
+
+;Viewtiful Joe
+victory74 = "They may call you the hero, but they call me the winner. What do you think about that?"
+
+;Yashiro Nanakase
+victory75 = "You can yell, you can flex all day long. But it's not gonna work for me, brother."
+
+;Yang Lee
+victory76 = "Logic doesn't show strength. The reason why people lose is because they're weak."
+
+;Yun Lee
+victory77 = "It's as clear as day what your eyes are gunning for. Your cap's visor ain't doing much to help here."
+
+;Zangief
+victory78 = "If it's a straight up battle of brawn you want, I won't lose!"
+
+;Zeku
+victory79 = "Man, I don't get ninjas. All this deception and trickery, when all you have to do is just punch the other guy."
+
+;Zero
+victory80 = "Jeebus, I ain't never seen a weapon like that on the streets of Brooklyn!"

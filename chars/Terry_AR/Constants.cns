@@ -1,0 +1,422 @@
+;====================<VARIABLE LIST>====================
+
+;var(2)  : Air Gravity Timer
+;var(3)  : Jump Type (0 = Normal; 1 = Low Jump; 2 = Long Low Jump; 3 = Long Jump)
+;var(4)  : Chain Combo (0 = Off; 1 = On)
+;var(5)  : Command Cancel Flag
+;var(6)  : Cancel Flag
+;var(7)  : Super Cancel Flag
+;var(8)  : Hyper Cancel Flag
+;var(9)  : Counter Flag
+;var(10) : Button Detect (0 = Light; 1 = Medium; 2 = Heavy)
+;var(11) : 
+;var(12) : 
+;var(13) : Hit Count
+;var(14) :
+;var(15) : Juggle Points
+;var(16) : Juggle Flag
+;var(17) : Ticks UnGuardable
+;var(18) : ProjContact (0 = No; 1 = Yes)
+;var(19) : Throw Escape
+;var(20) : Custom Combo Time
+;var(21) : Super Cancel Flag
+;var(22) : Hyper Cancel Flag
+;var(23) : Super Finish Type (900 = Custom Combo; 3000 = Power Geyser; 3100 = Buster Wolf; 3200 = High Angle Geyser; 3300 = Trinity Geyser; 3400 = Rising Force; 3500 = Rising Beat)
+;var(24) :
+;var(25) : Ticks to Apply EX FX
+;var(26) : Ticks Unable to Walk
+;var(27) : 
+;var(28) :
+;var(29) :
+;var(30) : Hit Detection
+;var(31) : Hit Sound (0 = Light Punch; 1 = Medium Punch; 2 = Heavy Punch; 3 = Light Kick; 4 = Medium Kick; 5 = Heavy Kick; 6 = Projectile Hit; 800 = Grab)
+;var(32) : Guard Sound
+;var(33) : Hit Spark (8010 = Light; 8011 = Medium; 8012 = Heavy; 8013 = Special; 8014 = Super)
+;var(34) : Guard Spark (8000 = Normal; 8001 = Special; 8005 = Normal Guard Break; 8006 = Special Guard Break)
+;var(35) : Spark xPos
+;var(36) : Spark yPos
+;var(37) : Special/Super Throws (0 = Allowed; 1 = Not Allowed)
+;var(38) : Throw (0 = Allowed; 1 = Not Allowed)
+;var(39) : Projectile Flag (0 = Off; 1 = On)
+;var(40) : Mode (0 = Classic; 1 = EX)
+;var(41) : 
+;var(42) :
+;var(43) : Player ID to apply flames to
+;var(44) : Flame particles timer
+;var(45) : 
+;var(46) : 
+;var(47) :
+;var(48) :
+;var(49) : Ticks Down is held down
+;var(50) : Down Charge Buffer
+;var(51) : EX Crack Shoot
+;var(52) : EX Fire Kick Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(53) : EX Power Charge Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(54) : Buster Wolf Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(55) :
+;var(56) :
+;var(57) :
+;var(58) : Game Time
+
+
+;fvar(5) : Amount of Corner Push
+;fvar(10): Damage Dampener
+;fvar(11): Damage Dampener with Counter Multiplier Added
+
+
+
+; ________________________________________________
+;| Terry Bogard by KarmaCharmeleon		|
+; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+;====================<CONSTANTS>====================
+[Data]
+life = 950
+power = 5000
+attack = 90
+defence = 100
+fall.defence_up = 50
+lieDown.time = 30
+airJuggle = 15
+sparkNo = s8010
+guard.sparkNo = s8000
+KO.echo = 0
+volume = 128
+IntPersistIndex = 0
+FloatPersistIndex = 0
+
+[Size]
+xScale = 1
+yScale = 1
+ground.back = 18
+ground.front = 18
+air.back = 18
+air.front = 18
+height = 78
+attack.dist = 160
+proj.attack.dist = 90
+proj.doScale = 0
+head.pos = -4, -90
+mid.pos = 0, -63
+shadowOffset = 0
+draw.offset = 0, 0
+
+[Velocity]
+walk.fwd = 3.56145251397
+walk.back = -2.37430167598
+run.fwd = 6.14525139665, 0
+run.back = -7.2625698324, -4.53125
+jump.neu = 0, -8.90625
+jump.fwd = 3.91061452514
+jump.back = -4.46927374302
+runJump.fwd = 5.86592178771, -10.2421760559
+runJump.back = -6.70391061453, -10.2421760559
+airjump.neu = 0,-6.5
+airjump.back = -2.8
+airjump.fwd = 2.8
+
+[Movement]
+airJump.num = 0
+airJump.height = 0
+yAccel = 0.48828125
+stand.friction = 0.85
+crouch.friction = 0.85
+stand.friction.threshold = 1.0
+crouch.friction.threshold = 1.0
+air.gethit.groundLevel = 25
+air.gethit.groundRecover.ground.threshold = -20
+air.gethit.groundRecover.groundLevel = 10
+air.gethit.airRecover.threshold = -1
+air.gethit.airRecover.yAccel = 0.35
+air.gethit.trip.groundLevel = 15
+down.bounce.offset = 0, 20
+down.bounce.yAccel = 0.4
+down.bounce.groundLevel = 12
+down.friction.threshold = 0.5
+
+
+;====================<WINQUOTES>====================
+[Quotes]
+victory0 = "You don't want to keep losing, right? I'll accept a rematch anytime!"
+victory1 = "If this is a world championship, I think the bar for qualification should be raised!"
+victory2 = "If you've got time to feel sorry for yourself, you've got time to get stronger!"
+victory3 = "It's been a while since a fight's got my blood pumping like this!"
+victory4 = "This is the strength of the Hungry Wolf. Do you understand?"
+victory5 = "You'd never make it in South Town with those skills!"
+victory6 = "Phew! That was pretty thrilling!"
+victory7 = "That's the best you can do? Maybe consider the skill level of your opponent before you challenge them!"
+
+;Terry Bogard
+victory8 = "Couldn't copy the spirit, huh? You look just like me, though!"
+
+;Andy Bogard
+victory9 = "Your speed and skill are on point! Still not gonna just let you win, though!"
+
+;Joe Higashi
+victory10 = "Hey Joe, you're not holding back, are you? Always go all out. That's the rule!"
+
+;Geese Howard
+victory11 = "You're up to something, aren't you? I won't give you a free pass to do whatever you want!"
+
+;Rock Howard
+victory12 = "Go ahead, throw everything you've got at me! Then we'll talk about the future!"
+
+;A.K.I.
+victory13 = "Man, an assassin that uses poison? Really, get away from me, ugh."
+
+;Alice Garnet Nakata 
+victory14 = "You fought way longer than I thought you would, Alice! I'm looking forward to next time!"
+
+;Ash Crimson
+victory15 = "Sorry, kid! Looks like I got too serious! If you don't like it, you can always try and challenge me again!"
+
+;Evil Ash
+victory16 = "You 'rule time', yet you lost to me? That power was all in your mind."
+
+;Athena Asamiya
+victory17 = "Sorry, I don't want to get on your bad side. I just wanted to show you that my fangs are still sharp."
+
+;Balrog (Claw)
+victory18 = "Fangs should be bared when needed. You don't wanna leave em' out."
+
+;Benimaru Nikaido
+victory19 = "You'd better have the luck to match that big mouth of yours!"
+
+;Billy Kane
+victory20 = "You're not the type to hang your tail between your legs, are you, Billy? Get up already!"
+
+;M. Bison (Boxer)	
+victory21 = "You're not fit to be a champ! You're blinded by greed!"
+
+;Blanka
+victory22 = "Rather than wilderness, it's just your nature, you know!"
+
+;Cammy White
+victory23 = "Calculation alone can't keep Terry down. It's all about the emotion in your fists!"
+
+;Chang Koehan / Choi Bounge
+victory24 = "Just how long have you two been getting away with this? Kim's got a lot of work to do."
+
+;Chun-Li
+victory25 = "I've fought Chinese Martial Arts many times before, it still amazes me how deep its knowledge goes!"
+
+;Clark Still
+victory26 = "Sorry, but today I just can't be beat! It'll be a straight shot to victory for me!"
+
+;Goro Daimon
+victory27 = "I'm down for a rematch anytime! Hell, I wouldn't mind going at it again right now. How about it?"
+
+;Duo Lon
+victory28 = "You just let your guard down there. You didn't think you could beat me like that, did ya?"
+
+;Dan Hibiki
+victory29 = "Sorry pal, but you don't have the luck or skills to be a star."
+
+;Dhalsim
+victory30 = "Hey, hey... That's one hell of a dislocation! That's not gonna get better anytime soon, is it?"
+
+;Dee Jay
+victory31 = "I like my music a bit more mellow, but what you're playing isn't bad at all!"
+
+;Dolores
+victory32 = "Liquid, solid... That mud is bigger trouble than I thought. The more I know!"
+
+;Duck King
+victory33 = "You've been out of the game for too long. I'm sorry, but I'm eons ahead of you."
+
+;Eagle
+victory34 = "Did you wanna play a game with that baton? Against a wolf, that's a deadly game."
+
+;Ed
+victory35 = "You're reckless and rash, to put it bluntly. But that's what it means to be young."
+
+;Elisabeth Blanctorche 
+victory36 = "I don't know what's your problem, but just worrying won't help! Why don't you try taking a chance?"
+
+;Gouki
+victory37 = "You're like a demon. Just looking at you gave me the shakes."
+
+;Shin Gouki
+victory38 = "So, you're no longer human. There's a nasty piece of work."
+
+;Guile
+victory39 = "Martial Arts have come a long way. Try and catch up with me!"
+
+;Hibiki Takane
+victory40 = "Your eyes are the eyes of a fighter. Fight with confidence!"
+
+;Haohmaru
+victory41 = "A clash of fists and swords. Not a bad idea. I had a blast!"
+
+;E. Honda
+victory42 = "So that's 'Sumo', huh. Powerful & Mysterious!"
+
+;Hwa Jai
+victory43 = "Your Muay Thai is a lot different from Joe's... I had fun with you though!"
+
+;Iori Yagami
+victory44 = "I can't say that I don't hate people nowadays. I'll just fight like a wolf... and let my heart howl!"
+
+;Orochi Iori
+victory45 = "A wolf can't be killed by a rabid dog!"
+
+;Isla
+victory46 = "Everybody in South Town heard of you, graffiti girl. Hope everything works out for you!"
+
+;Jamie Siu
+victory47 = "So that's drunken fist kung-fu. Neat. I'll have you know my style has its roots in China too."
+
+;B. Jenet
+victory48 = "I'm not the kinda guy who can appeal to the fans during a fight. Talk soon, okay?"
+
+;JP
+victory49 = "No matter where I go, there's always someone looking to spoil the party."
+
+;Juri Han
+victory50 = "Hey, calm down a bit would you? No need to give me that crazy eye."
+
+;K'
+victory51 = "Wanna go into overtime, buddy? Your fists are telling me you haven't admitted defeat yet!"
+
+;Mr. Karate
+victory52 = "Wait, has Jeff fought you before? That means... I sort of got to fight him through you."
+
+;Ken Masters
+victory53 = "This burning fist is the real deal! Make sure to burn it into your heart!"
+
+;Sie Kensou
+victory54 = "Maybe you should go on a journey. Traveling may give you some experience."
+
+;Kim Kaphwan
+victory55 = "You're still flying, Kim! It's not missionary work... Uh, how's the rehabiliation going?"
+
+;Kimberly Jackson
+victory56 = "Your ninja stuff is pretty colorful. Is that a trend or something?"
+
+;King
+victory57 = "Either stand up, or run off with your tail between your legs. Ask your soul!"
+
+;Kula Diamond
+victory58 = "Uh oh, you okay, little miss? I'll make it up to you by buying you something tasty at Richard's place."
+
+;Kyo Kusanagi
+victory59 = "Sorry Kyo, but this win is mine. The wolf in me still wants to run wild!"
+
+;Kyosuke Kagami
+victory60 = "That's the Southtown Style welcome for you. Come again anytime, I'm always ready!"
+
+;Leona Heidern
+victory61 = "What? You're giving up already? In South Town, this is just how we say 'hello'!"
+
+;Luke Sullivan
+victory62 = "The young blood keep on coming. But I'm not ready to retire just yet."
+
+;Luong
+victory63 = "Your taekwondo's got a unique flavor — different from Kim's. That was a blast!"
+
+;Mai Shiranui
+victory64 = "I'm telling you! I don't know anything about Andy!"
+
+;Maki Genryusai	
+victory65 = "It was an all-out attack. What a fresh battle!"
+
+;Manon Legrand
+victory66 = "For a ballerina, you sure do go crazy with your moves, huh? Hahaha!"
+
+;Marisa Rossetti
+victory67 = "Now that was fun! I love when my opponent puts all their strength into a fight!"
+
+;Blue Mary
+victory68 = "Hope that helped refresh you! You work too hard. Let's go grab some drinks!"
+
+;Mature
+victory69 = "My dad always told me to watch out for women like you. So I'll be going now."
+
+;Maxima
+victory70 = "That was a great fight! I always welcome heated matches like that anytime!"
+
+;Meitenkun
+victory71 = "You always sleep when you train? Next time I drop by, let's spar!"
+
+;Morrigan Aensland
+victory72 = "If this wasn't a fighting tournament, I'd have taken you up on your little offer."
+
+;Nakoruru
+victory73 = "I'm all for preserving nature... But you're not gonna get anywhere just being nice!"
+
+;Oswald
+victory74 = "No priority seat for you, old man! You are one tough old geezer!"
+
+;Raiden
+victory75 = "Hey, it's been a while. You've gotten stronger and bigger, haven't you?"
+
+;Ralf Jones
+victory76 = "I was raised on the streets, so I'm used to fighting tough guys, even if I'm taking on the army!"
+
+;Rashid
+victory77 = "Letting the wind do your fighting is unique. I let it tell me where I'm heading next."
+
+;Robert Garcia
+victory78 = "Hey! You okay with losing all the time, handsome? If you don't like that, then come and get me!"
+
+;Rolento F. Schugerg
+victory79 = "If you're scouting for mercenaries, I'll pass. I don't like giving orders, and I don't like taking them."
+
+;Rugal Bernstein
+victory80 = "It's a bit of a scam to call yourself a master class fighter when you're only that good."
+
+;God Rugal
+victory81 = "Beating you doesn't make me feel like I've surpassed God."
+
+;Ryo Sakazaki
+victory82 = "Kyokugen's limits aren't an easy thing to reach. Isn't that right, Ryo?"
+
+;Ryu
+victory83 = "That was a great fight. Let's fight again sometime!"
+
+;Evil Ryu
+victory84 = "You went out with a bang. I'm a little hot under the collar...!"
+
+;Sagat
+victory85 = "I've misunderstood Muay Thai until now. I know a guy who's not so serious."
+
+;Sakura Kasugano
+victory86 = "I'm so happy! Not just cute, but strong to boot!"
+
+;Shen Woo
+victory87 = "If you don't like being on the floor, stand up! That's how I grew stronger!"
+
+;Shun'ei
+victory88 = "I won't lose so easily, junior! I shouldn't talk, but you need to train properly!"
+
+;Ryuhaku Todoh
+victory89 = "The spirit of ancient martial arts... Nice! I felt your commitment to the fight loud and clear!"
+
+;Vanessa
+victory90 = "A great rush, but your punches are too light!"
+
+;Vega (Dictator)
+victory91 = "You're one of them, aren't you? Then, I'll never forgive you!"
+
+;Shin Vega (Dictator)
+victory92 = "Who flubbed the spreadsheet formula to get this mess!?"
+
+;Vice
+victory93 = "I'm still alive and kicking. I don't appreciate your rough treatment!"
+
+;Whip
+victory94 = "You can whip a lion into submission, but you can never tame a wolf like me!"
+
+;Ryuji Yamazaki
+victory95 = "Tch. Compared to you, a rattlesnake's like a puppy."
+
+;Yang Lee/Yun Lee
+victory96 = "Power and logic are nothing without spirit!"
+
+;Yashiro Nanakase
+victory97 = "I'm totally up for fighting you, but only if you're playing legit."
+
+;Yuri Sakazaki
+victory98 = "I'm all for having fun while fighting, but this tournament's all about the nail-biting tension!"
+
+;Zangief
+victory99 = "Sorry about that! Red and Stars are my lucky symbols!"

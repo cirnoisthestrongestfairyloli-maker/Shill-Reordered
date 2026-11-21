@@ -1,0 +1,509 @@
+[Statedef 1103 - Straight Grapple X]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = -1
+
+[state 0]
+type = posset
+trigger1 = 1
+y = 0
+
+[State 0, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movecamera = 1,0
+
+[State 820, 1]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 1104
+
+[state 0]
+type = selfstate
+trigger1 = time = 120
+value = 0
+ctrl = 1
+
+[Statedef 45000]
+type     = A
+movetype = H
+physics  = N
+velset = 0,0
+
+[State 820, CA]
+type = changeanim
+trigger1 = time = 0
+persistent = 0
+value = 5030
+
+[State 820, CA]
+type = changeanim
+trigger1 = hitshakeover
+trigger1 = selfanimexist(5060)
+persistent = 0
+value = 5060
+
+[State 820, CA]
+type = changeanim2
+trigger1 = hitshakeover
+trigger1 = !selfanimexist(5060)
+persistent = 0
+value = 45000
+
+[State 250, T]
+Type = Turn
+Trigger1 = p2dist x < 0
+
+[state 4250, VelS]
+type = velset
+trigger1 = hitshakeover
+x = gethitvar(xvel)*facing;*hitshakeover
+y = gethitvar(yvel);*hitshakeover
+persistent = 0
+
+[State 250, VA]
+type = veladd
+trigger1 = hitshakeover
+y = gethitvar(yaccel)
+
+[State 250, CS]
+type = changestate
+trigger1 = vel y > 0
+trigger1 = pos y >= -(vel y)
+value = 45100
+
+;------------------------------------------
+; Groundslam
+[Statedef 45100]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+
+[State 251, PS]
+type = posset
+trigger1 = time = 0
+y = 0;const(size.mid.pos.y)
+
+[State 251, Shake]
+type = envshake
+trigger1 = time = 0
+time = 15
+freq = 100
+phase = 100
+ampl = 8
+
+[State 251, CA]
+Type = ChangeAnim
+Trigger1 = Time < 3
+Trigger1 = SelfAnimExist(5035)
+Value = 5035
+
+[State 251, PF]
+Type = PosFreeze
+Trigger1 = Time < 4
+
+[State 1451, LA]
+type = null;lifeadd
+trigger1 = time = 0
+value = -5
+
+[state 4250, CA2]
+type = changeanim2
+trigger1 = time = 3
+value = 2500
+
+[State 1112]
+type = VelSet
+trigger1 = Time = 0
+x = -1.0
+y = -9.0
+
+[State 251, VA]
+type = VelAdd
+trigger1 = time > 4
+y = .3
+
+[State 251, AD]
+Type = AngleDraw
+Trigger1 = Time > 3
+trigger1 = Pos Y < 0
+Value = Time*30
+
+[State 251, OS]
+Type = OffSet
+Trigger1 = anim = 250
+trigger1 = pos y < 0
+Y = Const(Size.Mid.Pos.Y)
+
+[State 851, SS]
+type = selfstate
+trigger1 = vel y > 0
+trigger1 = pos y >= 0
+value = 5100
+
+;========================<HIT WALL>=============================
+;---Hit Pause---
+[Statedef 1125]
+type    = A
+movetype= H
+physics = N
+sprpriority = 1
+velset = -16,-4
+facep2 = 1
+
+[State 700, 2];ñ≥ìGÇÃèÛë‘ÇçÏÇÈ
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 820, 1]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 12600
+
+[State 821, 1]
+type = VelAdd
+Trigger1 = time != 0
+y = .22
+
+[State 821, 3] 
+type = changeState
+trigger1 = backedgedist <= 32
+value = 1126
+
+[State 821, 3] 
+type = selfState
+triggerall = Vel Y > 0
+trigger1 = Pos Y >= 10
+value = 5100
+
+
+;---Falling---
+[Statedef 1126]
+type    = A
+movetype= H
+physics = N
+sprpriority = 1
+velset = 0,0
+
+[state a]
+type = posadd
+trigger1 = time = 0
+x = -30
+
+[State 700, 2];ñ≥ìGÇÃèÛë‘ÇçÏÇÈ
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 820, 1]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 12610
+
+[State 1027, âπÇñ¬ÇÁÇ∑]
+type = PlaySnd
+trigger1 = Time = 0
+value = F7,2
+
+[State 1020, 4]
+type = EnvShake
+trigger1 = time = 0
+time = 10
+ampl = -5
+freq = 95
+phase = 95
+
+[State 821, 3] 
+type = changeState
+trigger1 = animtime = 0
+value=1127
+
+
+;---Hitting Wall---
+[Statedef 1127]
+type    = A
+movetype= H
+physics = N
+sprpriority = 1
+velset = 0,0
+
+[state a]
+type = velset
+trigger1 = time = 0
+x = 2.5
+y = -12
+
+[state a]
+type = veladd
+trigger1 = 1
+y = 0.46
+
+[State 820, 1]
+type = ChangeAnim
+Trigger1 = Time = 0
+value = 5050
+
+[State 821, 3] 
+type = selfState
+trigger1 = vel y > 0
+trigger1 = pos y >= -10
+value = 5050
+
+[Statedef 3003 - Bat Swarm Tag Team P2 State]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = -1
+
+
+[State 820, 1]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 3005
+
+[State 803, end]
+type = changestate
+trigger1 = time = 90
+value = 5040
+
+[Statedef 2102 - Bat Swarm P2 State]
+type    = S
+movetype= H
+physics = N
+velset = 0,0
+
+[state 0]
+type = nothitBy
+trigger1 = 1
+value = ,AA,AP
+
+[State 52, 1]
+type = Hitfallset
+trigger1 = 1
+value = 0
+
+[State 0, PosSet]
+type = PosSet
+trigger1 = 1
+y = 0
+X = 0
+
+[State 52, 1]
+type = VelSet
+trigger1 = time = 0
+x = 0
+y = 0
+
+[State 820, 1]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 2102
+
+[State 2141,changestate]
+type = changestate
+trigger1 = animtime = 0
+value = 2103
+ctrl = 0
+
+[Statedef 2103]
+type = A
+movetype = H
+physics = N
+velset = -2,-8
+facep2 = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = IsHelper
+
+[State 865, 2]
+type = VelAdd
+trigger1 = 1
+y = .5
+
+[State 865, 3]
+type = ChangeAnim2
+trigger1 = Time = 0
+value = 1321
+
+[State 865, 5]
+type = SelfState
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y > 0
+value = 5100
+
+
+
+[Statedef 802 - P2 Throw State]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = -1
+
+
+
+[State 0, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1,0
+
+[State 820, 1]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 802
+
+[Statedef 4501 - Bat Grappler P2 State]
+type = A
+movetype = H
+physics = N
+velset = 0,-6
+facep2 = 1
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = IsHelper
+
+[State 865, 2]
+type = VelAdd
+trigger1 = time >5
+y = .1
+
+[State 865, 3]
+type = ChangeAnim2
+trigger1 = Time = 0
+value = 4501
+
+[State 865, 5]
+type = SelfState
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y > 0
+value = 5100
+
+[Statedef 4506]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+
+[State 1000, PalFX]
+type = PalFX
+trigger1 = !time
+time = 1
+
+[State 820, 1]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 4506
+
+[State 810, 3]
+type = SprPriority
+Trigger1 = 1
+value = 9
+
+[State 0, Turn]
+type = Turn
+trigger1 = Enemynear,Facing = Facing
+
+[State 4502,]
+type = posadd
+trigger1 = time = [0,27]
+Y = 1
+
+[State 13302, 1]
+type = VelSet
+trigger1 = time > 27
+x = 0
+y = -45
+
+[State 1000, ]
+type = Veladd
+trigger1 = time > 27
+y = .65
+
+[State 13302, 2]
+type = ScreenBound
+trigger1 = Animelem = 1,>= 0
+value = 0
+movecamera = 0,0
+
+[State 1522,SelfState]
+type = SelfState
+trigger1 = time >= 400
+value = 5100
+
+[Statedef 4509]
+type    = L
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 1
+
+[State 14000, 0]
+type = destroyself
+trigger1 = ishelper
+
+[State 3512]
+type = lifeadd
+trigger1 = time = 0
+value = -200   ;Abstract Reordered: was -270
+kill = 1
+absolute = 1
+persistent = 0
+
+[State 170, ]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 820, 1]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 4509
+
+[State 2100, ]
+type = PosSet
+trigger1 = 1
+y = 0
+
+[State 820, 1]
+type = SelfState
+trigger1 = Animtime = 0
+trigger1 = Alive
+value = 5120
+
+[State 820, 1]
+type = SelfState
+trigger1 = Animtime = 0
+trigger1 = !Alive
+value = 5150
+
+[Statedef 3201 - Dark Knight P2 State]
+type    = A
+movetype= H
+physics = S
+velset = 0,0
+sprpriority = -1
+
+[state 1250, pos]
+type = posset
+trigger1 = 1
+y = 0
+
+[State 0, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1,0
+
+[State 820, 1]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 5300

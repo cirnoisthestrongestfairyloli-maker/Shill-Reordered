@@ -4227,6 +4227,14 @@ type = DestroySelf
 trigger1 = AnimTime = 0
 
 [Statedef -2]
+;Abstract Reordered: apply the colour slot that was picked (palettes 1,2..1,14 live inside the sprite file)
+[State -2, AR colour slot]
+type = RemapPal
+trigger1 = !ishelper
+source = 1,1
+dest = 1,palno
+ignorehitpause = 1
+
 
 ;Reverse Beat
 

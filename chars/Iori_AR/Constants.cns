@@ -1,0 +1,376 @@
+;====================<VARIABLE LIST>====================
+
+;var(2)  : Air Gravity Timer
+;var(3)  : Jump Type (0 = Normal; 1 = Low Jump; 2 = Long Low Jump; 3 = Long Jump)
+;var(4)  : Chain Combo (0 = Off; 1 = On)
+;var(5)  : Command Cancel Flag
+;var(6)  : Cancel Flag
+;var(7)  : Super Cancel Flag
+;var(8)  : Hyper Cancel Flag
+;var(9)  : Counter Flag
+;var(10) : Button Detect (0 = Light; 1 = Medium; 2 = Heavy)
+;var(11) : 127 Shiki: Aoibana Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(12) : EX 311 Shiki: Tsuma Kushi Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(13) : Hit Count
+;var(14) : Followup Detection (0 = Off; 218 = Ge-Shiki: Yumebiki ; 1200-1250 = 127 Shiki: Aoibana; 3220-3240 = Ura 316 Shiki: Saika)
+;var(15) : Juggle Points
+;var(16) : Juggle Flag
+;var(17) : Ticks UnGuardable
+;var(18) : ProjContact (0 = No; 1 = Yes)
+;var(19) : Throw Escape
+;var(20) : Custom Combo Time
+;var(21) : Super Cancel Flag
+;var(22) : Hyper Cancel Flag
+;var(23) : Super Finish Type (900 = Custom Combo; 3000 = Ya Otome; 3100 = Ya Sakazuki; 3200 = Saika; 3300 = Oni Homura; 3400 = Saku Tsuma Gushi; 3500 = Yami Sogi; 3600 = Chi no Boso; 3700 = Sanjingi no Ni; 3800 = Homura Hotogi; 3900 = Ya Shiori; 4000 = Hozuki; 4100 = Aoi Hanataba; 4200 = Maga Kaze; 4300 = Yatagarasu)
+;var(24) : Special ProjContact (0 = No ; 1 = Yes)
+;var(25) : Ticks to Apply EX FX
+;var(26) : Ticks Unable to Walk
+;var(27) : 104 Shiki: Nueuchi Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(28) : 401 Shiki: Shogetsu Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(29) : Ura 1018 Shiki: Ya Shiori Juggle Flag (0 = Can't juggle; 1 = Can juggle)
+;var(30) : Hit Detection
+;var(31) : Hit Sound (0 = Light Punch; 1 = Medium Punch; 2 = Heavy Punch; 3 = Light Kick; 4 = Medium Kick; 5 = Heavy Kick; 6 = Projectile Hit; 800 = Grab)
+;var(32) : Guard Sound
+;var(33) : Hit Spark (8010 = Light; 8011 = Medium; 8012 = Heavy; 8013 = Special; 8014 = Super)
+;var(34) : Guard Spark (8000 = Normal; 8001 = Special)
+;var(35) : Spark xPos
+;var(36) : Spark yPos
+;var(37) : Special/Super Throws (0 = Allowed; 1 = Not Allowed)
+;var(38) : Throw (0 = Allowed; 1 = Not Allowed)
+;var(39) : Projectile Flag (0 = Off; 1 = On)
+;var(40) : Mode (0 = Normal; 1 = Orochi Iori; 2 = EX Iori ; 3 = Claw Iori)
+;var(41) : KO Sound
+
+;var(43) : Player ID to apply flames to
+;var(44) : Flame particles timer
+
+
+;var(58) : Game Time
+
+;fvar(5) : Amount of Corner Push
+;fvar(10): Damage Dampener
+;fvar(11): Damage Dampener with Counter Multiplier Added
+
+
+
+; ________________________________________________
+;| Iori Yagami by KarmaCharmeleon		|
+; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+;====================<CONSTANTS>====================
+[Data]
+life = 950
+power = 5000
+attack = 90
+defence = 100
+fall.defence_up = 50
+lieDown.time = 30
+airJuggle = 15
+sparkNo = s8010
+guard.sparkNo = s8000
+KO.echo = 0
+volume = 128
+IntPersistIndex = 0
+FloatPersistIndex = 0
+
+[Size]
+xScale = 1
+yScale = 1
+ground.back = 19
+ground.front = 19
+air.back = 19
+air.front = 19
+height = 80
+attack.dist = 160
+proj.attack.dist = 90
+proj.doScale = 0
+head.pos = 6, -92
+mid.pos = -2, -66
+shadowOffset = 0
+draw.offset = 0,0
+
+[Velocity]
+walk.fwd = 2.79329608939
+walk.back = -2.23463687151
+run.fwd = 5.16759776536, 0
+run.back = -6.14525139665, -4.1015625
+jump.neu = 0, -9.21875
+jump.fwd = 3.35195530726
+jump.back = -3.49162011173
+runJump.fwd = 5.02793296089,-10.6015586853
+runJump.back = -5.2374301676,-10.6015586853
+airjump.neu = 0,-6.5
+airjump.back = -2.8
+airjump.fwd = 2.8
+
+[Movement]
+airJump.num = 0
+airJump.height = 0
+yAccel = 0.537109375
+stand.friction = 0.85
+crouch.friction = 0.85
+stand.friction.threshold = 1.0
+crouch.friction.threshold = 1.0
+air.gethit.groundLevel = 25
+air.gethit.groundRecover.ground.threshold = -20
+air.gethit.groundRecover.groundLevel = 10
+air.gethit.airRecover.threshold = -1
+air.gethit.airRecover.yAccel = 0.35
+air.gethit.trip.groundLevel = 15
+down.bounce.offset = 0, 20
+down.bounce.yAccel = 0.4
+down.bounce.groundLevel = 12
+down.friction.threshold = 0.5
+
+
+;====================<WINQUOTES>====================
+[Quotes]
+
+
+
+;====================<IORI WINQUOTES>====================
+victory0 = "Remember me when you look at the moon!"
+victory1 = "Swatting flies ain't my thing. Buzz off."
+victory2 = "Bwahaha! You should have seen yourself dance and fall into the flames!"
+victory3 = "No encores. You're not worth my time."
+victory4 = "Trash should do what trash does best: rot away."
+victory5 = "Feel the despair of dying, and the absolute terror I bring!"
+victory6 = "If you don't want to be turned to cinders, get out of my sight and stay there!"
+victory7 = "Congratulations! You've mastered being an idiot. Now stop wasting my time."
+victory8 = "You should take heart. I bet the flames of Hell burn hotter than mine."
+victory9 = "Quit gasping like that. If you value your life, get lost."
+victory10 = "Idiot... You thought you could fight me and go home in one piece?!"
+victory11 = "If you hadn't resisted, I would have sent you to your grave peacefully."
+victory12 = "Dance in a fiery shourd, until the hands of Death claim you."
+
+;Iori Yagami
+victory13 = "You... who the hell are you? You dare try and fool me with this mimicry?!"
+victory14 = "I'll rip off that phony hide of yours!"
+victory15 = "You're only a fake... This is a waste of time."
+victory16 = "I hope you enjoy your view from the mud. You'll never reach that crescent moon!"
+victory17 = "How utterly worthless... Do you think I can be beaten by a mere mirror image of myself!?"
+
+;Orochi Iori
+victory18 = "... You think this is enough to torment me? You underestimate me!"
+
+;Kyo Kusanagi
+victory19 = "No more trying to reason with me, Kyo! Your life ends here!"
+victory20 = "Get up, Kyo. I won't let you die this easily. I will keep bashing you until my blood runs cold."
+victory21 = "You don't know your fate? How about hell on earth?!"
+victory22 = "What's the matter, Kyo?! You call that fighting?!"
+victory23 = "Kyo, I will burn anything and everything to extinguish your existence."
+
+;Mature
+victory24 = "Begone! If you're of no use to me, then your existence is worthless!"
+
+;Vice
+victory25 = "I knew you'd show up eventually. Stop following me, or I won't hesitate to kill you!"
+
+;Ash Crimson
+victory26 = "That smile on your face... I can't resist setting it on fire."
+
+;Chizuru Kagura
+victory27 = "You never shut up, do you?! Who gave you the right to preach to me about my fate?"
+
+;Chris
+victory28 = "You're a little fly buzzing around my face. Go join Orochi already!"
+
+;Shermie
+victory29 = "If you want to touch me, go ahead. Feel the fire scorch your skin!"
+
+;Yashiro Nanakase
+victory30 = "I couldn't give a rat's ass about your grudges and your beliefs. Just die again already!"
+
+;Andy Bogard
+victory31 = "I won't harass a loser who's lost his fangs. Be gone now, and take your humiliation with you!"
+
+;Athena Asamiya
+victory32 = "Don't delude yourself. You can't change people, and you can't change the world!"
+
+;Balrog (Boxer)
+victory33 = "What do you think? How did it feel to taste the fires of Hell firsthand?!"
+
+;Benimaru Nikaido
+victory34 = "Rivals...? What nonsense! I will kill Kyo, and I won't let you stand in my way!"
+
+;Billy Kane
+victory35 = "Try as many times as you want, the results won't change. Leave while you can still move."
+
+;Blanka
+victory36 = "No matter what I say, a beast like you is incapable of understanding. But I dare say die!"
+
+;Cammy White
+victory37 = "Nothing more than a fragile doll. One twist and the screams cease...!"
+
+;Chang Koehan
+victory38 = "What happens to those who fear the flames? Livestock is destined to be burned!" 
+
+;Chun-Li
+victory39 = "No one has the right to judge me. Not even God himself!"
+
+;Clark Still
+victory40 = "Your hand-to-hand combat is like child's play to me. You'd better stay down if you don't want to get killed."
+
+;Dan Hibiki
+victory41 = "... Noisy fly! Don't you dare pester me ever again!"
+
+;Goro Daimon
+victory42 = "There's no place for sportsmen here! Run while you're still alive!"
+
+;Dhalsim
+victory43 = "I'm not here to listen to your street corner preaching, holy man!"
+
+;E. Honda
+victory44 = "From this day forth, your face will be forever scarred with an inextinguishable fear!"
+
+;Eagle
+victory45 = "You, what are you... Don't give me that dirty look!"
+
+;Elisabeth Blanctorche
+victory46 = "I don't care about your destiny... If you bother me again, that will be the last time."
+
+;Geese Howard
+victory47 = "Still alive? Your suffering will continue in the afterlife, loser!"
+
+;Gouki
+victory48 = "Go ahead and kill me if you can! At this rate, I needn't hold back!"
+
+;Guile
+victory49 = "Leave my sight! You military types are among those I hate most!"
+
+;Haohmaru
+victory50 = "We don't get to choose how we die. So here and now, breathe your last regrets!"
+
+;Hibiki Takane
+victory51 = "You are the one to be cut down! I will burn fear into those vacant eyes of yours!"
+
+;Joe Higashi
+victory52 = "I've had enough of you... Do want me to burn you to ash?!"
+
+;K'
+victory53 = "I have no use for a fake like you... Don't show your face in front of me again!"
+
+;Ken Masters
+victory54 = "If you're so desperate to burn, I'll gladly burn you to your bones!" 
+
+;Sie Kensou
+victory55 = "I'm sick of seeing the fear in your face. Get lost, you little brat!"
+
+;Kim Kaphwan
+victory56 = "Such a superficial idea of justice... You sicken me!" 
+
+;King
+victory57 = "Your destiny was sealed the moment you crossed me!"
+
+;Kula Diamond
+victory58 = "I don't have time to play your games. Get out of here before I change my mind!"
+
+;Kyosuke Kagami
+victory59 = "At best, you maintained a calm façade. But you couldn't keep your confidence in the face of death!"
+
+;Leona Heidern
+victory60 = "Are you scared of the power of Orochi...? Then let me put you to sleep permanently!"
+
+;M. Bison (Dictator)
+victory61 = "My power's origins? I haven't the want or the need to tell you anything!"
+
+;Mai Shiranui
+victory62 = "I can't even sympathise with you. Burn away with no time for regrets!" 
+
+;Maki Genryuusai
+victory63 = "No need for confusion. You were always destined to die a miserable death!"
+
+;Morrigan Aensland
+victory64 = "Be it the Demon Realm or Hell itself, no flame burns hotter than the hatred in my blood!"
+
+;Nakoruru
+victory65 = "I spared you the burden of cremation. No need to thank me..."
+
+;Raiden
+victory66 = "This is no place for a showboating clown. Get out of my sight, now!"
+
+;Ralf Jones
+victory67 = "Pick one.. Die on the battlefield, or drown in an ocean of blood; whichever you want!"
+
+;Red Arremer
+victory68 = "The only monster I need... is the one who lives in me."
+
+;Robert Garcia
+victory69 = "This is Kyokugen...? Whatever... This is your limit."
+
+;Rock Howard
+victory70 = "You do not have the freedom to fight! Crawl out of here!"
+
+;Rolento F. Schugerg
+victory71 = "Your inane ramblings end here! I kill mad fanatics like you without question!"
+
+;Rugal Bernstein
+victory72 = "You'll remember me each time you look at the moon. Tremble before the blue Yagami flame!"
+
+;Ryo Sakazaki
+victory73 = "My techniques are not so weak you can withstand them with feigned endurance alone!"
+
+;Ryu
+victory74 = "A true fighter...? You're just another low life nothing spouting garbage!"
+
+;Ryuhaku Todoh
+victory75 = "'Fair and Square'... Just hearing it pisses me off. Never say it again!"
+
+;Sagat
+victory76 = "Even the fierce tiger flinches in the face of the flames. You're no better than an animal!"
+
+;Sakura Kasugano
+victory77 = "Stick your neck out just for the fun of it, and you'll only wind-up drowning in your own blood...!"
+
+;Takuma Sakazaki
+victory78 = "You risk your life for a farce. How stupid can you get?"
+
+;Terry Bogard
+victory79 = "Now do you see what I mean? You're no hero, you're nothing but scum!"
+
+;Tessa (Tabasa)
+victory80 = "Back off, girl nerd. Do you really want to die for your research? Do you?"
+
+;Vanessa
+victory81 = "Do you ever learn...? If you want to feel the same searing pain again, come see me anytime."
+
+;Vega (Claw)
+victory82 = "Now you find yourself made into a bloodied canvas!"
+
+;Ryuji Yamazaki
+victory83 = "Trash belongs in the dump. Wouldn't you agree? Worthless scum!"
+
+;Yuri Sakazaki
+victory84 = "I'll start by crushing your throat! That high-pitched squawking pierced my ears!"
+
+;Zangief
+victory85 = "No amount of training your body will save you from my flames!"
+
+
+
+;====================<OROCHI IORI WINQUOTES>====================
+victory86 = "Gaaaaaaaaaaaaaaaaaaaa!!!"
+victory87 = "I'll... kill... you...!"
+victory88 = "Kishaaaaaaah!! Uugyaaaaah!!"
+victory89 = "... U... u... u... u... u..."
+victory90 = "... Kuuu... Huuuu!... Fuuu..."
+
+;Kyo Kusanagi
+victory91 = "Kill... Kusanagi... Kill... Kyo..."
+
+;Hakkesshu
+victory92 = "O... rochi..."
+
+
+
+;====================<CLAW IORI WINQUOTES>====================
+victory93 = "Bothersome pest! Get out of here! I have no business with you!"
+victory94 = "Crawl into a corner and die! A perfect ending for someone like you!"
+victory95 = "I've grown tired of your screams. It's about time you died."
+victory96 = "You can't touch the moon... Grovel there forever!"
+victory97 = "I won't finish you. Writhe in pain until madness consumes your mind!"
+
+;Kyo Kusanagi
+victory98 = "After I kill the kid, I'm coming for you. You'd better stay alive for me until then, Kyo!"
+
+;Ash Crimson
+victory99 = "You'll regret messing with me this far, far after you're in your grave!"

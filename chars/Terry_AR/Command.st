@@ -1168,6 +1168,17 @@ trigger1 = command != "holdfwd" && command != "holdback" && command != "holddown
 trigger1 = ctrl
 trigger2 = AILevel && ctrl && Random < 25
 
+[State -1, AR X charge]
+type = ChangeState
+value = 730
+triggerall = !ishelper && !AILevel
+triggerall = RoundState = 2
+triggerall = !(var(55) >= 1000 && var(56) = 0)
+triggerall = StateType != A && Power < PowerMax
+trigger1 = command = "ar_x"
+trigger1 = command != "holdfwd" && command != "holdback" && command != "holddown" && command != "holdup"
+trigger1 = ctrl
+
 
 ;==============================================================================================
 ;==============================================================================================
@@ -4337,6 +4348,7 @@ trigger3 = var(4)
 
 [State -1, Standing Far/Close Light Kick]
 type = ChangeState
+triggerAll = 0
 value = 230 + (Abs(P2BodyDist X) < 25) * 5
 triggerAll = !AILevel
 ;command != "holddown" && command = "a"
@@ -4403,6 +4415,7 @@ trigger3 = var(4)
 
 [State -1, Crouching Light Kick]
 type = ChangeState
+triggerAll = 0
 value = 430
 triggerAll = !AILevel
 ;command = "holddown" && command = "a"
@@ -4468,6 +4481,7 @@ trigger2 = var(4)
 
 [State -1, Jumping Light Kick]
 type = ChangeState
+triggerAll = 0
 value = 630
 triggerAll = !AILevel
 ;command = "a"

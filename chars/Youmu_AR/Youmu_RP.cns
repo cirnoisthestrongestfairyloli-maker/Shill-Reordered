@@ -1,0 +1,110 @@
+; Var(57) Flag List
+; 1 - Crescent Moon Slash (623p)
+; 2 - Air Crescent Moon Slash (j623p)
+; 3 - Lotus Stance Cut (41236p)
+; 4 - "Meditation" (236236p)
+; 5 - "Slash of Present" (214214p)
+
+[Data]
+life = 950
+power = 5000
+attack = 90
+defence = 100
+fall.defence_up = 0
+liedown.time = 11
+airjuggle = 1
+sparkno = s8000
+guard.sparkno = s8030
+KO.echo = 0
+volume = 255
+IntPersistIndex = 28
+FloatPersistIndex = 40
+
+[Size]
+xscale = 1           ;Horizontal scaling factor.
+yscale = 1           ;Vertical scaling factor.
+ground.back = 16     ;Player width (back, ground)
+ground.front = 16    ;Player width (front, ground)
+air.back = 16        ;Player width (back, air)
+air.front = 16       ;Player width (front, air)
+height = 60          ;Height of player (for opponent to jump over)
+attack.dist = 160    ;Default attack distance
+proj.attack.dist = 90 ;Default attack distance for projectiles
+proj.doscale = 0     ;Set to 1 to scale projectiles too
+head.pos = 0, -70    ;Approximate position of head
+mid.pos = 0, -45     ;Approximate position of midsection
+shadowoffset = 0     ;Number of pixels to vertically offset the shadow
+draw.offset = 0,0    ;Player drawing offset in pixels (x, y)
+
+[Velocity]
+walk.fwd = 2.3       ;Walk forward
+walk.back = -2.0     ;Walk backward
+run.fwd = 6.0,0.0    ;Run forward (x, y)
+run.back = -7.0,-2.5 ;Hop backward (x, y)
+jump.neu = 0,-10.4   ;Neutral jumping velocity (x, y)
+jump.fwd = 2.3       ;Jump forward Speed (x, y)
+jump.back = -2.0     ;Jump back Speed (x, y)
+runjump.fwd = 4.2,-6.3    ;Running jump speeds (opt)
+runjump.back = -4.8,-6.3
+airjump.neu = 0,-6.3      ;Air jump speeds (opt)
+airjump.fwd = 2.5
+airjump.back = -2.55
+air.gethit.groundrecover = -.15,-3.5  ;Velocity for ground recovery state (x, y) **MUGEN 1.0**
+air.gethit.airrecover.mul = .5,.2     ;Multiplier for air recovery velocity (x, y) **MUGEN 1.0**
+air.gethit.airrecover.add = 0,-4.5    ;Velocity offset for air recovery (x, y) **MUGEN 1.0**
+air.gethit.airrecover.back = -1       ;Extra x-velocity for holding back during air recovery **MUGEN 1.0**
+air.gethit.airrecover.fwd = 0         ;Extra x-velocity for holding forward during air recovery **MUGEN 1.0**
+air.gethit.airrecover.up = -2         ;Extra y-velocity for holding up during air recovery **MUGEN 1.0**
+air.gethit.airrecover.down = 1.5      ;Extra y-velocity for holding down during air recovery **MUGEN 1.0**
+
+[Movement]
+airjump.num = 0      ;Number of air jumps allowed (opt)
+airjump.height = 35  ;Minimum distance from ground before you can air jump (opt)
+yaccel = .5          ;Vertical acceleration
+stand.friction = .85  ;Friction coefficient when standing
+crouch.friction = .82 ;Friction coefficient when crouching
+stand.friction.threshold = 2          ;If player's speed drops below this threshold while standing, stop his movement **MUGEN 1.0**
+crouch.friction.threshold = .05       ;If player's speed drops below this threshold while crouching, stop his movement **MUGEN 1.0**
+air.gethit.groundlevel = 25           ;Y-position at which a falling player is considered to hit the ground **MUGEN 1.0**
+air.gethit.groundrecover.ground.threshold = -20 ;Y-position below which falling player can use the recovery command **MUGEN 1.0**
+air.gethit.groundrecover.groundlevel = 10   ;Y-position at which player in the ground recovery state touches the ground **MUGEN 1.0**
+air.gethit.airrecover.threshold = -1  ;Y-velocity above which player may use the air recovery command **MUGEN 1.0**
+air.gethit.airrecover.yaccel = .5     ;Vertical acceleration for player in the air recovery state **MUGEN 1.0**
+air.gethit.trip.groundlevel = 15      ;Y-position at which player in the tripped state touches the ground **MUGEN 1.0**
+down.bounce.offset = 0, 20            ;Offset for player bouncing off the ground (x, y) **MUGEN 1.0**
+down.bounce.yaccel = .4               ;Vertical acceleration for player bouncing off the ground **MUGEN 1.0**
+down.bounce.groundlevel = 12          ;Y-position at which player bouncing off the ground touches the ground again **MUGEN 1.0**
+down.friction.threshold = .05         ;If the player's speed drops below this threshold while lying down, stop his movement **MUGEN 1.0**
+
+
+[Quotes]
+victory1 = "If there is something I can't make clear, I try cutting it!" ;
+victory2 = "If a sword's been used to cut so much that it became tainted with clotted blood, it becomes useless." ;
+victory3 = "You never had a chance. You're an insult to my Roukanken." ;
+victory4 = "The things that can't be cut by this youkai-tempered Roukanken are next to none!" ;
+victory5 = "Now then, today's training is done." ;
+victory6 = "Past, present, and future... Events that have happened long ago, and those that have yet to happen. Surely, Lady Yukari might know something about the boundaries of time." ;
+;;Victory vs Reimu
+victory7 = "Maybe you say 'I shall make you the rust of my sword' because of the iron in blood?" ;
+victory8 = "If you're going to move that slowly, you'll never get out of the reach of my sword." ;
+;;Victory vs Marisa
+victory9 = "Don't use all your strength. It's easy for me to cut you down if you use strength." ;
+victory10 = "Your mind is too clouded. You know you won't die a good death like this, do you?" ;
+;;Victory vs Sanae
+victory11 = "So there are shrines in the outside world too, huh? I thought that they were already a lost culture." ;
+victory12 = "By relying on the power of your gods, that must mean you'll never reach first place on your own." ;with apologies to Daniel9999999
+;;Victory vs Hong Meiling
+victory13 = "Don't you use things like the Green Dragon Blade? I hear things like that often..." ;
+victory14 = "I sense hesitation in you. You're... holding something back?" ;
+;;Victory vs Lie Meiling
+victory15 = "Those rumors about Lady Yukari. They're true, aren't they? Or rather, they WILL become true? I'm not sure I understand." ;
+victory16 = "That dark power... Just what ARE you?" ;
+;;Victory vs Yuyuko
+victory17 = "Lady Yuyuko, why don't you train sword techniques with me sometimes? It'll settle your spirits, you know?" ;
+victory18 = "What do you think of this incident, Lady Yuyuko? Things that happened long ago, yet never happened?" ;
+;;Victory vs Yukari
+victory19 = "Ah, Lady Yukari. Strange things are happening all over the place..." ;
+victory20 = "Ah, Lady Yukari. I've heard rumors saying you were involved in this incident..." ;
+;;Victory vs Seiga
+victory21 = "I feel sorry for you. The both of you." ;
+victory22 = "I don't know what the two of you are scheming, but... " ;

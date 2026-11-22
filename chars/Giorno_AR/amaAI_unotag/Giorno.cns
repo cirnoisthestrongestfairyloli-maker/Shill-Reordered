@@ -2793,7 +2793,7 @@ value = 71000
 type = ChangeState
 triggerall = var(59) = 1 && RoundState = 2
 triggerall = NumHelper(10000) = 0
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo != 9999 || fvar(1) = 80
 trigger1 = numtarget
 trigger1 = movecontact && time > 6
 value = 51109
@@ -4337,7 +4337,7 @@ type = ChangeState
 triggerall = var(59) = 1 && RoundState = 2
 triggerall = NumHelper(10000) = 0
 triggerall = numhelper(4657) = 0
-triggerall = PalNo != 12
+triggerall = PalNo != 9999
 trigger1 = var(58)>9
 trigger1 = EnemyNear,const(size.head.pos.y)>= -58
 trigger1 = power > 1000
@@ -4614,7 +4614,7 @@ type = ChangeState
 triggerall = var(59) = 1 && RoundState = 2
 triggerall = NumHelper(10000) = 0
 triggerall = numhelper(4657) = 0
-triggerall = PalNo != 12
+triggerall = PalNo != 9999
 trigger1 = power > 1000
 trigger1 = enemy,movetype = H
 trigger1 = movecontact && time > 5
@@ -4893,7 +4893,7 @@ type = ChangeState
 triggerall = var(59) = 1 && RoundState = 2
 triggerall = movecontact && time > 5
 triggerall = NumHelper(10000) = 0
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo != 9999 || fvar(1) = 80
 
 trigger1 = enemy,movetype != A
 trigger1 = enemy,statetype = C
@@ -4975,7 +4975,7 @@ type = ChangeState
 triggerall = var(59) = 1 && RoundState = 2
 triggerall = movecontact && time > 5
 triggerall = NumHelper(10000) = 0
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo != 9999 || fvar(1) = 80
 trigger1 = enemy,movetype != A
 trigger1 = enemy,statetype = C
 trigger2 = enemy,movetype != A
@@ -5056,7 +5056,7 @@ type = ChangeState
 triggerall = var(59) = 1 && RoundState = 2
 triggerall = movecontact && time > 5
 triggerall = NumHelper(10000) = 0
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo != 9999 || fvar(1) = 80
 trigger1 = enemy,movetype != A
 trigger1 = enemy,statetype = C
 trigger2 = enemy,movetype != A
@@ -5280,7 +5280,7 @@ value = 1
 type = ChangeState
 triggerall = var(59) = 1 && RoundState = 2
 triggerall = numhelper(4657) = 0
-triggerall = PalNo != 12
+triggerall = PalNo != 9999
 trigger1 = life <= 500
 trigger1 = enemy,movetype = H
 trigger1 = movehit && time > 5
@@ -8438,7 +8438,7 @@ pos = 0, -70
 [State 200, 1]
 type = HitDef
 trigger1 = 1
-triggerall = root,PalNo = 11
+triggerall = root,PalNo = 9999
 trigger1 = enemynear,movetype = A
 attr = S, SA
 damage = 0,0
@@ -8467,7 +8467,7 @@ p2stateno = 16668
 [State 200, 1]
 type = HitDef
 trigger1 = 1
-triggerall = root,PalNo = 12
+triggerall = root,PalNo = 9999
 trigger1 = enemynear,movetype = A
 attr = S, SA
 damage = 0,0
@@ -8495,7 +8495,7 @@ p2stateno = 99995
 
 [State 1009, 受け止め定義]
 type = ReversalDef
-triggerall = root,PalNo = 11
+triggerall = root,PalNo = 9999
 trigger1 = 1
 trigger2 = !time
 attr = S, HA
@@ -8509,7 +8509,7 @@ P2StateNo     = 16668
 
 [State 1009, 受け止め定義]
 type = ReversalDef
-triggerall = root,PalNo = 12
+triggerall = root,PalNo = 9999
 trigger1 = 1
 trigger2 = !time
 attr = S, HA
@@ -10844,6 +10844,14 @@ trigger1 = time = 60
 
 
 [Statedef -2] 
+;Abstract Reordered: apply the colour slot that was picked (palettes 1,2..1,14 live inside the sprite file)
+[State -2, AR colour slot]
+type = RemapPal
+trigger1 = !ishelper
+source = 1,1
+dest = 1,palno
+ignorehitpause = 1
+
 
 [State -2, Vans' Command Buffer]
 Type = Helper

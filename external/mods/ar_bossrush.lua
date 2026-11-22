@@ -110,7 +110,7 @@ end
 --------------------------------------------------------------------- reward colour
 -- character folder (lower case) -> the colour slot holding its boss rush colour (bossrush.act, always the
 -- highest slot). cadenza.lua asks BR.unlocked() whether to show that slot on the colour menu.
-BR.bossPal = {['cureblack_ar'] = 6, ['haruhi_ar'] = 12, ['homura_ar'] = 9, ['ichigo_ar'] = 13, ['ippo_ar'] = 13, ['kamijo_ar'] = 12, ['kumagawa_ar'] = 11, ['lilith_ar'] = 13, ['madoka_ar'] = 13, ['panty_ar'] = 13, ['ryuko_ar'] = 13, ['saber_ar'] = 8, ['saitama_ar'] = 8, ['satsuki_ar'] = 13, ['sayaka_ar'] = 13, ['sol_ar'] = 13, ['stocking_ar'] = 13, ['taiga_ar'] = 13}
+BR.bossPal = {['aoko_ar'] = 14, ['dio_ar'] = 14, ['jotaro_ar'] = 14, ['shiki_ar'] = 14, ['cureblack_ar'] = 14, ['haruhi_ar'] = 14, ['homura_ar'] = 14, ['ichigo_ar'] = 14, ['ippo_ar'] = 14, ['kamijo_ar'] = 14, ['kumagawa_ar'] = 14, ['lilith_ar'] = 14, ['madoka_ar'] = 14, ['panty_ar'] = 14, ['ryuko_ar'] = 14, ['saber_ar'] = 14, ['saitama_ar'] = 14, ['satsuki_ar'] = 14, ['sayaka_ar'] = 14, ['sol_ar'] = 14, ['stocking_ar'] = 14, ['taiga_ar'] = 14}
 
 -- The colour used to be a reward (hidden until that character cleared boss rush). It is now open to
 -- everyone: set this to false to bring the lock back.

@@ -3107,8 +3107,8 @@ var(59)= 3
 [State -1, AI Humanlike]
 type = null;VarSet
 triggerall= var(59) = 1
-trigger1= palno = 5
-trigger2= palno = 11
+trigger1= palno = 9999
+trigger2= palno = 9999
 var(59)= 2
 
 

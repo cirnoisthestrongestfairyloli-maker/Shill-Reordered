@@ -1,0 +1,2154 @@
+;-| Button Remapping |-----------------------------------------------------
+; If the following lines are NOT preceded by semicolons, please
+; add them or remove the remap entirely since Ricepigeon is a
+; lazy bastard who forgets to remove it before releasing stuff
+; *facepalms*
+;[Remap]
+;x = x
+;y = y
+;z = b;z
+;a = s;a
+;b = a;b
+;c = c
+;s = z
+
+;-| Default Values |-------------------------------------------------------
+[Defaults]
+; Default value for the "time" parameter of a Command. Minimum 1.
+command.time = 15
+; Default value for the "buffer.time" parameter of a Command. Minimum 1,
+; maximum 30.
+command.buffer.time = 1
+
+;-| Single Button |---------------------------------------------------------
+[Command]
+name = "a"
+command = x
+time = 1
+;buffer.time = 2
+
+[Command]
+name = "b"
+command = y
+time = 1
+;buffer.time = 2
+
+[Command]
+name = "c"
+command = z
+time = 1
+;buffer.time = 2
+
+[Command]
+name = "x"
+command = a
+time = 1
+;buffer.time = 2
+
+[Command]
+name = "y"
+command = b
+time = 1
+;buffer.time = 2
+
+[Command]
+name = "z"
+command = c
+time = 1
+;buffer.time = 2
+
+[Command]
+name = "U"
+command = U
+time = 1
+[Command]
+name = "U"
+command = UF
+time = 1
+[Command]
+name = "U"
+command = UB
+time = 1
+
+[Command]
+name = "back"
+command = B
+time = 1
+[Command]
+name = "D"
+command = $D
+time = 1
+[Command]
+name = "fwd" ; REQUIRED for command buffering
+command = F
+time = 1
+
+[Command]
+name = "start"
+command = s
+time = 1
+;buffer.time = 2
+
+;-| Hold Dir |--------------------------------------------------------------
+[Command]
+name = "holdfwd";Required (do not remove)
+command = /$F
+time = 1
+
+[Command]
+name = "holdback";Required (do not remove)
+command = /$B
+time = 1
+
+[Command]
+name = "holdup" ;Required (do not remove)
+command = /$U
+time = 1
+
+[Command]
+name = "holddown";Required (do not remove)
+command = /$D
+time = 1
+
+[Command]
+name = "holdfwd_r" ; Raw hold forward (REQUIRED for command buffering)
+command = /F
+time = 1
+[Command]
+name = "holddown_r" ; Raw hold forward (REQUIRED for command buffering)
+command = /D
+time = 1
+[Command]
+name = "holdback_r" ; Raw hold forward (REQUIRED for command buffering)
+command = /B
+time = 1
+[Command]
+name = "holdup_r" ; Raw hold forward (REQUIRED for command buffering)
+command = /U
+time = 1
+
+[Command]
+name = "fwd";Required (do not remove)
+command = F
+time = 1
+
+[Command]
+name = "back";Required (do not remove)
+command = B
+time = 1
+
+[Command]
+name = "up" ;Required (do not remove)
+command = U
+time = 1
+
+[Command]
+name = "down";Required (do not remove)
+command = D
+time = 1
+
+;-| Hold Button |----------------------------------------------------------
+; Please define Anim 74140108 in your AIR file if AND ONLY IF you place these
+; 7 Hold Button commands immediately after the 11 Single Button and Hold Dir
+; commands at the very top of your CMD list, as demonstrated here.
+; In this version of the AI code, these commands are only used by the XOR
+; method, and thus are optional.  But there remains a possibility that a
+; future version of the helper method might be helped by having these
+; commands placed here, and Anim 74140108 would then be used to indicate
+; that a partner character has a compatible CMD.
+
+[Command]
+name = "holda"
+command = /x
+time = 1
+
+[Command]
+name = "holdb"
+command = /y
+time = 1
+
+[Command]
+name = "holdc"
+command = /z
+time = 1
+
+[Command]
+name = "holdx"
+command = /a
+time = 1
+
+[Command]
+name = "holdy"
+command = /b
+time = 1
+
+[Command]
+name = "holdz"
+command = /c
+time = 1
+
+[Command]
+name = "holdstart"
+command = /s
+time = 1
+
+[Command]
+name = "rlsx"
+command = ~a
+time = 1
+
+[Command]
+name = "rlsy"
+command = ~b
+time = 1
+
+[Command]
+name = "rlsz"
+command = ~c
+time = 1
+
+;-| Spellcards Lvl 3 |---------------------------------------------------------
+[Command]
+name = "Misogi"
+command = D,D,D,a+b+c
+time = 20
+buffer.time = 3
+[Command]
+name = "Misogi"
+command = D,D,D,z
+time = 20
+buffer.time = 3
+[Command]
+name = "Misogi"
+command = D,D,D,~z
+time = 20
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "QCFx2_PPP"
+command = ~D,DF,$F,D,DF,$F,a+b+c
+time = 24
+buffer.time = 4
+
+[Command]
+name = "QCFx2_PPP"
+command = ~D,DF,$F,D,DF,$F,z
+time = 24
+buffer.time = 4
+[Command]
+name = "QCFx2_PPP"
+command = ~D,DF,$F,D,DF,$F,~z
+time = 24
+buffer.time = 4
+
+[Command]
+name = "QCFx2_PPPR"
+command = ~D,DF,$F,D,DF,$F,~a
+time = 24
+buffer.time = 3
+
+[Command]
+name = "QCFx2_PPPR"
+command = ~D,DF,$F,D,DF,$F,~b
+time = 24
+buffer.time = 3
+
+[Command]
+name = "QCFx2_PPPR"
+command = ~D,DF,$F,D,DF,$F,~c
+time = 24
+buffer.time = 3
+
+[Command]
+name = "QCBx2_PPP"
+command = ~D,DB,$B,D,DB,$B,a+b+c
+time = 24
+buffer.time = 4
+
+[Command]
+name = "QCBx2_PPP"
+command = ~D,DB,$B,D,DB,$B,z
+time = 24
+buffer.time = 4
+[Command]
+name = "QCBx2_PPP"
+command = ~D,DB,$B,D,DB,$B,~z
+time = 24
+buffer.time = 4
+
+[Command]
+name = "QCBx2_PPPR"
+command = ~D,DB,$B,D,DB,$B,~a
+time = 24
+buffer.time = 3
+
+[Command]
+name = "QCBx2_PPPR"
+command = ~D,DB,$B,D,DB,$B,~b
+time = 24
+buffer.time = 3
+
+[Command]
+name = "QCBx2_PPPR"
+command = ~D,DB,$B,D,DB,$B,~c
+time = 24
+buffer.time = 3
+
+;-| Spellcards Lvl 1 |---------------------------------------------------------
+[Command]
+name = "214214_X"
+command = ~D,DB,$B,D,DB,$B,a
+time = 24
+buffer.time = 3
+[Command]
+name = "214214_X"
+command = ~D,DB,$B,D,DB,$B,~a
+time = 24
+buffer.time = 3
+[Command]
+name = "214214_Y"
+command = ~D,DB,$B,D,DB,$B,b
+time = 24
+buffer.time = 3
+[Command]
+name = "214214_Y"
+command = ~D,DB,$B,D,DB,$B,~b
+time = 24
+buffer.time = 3
+[Command]
+name = "214214_Z"
+command = ~D,DB,$B,D,DB,$B,c
+time = 24
+buffer.time = 3
+[Command]
+name = "214214_Z"
+command = ~D,DB,$B,D,DB,$B,~c
+time = 24
+buffer.time = 3
+
+[Command]
+name = "236236_X"
+command = ~D,DF,$F,D,DF,$F,a
+time = 24
+buffer.time = 3
+[Command]
+name = "236236_X"
+command = ~D,DF,$F,D,DF,$F,~a
+time = 24
+buffer.time = 3
+[Command]
+name = "236236_Y"
+command = ~D,DF,$F,D,DF,$F,b
+time = 24
+buffer.time = 3
+[Command]
+name = "236236_Y"
+command = ~D,DF,$F,D,DF,$F,~b
+time = 24
+buffer.time = 3
+[Command]
+name = "236236_Z"
+command = ~D,DF,$F,D,DF,$F,c
+time = 24
+buffer.time = 3
+[Command]
+name = "236236_Z"
+command = ~D,DF,$F,D,DF,$F,~c
+time = 24
+buffer.time = 3
+
+;-| Specials |-----------------------------------------------------------------
+[Command]
+name = "RDP_PPP"
+command = ~B,D,$B,a+b+c
+time = 14
+buffer.time = 3
+[Command]
+name = "RDP_PPP"
+command = ~B,D,$B,z
+time = 14
+buffer.time = 3
+[Command]
+name = "RDP_PPP"
+command = ~B,D,$B,~z
+time = 14
+buffer.time = 3
+[Command]
+name = "RDP_PPPR"
+command = ~B,D,$B,~a
+time = 14
+buffer.time = 3
+[Command]
+name = "RDP_PPPR"
+command = ~B,D,$B,~b
+time = 14
+buffer.time = 3
+[Command]
+name = "RDP_PPPR"
+command = ~B,D,$B,~c
+time = 14
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "DP_PPP"
+command = ~F,D,$F,a+b+c
+time = 14
+buffer.time = 3
+[Command]
+name = "DP_PPP"
+command = ~F,D,$F,z
+time = 14
+buffer.time = 3
+[Command]
+name = "DP_PPP"
+command = ~F,D,$F,~z
+time = 14
+buffer.time = 3
+[Command]
+name = "DP_PPPR"
+command = ~F,D,$F,~a
+time = 14
+buffer.time = 3
+[Command]
+name = "DP_PPPR"
+command = ~F,D,$F,~b
+time = 14
+buffer.time = 3
+[Command]
+name = "DP_PPPR"
+command = ~F,D,$F,~c
+time = 14
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "623_X"
+command = ~F,D,$F,a
+time = 12
+buffer.time = 3
+
+[Command]
+name = "623_X"
+command = ~F,D,$F,~a
+time = 12
+buffer.time = 3
+
+[Command]
+name = "623_Y"
+command = ~F,D,$F,b
+time = 12
+buffer.time = 3
+
+[Command]
+name = "623_Y"
+command = ~F,D,$F,~b
+time = 12
+buffer.time = 3
+
+[Command]
+name = "623_Z"
+command = ~F,D,$F,c
+time = 12
+buffer.time = 3
+
+[Command]
+name = "623_Z"
+command = ~F,D,$F,~c
+time = 12
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "421_X"
+command = ~B,D,$B,a
+time = 12
+buffer.time = 3
+[Command]
+name = "421_X"
+command = ~B,D,$B,~a
+time = 12
+buffer.time = 3
+
+[Command]
+name = "421_Y"
+command = ~B,D,$B,b
+time = 12
+buffer.time = 3
+[Command]
+name = "421_Y"
+command = ~B,D,$B,~b
+time = 12
+buffer.time = 3
+
+[Command]
+name = "421_Z"
+command = ~B,D,$B,c
+time = 12
+buffer.time = 3
+[Command]
+name = "421_Z"
+command = ~B,D,$B,~c
+time = 12
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "41236_X"
+;command = ~B,DB,D,DF,F,x
+command = ~B,DB,$D,DF,$F,a
+time = 16;20
+buffer.time = 3
+[Command]
+name = "41236_X"
+command = ~B,DB,$D,DF,$F,~a
+;command = ~B,$D,F,~x
+time = 16;20
+buffer.time = 3
+
+[Command]
+name = "41236_Y"
+command = ~B,DB,$D,DF,$F,b
+;command = ~B,$D,F,y
+time = 16;20
+buffer.time = 3
+[Command]
+name = "41236_Y"
+command = ~B,DB,$D,DF,$F,~b
+;command = ~B,$D,F,~y
+time = 16;20
+buffer.time = 3
+
+[Command]
+name = "41236_Z"
+command= ~B,DB,$D,DF,$F,c
+;command = ~B,$D,F,z
+time = 16;20
+buffer.time = 3
+[Command]
+name = "41236_Z"
+command = ~B,DB,$D,DF,$F,~c
+;command = ~B,$D,F,~z
+time = 16;20
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "63214_X"
+;command = ~F,DF,D,DB,B,x
+command = ~F,DF,$D,DB,$B,a
+time = 16;20
+buffer.time = 3
+[Command]
+name = "63214_X"
+command = ~F,DF,$D,DB,$B,~a
+;command = ~F,$D,B,~x
+time = 16;20
+buffer.time = 3
+
+[Command]
+name = "63214_Y"
+command = ~F,DF,$D,DB,$B,b
+;command = ~F,$D,B,y
+time = 16;20
+buffer.time = 3
+[Command]
+name = "63214_Y"
+command = ~F,DF,$D,DB,$B,~b
+;command = ~F,$D,B,~y
+time = 16;20
+buffer.time = 3
+
+[Command]
+name = "63214_Z"
+command = ~F,DF,$D,DB,$B,c
+;command = ~F,$D,B,z
+time = 16;20
+buffer.time = 3
+[Command]
+name = "63214_Z"
+command = ~F,DF,$D,DB,$B,~c
+;command = ~F,$D,B,~z
+time = 16;20
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "412_X"
+command = ~B,DB,$D,a
+time = 10
+buffer.time = 3
+[Command]
+name = "412_X"
+command = ~B,DB,$D,~a
+time = 10
+buffer.time = 3
+
+[Command]
+name = "412_Y"
+command = ~B,DB,$D,b
+time = 10
+buffer.time = 3
+[Command]
+name = "412_Y"
+command = ~B,DB,$D,~b
+time = 10
+buffer.time = 3
+
+[Command]
+name = "412_Z"
+command = ~B,DB,$D,c
+time = 10
+buffer.time = 3
+[Command]
+name = "412_Z"
+command = ~B,DB,$D,~c
+time = 10
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "632_X"
+command = ~F,DF,$D,a
+time = 10
+buffer.time = 3
+[Command]
+name = "632_X"
+command = ~F,DF,$D,~a
+time = 10
+buffer.time = 3
+
+[Command]
+name = "632_Y"
+command = ~F,DF,$D,b
+time = 10
+buffer.time = 3
+[Command]
+name = "632_Y"
+command = ~F,DF,$D,~b
+time = 10
+buffer.time = 3
+
+[Command]
+name = "632_Z"
+command = ~F,DF,$D,c
+time = 10
+buffer.time = 3
+[Command]
+name = "632_Z"
+command = ~F,DF,$D,~c
+time = 10
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "236_X"
+command = ~D,DF,$F,a
+time = 10
+buffer.time = 3
+[Command]
+name = "236_X"
+command = ~D,DF,$F,~a
+time = 10
+buffer.time = 3
+
+[Command]
+name = "236_Y"
+command = ~D,DF,$F,b
+time = 10
+buffer.time = 3
+[Command]
+name = "236_Y"
+command = ~D,DF,$F,~b
+time = 10
+buffer.time = 3
+
+[Command]
+name = "236_Z"
+command = ~D,DF,$F,c
+time = 10
+buffer.time = 3
+[Command]
+name = "236_Z"
+command = ~D,DF,$F,~c
+time = 10
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "214_X"
+command = ~D,DB,$B,a
+time = 10
+buffer.time = 3
+[Command]
+name = "214_X"
+command = ~D,DB,$B,~a
+time = 10
+buffer.time = 3
+
+[Command]
+name = "214_Y"
+command = ~D,DB,$B,b
+time = 10
+buffer.time = 3
+[Command]
+name = "214_Y"
+command = ~D,DB,$B,~b
+time = 10
+buffer.time = 3
+
+[Command]
+name = "214_Z"
+command = ~D,DB,$B,c
+time = 10
+buffer.time = 3
+[Command]
+name = "214_Z"
+command = ~D,DB,$B,~c
+time = 10
+buffer.time = 3
+
+;-------------------------------------------
+[Command]
+name = "22_X"
+command = ~D,D,a
+time = 10
+buffer.time = 2
+[Command]
+name = "22_X"
+command = ~D,D,~a
+time = 10
+buffer.time = 2
+
+[Command]
+name = "22_Y"
+command = ~D,D,b
+time = 10
+buffer.time = 2
+[Command]
+name = "22_Y"
+command = ~D,D,~b
+time = 10
+buffer.time = 2
+
+[Command]
+name = "22_Z"
+command = ~D,D,c
+time = 10
+buffer.time = 2
+[Command]
+name = "22_Z"
+command = ~D,D,~c
+time = 10
+buffer.time = 2
+
+;-| Directional Attacks |------------------------------------------------------
+[Command]
+name = "Down_y"
+command = /$D,b
+time = 1
+
+[Command]
+name = "Up_y"
+command = /$U,b
+time = 1
+
+[Command]
+name = "Forward_y"
+command = /$F,b
+time = 1
+
+[Command]
+name = "Backward_y"
+command = /$F,b
+time = 1
+
+;-| Double Tap |-----------------------------------------------------------
+[Command]
+name = "FF"     ;Required (do not remove)
+command = F,F
+time = 10
+;buffer.time = 2
+
+[Command]
+name = "BB"     ;Required (do not remove)
+command = B,B
+time = 10
+;buffer.time = 2
+
+[Command]
+name = "UU"     ;Required (do not remove)
+command = U,U
+time = 10
+[Command]
+name = "UU"     ;Required (do not remove)
+command = UB,UB
+time = 10
+[Command]
+name = "UU"     ;Required (do not remove)
+command = UF,UF
+time = 10
+;buffer.time = 2
+
+[Command]
+name = "DD"     ;Required (do not remove)
+command = D,D
+time = 10
+[Command]
+name = "DD"     ;Required (do not remove)
+command = DB,DB
+time = 10
+[Command]
+name = "DD"     ;Required (do not remove)
+command = DF,DF
+time = 10
+;buffer.time = 2
+
+;-| 2/3 Button Combination |-----------------------------------------------
+[Command]
+name = "recovery";Required (do not remove)
+command = /a
+time = 1
+;buffer.time = 1
+[Command]
+name = "recovery";Required (do not remove)
+command = /b
+time = 1
+;buffer.time = 1
+[Command]
+name = "recovery";Required (do not remove)
+command = /c
+time = 1
+;buffer.time = 1
+
+;-| Dir + Button |---------------------------------------------------------
+[Command]
+name = "down_a"
+command = /$D,x
+time = 1
+
+[Command]
+name = "down_b"
+command = /$D,y
+time = 1
+
+;-| Release Dir |-----------------------------------------------------------
+[Command]
+name = "release_fwd"
+command = ~F
+time = 1
+
+[Command]
+name = "release_down"
+command = ~D
+time = 1
+
+[Command]
+name = "release_back"
+command = ~B
+time = 1
+
+[Command]
+name = "release_up"
+command = ~U
+time = 1
+
+;-| Release Button |---------------------------------------------------------
+[Command]
+name = "release_a"
+command = ~x
+time = 1
+
+[Command]
+name = "release_b"
+command = ~y
+time = 1
+
+[Command]
+name = "release_c"
+command = ~z
+time = 1
+
+[Command]
+name = "release_x"
+command = ~a
+time = 1
+
+[Command]
+name = "release_y"
+command = ~b
+time = 1
+
+[Command]
+name = "release_z"
+command = ~c
+time = 1
+
+;---------------------------------------------------------------------------
+; 2. State entry
+; --------------
+; Don't remove the following line. It's required by the CMD standard.
+;Abstract Reordered: A/B/C = light/medium/heavy (swapped above: her own x/y/z), X = Half-Ghost (Myon), Y = grab, Z = parry, A+B+C = burst
+[Command]
+name = "ar_x"
+command = x
+time = 1
+
+[Command]
+name = "ar_parry"
+command = z
+time = 1
+
+[Command]
+name = "ar_burst"
+command = a+b+c
+time = 1
+
+[Statedef -1]
+;Abstract Reordered: burst gauge (var(35)) HUD
+;Abstract Reordered: burst HUD - Touma's BURST gauge, recoloured, just under the lifebar.
+;var(35) = cooldown ticks (4500 = just used, 0 = ready). Anims 9660-9668, explod IDs = anims.
+[State -1, AR burst gauge 9668 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9668) = 0
+trigger1 = var(35) = 0
+anim = 9668
+ID = 9668
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9661) = 0
+trigger1 = var(35) = 0
+anim = 9661
+ID = 9661
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9660) = 0
+trigger1 = var(35) > 3750
+anim = 9660
+ID = 9660
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9662) = 0
+trigger1 = var(35) <= 3750 && var(35) > 3000
+anim = 9662
+ID = 9662
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9663) = 0
+trigger1 = var(35) <= 3000 && var(35) > 2250
+anim = 9663
+ID = 9663
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9664) = 0
+trigger1 = var(35) <= 2250 && var(35) > 1500
+anim = 9664
+ID = 9664
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9665) = 0
+trigger1 = var(35) <= 1500 && var(35) > 750
+anim = 9665
+ID = 9665
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9666) = 0
+trigger1 = var(35) <= 750 && var(35) > 0
+anim = 9666
+ID = 9666
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 P1]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 1
+trigger1 = NumExplod(9667) = 0
+trigger1 = var(35) > 3750
+anim = 9667
+ID = 9667
+pos = (GameWidth - 320) / 2 + 52, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9668 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9668) = 0
+trigger1 = var(35) = 0
+anim = 9668
+ID = 9668
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 9
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9661) = 0
+trigger1 = var(35) = 0
+anim = 9661
+ID = 9661
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9660) = 0
+trigger1 = var(35) > 3750
+anim = 9660
+ID = 9660
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9662) = 0
+trigger1 = var(35) <= 3750 && var(35) > 3000
+anim = 9662
+ID = 9662
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9663) = 0
+trigger1 = var(35) <= 3000 && var(35) > 2250
+anim = 9663
+ID = 9663
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9664) = 0
+trigger1 = var(35) <= 2250 && var(35) > 1500
+anim = 9664
+ID = 9664
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9665) = 0
+trigger1 = var(35) <= 1500 && var(35) > 750
+anim = 9665
+ID = 9665
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9666) = 0
+trigger1 = var(35) <= 750 && var(35) > 0
+anim = 9666
+ID = 9666
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 10
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 P2]
+type = Explod
+triggerall = !ishelper
+triggerall = TeamSide = 2
+trigger1 = NumExplod(9667) = 0
+trigger1 = var(35) > 3750
+anim = 9667
+ID = 9667
+pos = (GameWidth - 320) / 2 + 210, 43
+postype = left
+facing = 1
+scale = .5, .5
+bindtime = -1
+removetime = -1
+supermovetime = 99999
+pausemovetime = 99999
+sprpriority = 11
+ontop = 1
+ownpal = 1
+removeongethit = 0
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9668 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9668)
+trigger1 = !(var(35) = 0)
+ID = 9668
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9661 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9661)
+trigger1 = !(var(35) = 0)
+ID = 9661
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9660 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9660)
+trigger1 = !(var(35) > 3750)
+ID = 9660
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9662 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9662)
+trigger1 = !(var(35) <= 3750 && var(35) > 3000)
+ID = 9662
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9663 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9663)
+trigger1 = !(var(35) <= 3000 && var(35) > 2250)
+ID = 9663
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9664 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9664)
+trigger1 = !(var(35) <= 2250 && var(35) > 1500)
+ID = 9664
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9665 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9665)
+trigger1 = !(var(35) <= 1500 && var(35) > 750)
+ID = 9665
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9666 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9666)
+trigger1 = !(var(35) <= 750 && var(35) > 0)
+ID = 9666
+ignorehitpause = 1
+
+[State -1, AR burst gauge 9667 off]
+type = RemoveExplod
+triggerall = !ishelper
+trigger1 = NumExplod(9667)
+trigger1 = !(var(35) > 3750)
+ID = 9667
+ignorehitpause = 1
+
+
+;---------------------------------------------------------------------------
+;=== AR BURST LOGIC (HUD blocks are added by hud_youmu.py: Touma style, anims/sprites 9660-9668) ===
+;Abstract Reordered: burst (Kamijo's) - A+B+C while being hit, recharges in 75 s (var(35) counts down from 4500)
+[State -1, AR burst round reset]
+type = VarSet
+triggerall = !ishelper
+trigger1 = RoundState < 2
+var(35) = 0
+
+[State -1, AR burst recharge]
+type = VarAdd
+triggerall = !ishelper
+trigger1 = RoundState = 2
+trigger1 = var(35) > 0
+var(35) = -1
+ignorehitpause = 1
+
+;Abstract Reordered: comeback - once a combo has done more than 15% of max life, every further hit
+;knocks half a second (30 ticks) off the burst cooldown. fvar(31) = life when the combo started, fvar(33) = life last tick
+[State -1, AR burst comeback]
+type = VarAdd
+triggerall = !ishelper
+triggerall = var(35) > 0
+trigger1 = movetype = H
+trigger1 = Life < fvar(33)
+trigger1 = fvar(31) - Life > LifeMax * 0.15
+var(35) = -30
+ignorehitpause = 1
+
+[State -1, AR burst comeback clamp]
+type = VarSet
+triggerall = !ishelper
+trigger1 = var(35) < 0
+var(35) = 0
+ignorehitpause = 1
+
+[State -1, AR burst combo start]
+type = VarSet
+triggerall = !ishelper
+trigger1 = movetype != H
+fvar(31) = Life
+ignorehitpause = 1
+
+[State -1, AR burst last life]
+type = VarSet
+triggerall = !ishelper
+trigger1 = 1
+fvar(33) = Life
+ignorehitpause = 1
+
+[State -1, AR burst]
+type = ChangeState
+value = ifelse(StateType = A, 7751, 7750)
+triggerall = !ishelper
+triggerall = command = "ar_burst"
+triggerall = var(35) = 0
+triggerall = RoundState = 2
+triggerall = Alive
+trigger1 = (stateno = 5000 || stateno = 5010 || stateno = 5020 || stateno = 5070) && Time > 0
+trigger2 = stateno = [5001, 5099]
+trigger2 = stateno != 5000 && stateno != 5010 && stateno != 5020 && stateno != 5070
+
+;=== END AR BURST ===
+
+;Abstract Reordered: parry on Z
+[State -1, AR Parry]
+type = ChangeState
+value = 7740
+triggerall = !ishelper
+triggerall = command = "ar_parry"
+triggerall = RoundState = 2
+trigger1 = ctrl
+
+;Abstract Reordered: X = Half-Ghost (Myon joins in for 4-10 s, her hits repeat). Costs 400 spirit (needs 500+), state 4100.
+[State -1, AR Half-Ghost]
+type = ChangeState
+value = 4100
+triggerall = !ishelper
+triggerall = RoundState = 2
+triggerall = statetype != A
+triggerall = var(54) = 0
+triggerall = var(50) >= 950   ;MAX Spirit Level = the "bankai" input
+triggerall = ctrl
+trigger1 = AILevel <= 0
+trigger1 = command = "ar_x"
+trigger1 = command != "holdfwd" && command != "holdback" && command != "holdup"
+trigger2 = AILevel > 0
+trigger2 = Random < 12
+trigger2 = P2BodyDist X < 120
+
+[State -1, Negative Edge] ;- Reset // Release // Hold
+type = null
+triggerall = !ishelper
+trigger1 = var(40)&4032
+trigger1 = (var(40):=0)||1
+trigger2 = var(40)
+trigger2 = (var(40):=var(40) +64*(var(40)&1 && command != "holda") +128*(var(40)&2 && command != "holdb") +256*(var(40)&4 && command != "holdc") +512*(var(40)&8 && command != "holdx") +1024*(var(40)&16 && command != "holdy") +2048*(var(40)&32 && command != "holdz")) - var(40)
+trigger3 = var(40):=var(40)-(var(40)&63) + 1*(command = "holda") + 2*(command = "holdb") + 4*(command = "holdc") + 8*(command = "holdx") + 16*(command = "holdy") + 32*(command = "holdz")
+
+[State -1, Tick Fix]
+type = CtrlSet
+triggerall = !ishelper
+triggerall = !ctrl
+trigger1 = (stateno=52 || stateno=101 || stateno=5120 || stateno=5201) && !animtime
+trigger2 = ((stateno=[200,499]) || stateno=626) && !animtime
+trigger3 = (stateno=800 || stateno=810) && !animtime
+trigger4 = (stateno=1000 || stateno=1001 || stateno=1020 || stateno=1101 || stateno=1200 || stateno=1201) && !animtime
+trigger5 = (stateno=1203 || stateno=1300 || stateno=1400 || stateno=2000 || stateno=2100 || stateno=4000) && !animtime
+trigger6 = (stateno=4003 || stateno=4100 || stateno=4200 || stateno=4202) && !animtime
+trigger7 = (stateno=5001 || stateno=5011 || stateno=151 || stateno=153) && hitover
+value = 1
+
+[State -1, Hello Training I have ctrl please cease your 1f buggery]
+type = Null
+triggerall = numenemy
+triggerall = enemy,numhelper(20000)
+triggerall = enemy,name="Training"
+trigger1 = ctrl && enemy,cond(numhelper(20000),helper(20000),cond(1,var(31)>0,0),0)
+trigger1 = enemy,cond(numhelper(20000),helper(20000),cond(1,var(31):=0,0),0)||1
+
+;======================
+; Myon Proration Stuff
+[State -2, Reset var when the opponent recovers]
+type = Varset
+triggerall = ishelper(30100)
+trigger1 = numenemy
+trigger1 = (enemynear,movetype!=H)
+trigger2 = !numenemy
+fvar(10) = 1.0
+
+[State -2, Final Dampen]
+type = null
+triggerall = ishelper(30100)
+trigger1 = (stateno!=[2000,4999])
+trigger1 = (fvar(11):=ifelse(root,fvar(9)>fvar(10),root,fvar(9),fvar(10))*ifelse(root,var(4)>0,0.5,1.0)*0.6) || 1
+ignorehitpause = 1
+
+;===========================================================================
+[State -1, Combo condition Reset]
+type = VarSet
+triggerall = !ishelper
+trigger1 = var(1)!=0
+trigger1 = !ctrl
+trigger1 = stateno != [1001,1005]
+var(1) = 0
+ignorehitpause = 1
+
+[State -1, Combo condition Check]
+type = VarSet
+triggerall = !ishelper
+trigger1 = var(1)!=1
+trigger1 = movetype != A
+trigger1 = ctrl
+trigger2 = ((stateno=[200,299]) || (stateno=[400,499]) || (stateno=[600,699])) && movecontact
+trigger3 = (stateno = [1100,1105]) && movecontact
+trigger4 = (stateno = [1200,1203]) && movecontact
+trigger5 = stateno = 1300 && movecontact
+trigger6 = stateno = 1400 && animelemtime(7)>=2
+var(1) = 1
+ignorehitpause = 1
+
+;===========================================================================
+;///////////////////////////////////////////////////////////////////////////
+;===========================================================================
+; CPU Controls
+;===========================================================================
+;///////////////////////////////////////////////////////////////////////////
+;===========================================================================
+[State -1, Jump Back AI]
+type = changestate
+value = 1
+triggerall = !ishelper
+triggerall = AILevel > 0
+triggerall = roundstate=2 && statetype != A
+triggerall = ctrl && stateno != 40 && (stateno != [1,3])
+; AI SHIT GOES HERE:
+trigger1 = var(58)=1
+trigger1 = (var(58):=0)||1
+
+[State -1, Jump Fwd AI]
+type = changestate
+value = 2
+triggerall = !ishelper
+triggerall = AILevel > 0
+triggerall = roundstate=2 && statetype != A
+triggerall = ctrl && stateno != 40 && (stateno != [1,3])
+; AI SHIT GOES HERE:
+trigger1 = var(58)=2
+trigger1 = (var(58):=0)||1
+
+[State -1, Jump Neutral AI]
+type = changestate
+value = 3
+triggerall = !ishelper
+triggerall = AILevel > 0
+triggerall = roundstate=2 && statetype != A
+triggerall = ctrl && stateno != 40 && (stateno != [1,3])
+; AI SHIT GOES HERE:
+trigger1 = var(58)=3
+trigger1 = (var(58):=0)||1
+
+[State -1, Guard]
+type = changestate
+value = 120
+triggerall = numenemy
+triggerall = !ishelper
+triggerall = !(stateno = [2000,4200])
+trigger1 = var(58) > 0
+trigger1 = roundstate=2
+trigger1 = inguarddist
+trigger1 = ctrl || (stateno = [100,106])
+trigger1 = (stateno!=[120,155])
+trigger1 = !(enemynear,hitdefattr=SCA,AT) && (enemynear,time<120)
+trigger1 = (random%100) < ifelse((p2stateno=[200,699]),49,ifelse((p2stateno=[1000,2999]),49,100))
+
+[State -1, Recover AI] ;Recover near ground (use ChangeState)
+type = SelfState
+triggerall = !ishelper
+triggerall = !(stateno = [2000,4200])
+triggerall = stateno = 5050 ;movetype = H
+triggerall = time >= 10
+triggerall = Vel Y > 0
+triggerall = Pos Y >= -20
+triggerall = alive
+triggerall = CanRecover
+trigger1 = var(58) > 0
+trigger1 = (random%100) <= 24
+value = 5200 ;HITFALL_RECOVER
+
+[State -1, Recover AI] ;Recover in mid air (use SelfState)
+type = SelfState
+triggerall = !ishelper
+triggerall = !(stateno = [2000,4200])
+triggerall = stateno = 5050 ;movetype = H
+triggerall = time >= 10
+triggerall = Vel Y > 0
+triggerall = alive
+triggerall = CanRecover
+trigger1 = var(58) > 0
+trigger1 = (random%100) <= 24
+value = 5210 ;HITFALL_AIRRECOVER
+
+;===========================================================================
+;///////////////////////////////////////////////////////////////////////////
+;===========================================================================
+; Human Controls
+;===========================================================================
+;///////////////////////////////////////////////////////////////////////////
+;===========================================================================
+
+;===========================================================================
+; Level 3 Spellcards
+;===========================================================================
+
+;---------------------------------------------------------------------------
+[State -1, Matsuyoi-Reflecting Satellite Slash]
+type = ChangeState
+value = 4200
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = power >= 5000   ;AR: 5 bars, no spirit requirement
+triggerall = ctrl || stateno=40 || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || (((stateno=[200,629])||(stateno=[1002,1500])) && (movecontact||var(1))) || (stateno=1001 && movecontact && animelemtime(3)>=0)
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = ifelse((anim!=[5,6]),command="236236_Z",command="214214_Z")
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 4200
+trigger2 = stateno = [1000,1999]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+[State -1, 6-Root Cleansing]
+type = ChangeState
+value = 4000
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = power >= 3000   ;AR: 3 bars, always available (no spellcard select)
+triggerall = ctrl || stateno=40 || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || (((stateno=[200,629])||(stateno=[1002,1500])) && (movecontact||var(1))) || (stateno=1001 && movecontact && animelemtime(3)>=0)
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = ifelse((anim!=[5,6]),command="214214_Z",command="236236_Z")
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 4000
+trigger2 = stateno = [1000,1999]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;214214xyz: Slash of Present
+[State -1, 214214xyz: Slash of Present]
+type = ChangeState
+value = 2100
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = power >= 1000
+triggerall = ctrl || stateno=40 || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || (((stateno=[200,629])||(stateno=[1002,1500])) && (movecontact||var(1))) || (stateno=1001 && movecontact && animelemtime(3)>=0)
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = ifelse((anim=[5,6]),command="236236_Y",command="214214_Y")
+trigger1 = (var(10):=2)||1
+trigger2 = AILevel <= 0 ;AI Off
+trigger2 = ifelse((anim=[5,6]),command="236236_X",command="214214_X")
+trigger2 = (var(10):=2)||1
+;AI
+trigger3 = AILevel > 0
+trigger3 = var(58) = 2100
+trigger3 = (stateno = [1000,1999])
+trigger3 = p2bodydist x = [0,50]
+trigger3 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;236236xyz: Meditation
+[State -1, 236236xyz: Meditation]
+type = ChangeState
+value = 2000
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = power >= 1000
+triggerall = ctrl || stateno=40 || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || (((stateno=[200,629])||(stateno=[1002,1500])) && (movecontact||var(1))) || (stateno=1001 && movecontact && animelemtime(3)>=0)
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = ifelse((anim!=[5,6]),command="236236_Y",command="214214_Y")
+trigger1 = (var(10):=2)||1
+trigger2 = AILevel <= 0 ;AI Off
+trigger2 = ifelse((anim!=[5,6]),command="236236_X",command="214214_X")
+trigger2 = (var(10):=1)||1
+;AI
+trigger3 = AILevel > 0
+trigger3 = var(58) = 2000
+trigger3 = (stateno = [1000,1999])
+trigger3 = p2bodydist x = [0,50]
+trigger3 = (var(58):=0)||1
+
+;===========================================================================
+; Specials
+;===========================================================================
+
+;---------------------------------------------------------------------------
+;Guard Cancel Counter
+[State -1, Guard Cancel Counter]
+type = ChangeState
+value = 1900
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = power >= 1000
+triggerall = stateno=[150,155]
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = ifelse((anim!=[5,6]),command="412_Z",command="632_Z")
+trigger1 = (var(10):=1)||1
+trigger2 = AILevel <= 0 ;AI Off
+trigger2 = ifelse((anim!=[5,6]),command="412_Y",command="632_Y")
+trigger2 = (var(10):=1)||1
+trigger3 = AILevel <= 0 ;AI Off
+trigger3 = ifelse((anim!=[5,6]),command="412_X",command="632_X")
+trigger3 = (var(10):=1)||1
+
+;---------------------------------------------------------------------------
+;41236xyz: Lotus Stance Cut
+[State -1, 41236xyz: Lotus Stance Cut]
+type = ChangeState
+value = 1400
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = numhelper(21400)=0
+triggerall = ctrl || stateno=40 || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=[200,629]) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = ifelse((anim=[5,6]),command="63214_Z",command="41236_Z")
+trigger1 = power >= 500   ;AR: C = EX, 500 meter
+trigger1 = (var(10):=1)||1
+trigger1 = (var(38):=1)||1
+trigger2 = AILevel <= 0 ;AI Off
+trigger2 = ifelse((anim=[5,6]),command="63214_Y",command="41236_Y")
+trigger2 = (var(10):=2)||1
+trigger3 = AILevel <= 0 ;AI Off
+trigger3 = ifelse((anim=[5,6]),command="63214_X",command="41236_X")
+trigger3 = (var(10):=3)||1
+;AI
+trigger4 = AILevel > 0
+trigger4 = var(58) = 1401
+trigger4 = (var(10):=1)||1
+trigger4 = (var(58):=0)||1
+trigger5 = AILevel > 0
+trigger5 = var(58) = 1402
+trigger5 = (var(10):=2)||1
+trigger5 = (var(58):=0)||1
+trigger6 = AILevel > 0
+trigger6 = var(58) = 1403
+trigger6 = (var(10):=3)||1
+trigger6 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;63214xyz: Heart Carving Cut
+[State -1, 63214xyz: Heart Carving Cut]
+type = ChangeState
+value = 1300
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=40 || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=[200,629]) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = ifelse((anim!=[5,6]),command="63214_Z",command="41236_Z")
+trigger1 = power >= 500   ;AR: C = EX, 500 meter
+trigger1 = (var(10):=3)||1
+trigger1 = (var(38):=1)||1
+trigger2 = AILevel <= 0 ;AI Off
+trigger2 = ifelse((anim!=[5,6]),command="63214_Y",command="41236_Y")
+trigger2 = (var(10):=2)||1
+trigger3 = AILevel <= 0 ;AI Off
+trigger3 = ifelse((anim!=[5,6]),command="63214_X",command="41236_X")
+trigger3 = (var(10):=1)||1
+;AI
+trigger4 = AILevel > 0
+trigger4 = var(58) = 1301
+trigger4 = (var(10):=1)||1
+trigger4 = (var(58):=0)||1
+trigger5 = AILevel > 0
+trigger5 = var(58) = 1302
+trigger5 = (var(10):=2)||1
+trigger5 = (var(58):=0)||1
+trigger6 = AILevel > 0
+trigger6 = var(58) = 1303
+trigger6 = (var(10):=3)||1
+trigger6 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;623xyz: Crescent Moon Slash
+[State -1, 623xyz: Crescent Moon Slash]
+type = ChangeState
+value = 1100+5*(statetype=A)
+triggerall = !ishelper
+;triggerall = statetype != A
+triggerall = ctrl || stateno=40 || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=[200,629]) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = ifelse((anim!=[5,6]),command="623_Z",command="421_Z")
+trigger1 = power >= 500   ;AR: C = EX, 500 meter
+trigger1 = (var(10):=3)||1
+trigger1 = (var(38):=1)||1
+trigger2 = AILevel <= 0 ;AI Off
+trigger2 = ifelse((anim!=[5,6]),command="623_Y",command="421_Y")
+trigger2 = (var(10):=2)||1
+trigger3 = AILevel <= 0 ;AI Off
+trigger3 = ifelse((anim!=[5,6]),command="623_X",command="421_X")
+trigger3 = (var(10):=1)||1
+
+;---------------------------------------------------------------------------
+;421xyz: Insightful Sword
+[State -1, 421xyz: Insightful Sword/Netherworld Reflection Slash]
+type = ChangeState
+value = 1000+20*(var(10)=3)
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=40 || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=[200,629]) && (movecontact||var(1)))
+trigger1 = ifelse((anim=[5,6]),command="623_Z",command="421_Z")
+trigger1 = (var(10):=3)||1
+trigger2 = AILevel <= 0 ;AI Off
+trigger2 = ifelse((anim=[5,6]),command="623_Y",command="421_Y")
+trigger2 = (var(10):=2)||1
+trigger3 = AILevel <= 0 ;AI Off
+trigger3 = ifelse((anim=[5,6]),command="623_X",command="421_X")
+trigger3 = (var(10):=1)||1
+
+;---------------------------------------------------------------------------
+;236xyz: Slash of Life & Death
+[State -1, 236xyz: Slash of Life & Death]
+type = ChangeState
+value = 1200
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=40 || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=[200,629]) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = ifelse((anim!=[5,6]),command="236_Z",command="214_Z")
+trigger1 = power >= 500   ;AR: C = EX, 500 meter
+trigger1 = (var(10):=3)||1
+trigger1 = (var(38):=1)||1
+trigger2 = AILevel <= 0 ;AI Off
+trigger2 = ifelse((anim!=[5,6]),command="236_Y",command="214_Y")
+trigger2 = (var(10):=2)||1
+trigger3 = AILevel <= 0 ;AI Off
+trigger3 = ifelse((anim!=[5,6]),command="236_X",command="214_X")
+trigger3 = (var(10):=1)||1
+;AI
+trigger4 = AILevel > 0
+trigger4 = var(58) = 1001
+trigger4 = (var(10):=1)||1
+trigger4 = (var(58):=0)||1
+trigger5 = AILevel > 0
+trigger5 = var(58) = 1002
+trigger5 = (var(10):=2)||1
+trigger5 = (var(58):=0)||1
+trigger6 = AILevel > 0
+trigger6 = var(58) = 1003
+trigger6 = (var(10):=3)||1
+trigger6 = (var(58):=0)||1
+
+;===========================================================================
+; Basics
+;===========================================================================
+
+;---------------------------------------------------------------------------
+;Run Fwd
+[State -1, Run Fwd]
+type = ChangeState
+value = 100+10*(statetype=A)
+triggerall = !ishelper
+triggerall = (stateno!=[100,101]) && stateno!=110
+triggerall = ctrl
+triggerall = cond(statetype!=A,1,cond(vel y < 0,pos y <= -35,1))
+triggerall = var(8)=0
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "FF" || (command = "holdfwd" && command!="holdback" && (command="a"))
+trigger1 = var(8):=(var(8)+1)
+;AI
+trigger2 = AILevel > 0
+trigger2 = statetype != A
+trigger2 = var(58) = 100
+trigger2 = (var(58):=0)||1
+trigger2 = var(8):=(var(8)+1)
+trigger3 = AILevel > 0
+trigger3 = statetype = A
+trigger3 = var(58) = 110
+trigger3 = (var(58):=0)||1
+trigger3 = var(8):=(var(8)+1)
+
+;---------------------------------------------------------------------------
+;Run Back
+[State -1, Run Back]
+type = ChangeState
+value = 105+10*(statetype=A)
+triggerall = !ishelper
+triggerall = (stateno!=[105,106]) && stateno!=115
+triggerall = ctrl
+triggerall = cond(statetype!=A,1,cond(vel y < 0,pos y <= -35,1))
+triggerall = var(8)=0
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "BB" || (command = "holdback" && command!="holdfwd" && (command="a"))
+trigger1 = var(8):=(var(8)+1)
+;AI
+trigger2 = AILevel > 0
+trigger2 = statetype != A
+trigger2 = var(58) = 105
+trigger2 = (var(58):=0)||1
+trigger2 = var(8):=(var(8)+1)
+trigger3 = AILevel > 0
+trigger3 = statetype = A
+trigger3 = var(58) = 115
+trigger3 = (var(58):=0)||1
+trigger3 = var(8):=(var(8)+1)
+
+;---------------------------------------------------------------------------
+;Grab
+[State -1, Grab]
+type = ChangeState
+value = 800
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1)
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "b"   ;AR: Y = grab
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 800
+trigger2 = p2bodydist x = [0,50]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Taunt
+[State -1, Taunt]
+type = ChangeState
+value = 195
+triggerall = !ishelper
+triggerall = AILevel <= 0 ;AI Off
+triggerall = command = "start"
+trigger1 = statetype != A
+trigger1 = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1)
+
+;---------------------------------------------------------------------------
+;Forward Heavy Attack
+[State -1, Forward Heavy Attack]
+type = ChangeState
+value = 225
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=200||stateno=210||(stateno=215 && var(53)>=4)||stateno=400||stateno=410) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "z"
+trigger1 = command = "holdfwd"
+trigger1 = command != "holddown"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 225
+trigger2 = p2bodydist x = [0,70]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Standing Heavy Attack
+[State -1, Standing Heavy Attack]
+type = ChangeState
+value = 220
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=200||stateno=210||stateno=400||stateno=410) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "z"
+trigger1 = command != "holddown"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 220
+trigger2 = p2bodydist x = [0,70]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Forward Medium Attack
+[State -1, Forward Medium Attack]
+type = ChangeState
+value = 215
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=200||(stateno=220 && var(53)>=2)||stateno=400) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "y"
+trigger1 = command = "holdfwd"
+trigger1 = command != "holddown"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 215
+trigger2 = p2bodydist x = [0,50]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Standing Medium Attack
+[State -1, Standing Medium Attack]
+type = ChangeState
+value = 210
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=200||stateno=400) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "y"
+trigger1 = command != "holddown"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 210
+trigger2 = p2bodydist x = [0,50]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Standing Light Attack
+[State -1, Standing Light Attack]
+type = ChangeState
+value = 200
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || (stateno=200 && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "x"
+trigger1 = command != "holddown"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 200
+trigger2 = p2bodydist x = [0,50]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Crouching Heavy Attack
+[State -1, Crouching Heavy Attack]
+type = ChangeState
+value = 420
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=200||stateno=210||stateno=400||stateno=410) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "z"
+trigger1 = command = "holddown"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 420
+trigger2 = p2bodydist x = [30,70]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Crouching Medium Attack
+[State -1, Crouching Medium Attack]
+type = ChangeState
+value = 410
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || ((stateno=200||stateno=400) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "y"
+trigger1 = command = "holddown"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 410
+trigger2 = p2bodydist x = [0,70]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Crouching Light Attack
+[State -1, Crouching Light Attack]
+type = ChangeState
+value = 400
+triggerall = !ishelper
+triggerall = statetype != A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=100||stateno=105) && animelemtime(3)>1) || (stateno=400 && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "x"
+trigger1 = command = "holddown"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 400
+trigger2 = p2bodydist x = [0,50]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Aerial Down Heavy Attack
+[State -1, Aerial Down Heavy Attack]
+type = ChangeState
+value = 625
+triggerall = !ishelper
+triggerall = statetype = A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=110||stateno=115) && animelemtime(3)>1) || ((stateno=600||stateno=610) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "z"
+trigger1 = command = "holddown"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 625
+trigger2 = p2bodydist x = [-20,20]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Aerial Heavy Attack
+[State -1, Aerial Heavy Attack]
+type = ChangeState
+value = 620
+triggerall = !ishelper
+triggerall = statetype = A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=110||stateno=115) && animelemtime(3)>1) || ((stateno=600||stateno=610) && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "z"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 620
+trigger2 = p2bodydist x = [0,50]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Aerial Medium Attack
+[State -1, Aerial Medium Attack]
+type = ChangeState
+value = 610
+triggerall = !ishelper
+triggerall = statetype = A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=110||stateno=115) && animelemtime(3)>1) || (stateno=600 && (movecontact||var(1)))
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "y"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 610
+trigger2 = p2bodydist x = [0,50]
+trigger2 = (var(58):=0)||1
+
+;---------------------------------------------------------------------------
+;Aerial Light Attack
+[State -1, Aerial Light Attack]
+type = ChangeState
+value = 600
+triggerall = !ishelper
+triggerall = statetype = A
+triggerall = ctrl || stateno=52 || stateno=101 || stateno=106 || ((stateno=110||stateno=115) && animelemtime(3)>1)
+trigger1 = AILevel <= 0 ;AI Off
+trigger1 = command = "x"
+;AI
+trigger2 = AILevel > 0
+trigger2 = var(58) = 600
+trigger2 = p2bodydist x = [0,50]
+trigger2 = (var(58):=0)||1

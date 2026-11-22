@@ -908,7 +908,7 @@ ctrl = 0
 [State 730, PowerAdd]
 type = PowerAdd
 triggerAll = Power < const(data.power) && Power < PowerMax
-trigger1 = !AILevel && (command = "holdb" && command = "holdy")
+trigger1 = !AILevel && command = "holda"
 trigger2 = AILevel
 value = 2 + ifElse(time < 60, 0, (time - 60) / 12)
 
@@ -952,7 +952,7 @@ ownPal = 1
 [State 730, End]
 type = ChangeState
 trigger1 = Power >= const(data.power) || Power >= PowerMax || RoundState != 2
-trigger2 = !AILevel && (command != "holdb" || command != "holdy")
+trigger2 = !AILevel && command != "holda"
 trigger3 = AILevel && (InGuardDist || P2BodyDist x <= 120)
 value = 731
 ctrl = 1

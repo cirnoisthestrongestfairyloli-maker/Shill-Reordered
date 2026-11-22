@@ -577,6 +577,14 @@ ignorehitpause = 1
 
 
 [Statedef -2]
+;Abstract Reordered: apply the colour slot that was picked (palettes 1,2..1,13 live inside the sprite file)
+[State -2, AR colour slot]
+type = RemapPal
+trigger1 = !ishelper
+source = 1,1
+dest = 1,palno
+ignorehitpause = 1
+
 
 ;  --- Uno Tag System v3.2.1 STATEDEF -2 ---
 

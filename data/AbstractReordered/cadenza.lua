@@ -62,6 +62,9 @@ AR.data = {
 	['terry_ar'] = {n = 46, plate_w = 328, bio_w = 1762, q = 3, win = {181, 0}, vphd = true},
 	['alex_ar'] = {n = 47, plate_w = 238, bio_w = 1814, q = 3, win = {181, 0}, vphd = true},
 	['ash_ar'] = {n = 48, plate_w = 328, bio_w = 1717, q = 3, win = {181, 0}, vphd = true},
+	['youmu_ar'] = {n = 49, plate_w = 202, bio_w = 2007, q = 3, win = {181, 0}, vphd = true},
+	['iori_ar'] = {n = 50, plate_w = 146, bio_w = 1920, q = 3, win = {181, 0}, vphd = true},
+	['rose_ar'] = {n = 51, plate_w = 146, bio_w = 1567, q = 3, win = {181, 0}, vphd = true},
 }
 AR.random = {n = 99, plate_w = 185, bio_w = 758}
 AR.timeW = 169
@@ -491,7 +494,7 @@ AR.music = {
 	{path = 'Music/Granblue Fantasy - Dark Silver Wings.mp3', w = 373, wh = 404},
 	{path = 'Music/RWBY - Crossing Fate.mp3', w = 246, wh = 278},
 	{path = 'Music/Conciliation.mp3', w = 168, wh = 200},
-	{path = 'Music/Johnny - SPIN.mp3', w = 175, wh = 208},
+	{path = 'Music/Johnny - SPIN.mp3', w = 185, wh = 217},
 }
 AR.musicSel = 1          -- index into AR.music: 1 = random Music track (default), 2 = the stage's own music
 AR.randomPick = nil      -- the track RANDOM resolved to for this match
@@ -534,7 +537,7 @@ end
 
 -- characters whose SFF keeps effect palettes in group 1 (Broly: 1,13+ are transformation/flash palettes):
 -- with Config.PaletteMax = 100 the select screen offered all of them, so only keep the real colours
-AR.palLimit = {['broly_ar'] = 12, ['giorno_ar'] = 10}   -- giorno: palettes 11/12 are joke modes
+AR.palLimit = {['broly_ar'] = 12, ['giorno_ar'] = 13, ['aoko_ar'] = 14, ['shiki_ar'] = 14, ['mitsuru_ar'] = 13}   -- palette overhaul: v2 sffs still hold old extra palettes above the new last slot
 
 -- boss rush reward colour (external/mods/ar_bossrush.lua): it is each character's highest colour slot, and it
 -- stays off the colour menu until that character has cleared boss rush
@@ -1450,7 +1453,7 @@ AR.movelistChars = {['saber_ar'] = true, ['reimu_ar'] = true, ['haruhi_ar'] = tr
 	['meisaku_ar'] = true, ['stocking_ar'] = true, ['sailor_mercury_ar'] = true, ['cureblack_ar'] = true, ['aoko_ar'] = true,
 	['jotaro_ar'] = true, ['ippo_ar'] = true, ['kamijo_ar'] = true, ['gokublack_ar'] = true, ['vegeta_ar'] = true,
 	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true, ['shiki_ar'] = true, ['taiga_ar'] = true, ['panty_ar'] = true,
-	['saitama_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['mitsuru_ar'] = true, ['giorno_ar'] = true, ['weiss_ar'] = true, ['shana_ar'] = true, ['rentaro_ar'] = true, ['batman_ar'] = true, ['yang_ar'] = true, ['johnny_ar'] = true, ['alucard_ar'] = true}
+	['saitama_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['mitsuru_ar'] = true, ['giorno_ar'] = true, ['weiss_ar'] = true, ['shana_ar'] = true, ['rentaro_ar'] = true, ['batman_ar'] = true, ['yang_ar'] = true, ['johnny_ar'] = true, ['alucard_ar'] = true, ['youmu_ar'] = true, ['iori_ar'] = true, ['rose_ar'] = true}
 AR.movelistArtX = 1040
 AR.movelistArtY = 712
 AR.movelistArtScale = 1.0

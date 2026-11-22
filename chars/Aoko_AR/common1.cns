@@ -125,25 +125,25 @@ sprpriority = 0
 type = VelSet
 triggerall = AILevel=0
 trigger1 = command = "holdfwd"
-x = Cond(PalNo != 11, const(velocity.walk.fwd.x), const(velocity.walk.fwd.x) + 2)
+x = Cond(PalNo != 9999, const(velocity.walk.fwd.x), const(velocity.walk.fwd.x) + 2)
 
 [State 20, 2]
 type = VelSet
 triggerall = AILevel=0
 trigger1 = command = "holdback"
-x = Cond(PalNo != 11, const(velocity.walk.back.x), const(velocity.walk.back.x) - 2)
+x = Cond(PalNo != 9999, const(velocity.walk.back.x), const(velocity.walk.back.x) - 2)
 
 [State 20, 1]
 type = VelSet
 triggerall = AILevel>0
 trigger1 = helper(10003),var(25)
-x = Cond(PalNo != 11, const(velocity.walk.fwd.x), const(velocity.walk.fwd.x) + 2)
+x = Cond(PalNo != 9999, const(velocity.walk.fwd.x), const(velocity.walk.fwd.x) + 2)
 
 [State 20, 2]
 type = VelSet
 triggerall = AILevel>0
 trigger1 =!helper(10003),var(25)
-x = Cond(PalNo != 11, const(velocity.walk.back.x), const(velocity.walk.back.x) - 2)
+x = Cond(PalNo != 9999, const(velocity.walk.back.x), const(velocity.walk.back.x) - 2)
 
 
 [State 20, 3]
@@ -262,14 +262,14 @@ sysvar(1) = -1
 
 [State 40, 4]
 type = VelSet
-triggerall = PalNo != 11
+triggerall = PalNo != 9999
 trigger1 = AnimTime = 0
 x = Cond(sysvar(1)=0, const(velocity.jump.neu.x), Cond(sysvar(1)=1, const(velocity.jump.fwd.x), const(velocity.jump.back.x)))
 y = const(velocity.jump.y)
 
 [State 40, 4]
 type = VelSet
-triggerall = PalNo = 11
+triggerall = PalNo = 9999
 trigger1 = AnimTime = 0
 x = Cond(sysvar(1)=0, const(velocity.jump.neu.x), Cond(sysvar(1)=1, const(velocity.jump.fwd.x) + 2, const(velocity.jump.back.x) - 2))
 y = const(velocity.jump.y) - 2
@@ -336,14 +336,14 @@ sysvar(1) = -1
 
 [State 45, 6]
 type = VelSet
-triggerall = PalNo != 11
+triggerall = PalNo != 9999
 trigger1 = Time = 1
 x = Cond(sysvar(1)=0, const(velocity.jump.neu.x), Cond(sysvar(1)=1, const(velocity.jump.fwd.x), const(velocity.jump.back.x)))
 y = const(velocity.jump.y)
 
 [State 45, 6]
 type = VelSet
-triggerall = PalNo = 11
+triggerall = PalNo = 9999
 trigger1 = Time = 1
 x = Cond(sysvar(1)=0, const(velocity.jump.neu.x), Cond(sysvar(1)=1, const(velocity.jump.fwd.x) + 2, const(velocity.jump.back.x) -2))
 y = const(velocity.jump.y) - 1
@@ -486,7 +486,7 @@ pan = 0
 [State 100, 1]
 type = VelSet
 trigger1 = AnimElemTime(3) >= 0
-x = Cond(PalNo != 11, const(velocity.run.fwd.x), const(velocity.run.fwd.x) + 2)
+x = Cond(PalNo != 9999, const(velocity.run.fwd.x), const(velocity.run.fwd.x) + 2)
 
 [State 100, 2] ;Prevent from turning
 type = AssertSpecial
@@ -635,7 +635,7 @@ value = 1
 [State 110, 1]
 type = VelSet
 trigger1 = AnimElem = 2
-x = const(velocity.run.fwd.x) + Cond(PalNo != 11, 0, 2)
+x = const(velocity.run.fwd.x) + Cond(PalNo != 9999, 0, 2)
 
 [State 110, 2]
 type = StateTypeSet 
@@ -695,7 +695,7 @@ value = 1
 [State 115, 1]
 type = VelSet
 trigger1 = AnimElem = 2
-x = const(velocity.run.back.x) + Cond(PalNo != 11, 0, -2)
+x = const(velocity.run.back.x) + Cond(PalNo != 9999, 0, -2)
 
 [State 115, 2]
 type = StateTypeSet 

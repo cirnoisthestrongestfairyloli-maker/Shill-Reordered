@@ -120,7 +120,7 @@ v = 58
  ;#####################################################################################################################
 ;## Change to the palette number you wish to add found in the palette folder. 
 ;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
-value = 5;2
+value = 2
 
 ;Change palette for button "c"
 [State 0, VarSet]
@@ -153,7 +153,7 @@ v = 58
  ;#####################################################################################################################
 ;## Change to the palette number you wish to add found in the palette folder. 
 ;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
-value = 8;5
+value = 5
 ;Change palette for button "z"
 [State 0, VarSet]
 type = VarSet
@@ -185,7 +185,7 @@ v = 58
  ;#####################################################################################################################
 ;## Change to the palette number you wish to add found in the palette folder. 
 ;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
-value = 127;8
+value = 8
 
 ;Change palette for button "start" + "c"
 [State 0, VarSet]
@@ -231,13 +231,21 @@ v = 58
 ;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
 value = 12
 
-;Abstract Reordered: colour slot 23 is the boss rush colour (palettes 1,23 / 2,23 / 3,23 in the sprite file)
+;Abstract Reordered palette overhaul: colour 13 = cross-series reference
 [State 0, VarSet]
 type = VarSet
 trigger1 = RoundsExisted = 0
-trigger1 = palno = 23
+trigger1 = palno = 13
 v = 58
-value = 23
+value = 13
+
+;Abstract Reordered palette overhaul: colour slot 14 is the boss rush colour (palettes 1,14 / 2,14 / 3,14 in the sprite file)
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno = 14
+v = 58
+value = 14
 
 ;Change palette during intro using direction keys?
 [State 5900, 3]

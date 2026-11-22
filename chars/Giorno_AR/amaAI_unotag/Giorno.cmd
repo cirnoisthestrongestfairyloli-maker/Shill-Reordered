@@ -3608,7 +3608,7 @@ triggerall = var(7) = 0
 triggerall = roundstate = 2
 triggerall = command = "c"
 triggerall = statetype = S
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo != 9999 || fvar(1) = 80
 trigger1 = NumHelper(2) = 0
 trigger1 = ctrl
 ignorehitpause = 0
@@ -3626,7 +3626,7 @@ triggerall = var(7) = 0
 triggerall = roundstate = 2
 triggerall = command = "c"
 triggerall = statetype = S
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo != 9999 || fvar(1) = 80
 trigger1 = NumHelper(2) = 0
 trigger1 = ctrl
 ignorehitpause = 0
@@ -3643,7 +3643,7 @@ triggerall = !var(49)
 triggerall = roundstate = 2
 triggerall = command = "c"
 triggerall = statetype = C
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo != 9999 || fvar(1) = 80
 trigger1 = ctrl
 ignorehitpause = 0
 
@@ -3660,7 +3660,7 @@ triggerall = !var(49)
 triggerall = roundstate = 2
 triggerall = command = "c"
 triggerall = statetype = C
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo != 9999 || fvar(1) = 80
 trigger1 = ctrl
 ignorehitpause = 0
 
@@ -3676,7 +3676,7 @@ triggerall = !var(49)
 triggerall = roundstate = 2
 triggerall = command = "c"
 triggerall = statetype = A
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo != 9999 || fvar(1) = 80
 trigger1 = ctrl
 ignorehitpause = 0
 
@@ -3693,7 +3693,7 @@ triggerall = !var(49)
 triggerall = roundstate = 2
 triggerall = command = "c"
 triggerall = statetype = A
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo != 9999 || fvar(1) = 80
 trigger1 = ctrl
 ignorehitpause = 0
 
@@ -3710,7 +3710,7 @@ triggerall = var(49)
 triggerall = roundstate = 2
 triggerall = command = "c"
 triggerall = statetype = S
-triggerall = PalNo != 12
+triggerall = PalNo != 9999
 trigger1 = ctrl
 ignorehitpause = 0
 
@@ -3726,7 +3726,7 @@ triggerall = var(49)
 triggerall = roundstate = 2
 triggerall = command = "c"
 triggerall = statetype = C
-triggerall = PalNo != 12
+triggerall = PalNo != 9999
 trigger1 = ctrl
 ignorehitpause = 0
 
@@ -3742,7 +3742,7 @@ triggerall = var(49)
 triggerall = roundstate = 2
 triggerall = command = "c"
 triggerall = statetype = A
-triggerall = PalNo != 12
+triggerall = PalNo != 9999
 trigger1 = ctrl
 ignorehitpause = 0
 
@@ -3850,8 +3850,8 @@ type = ChangeState
 triggerall = !NumPartner || (NumPartner && (sysvar(4) != [8,9]) && (sysvar(4) != 12) && (StateNo != [1251109,1251114])) 
 value = 10820
 triggerall = var(59)=1&& RoundState = 2
-triggerall = PalNo = 12
-triggerall = PalNo != 11 || fvar(1) = 80
+triggerall = PalNo = 9999
+triggerall = PalNo != 9999 || fvar(1) = 80
 triggerall = numhelper(1001) = 0
 triggerall = NumHelper(10000) = 0
 triggerall = !var(49)

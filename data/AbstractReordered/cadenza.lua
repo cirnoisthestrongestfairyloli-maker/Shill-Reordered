@@ -166,9 +166,9 @@ function AR.addComingSoon(list)
 				bg.y = motif.select_info.pos[2] + t.y
 				por.anim = AR.comingSoonAnim or anim(7400, 98)
 				AR.comingSoonAnim = por.anim
-				por.scale = {1, 1}
-				por.x = bg.x + motif.select_info.portrait.offset[1]
-				por.y = bg.y + motif.select_info.portrait.offset[2]
+				por.scale = {0.85, 0.85}
+				por.x = bg.x + motif.select_info.portrait.offset[1] * 0.85
+				por.y = bg.y + motif.select_info.portrait.offset[2] * 0.85
 				table.insert(list, bg)
 				table.insert(list, por)
 			end
@@ -184,7 +184,7 @@ local function swapPortraits()
 			local list = orig(...)
 			for _, item in ipairs(list) do
 				if portraitAnims[item.anim] then
-					item.scale = {1, 1}
+					item.scale = {0.85, 0.85}
 				end
 			end
 			pcall(AR.addComingSoon, list)

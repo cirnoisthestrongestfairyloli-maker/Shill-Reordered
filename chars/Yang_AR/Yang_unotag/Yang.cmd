@@ -2226,7 +2226,7 @@ trigger2 = movecontact
 [State -1, jC]
 type = ChangeState
 triggerall = !NumPartner || (NumPartner && (sysvar(4) != [8,9]) && (sysvar(4) != 12) && (StateNo != [1251109,1251114])) 
-value = 620
+value = 220   ;Abstract Reordered: air C = the 22C lunge
 triggerall = !ishelper
 triggerall = numhelper(10371)
 triggerall = helper(10371),var(2) = [1,3]
@@ -2239,7 +2239,7 @@ trigger3 = (stateno = [600,611]) && movecontact
 [State -1, jC]
 type = ChangeState
 triggerall = !NumPartner || (NumPartner && (sysvar(4) != [8,9]) && (sysvar(4) != 12) && (StateNo != [1251109,1251114])) 
-value = 620
+value = 220   ;Abstract Reordered: air C = the 22C lunge
 triggerall = !ishelper
 triggerall = numhelper(10371)
 triggerall = helper(10371),var(2) = [1,3]

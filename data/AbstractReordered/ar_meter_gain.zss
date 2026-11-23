@@ -1,0 +1,14 @@
+#===============================================================================
+# Abstract Reordered: per-character meter gain bonus.
+# Whatever meter the character gained since the last tick is topped up by a fraction of that gain.
+# (same idea as the boss rush rule in ar_bossrush.zss)
+#===============================================================================
+[StateDef -4]
+
+ignorehitpause if !isHelper && name = "johnny" {
+	if roundState = 2 && map(_mg_lastPower) > 0 && power + 1 > map(_mg_lastPower) {
+		powerAdd{value: floor((power + 1 - map(_mg_lastPower)) * 0.5)}
+	}
+	# +1 so that an empty meter (0) is still told apart from "not set yet"
+	map(_mg_lastPower) := power + 1;
+}

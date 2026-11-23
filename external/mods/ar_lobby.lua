@@ -605,8 +605,16 @@ function L.rankedSetup(rk)
 	for side = 1, 2 do
 		for k in pairs(main.teamMenu[side]) do main.teamMenu[side][k] = false end   -- no team menu: single
 	end
-	local pool = main.t_selectableStages
-	if pool ~= nil and #pool > 0 then
+	-- stage from the shared seed, over the stages sorted by file name (not select.def order, which can differ
+	-- between two builds)
+	local pool = {}
+	for _, v in ipairs(main.t_selectableStages or {}) do table.insert(pool, v) end
+	local function stageKey(ref)
+		local s = main.t_selStages[ref]
+		return s and tostring(s.def or ''):lower():gsub('\\', '/') or ''
+	end
+	table.sort(pool, function(a, b) return stageKey(a) < stageKey(b) end)
+	if #pool > 0 then
 		rk.stage = pool[(math.floor(rk.seed or 0) % #pool) + 1]
 	end
 	pcall(textImgSetText, motif.select_info.title.TextSpriteData, 'RANKED MATCH')

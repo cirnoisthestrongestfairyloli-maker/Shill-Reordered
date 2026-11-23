@@ -284,8 +284,8 @@ class Lobby(threading.Thread):
             # matchmaking: accept automatically if we are still searching
             cid = str(msg.get("cid", ""))
             theirs = msg.get("ranked") if isinstance(msg.get("ranked"), dict) else None
-            # ranked only pairs with ranked (and the same build: forced picks must load the same files)
-            fits = bool(theirs) == bool(self.ranked) and (not self.ranked or self.same_build_id(pid))
+            # ranked only pairs with ranked (the challenger already waited for a same-build opponent)
+            fits = bool(theirs) == bool(self.ranked)
             if self.searching and not self.match and not self.outgoing and fits:
                 auto = bool(msg.get("auto"))
                 reply = {"t": "reply", "cid": cid, "answer": "accept", "port": self.listen_port_of_game(), "auto": auto}
@@ -436,11 +436,13 @@ class Lobby(threading.Thread):
         for pid, p in sorted(self.peers.items(), key=lambda kv: (not same_build(kv[1]), kv[0])):
             if p.get("status") != want or now - self.mm_skip.get(pid, 0) <= 10:
                 continue
-            if self.ranked and not same_build(p):
-                continue
             # normally the lower id challenges; after 6 s of both searching the other side does (older versions
             # of this helper refuse to challenge a different build, so they would never start it)
             both_since = max(self.search_since, p.get("searching_since", now))
+            # ranked prefers the same build, but the fingerprint changes with any edited file, so after 8 s of both
+            # searching a different build is paired too (the game checks the opponent's character exists)
+            if self.ranked and not same_build(p) and now - both_since < 8:
+                continue
             if self.id < pid or now - both_since >= 6:
                 cid = "%08x" % random.getrandbits(32)
                 self.outgoing = {"cid": cid, "id": pid, "name": p["name"], "ip": p["ip"],

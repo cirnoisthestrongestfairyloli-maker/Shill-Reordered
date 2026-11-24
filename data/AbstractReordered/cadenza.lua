@@ -65,6 +65,7 @@ AR.data = {
 	['youmu_ar'] = {n = 49, plate_w = 202, bio_w = 2007, q = 3, win = {181, 0}, vphd = true},
 	['iori_ar'] = {n = 50, plate_w = 146, bio_w = 1920, q = 3, win = {181, 0}, vphd = true},
 	['rose_ar'] = {n = 51, plate_w = 146, bio_w = 1567, q = 3, win = {181, 0}, vphd = true},
+	['kuroyukihime_ar'] = {n = 52, plate_w = 174, bio_w = 2048, q = 3, win = {181, 0}, vphd = true},
 }
 AR.random = {n = 99, plate_w = 185, bio_w = 758}
 AR.timeW = 169
@@ -1453,7 +1454,7 @@ AR.movelistChars = {['saber_ar'] = true, ['reimu_ar'] = true, ['haruhi_ar'] = tr
 	['meisaku_ar'] = true, ['stocking_ar'] = true, ['sailor_mercury_ar'] = true, ['cureblack_ar'] = true, ['aoko_ar'] = true,
 	['jotaro_ar'] = true, ['ippo_ar'] = true, ['kamijo_ar'] = true, ['gokublack_ar'] = true, ['vegeta_ar'] = true,
 	['madoka_ar'] = true, ['sayaka_ar'] = true, ['sol_ar'] = true, ['kumagawa_ar'] = true, ['shiki_ar'] = true, ['taiga_ar'] = true, ['panty_ar'] = true,
-	['saitama_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['mitsuru_ar'] = true, ['giorno_ar'] = true, ['weiss_ar'] = true, ['shana_ar'] = true, ['rentaro_ar'] = true, ['batman_ar'] = true, ['yang_ar'] = true, ['johnny_ar'] = true, ['alucard_ar'] = true, ['youmu_ar'] = true, ['iori_ar'] = true, ['rose_ar'] = true}
+	['saitama_ar'] = true, ['dio_ar'] = true, ['ryuko_ar'] = true, ['satsuki_ar'] = true, ['sailor_moon_ar'] = true, ['lilith_ar'] = true, ['mitsuru_ar'] = true, ['giorno_ar'] = true, ['weiss_ar'] = true, ['shana_ar'] = true, ['rentaro_ar'] = true, ['batman_ar'] = true, ['yang_ar'] = true, ['johnny_ar'] = true, ['alucard_ar'] = true, ['youmu_ar'] = true, ['iori_ar'] = true, ['rose_ar'] = true, ['kuroyukihime_ar'] = true}
 AR.movelistArtX = 1040
 AR.movelistArtY = 712
 AR.movelistArtScale = 1.0

@@ -695,9 +695,9 @@ sprpriority = 2
 
 [State 800, 攻撃設定]
 type = HitDef
-trigger1 = Time = 0
 trigger1 = p2stateNo != [150,155]
 trigger1 = p2bodydist X <= 15
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S, NT
 hitflag = M-          ;相手がやられ状態ではない地上の時
 priority = 1, Miss    ;投げなので優先度を低く
@@ -935,10 +935,10 @@ sprpriority = 2
 
 [State 800, 攻撃設定]
 type = HitDef
-trigger1 = Time = 0
 trigger1 = p2stateNo != [150,155]
 trigger1 = p2bodydist X <= 15
 trigger1 = enemynear,Pos Y - Pos Y = [-40,40]
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S, NT
 hitflag = A-          ;相手がやられ状態ではない地上の時
 priority = 1, Miss    ;投げなので優先度を低く

@@ -4859,9 +4859,9 @@ ignorehitpause = 1
 
 [State 810, hit]
 type = hitdef
+trigger1 = Var(0)=0 || enemy, AuthorName != "Team Z2"
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 triggerall = P2BodyDist X <35
-trigger1 = animelem=4 && !var(38)
-trigger1 = Var(0)=0 || enemy, AuthorName != "Team Z2";NEW
 attr = S,NT
 hitflag = M-
 priority = 1,Miss
@@ -4876,10 +4876,10 @@ hitsound = s800,1
 
 [State 810, hit]
 type = hitdef
-trigger1 = animelem=4 && !var(38)
-trigger1 = Var(0)>0 
-trigger1 = p2bodydist x<35 
-trigger1 = enemy, NumExplod(800)=0;5.1new
+trigger1 = Var(0)>0
+trigger1 = p2bodydist x<35
+trigger1 = enemy, NumExplod(800)=0
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S,NT
 hitflag = M-
 priority = 1,Miss
@@ -4894,10 +4894,11 @@ id = Cond((enemynear, NumExplod(98000000)),800,801)
  
 [State 810, hit]
 type = hitdef
-trigger1 = animelem=4 && !var(38)
 trigger1 = Var(0)>0
-trigger1 = p2bodydist x<35 
-trigger1 = enemy, NumExplod(800)>0;5.1new
+trigger1 = p2bodydist x<35
+trigger1 = enemy, NumExplod(800)>0
+trigger1 = movehit = 1
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S,NT
 hitflag = M-
 priority = 1,hit;5.1new
@@ -4912,7 +4913,6 @@ id = Cond((enemynear, NumExplod(98000000)),800,801)
 
 [state 751, max scaling]
 type = varset
-trigger1 = movehit = 1
 fvar(13) = 4
 ignorehitpause = 1
 

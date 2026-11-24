@@ -1,0 +1,61 @@
+#===============================================================================
+# Abstract Reordered: wakeup lock and loop drop, for every character
+#
+# 1. Wakeup: from landing (state 5110) to control takes 42 frames for every character (longer ones are cut
+#    at 36, shorter ones wait), and the last 6 are a mash lock, so nothing can come out on the first frame.
+#    (A DP exception cannot be done here: every character names its commands differently and a missing
+#    command name stops the file loading.)
+# 2. Run grab: control is given back 2 frames into any run, so everyone can grab out of a run.
+# 3. Loop drop: if the same move of the attacker hits 4 times in a row in one combo (the move
+#    starts again from its first frame each time), the combo drops: the opponent is knocked down.
+#===============================================================================
+[StateDef -4]
+
+ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) && roundstate = 2 {
+	# ---------------------------------------------------------- wakeup: same timing for everyone
+	# from landing (state 5110) to regaining control takes exactly 42 frames for every character:
+	# a longer lie-down/get-up is cut at 36 frames, a shorter one is held in idle with no control until
+	# 42, and the last 6 frames are the mash lock (no control, nothing can come out on the first frame)
+	if stateNo = 5110 && time = 0 {
+		map(_ar_downT) := gameTime;
+	}
+	map(_ar_wakeT) := gameTime - map(_ar_downT);
+	if alive && (stateNo = 5110 || stateNo = 5120) && map(_ar_wakeT) >= 36 {
+		changeState{value: 0; ctrl: 0}
+	}
+	if alive && stateNo = 0 && (prevStateNo = 5120 || prevStateNo = 5110) {
+		if map(_ar_wakeT) < 42 {
+			ctrlSet{value: 0}
+		} else if map(_ar_wakeT) = 42 {
+			ctrlSet{value: 1}
+		}
+	}
+
+	# ---------------------------------------------------------- grab out of a run
+	# every character regains control a moment into the run (state 100), so the Y grab (and every other
+	# move that waits for control) can be done straight out of a run
+	if alive && stateNo = 100 && time >= 2 {
+		ctrlSet{value: 1}
+	}
+
+	# ---------------------------------------------------------- loop drop
+	if moveType != H {
+		map(_ar_loopState) := -1;
+		map(_ar_loopCount) := 0;
+		map(_ar_loopTime) := 0;
+	} else if numenemy && getHitVar(hitcount) > map(_ar_loopHits) {
+		if (enemyNear, stateno) != map(_ar_loopState) {
+			map(_ar_loopState) := (enemyNear, stateno);
+			map(_ar_loopCount) := 1;
+		} else if (enemyNear, time) <= map(_ar_loopTime) {
+			map(_ar_loopCount) := map(_ar_loopCount) + 1;
+		}
+		map(_ar_loopTime) := (enemyNear, time);
+		if map(_ar_loopCount) > 3 {
+			map(_ar_loopCount) := 0;
+			changeState{value: 5030}
+			velSet{x: -3; y: -5}
+		}
+	}
+	map(_ar_loopHits) := cond(moveType = H, getHitVar(hitcount), 0);
+}

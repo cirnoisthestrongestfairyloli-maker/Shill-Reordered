@@ -16,9 +16,10 @@ channel = 0
 
 [State 800, 1]
 type = HitDef
-Trigger1 = !Movecontact
+trigger1 = !Movecontact
 trigger1 = command != "holdback"
 trigger1 = var(59) = 0
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S, NT          
 hitflag = M-          
 priority = 1, Miss    
@@ -33,9 +34,10 @@ fall = 1
 
 [State 800, 1]
 type = HitDef
-Trigger1 = !Movecontact
+trigger1 = !Movecontact
 trigger1 = command = "holdback"
 trigger1 = var(59) = 0
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S, NT         
 hitflag = M-          
 priority = 1, Miss    
@@ -389,8 +391,9 @@ x = 0
 
 [State 800, 1]
 type = HitDef
-Trigger1 = !Movecontact
+trigger1 = !Movecontact
 trigger1 = p2stateno != [150,151]
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S, NT        
 hitflag = HAFD        
 priority = 7, Miss    
@@ -516,7 +519,8 @@ sprpriority = 2
 
 [State 800, 1]
 type = HitDef
-Trigger1 = !Movecontact
+trigger1 = !Movecontact
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S, NT        
 hitflag = AF        
 priority = 7, Miss    

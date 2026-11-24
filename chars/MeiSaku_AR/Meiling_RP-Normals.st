@@ -2041,8 +2041,8 @@ value = 0,1
 
 [State 800, IDDQD]
 type = HitDef
-trigger1 = animelemtime(2)>=0 && animelemtime(3)<0
-trigger1 = var(30)=0 ;Throw Limited
+trigger1 = var(30)=0
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S,NT
 hitflag = M-
 guardflag = 

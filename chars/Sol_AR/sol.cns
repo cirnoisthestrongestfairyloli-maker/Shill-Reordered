@@ -17175,14 +17175,17 @@ var(18) = 235
 
 [State 800, 1]
 type = HitDef
-triggerall = time = 0
 trigger1 = p2movetype!=H&&p2stateno!=40
 trigger1 = !fvar(35)
-
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 trigger2 = numtarget
 trigger2 = numtarget(230)&&target,stateno=[231,239]
-
+trigger2 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 trigger3 = enemynear,anim = 5003 || enemynear,anim = 5008
+trigger3 = Time = 2   ;Abstract Reordered: grab startup 3 frames
+triggerall = time = 0
+
+
 
 attr = S, NT
 hitflag = M
@@ -17761,7 +17764,7 @@ var(18) = 630
 
 [State 850, 0]
 type = HitDef
-trigger1 = Time = 0
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = A, NT
 hitflag = A-
 priority = 1, Miss

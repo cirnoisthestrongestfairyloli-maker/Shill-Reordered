@@ -1947,8 +1947,9 @@ size.yscale = const(size.yscale)/1.25
 
 [State 800, 1]
 type = HitDef
-Trigger1 = anim = 800
-Trigger1 = !Movecontact
+trigger1 = anim = 800
+trigger1 = !Movecontact
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S, NT
 hitflag = M-          
 priority = 1, Miss    
@@ -1964,8 +1965,9 @@ fall = 1
 
 [State 800, 1]
 type = HitDef
-Trigger1 = anim = 830
-Trigger1 = !Movecontact
+trigger1 = anim = 830
+trigger1 = !Movecontact
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = A, NT          
 hitflag = A-
 priority = 1, Miss    

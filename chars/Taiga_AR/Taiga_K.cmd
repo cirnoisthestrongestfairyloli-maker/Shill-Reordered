@@ -1556,7 +1556,7 @@ trigger3 = Var(23)
 [State -1, Air Sled Ram]
 type = ChangeState
 value = 1230
-triggerall = !var(25)   ;Abstract Reordered: one launcher per combo
+;Abstract Reordered: air Sled Ram is exempt from the one-launcher limit
 triggerall = Statetype = A
 triggerall = command = "Sled Ram X" || command = "Sled Ram Y" || command = "Sled Ram Z"
 trigger1 = ctrl

@@ -2103,15 +2103,15 @@ sprpriority = 10
 
 [State 0, StateTypeSet]
 type = StateTypeSet
-trigger1 = animelem = 4
 movetype = A        ;I,A,H
 ;ignorehitpause = 
 ;persistent = 
 	
 	[State 800, ヒット定義]
 		type = HitDef
+trigger1 = P2bodydist x < 24
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 ;		Trigger1 = Time = 0
-		Trigger1 = P2bodydist x < 24
 		attr = S, NT          ;三文字目をＴにするのを忘れないでください。
 		hitflag = M-          ;マイナスが付加されてるので相手が食らい中の時は掴めない
 		priority = 1, Miss    
@@ -2129,7 +2129,6 @@ movetype = A        ;I,A,H
 		
 	[State 800, ステート変更]
 		type = ChangeState
-		trigger1 = AnimTime = 0
 		value = 0
 		ctrl = 1 
 

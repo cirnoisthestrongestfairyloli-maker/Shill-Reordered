@@ -1803,13 +1803,14 @@ var(26) = (enemynear(0),movetype=A && !(enemynear(0),HitDefAttr = S, NT))
 
 [State 800, ヒット定義]
 type = HitDef
+trigger1 = p2bodydist X = [-10,20]
+trigger1 = animelemno(0) <= 4
+trigger1 = var(33) >= 5
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 triggerall = !(id > enemy,id && (enemy,prevstateno = 5001 || enemy,prevstateno = 5011) && enemy,time <= 1)
 triggerall = p2movetype!=H
 triggerall = p2stateno!=[150,155]
 triggerall = movecontact=0 && movereversed=0;念のため
-trigger1 = p2bodydist X = [-10,20]
-trigger1 = animelemno(0) <= 4 ;投げ抜け用(相手がhitdefattrで判別可能のハズ)
-trigger1 = var(33) >= 5;ガードさせてから5F以降
 attr = S, NT ;立ち通常投げ（Standing, Normal Throw）
 hitflag = M-  ;マイナスが付加されてるので相手が食らい中の時は掴めない
 priority = 1, Miss

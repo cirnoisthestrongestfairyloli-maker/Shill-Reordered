@@ -2388,9 +2388,9 @@ value = 0
 
 [State 800, HitDef: PP Throw]
 type = HitDef
-trigger1 = AnimElem = 3
 trigger1 = P2BodyDist x < 55
 trigger1 = !var(38)
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S, NT
 hitFlag = M-
 priority = 1, Miss
@@ -2939,8 +2939,8 @@ value = 0
 [State 850, HitDef]
 type = HitDef
 trigger1 = !var(16) && (var(15) < 1 || var(20))
-trigger1 = AnimElem = 2
 trigger1 = !var(38)
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = A, NT
 hitFlag = AF
 priority = 1, Miss

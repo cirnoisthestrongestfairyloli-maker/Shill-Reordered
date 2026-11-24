@@ -1397,31 +1397,35 @@ poweradd = floor(50*fvar(2))
 
 [state 500, varset]
 type = varset
-trigger1 = var(50) = 0
-trigger1 = command = "holdfwd"
-trigger2 = var(50) != 0
-trigger2 = random <= 499
 var(6) = 1
 
 [state 500, varset]
 type = varset
-trigger1 = var(50) = 0
-trigger1 = command = "holdback"
-trigger2 = var(50) != 0
-trigger2 = random > 500
 var(6) = 2
 
 [state 500, playsnd]
 type = playsnd
-trigger1 = animelemtime(1) = 0
 value = 0,0
 
 [state 500, hitdef]
 type = hitdef
-trigger1 = animelemtime(2) = 0
+trigger1 = var(50) = 0
+trigger1 = command = "holdfwd"
+trigger1 = var(50) = 0
+trigger1 = command = "holdback"
 trigger1 = p2stateno != 40
 trigger1 = p2stateno != [140,155]
 trigger1 = p2stateno != [5000,5011]
+trigger1 = numtarget(500) = 1
+trigger1 = movehit = 1
+trigger1 = numtarget > 0
+trigger1 = movehit
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
+trigger2 = var(50) != 0
+trigger2 = random <= 499
+trigger2 = var(50) != 0
+trigger2 = random > 500
+trigger2 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 id = 500
 ;---------
 affectteam = e
@@ -1437,21 +1441,16 @@ hitsound = s1,6
 
 [state 500, targetstate]
 type = targetstate
-trigger1 = numtarget(500) = 1
-trigger1 = movehit = 1
 value = 505
 ignorehitpause = 1
 
 [state 500, changestate]
 type = changestate
-trigger1 = numtarget > 0
-trigger1 = movehit
 value = 501
 ignorehitpause = 1
 
 [state 500, changestate]
 type = changestate
-trigger1 = animtime = 0
 value = 0
 ctrl = 1
 ;---------------------------------------------------------------------------

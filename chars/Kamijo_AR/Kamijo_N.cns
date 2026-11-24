@@ -1666,10 +1666,11 @@ IgnoreHitPause=1
 
 [State 800,hitdef]
 Type=HitDef
+trigger1 = !MoveContAct
+trigger1 = !MoveReversed
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 triggerall = P2StateNo != [130,155]
 triggerall = p2bodydist X <= 25
-Trigger1=!MoveContAct
-Trigger1=!MoveReversed
 Attr=S,NT
 Hitflag=M-
 Priority=1,Miss
@@ -1864,8 +1865,9 @@ IgnoreHitPause=1
 
 [State 900,2]
 Type=HitDef
-Trigger1=!MoveContAct
-Trigger1=!MoveReversed
+trigger1 = !MoveContAct
+trigger1 = !MoveReversed
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 Attr=A,NT
 Hitflag=A-F-
 Priority=1,Miss

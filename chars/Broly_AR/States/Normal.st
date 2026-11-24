@@ -1746,8 +1746,8 @@ value = 0
 
 [State 800, Hit]
 type = hitdef
-trigger1 = !time && (var(10) = [1, 2])
 trigger1 = !var(38)
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S, NT 
 hitflag = M-
 priority = 1, Miss
@@ -1763,8 +1763,8 @@ fall.recovertime = 120
 
 [State 800, Hit]
 type = hitdef
-trigger1 = !time && var(10) = 3
 trigger1 = !var(38)
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S, NT 
 hitflag = M-
 priority = 1, Miss

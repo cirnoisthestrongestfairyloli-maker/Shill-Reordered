@@ -5777,9 +5777,10 @@ y = 0
 
 [State 800, 1]
 type = HitDef
+trigger1 = enemynear,pos Y >= 0
+trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 Triggerall = !Movecontact && !movereversed
 triggerall = time >= 10
-trigger1 = enemynear,pos Y >= 0
 attr = S, ST          
 hitflag = MAFD          
 priority = 1, Miss    

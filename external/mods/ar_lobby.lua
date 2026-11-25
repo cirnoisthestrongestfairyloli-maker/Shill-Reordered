@@ -136,6 +136,13 @@ local function drawScreen(text, withBg, buttons)
 	-- put the text on layer 1 (textImgReset above restores the motif's layer for the game's own screens)
 	pcall(textImgSetLayerno, ts, art and 1 or 0)
 	textImgDraw(ts)
+	if buttons and buttons.extra then   -- a text entry under the picture buttons
+		textImgReset(ts)
+		pcall(textImgSetPos, ts, 60, 650)
+		textImgSetText(ts, buttons.extra)
+		pcall(textImgSetLayerno, ts, art and 1 or 0)
+		textImgDraw(ts)
+	end
 	if not art then bgDraw(bg.BGDef, 1) end
 	refresh()
 end
@@ -863,7 +870,69 @@ function L.ranked()
 	end
 end
 
--- hub: LOBBIES / MATCHMAKING / RANKED / BACK buttons over the lobby picture
+-- LEADERBOARD: the ratings the lobby helper has collected (save/ar_leaderboard.txt: uid, name, rating, wins,
+-- losses, tab separated). Your own row is marked with ">".
+L.boardFile = 'save/ar_leaderboard.txt'
+
+function L.leaderboardText()
+	local myUid = ''
+	local u = io.open('save/ar_uid.txt', 'r')
+	if u then
+		myUid = (u:read('*a') or ''):gsub('%s', '')
+		u:close()
+	end
+	local rows = {}
+	local f = io.open(L.boardFile, 'r')
+	if f then
+		for line in (f:read('*a') or ''):gmatch('[^\r\n]+') do
+			local p = split(line, '\t')
+			if #p >= 5 then
+				table.insert(rows, {uid = p[1], name = p[2], rating = tonumber(p[3]) or 0,
+					wins = tonumber(p[4]) or 0, losses = tonumber(p[5]) or 0})
+			end
+		end
+		f:close()
+	end
+	table.sort(rows, function(a, b)
+		if a.rating ~= b.rating then return a.rating > b.rating end
+		return a.name < b.name
+	end)
+	local function tier(r)
+		local t, floors = 1, {0, 1100, 1250, 1400, 1550, 1700}   -- same floors as cadenza.lua's AR.ranked.tiers
+		for i, v in ipairs(floors) do
+			if r >= v then t = i end
+		end
+		return L.tierNames[t]
+	end
+	local lines = {'LEADERBOARD', ''}
+	for i, r in ipairs(rows) do
+		if i <= 10 or r.uid == myUid then
+			table.insert(lines, string.format('%s %d.  %s   %d   %dW %dL   %s', r.uid == myUid and '>' or '  ', i,
+				r.name, r.rating, r.wins, r.losses, tier(r.rating)))
+		end
+	end
+	if #rows == 0 then
+		table.insert(lines, 'No ranked matches yet.')
+	end
+	table.insert(lines, '')
+	table.insert(lines, 'ESC: back')
+	return table.concat(lines, '\\n')
+end
+
+function L.leaderboard()
+	local t, text = 0, L.leaderboardText()
+	while true do
+		t = t + 1
+		if t % 60 == 0 then text = L.leaderboardText() end
+		drawScreen(text, true)
+		if t > 15 and (pressed('cancel') or pressed('done')) then
+			sound('cancel')
+			return
+		end
+	end
+end
+
+-- hub: LOBBIES / MATCHMAKING / RANKED / BACK buttons over the lobby picture, LEADERBOARD as a text line under them
 function L.lobby()
 	command('lobby', '1')
 	lobbyMusic(true)
@@ -881,14 +950,15 @@ function L.lobby()
 		local who = st.me and st.me.name or '?'
 		local info = 'You are: ' .. who .. '      Players online: ' .. #st.peers
 		if not st.running then info = 'The lobby helper is not running (needs Python + discord_presence).' end
-		drawScreen(info, true, {sel = sel})
+		local board = #L.buttons + 1
+		drawScreen(info, true, {sel = sel, extra = (sel == board and '> ' or '   ') .. 'LEADERBOARD'})
 		if t > 15 then
 			local n = #L.buttons
 			if pressed('next') then
-				sel = sel % n + 1
+				sel = sel % board + 1
 				sound('move')
 			elseif pressed('previous') then
-				sel = (sel - 2) % n + 1
+				sel = (sel - 2) % board + 1
 				sound('move')
 			elseif pressed('cancel') or (sel == n and pressed('done')) then
 				sound('cancel')
@@ -901,6 +971,8 @@ function L.lobby()
 					r = L.lobbyList()
 				elseif sel == 2 then
 					r = L.matchmaking()
+				elseif sel == board then
+					L.leaderboard()
 				else
 					r = L.ranked()
 					lobbyMusic(true)

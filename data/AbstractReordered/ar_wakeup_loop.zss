@@ -1,36 +1,30 @@
 #===============================================================================
-# Abstract Reordered: wakeup lock and loop drop, for every character
+# Abstract Reordered: wakeup timing, run grab and loop drop, for every character
 #
-# 1. Wakeup: from landing (state 5110) to control takes 42 frames for every character (longer ones are cut
-#    at 36, shorter ones wait), and the last 6 are a mash lock, so nothing can come out on the first frame.
-#    (A DP exception cannot be done here: every character names its commands differently and a missing
-#    command name stops the file loading.)
-# 2. Run grab: control is given back 2 frames into any run, so everyone can grab out of a run.
-# 3. Loop drop: if the same move of the attacker hits 4 times in a row in one combo (the move
+# 0. Wakeup: everyone lies downed for 9 frames, then plays their whole get-up animation and has control
+#    as soon as it ends. No mash lock.
+# 1. Run grab: control is given back 2 frames into any run, so everyone can grab out of a run.
+# 2. Loop drop: if the same move of the attacker hits 4 times in a row in one combo (the move
 #    starts again from its first frame each time), the combo drops: the opponent is knocked down.
+# 3. Grab tech: pressing Y just as you are grabbed breaks the grab and pushes both players apart.
 #===============================================================================
 [StateDef -4]
 
 ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) && roundstate = 2 {
 	# ---------------------------------------------------------- wakeup: same timing for everyone
-	# from landing (state 5110) to regaining control takes exactly 42 frames for every character:
-	# a longer lie-down/get-up is cut at 36 frames, a shorter one is held in idle with no control until
-	# 42, and the last 6 frames are the mash lock (no control, nothing can come out on the first frame)
+	# the downed state (5110) is never cut straight to standing: the engine's own get-up is held back until
+	# frame 9 and then started here, so the downed sprite and the get-up animation both play
 	if stateNo = 5110 && time = 0 {
 		map(_ar_downT) := gameTime;
 	}
 	map(_ar_wakeT) := gameTime - map(_ar_downT);
-	if alive && (stateNo = 5110 || stateNo = 5120) && map(_ar_wakeT) >= 36 {
-		changeState{value: 0; ctrl: 0}
-	}
-	if alive && stateNo = 0 && (prevStateNo = 5120 || prevStateNo = 5110) {
-		if map(_ar_wakeT) < 42 {
-			ctrlSet{value: 0}
-		} else if map(_ar_wakeT) = 42 {
-			ctrlSet{value: 1}
+	if alive && stateNo = 5110 {
+		if map(_ar_wakeT) < 9 {
+			assertSpecial{flag: noGetUpFromLieDown; flag2: noFastRecoverFromLieDown}
+		} else {
+			changeState{value: 5120}
 		}
 	}
-
 	# ---------------------------------------------------------- grab out of a run
 	# every character regains control a moment into the run (state 100), so the Y grab (and every other
 	# move that waits for control) can be done straight out of a run
@@ -58,4 +52,39 @@ ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) && roundstate = 2 
 		}
 	}
 	map(_ar_loopHits) := cond(moveType = H, getHitVar(hitcount), 0);
+
+	# ---------------------------------------------------------- grab tech: victim
+	# grabbed = being hit while the opponent attacks from a throw state (800-899). A fresh press of Y within
+	# 10 frames (or up to 4 frames before, for both pressing grab together) breaks the grab with no damage.
+	if moveType != H {
+		map(_ar_grabbed) := 0;
+	} else if alive && !map(_ar_grabbed) && numenemy && (enemyNear, stateNo = [800, 899]) && (enemyNear, moveType = A) {
+		map(_ar_grabbed) := 1;
+		map(_ar_grabT) := gameTime;
+	}
+	if alive && moveType = H && map(_ar_grabbed) = 1 && gameTime - map(_ar_grabT) <= 10 &&
+		inputTime(y) > 0 && inputTime(y) <= gameTime - map(_ar_grabT) + 4 {
+		map(_ar_grabbed) := 2;
+		map(_ar_techT) := gameTime;
+		if pos y > -30 {
+			posSet{y: 0}
+			selfState{value: 0; ctrl: 1}
+		} else {
+			selfState{value: 50; ctrl: 1}
+		}
+		velSet{x: -4}
+		notHitBy{value: , NT,ST,HT; time: 20}
+	}
+
+	# ---------------------------------------------------------- grab tech: the one who grabbed lets go
+	if alive && numenemy && stateNo = [800, 899] && (enemyNear, map(_ar_techT)) > 0 &&
+		(enemyNear, map(_ar_techT)) >= gameTime - 1 {
+		if pos y > -30 {
+			posSet{y: 0}
+			selfState{value: 0; ctrl: 1}
+		} else {
+			selfState{value: 50; ctrl: 1}
+		}
+		velSet{x: -4}
+	}
 }

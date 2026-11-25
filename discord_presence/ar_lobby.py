@@ -67,6 +67,74 @@ class Lobby(threading.Thread):
         self.last_written = None
         self.stop_flag = False
         self.sock = None
+        # leaderboard: no server, so every PC keeps the ratings of all the players it has heard from
+        self.ranked_file = os.path.join(root, "save", "ar_ranked.txt")
+        self.board_file = os.path.join(root, "save", "ar_leaderboard.txt")
+        self.uid = self.load_uid()
+        self.board = self.load_board()      # uid -> (name, rating, wins, losses)
+
+    # ---------------------------------------------------------------- leaderboard
+    def load_uid(self):
+        """A permanent id per install, so a renamed player keeps one row."""
+        path = os.path.join(self.root, "save", "ar_uid.txt")
+        try:
+            with open(path, encoding="utf-8") as f:
+                uid = f.read().strip()
+            if re.fullmatch(r"[0-9a-f]{16}", uid):
+                return uid
+        except OSError:
+            pass
+        uid = "%016x" % random.SystemRandom().getrandbits(64)
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(uid)
+        except OSError:
+            pass
+        return uid
+
+    def load_board(self):
+        board = {}
+        try:
+            with open(self.board_file, encoding="utf-8") as f:
+                for line in f:
+                    p = line.rstrip("\n").split("\t")
+                    if len(p) == 5:
+                        board[p[0]] = (p[1], int(p[2]), int(p[3]), int(p[4]))
+        except (OSError, ValueError):
+            pass
+        return board
+
+    def record(self, uid, name, rating, wins, losses):
+        """Add or update one player; players with no finished ranked match are left off."""
+        if not re.fullmatch(r"[0-9a-f]{16}", str(uid)):
+            return
+        try:
+            row = (_clean(name, 20), *(max(0, min(99999, int(v))) for v in (rating, wins, losses)))
+        except (TypeError, ValueError, OverflowError):
+            return
+        if row[2] + row[3] == 0 or self.board.get(uid) == row or (uid not in self.board and len(self.board) >= 200):
+            return
+        self.board[uid] = row
+        tmp = self.board_file + ".tmp"
+        try:
+            with open(tmp, "w", encoding="utf-8", newline="\n") as f:
+                for k, r in sorted(self.board.items(), key=lambda kv: -kv[1][1]):
+                    f.write("\t".join([k, r[0], str(r[1]), str(r[2]), str(r[3])]) + "\n")
+            os.replace(tmp, self.board_file)
+        except OSError:
+            pass
+
+    def rank_info(self):
+        """Our own record from save/ar_ranked.txt (written by the game), sent with every hello."""
+        try:
+            with open(self.ranked_file, encoding="utf-8", errors="ignore") as f:
+                d = dict(re.findall(r"^(\w+)=(-?\d+)", f.read(), re.M))
+        except OSError:
+            d = {}
+        info = {"uid": self.uid, "rating": int(d.get("rating", 1000)), "wins": int(d.get("wins", 0)),
+                "losses": int(d.get("losses", 0))}
+        self.record(self.uid, self.name, info["rating"], info["wins"], info["losses"])
+        return info
 
     # ---------------------------------------------------------------- helpers
     def listen_port_of_game(self):
@@ -202,7 +270,7 @@ class Lobby(threading.Thread):
     def broadcast_hello(self):
         self.refresh_name()
         msg = json.dumps({"app": APP, "v": PROTO, "t": "hello", "id": self.id, "name": self.name,
-                          "status": self.game_status(), "build": self.build}).encode()
+                          "status": self.game_status(), "build": self.build, "rank": self.rank_info()}).encode()
         targets = set(self.saved_ips()) | set(self.known_ips) | {p["ip"] for p in self.peers.values()}
         for ip in targets:
             try:
@@ -266,6 +334,9 @@ class Lobby(threading.Thread):
                 p["rtt"] = rtt if not p.get("rtt") else p["rtt"] * 0.7 + rtt * 0.3
             return
         if t == "hello":
+            r = msg.get("rank")
+            if isinstance(r, dict) and r.get("uid") != self.uid:
+                self.record(r.get("uid"), name, r.get("rating"), r.get("wins"), r.get("losses"))
             self.remember(ip)
             new = pid not in self.peers
             p = self.peers.setdefault(pid, {})
@@ -275,7 +346,8 @@ class Lobby(threading.Thread):
             if new:
                 self.log(f"lobby: heard {name} ({ip}) status={p['status']} build={p['build']}")
                 # answer straight from the lobby socket: they learn us at once, and it lets their replies in
-                self.send({"t": "hello", "status": self.game_status(), "build": self.build}, ip)
+                self.send({"t": "hello", "status": self.game_status(), "build": self.build,
+                           "rank": self.rank_info()}, ip)
             if p["status"] not in ("searching", "ranked"):
                 p.pop("searching_since", None)
             else:

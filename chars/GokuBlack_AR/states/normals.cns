@@ -4897,7 +4897,6 @@ type = hitdef
 trigger1 = Var(0)>0
 trigger1 = p2bodydist x<35
 trigger1 = enemy, NumExplod(800)>0
-trigger1 = movehit = 1
 trigger1 = Time = 2   ;Abstract Reordered: grab startup 3 frames
 attr = S,NT
 hitflag = M-
@@ -4913,6 +4912,7 @@ id = Cond((enemynear, NumExplod(98000000)),800,801)
 
 [state 751, max scaling]
 type = varset
+trigger1 = movehit = 1
 fvar(13) = 4
 ignorehitpause = 1
 

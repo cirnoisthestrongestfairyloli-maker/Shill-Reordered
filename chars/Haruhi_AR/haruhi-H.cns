@@ -4537,20 +4537,77 @@ trigger1 = AnimElemTime(1) >= 0
 trigger1 = AnimElemTime(21) < 0
 value = SCA
 
-[State 3700]
-type = Helper
-trigger1 = AnimElemTime(21) >= 0
-trigger1 = random%4 = 0;Gametime%4 = 0
-trigger1 = Roundstate = 2
-postype = back
-name = "onpu"
+[State 3700, AR note projectile]
+;Abstract Reordered: the band notes are real projectiles (were helpers), so projectile parries work on every note
+type = Projectile
+triggerall = AnimElemTime(21) >= 0
+triggerall = Roundstate = 2
+trigger1 = random%4 = 0
+projid = 3715
+projanim = 3715
+projhitanim = -1
+projremanim = -1
+projremovetime = -1
+projhits = 1
+projpriority = 99
+projsprpriority = 7
+projshadow = 0
 postype = p1
-pos = -20,0
-stateno = 3715
-id = 3715
-keyctrl = 0
-ownpal = 1
-facing = 1
+offset = -20, 10 - (random%231)
+velocity = 10, 0 - (random%3)
+attr = S, SP
+guard.kill = 1
+animtype = Hard
+damage = ceil(25 * fvar(0)), 4
+getpower = 0, 0
+hitflag = MAFP
+guardflag = MA
+pausetime = 0, 9
+sprpriority = 2
+sparkno = s6910
+guard.sparkno = s6950
+sparkxy = -10, 0
+hitsound = S3601, 0
+guardsound = S1, 1
+ground.type = High
+ground.slidetime = 23
+guard.ctrltime = 21
+ground.hittime = 23
+airguard.ctrltime = 19
+ground.velocity = -2, -7
+air.velocity = -2, -7
+airguard.velocity = -3, -5
+guard.velocity = -2
+fall = 1
+fall.recover = 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+p2stateno = 3791
+p2getp1state = 1
+
+[State 3700, AR note trail]
+type = Explod
+triggerall = AnimElemTime(21) >= 0
+triggerall = Roundstate = 2
+trigger1 = random%6 = 0
+anim = 3710
+id = 3710
+postype = p1
+pos = -30, 10 - (random%231) + (random%101)
+vel = 7, 0 - (random%4)
+ontop = 1
+sprpriority = 7
+removetime = -2
+ignorehitpause = 1
+
+[State 3700, AR note damage scaling]
+type = VarSet
+triggerall = P2MoveType = H
+trigger1 = ProjHitTime(3715) = 1
+fvar(1) = fvar(1) * 0.93 * (1 - 0.07 * (0.93 * fvar(1) > 1.00001))
+ignorehitpause = 1
 
 [State 3600, 1]
 type = VarAdd

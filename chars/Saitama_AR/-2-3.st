@@ -23,6 +23,24 @@ trigger1 = 1
 var(45) = StateNo
 ignorehitpause = 1
 
+;normals hit with their own HitDef (not the old helper projectiles)
+[State -2, AR normal hit]
+type = VarSet
+triggerall = !IsHelper
+triggerall = StateNo = [200, 650]
+trigger1 = MoveHit
+var(44) = 1
+ignorehitpause = 1
+
+[State -2, AR normal blocked]
+type = VarSet
+triggerall = !IsHelper
+triggerall = StateNo = [200, 650]
+triggerall = var(46) = 0
+trigger1 = MoveGuarded = 1
+var(46) = 1
+ignorehitpause = 1
+
 ;=== AR BLOCKED = -8 (user, 2026-11-12) ===
 ;var(46): 0 nothing | 1 a normal was just blocked | 2 the opponent is in block stun | 100+n = n ticks of lock left.
 ;While it is set Saitama gets no control once his normal ends, until 8 ticks after the opponent's block stun ends.

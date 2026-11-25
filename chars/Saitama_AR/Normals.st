@@ -16,36 +16,36 @@ facep2      = 1
 
 [State 200, 0]
 type = statetypeset
-trigger1 = AnimElem = 3
+trigger1 = AnimElem = 4
 movetype = I
 
-[State 11101]
-type = helper
-trigger1 = animelem = 2
-id = 1105
-persistent = 9
-name = "Normal-atack"
-pos = 30,-60
-postype = P1
-stateno = 1105
-helpertype = normal
-keyctrl = 0
-ownpal = 1
-
-; [State 0, Helper]
-; type = Helper
-; triggerall = (palno = [11,12])
-; trigger1 = animelem = 2
-; helpertype = normal
-; name = "OnePunchMan"
-; ID = 10000
-; stateno = 10000
-; pos = 30,-60
-; postype = p1
-; facing = 1
-; keyctrl = 0
-; ownpal = 0
-; pausemovetime = 60
+[State 200, AR hit]
+type = HitDef
+trigger1 = AnimElem = 2
+attr = S, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -80
+air.fall = 1
+animtype = Light
+damage = floor(30 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 8, 8
+hitsound = s1,0
+ground.type = High
+air.type = Low
+ground.slidetime = 8
+ground.hittime = 8
+air.hittime = 8
+guard.ctrltime = 9
+ground.velocity = -6
+air.velocity = -4, -5.25
+airguard.velocity = -4,-1
+ground.cornerpush.veloff = -8.4
+air.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+sparkno = 0
 
 [State 200, PlaySnd]
 type = PlaySnd
@@ -139,19 +139,33 @@ ownpal = 1
 removeongethit = 1
 
 
-[State 11101]
-type = helper
-trigger1 = animelem = 4
-id = 1106
-persistent = 9
-name = "Medium-atack"
-pos = 50,-69
-postype = P1
-stateno = 1106
-helpertype = normal
-keyctrl = 0
-ownpal = 1
-
+[State 210, AR hit]
+type = HitDef
+trigger1 = AnimElem = 4
+attr = S, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -75
+air.fall = 1
+animtype = Medium
+damage = floor(50 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 14, 13
+hitsound = s1,2
+ground.type = Low
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 1
+envshake.time = 10
+envshake.ampl = 5
+envshake.freq = 120
+envshake.phase = 120
 
 [State 200, PlaySnd]
 type = PlaySnd
@@ -195,18 +209,33 @@ trigger1 = animelem = 7
 x = 0
 
 
-[State 11101]
-type = helper
-trigger1 = animelem = 5
-id = 1106
-persistent = 9
-name = "Medium-atack"
-pos = 55,-56
-postype = P1
-stateno = 1106
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 215, AR hit]
+type = HitDef
+trigger1 = AnimElem = 5
+attr = S, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -70
+air.fall = 1
+animtype = Medium
+damage = floor(50 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 14, 13
+hitsound = s1,2
+ground.type = Low
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 1
+envshake.time = 10
+envshake.ampl = 5
+envshake.freq = 120
+envshake.phase = 120
 
 [State 200, PlaySnd]
 type = PlaySnd
@@ -273,18 +302,33 @@ type = velset
 trigger1 = animelem = 8
 x = 0
 
-[State 11101]
-type = helper
-trigger1 = animelem = 5
-id = 1107
-persistent = 9
-name = "Strong-atack"
-pos = 64,-64
-postype = P1
-stateno = 1107
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 220, AR hit]
+type = HitDef
+trigger1 = AnimElem = 5
+attr = S, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -47
+air.fall = 1
+animtype = Hard
+damage = floor(70 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 12, 12
+hitsound = s1,5
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 2
+envshake.time = 15
+envshake.ampl = 8
+envshake.freq = 125
+envshake.phase = 125
 
 [State 200, PlaySnd]
 type = PlaySnd
@@ -322,18 +366,33 @@ type = statetypeset
 trigger1 = AnimElem = 4
 movetype = I
 
-[State 11101]
-type = helper
-trigger1 = animelem = 2
-id = 1105
-persistent = 9
-name = "Normal-atack"
-pos = 38,-27
-postype = P1
-stateno = 1105
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 230, AR hit]
+type = HitDef
+trigger1 = AnimElem = 2
+attr = S, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -25
+air.fall = 1
+animtype = Light
+damage = floor(30 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 8, 8
+hitsound = s1,0
+ground.type = High
+air.type = Low
+ground.slidetime = 8
+ground.hittime = 8
+air.hittime = 8
+guard.ctrltime = 9
+ground.velocity = -6
+air.velocity = -4, -5.25
+airguard.velocity = -4,-1
+ground.cornerpush.veloff = -8.4
+air.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+sparkno = 0
 
 [State 230, PlaySnd]
 type = PlaySnd
@@ -365,33 +424,33 @@ trigger1 = Animelem = 1 && Random <= 500
 value = s4,2 ;+ (random % 2)
 channel = 0
 
-[State 11101]
-type = helper
-trigger1 = animelem = 3
-id = 1106
-persistent = 9
-name = "Medium-atack"
-pos = 54,-43
-postype = P1
-stateno = 1106
-helpertype = normal
-keyctrl = 0
-ownpal = 1
-
-; [State 210, Dust Helper]
-; type = Helper
-; trigger1 = AnimElem = 3
-; helperType = Normal
-; stateNo = 8103
-; ID = 8100
-; pos = 40,0
-; name = "Dash Dust"
-; posType = P1
-; facing = -1
-; priority = 9
-; pauseMoveTime = 255
-; superMoveTime = 255
-; ownPal = 1
+[State 240, AR hit]
+type = HitDef
+trigger1 = AnimElem = 3
+attr = S, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -51
+air.fall = 1
+animtype = Medium
+damage = floor(50 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 14, 13
+hitsound = s1,2
+ground.type = Low
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 1
+envshake.time = 10
+envshake.ampl = 5
+envshake.freq = 120
+envshake.phase = 120
 
 [State 230, PlaySnd]
 type = PlaySnd
@@ -450,18 +509,33 @@ sprpriority = -9
 ownpal = 1
 removeongethit = 1
 
-[State 11101]
-type = helper
-trigger1 = animelem = 4
-id = 1107
-persistent = 9
-name = "Strong-atack"
-pos = 49,-53
-postype = P1
-stateno = 1107
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 250, AR hit]
+type = HitDef
+trigger1 = AnimElem = 4
+attr = S, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -58
+air.fall = 1
+animtype = Hard
+damage = floor(70 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 12, 12
+hitsound = s1,5
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 2
+envshake.time = 15
+envshake.ampl = 8
+envshake.freq = 125
+envshake.phase = 125
 
 [State 230, PlaySnd]
 type = PlaySnd
@@ -492,18 +566,33 @@ type = statetypeset
 trigger1 = AnimElem = 4
 movetype = I
 
-[State 11101]
-type = helper
-trigger1 = animelem = 2
-id = 1105
-persistent = 9
-name = "Normal-atack"
-pos = 22,-40
-postype = P1
-stateno = 1105
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 400, AR hit]
+type = HitDef
+trigger1 = AnimElem = 2
+attr = C, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -46
+air.fall = 1
+animtype = Light
+damage = floor(30 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 8, 8
+hitsound = s1,0
+ground.type = High
+air.type = Low
+ground.slidetime = 8
+ground.hittime = 8
+air.hittime = 8
+guard.ctrltime = 9
+ground.velocity = -6
+air.velocity = -4, -5.25
+airguard.velocity = -4,-1
+ground.cornerpush.veloff = -8.4
+air.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+sparkno = 0
 
 [State 400, PlaySnd]
 type = PlaySnd
@@ -529,18 +618,33 @@ anim        = 420
 sprPriority = 1
 facep2      = 1
 
-[State 11101]
-type = helper
-trigger1 = animelem = 4
-id = 1106
-persistent = 9
-name = "Strong-atack"
-pos = 16,-82
-postype = P1
-stateno = 1106
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 420, AR hit]
+type = HitDef
+trigger1 = AnimElem = 4
+attr = C, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -91
+air.fall = 1
+animtype = Medium
+damage = floor(50 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 14, 13
+hitsound = s1,2
+ground.type = Low
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 1
+envshake.time = 10
+envshake.ampl = 5
+envshake.freq = 120
+envshake.phase = 120
 
 [State 420, PlaySnd]
 type = PlaySnd
@@ -569,21 +673,36 @@ facep2      = 1
 
 [State 430, 0]
 type = statetypeset
-trigger1 = AnimElem = 4
+trigger1 = AnimElem = 5
 movetype = I
 
-[State 11101]
-type = helper
-trigger1 = animelem = 3
-id = 1105
-persistent = 9
-name = "weak-atack"
-pos = 31,-5
-postype = P1
-stateno = 1105
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 430, AR hit]
+type = HitDef
+trigger1 = AnimElem = 3
+attr = C, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -10
+air.fall = 1
+animtype = Light
+damage = floor(30 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 8, 8
+hitsound = s1,0
+ground.type = High
+air.type = Low
+ground.slidetime = 8
+ground.hittime = 8
+air.hittime = 8
+guard.ctrltime = 9
+ground.velocity = -6
+air.velocity = -4, -5.25
+airguard.velocity = -4,-1
+ground.cornerpush.veloff = -8.4
+air.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+sparkno = 0
 
 [State 400, PlaySnd]
 type = PlaySnd
@@ -611,21 +730,36 @@ facep2      = 1
 
 [State 430, 0]
 type = statetypeset
-trigger1 = AnimElem = 4
+trigger1 = AnimElem = 5
 movetype = I
 
-[State 11101]
-type = helper
-trigger1 = animelem = 4
-id = 1106
-persistent = 9
-name = "Medium-atack"
-pos = 63,-18
-postype = P1
-stateno = 1106
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 440, AR hit]
+type = HitDef
+trigger1 = AnimElem = 4
+attr = C, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -32
+air.fall = 1
+animtype = Medium
+damage = floor(50 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 14, 13
+hitsound = s1,2
+ground.type = Low
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 1
+envshake.time = 10
+envshake.ampl = 5
+envshake.freq = 120
+envshake.phase = 120
 
 [State 400, PlaySnd]
 type = PlaySnd
@@ -661,18 +795,33 @@ channel = 0
 ; trigger1 = Time = 5
 ; value = 1
 
-[State 11101]
-type = helper
-trigger1 = animelem = 3
-id = 1105
-persistent = 9
-name = "Normal-atack"
-pos = 50,-100
-postype = P1
-stateno = 1105
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 600, AR hit]
+type = HitDef
+trigger1 = AnimElem = 3
+attr = A, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -100
+air.fall = 1
+animtype = Light
+damage = floor(30 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 8, 8
+hitsound = s1,0
+ground.type = High
+air.type = Low
+ground.slidetime = 8
+ground.hittime = 8
+air.hittime = 8
+guard.ctrltime = 9
+ground.velocity = -6
+air.velocity = -4, -5.25
+airguard.velocity = -4,-1
+ground.cornerpush.veloff = -8.4
+air.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+sparkno = 0
 
 [State 700, PlaySnd]
 type = PlaySnd
@@ -722,18 +871,33 @@ channel = 0
 ; trigger1 = animelem = 4
 ; value = 1
 
-[State 11101]
-type = helper
-trigger1 = animelem = 3
-id = 1106
-persistent = 9
-name = "Medium-atack"
-pos = 55,-56
-postype = P1
-stateno = 1106
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 610, AR hit]
+type = HitDef
+trigger1 = AnimElem = 3
+attr = A, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -72
+air.fall = 1
+animtype = Medium
+damage = floor(50 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 14, 13
+hitsound = s1,2
+ground.type = Low
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 1
+envshake.time = 10
+envshake.ampl = 5
+envshake.freq = 120
+envshake.phase = 120
 
 [State 700, PlaySnd]
 type = PlaySnd
@@ -783,18 +947,33 @@ trigger1 = Animelem = 1 && Random <= 500
 value = s4,4 ;+ (random % 2)
 channel = 0
 
-[State 11101]
-type = helper
-trigger1 = animelem = 3
-id = 1107
-persistent = 9
-name = "Strong-atack"
-pos = 43,-59
-postype = P1
-stateno = 1107
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 620, AR hit]
+type = HitDef
+trigger1 = AnimElem = 3
+attr = A, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -85
+air.fall = 1
+animtype = Hard
+damage = floor(70 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 12, 12
+hitsound = s1,5
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 2
+envshake.time = 15
+envshake.ampl = 8
+envshake.freq = 125
+envshake.phase = 125
 
 [State 210, blast FX]
 type = Explod
@@ -857,18 +1036,33 @@ facep2      = 1
 ; y = 3
 ; x = 2
 
-[State 11101]
-type = helper
-trigger1 = animelem = 2
-id = 1106
-persistent = 0
-name = "weak-atack"
-pos = 40,-28
-postype = P1
-stateno = 1106
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 640, AR hit]
+type = HitDef
+trigger1 = AnimElem = 2
+attr = A, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -33
+air.fall = 1
+animtype = Medium
+damage = floor(50 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 14, 13
+hitsound = s1,2
+ground.type = Low
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 1
+envshake.time = 10
+envshake.ampl = 5
+envshake.freq = 120
+envshake.phase = 120
 
 [State 700, PlaySnd]
 type = PlaySnd
@@ -913,18 +1107,33 @@ trigger1 = Animelem = 1 && Random <= 500
 value = s4,4 ;+ (random % 2)
 channel = 0
 
-[State 11101]
-type = helper
-trigger1 = animelem = 7
-id = 1107
-persistent = 9
-name = "Strong-atack"
-pos = 60,-60
-postype = P1
-stateno = 1107
-helpertype = normal
-keyctrl = 0
-ownpal = 1
+[State 650, AR hit]
+type = HitDef
+trigger1 = AnimElem = 7
+attr = A, NA
+guardflag = MA
+hitflag = MAF
+guardsound = s2,0
+guard.sparkno = 40
+sparkxy = 0, -73
+air.fall = 1
+animtype = Hard
+damage = floor(70 * ifelse(fvar(22), 1.3, 1)), 0
+pausetime = 12, 12
+hitsound = s1,5
+ground.type = High
+ground.slidetime = 14
+ground.hittime = 14
+ground.velocity = -6
+airguard.velocity = -6
+air.type = High
+air.velocity = -6
+air.hittime = 14
+sparkno = 2
+envshake.time = 15
+envshake.ampl = 8
+envshake.freq = 125
+envshake.phase = 125
 
 [State 700, PlaySnd]
 type = PlaySnd

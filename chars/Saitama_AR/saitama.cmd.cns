@@ -146,16 +146,19 @@ time = 1
 name = "a"
 command = a
 time = 1
+buffer.time = 4
 
 [Command]
 name = "b"
 command = b
 time = 1
+buffer.time = 4
 
 [Command]
 name = "c"
 command = c
 time = 1
+buffer.time = 4
 
 [Command]
 name = "x"
@@ -235,29 +238,6 @@ time = 1
 ; 2. State entry
 [Statedef -1]
 
-[State -1, No Push]
-type = PlayerPush
-trigger1 = 1
-value = 0
-ignorehitpause = 1
-
-[State -1, No Push Dummy]		; Allows player to be able to push opponent withput opponent being able to push player
-type = Helper
-trigger1 = Var(50) = [0, 1]
-trigger1 = StateNo != 5150
-trigger1 = !NumHelper(10003 + IsHelper(13210))
-trigger1 = Life
-trigger1 = !Lose
-trigger1 = RoundState > 0
-name = "No Push"
-id = 10003 + IsHelper(13210)
-stateno = 10002
-size.ground.back = Const(size.ground.back) * !Var(50) + 20 * (Var(50) = 1)
-size.ground.front = Const(size.ground.front) * !Var(50) + 20 * (Var(50) = 1)
-size.height = Const(size.height) * !Var(50) + 60 * (Var(50) = 1)
-
-;---------------------------------------------------------------------------
-;Abstract Reordered: burst (Kamijo's) - A+B+C while being hit, recharges in 75 s (fvar(30))
 [State -1, AR burst round reset]
 type = VarSet
 triggerall = !ishelper
@@ -969,7 +949,7 @@ triggerall = command != "holddown"
 triggerall = command != "holdfwd"
 triggerall = StateType != A
 trigger1 = ctrl
-trigger2 = StateNo = [200, 215] && var(44)
+trigger2 = (StateNo = [200, 215] || StateNo = 240) && var(44)
 trigger3 = StateNo = [400, 440] && StateNo != 420 && var(44)
 
 [State -1, 6C]
@@ -980,7 +960,7 @@ triggerall = command != "holddown"
 triggerall = command = "holdfwd"
 triggerall = StateType != A
 trigger1 = ctrl
-trigger2 = StateNo = [200, 215] && var(44)
+trigger2 = (StateNo = [200, 215] || StateNo = 240) && var(44)
 trigger3 = StateNo = [400, 440] && StateNo != 420 && var(44)
 
 [State -1, 5B close]

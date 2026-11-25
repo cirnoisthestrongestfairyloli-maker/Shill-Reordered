@@ -2,7 +2,8 @@
 # Abstract Reordered: wakeup timing, run grab and loop drop, for every character
 #
 # 0. Wakeup: everyone lies downed for 9 frames, then plays their whole get-up animation and has control
-#    as soon as it ends. No mash lock.
+#    as soon as it ends. No mash lock. Every character's get-up actions (5120-5129 in their .air files) are
+#    timed to 30 frames; a new character needs the same.
 # 1. Run grab: control is given back 2 frames into any run, so everyone can grab out of a run.
 # 2. Loop drop: if the same move of the attacker hits 4 times in a row in one combo (the move
 #    starts again from its first frame each time), the combo drops: the opponent is knocked down.

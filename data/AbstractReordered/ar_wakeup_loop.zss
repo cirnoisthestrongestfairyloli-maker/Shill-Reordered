@@ -1,7 +1,7 @@
 #===============================================================================
 # Abstract Reordered: wakeup timing, run grab and loop drop, for every character
 #
-# 0. Wakeup: everyone lies downed for 30 frames, then plays their whole get-up animation and has control
+# 0. Wakeup: everyone lies downed for 45 frames, then plays their whole get-up animation and has control
 #    as soon as it ends (at that character's own get-up speed). No mash lock.
 # 1. Run grab: control is given back 2 frames into any run, so everyone can grab out of a run.
 # 2. Loop drop: if the same move of the attacker hits 4 times in a row in one combo (the move
@@ -13,13 +13,16 @@
 ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) && roundstate = 2 {
 	# ---------------------------------------------------------- wakeup: same timing for everyone
 	# the downed state (5110) is never cut straight to standing: the engine's own get-up is held back until
-	# frame 30 and then started here, so the downed sprite and the get-up animation both play
-	if stateNo = 5110 && time = 0 {
-		map(_ar_downT) := gameTime;
+	# frame 45 and then started here, so the downed sprite and the get-up animation both play
+	# the frames are counted here; do not test "time = 0": this state runs before 5110 is entered on that
+	# frame, so it never sees it
+	if stateNo = 5110 {
+		map(_ar_downF) := map(_ar_downF) + 1;
+	} else {
+		map(_ar_downF) := 0;
 	}
-	map(_ar_wakeT) := gameTime - map(_ar_downT);
 	if alive && stateNo = 5110 {
-		if map(_ar_wakeT) < 30 {
+		if map(_ar_downF) <= 45 {
 			assertSpecial{flag: noGetUpFromLieDown; flag2: noFastRecoverFromLieDown}
 		} else {
 			changeState{value: 5120}

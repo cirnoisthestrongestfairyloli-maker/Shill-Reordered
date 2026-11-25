@@ -1059,7 +1059,9 @@ function AR.rankedFinish(w, g, rk)
 		t.losses = (t.losses or 0) + 1
 	end
 	t.peak = math.max(t.peak or 0, me.new)
-	rankedSave(t)
+	if not rk.playback then   -- watching a replay must not change the rating
+		rankedSave(t)
+	end
 	rk.result = out
 	return out
 end

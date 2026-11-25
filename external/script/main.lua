@@ -3000,6 +3000,7 @@ function main.f_deleteReplay(item, t)
 		return t, item
 	end
 
+	pcall(os.remove, t[item].itemname .. '.ranked')
 	sndPlay(motif.Snd, motif.replay_info.cancel.snd[1], motif.replay_info.cancel.snd[2])
 	resetKey()
 	table.remove(t, item)
@@ -3045,6 +3046,7 @@ function main.f_renameReplay(item, t)
 		sndPlay(motif.Snd, motif.replay_info.cancel.snd[1], motif.replay_info.cancel.snd[2])
 		return t, item
 	end
+	os.rename(t[item].itemname .. '.ranked', newFile .. '.ranked')
 	sndPlay(motif.Snd, motif.replay_info.cursor.done.snd[1], motif.replay_info.cursor.done.snd[2])
 	t[item].itemname = newFile
 	t[item].displayname = newName
@@ -3113,7 +3115,9 @@ function main.f_replay()
 			sndPlay(motif.Snd, motif[main.group].cursor.done.snd.default[1], motif[main.group].cursor.done.snd.default[2])
 			if enterReplay(t[item].itemname) and synchronize() then
 				main.replayActive = true
-				enterSyncedNetplayMenu()
+				if not (arPlayRankedReplay and arPlayRankedReplay(t[item].itemname)) then
+					enterSyncedNetplayMenu()
+				end
 			end
 			main.replayActive = false
 			replayStop()
@@ -3150,7 +3154,8 @@ function main.f_connect(server, str)
 		bgDraw(motif[main.background].BGDef, 1)
 		refresh()
 	end
-	replayRecord('save/replays/' .. os.date("%Y-%m-%d_%Hh%Mm%Ss") .. '.replay')
+	main.lastReplayPath = 'save/replays/' .. os.date("%Y-%m-%d_%Hh%Mm%Ss") .. '.replay'
+	replayRecord(main.lastReplayPath)
 	return true
 end
 

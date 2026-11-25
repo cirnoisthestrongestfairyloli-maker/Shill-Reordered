@@ -673,6 +673,78 @@ if start ~= nil and start.f_selectScreen ~= nil and not L.selectWrapped then
 	end
 end
 
+-------------------------------------------------------------------------- ranked replays
+-- The engine already records every netplay session. After a ranked match the file is renamed to
+-- "<P1 name> vs <P2 name> <date>.replay" and the pre-picks go in "<file>.ranked": a ranked match skips the netplay
+-- menu, so playback has to rebuild the same forced setup or the recorded inputs drive the wrong screens.
+local function fileSafe(s)
+	s = tostring(s or ''):gsub('[%c\\/:%*%?"<>|%.]', ''):gsub('^%s+', ''):gsub('%s+$', '')
+	return s ~= '' and s or 'Player'
+end
+
+function L.saveRankedReplay(rk)
+	local old = main.lastReplayPath
+	main.lastReplayPath = nil
+	if old == nil or rk == nil or not rk.launched or not main.f_fileExists(old) then return end
+	local base = 'save/replays/' .. fileSafe(rk.names[1]) .. ' vs ' .. fileSafe(rk.names[2]) .. ' ' .. os.date('%Y-%m-%d %Hh%M')
+	local path, n = base .. '.replay', 1
+	while main.f_fileExists(path) do
+		n = n + 1
+		path = base .. ' (' .. n .. ').replay'
+	end
+	if not os.rename(old, path) then path = old end
+	local lines = {'side=' .. rk.side, 'seed=' .. string.format('%.0f', rk.seed or 0)}
+	for s = 1, 2 do
+		local c = main.t_selChars[rk.refs[s] + 1]
+		table.insert(lines, 'char' .. s .. '=' .. tostring(c and c.char or ''):gsub('\\', '/'))
+		table.insert(lines, 'pal' .. s .. '=' .. tostring(rk.pals[s]))
+		table.insert(lines, 'rating' .. s .. '=' .. tostring(rk.ratings[s]))
+		table.insert(lines, 'name' .. s .. '=' .. tostring(rk.names[s]))
+	end
+	pcall(os.remove, path .. '.ranked')
+	local f = io.open(path .. '.ranked', 'w')
+	if f then
+		f:write(table.concat(lines, '\n') .. '\n')
+		f:close()
+	end
+end
+
+-- called by main.f_replay once the replay is open; false = not a ranked replay (use the netplay menu)
+function arPlayRankedReplay(path)
+	local f = io.open(path .. '.ranked', 'r')
+	if not f then return false end
+	local d = {}
+	for line in (f:read('*a') or ''):gmatch('[^\r\n]+') do
+		local k, v = line:match('^(%w+)=(.*)$')
+		if k then d[k] = v end
+	end
+	f:close()
+	local rk = {side = tonumber(d.side) or 1, seed = tonumber(d.seed) or 0, refs = {}, pals = {}, ratings = {},
+		names = {}, playback = true}
+	for s = 1, 2 do
+		rk.refs[s] = charRefOf(d['char' .. s])
+		if rk.refs[s] == nil then
+			main.f_warning('A character in this replay is not in your build.', motif[main.group], motif[main.background])
+			return true
+		end
+		rk.pals[s] = tonumber(d['pal' .. s]) or 1
+		rk.ratings[s] = tonumber(d['rating' .. s]) or 1000
+		rk.names[s] = d['name' .. s] or ('P' .. s)
+	end
+	main.f_clearShuffleTables()
+	main.f_default()
+	local mode = main.t_itemname.netplayversus({{itemname = 'netplayversus', displayname = 'VERSUS 2P'}}, 1)
+	L.rankedSetup(rk)
+	main.f_unlock(false)
+	local ok, err = pcall(function() if mode ~= nil then mode() end end)
+	rk.active = false
+	arRanked = nil
+	main.f_default()
+	main.f_unlock(false)
+	if not ok then error(err, 0) end
+	return true
+end
+
 -- result after the netplay session; returns true to search again with the same character
 local function rankedAfter(rk, pick)
 	local t = 0
@@ -727,7 +799,9 @@ function L.rankedSearch(pick)
 			command('clear_ranked')
 			return 'back'
 		end
+		main.lastReplayPath = nil
 		netplay(server, label, oppId, true, rk)
+		pcall(L.saveRankedReplay, rk)
 		command('clear_ranked')
 		arRanked = nil
 		return 'played', rk

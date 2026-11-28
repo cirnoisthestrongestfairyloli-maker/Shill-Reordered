@@ -3141,11 +3141,11 @@ guardsound = s7, 0
 ground.type = High
 ground.slidetime = 25
 ground.hittime  = 30
-ground.velocity = -4,-4.1
+ground.velocity = -4,-9.5
 guard.velocity = -3.5
 airguard.velocity = -2.4,-4
 air.type = High
-air.velocity = -2.5,-6
+air.velocity = -2.5,-9.5
 air.hittime = 30
 Guard.CtrlTime = 27
 AirGuard.CtrlTime = 28
@@ -7862,11 +7862,12 @@ guardsound = s7, 0
 ground.type = L
 ground.slidetime = 20
 ground.hittime  = 21
-ground.velocity = -1.6,-1.0;3
+ground.velocity = -1.6, ifelse(p2statetype != S, -7.5, -1.0) ;Abstract Reordered: 6H launches anyone not standing
 yaccel = 0.25
 guard.velocity = -4
 airguard.velocity = -4,-1
-air.velocity = -0.8,-1
+air.velocity = -0.8, -7.5
+air.fall = 1
 air.hittime = 50
 Guard.CtrlTime = 17
 AirGuard.CtrlTime = 50
@@ -12701,9 +12702,10 @@ value = 3140
 type    = A
 movetype= A
 physics = N
-velset = 8*cos(-8.6*Pi/180),-8*sin(-8.6*Pi/180)
+velset = 20*cos(-8.6*Pi/180),-20*sin(-8.6*Pi/180)
 ctrl = 0
 sprpriority = 3
+juggle = 0
 [State ƒAƒjƒ•ÏX]
 type = Changeanim
 trigger1 = Anim != 3040 && time = 0
@@ -12722,7 +12724,9 @@ attr = S, HP
 damage = ceil(50*root,fvar(0)), ceil(4*root,fvar(0))
 animtype = B;H
 guardflag = MA
-hitflag = MAF
+hitflag = MAFD ;Abstract Reordered: also catches a downed opponent so the super combos
+down.velocity = -2, -6
+down.bounce = 0
 priority = 4, Hit
 pausetime = 4, 10
 sparkno = -1
@@ -15878,10 +15882,11 @@ var(45) = 0
 ignorehitpause = 1
 
 [State -2, AR spin clamp]
+;Abstract Reordered: the spin gauge and Golden Spin were removed; the bar now shows nail refill (var(51))
 type = VarSet
 triggerall = !ishelper
-trigger1 = var(43) > 1000
-var(43) = 1000
+trigger1 = 1
+var(43) = 0
 ignorehitpause = 1
 
 [State -2, AR golden ammo]

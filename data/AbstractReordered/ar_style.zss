@@ -1,0 +1,747 @@
+#===============================================================================
+# Abstract Reordered: combo style shared by every character (generated - see side notes)
+#
+# 1. Chains: a normal that hit or was blocked can go into any other light / medium / heavy
+#    (up or down in strength, standing or crouching), each one once per string. Air normals
+#    chain the same way, except for Johnny.
+# 2. Launch jump cancel: when your attack launches them, press up to jump after them.
+#    Once per combo. Any move that launches counts (Johnny's rising shot included).
+# 3. Rapid Cancel: A+B+C on a hit or block, costs 1 bar, ends the move at once.
+#===============================================================================
+[StateDef -4]
+
+ignorehitpause if !ishelper && (teamside = 1 || teamside = 2) && roundstate = 2 {
+	# ---------------------------------------------------------- each character's normals
+	if name = "Haruhi Suzumiya" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 221; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Ichigo Kurosaki" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Akemi-Homura" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 300; map(_at1) := -9999;
+		map(_as2) := 230; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 430; map(_at4) := -9999;
+		map(_as5) := 410; map(_at5) := -9999;
+		map(_as6) := 620; map(_at6) := -9999;
+		map(_as7) := 630; map(_at7) := -9999;
+		map(_as8) := 639; map(_at8) := -9999;
+	}
+	if name = "kaname madoka" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 300; map(_at3) := -9999;
+		map(_as4) := 310; map(_at4) := -9999;
+		map(_as5) := 320; map(_at5) := -9999;
+		map(_as6) := 400; map(_at6) := -9999;
+		map(_as7) := 410; map(_at7) := -9999;
+		map(_as8) := 420; map(_at8) := -9999;
+	}
+	if name = "miki sayaka" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 330; map(_at3) := -9999;
+		map(_as4) := 340; map(_at4) := -9999;
+		map(_as5) := 350; map(_at5) := -9999;
+		map(_as6) := -9999; map(_at6) := -9999;
+		map(_as7) := -9999; map(_at7) := -9999;
+		map(_as8) := -9999; map(_at8) := -9999;
+	}
+	if name = "Broly" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 220; map(_at1) := -9999;
+		map(_as2) := 210; map(_at2) := -9999;
+		map(_as3) := 230; map(_at3) := -9999;
+		map(_as4) := 250; map(_at4) := -9999;
+		map(_as5) := 255; map(_at5) := -9999;
+		map(_as6) := -9999; map(_at6) := -9999;
+		map(_as7) := -9999; map(_at7) := -9999;
+		map(_as8) := -9999; map(_at8) := -9999;
+	}
+	if name = "SSJ Vegeta Z2" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 320; map(_at2) := -9999;
+		map(_as3) := 430; map(_at3) := -9999;
+		map(_as4) := 440; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 615; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Black Z2" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 260; map(_at2) := -9999;
+		map(_as3) := 430; map(_at3) := -9999;
+		map(_as4) := 440; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Kamijou Touma" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 220; map(_at1) := -9999;
+		map(_as2) := 225; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 415; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 630; map(_at8) := -9999;
+	}
+	if name = "kuroko_s" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 203; map(_at1) := -9999;
+		map(_as2) := 202; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Reimu Hakurei" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Meiling_RP" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Youmu_RP" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Sailor Moon" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 240; map(_at2) := -9999;
+		map(_as3) := -9999; map(_at3) := -9999;
+		map(_as4) := -9999; map(_at4) := -9999;
+		map(_as5) := -9999; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 640; map(_at8) := -9999;
+	}
+	if name = "Sailor Mercury" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 240; map(_at2) := -9999;
+		map(_as3) := -9999; map(_at3) := -9999;
+		map(_as4) := -9999; map(_at4) := -9999;
+		map(_as5) := -9999; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 640; map(_at8) := -9999;
+	}
+	if name = "CURE BLACK" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 630; map(_at7) := -9999;
+		map(_as8) := 640; map(_at8) := -9999;
+	}
+	if name = "ZSAoko" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 223; map(_at1) := -9999;
+		map(_as2) := 224; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "ZSShiki" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Saber" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Jotaro Kujo" {
+		map(_as0) := 200; map(_at0) := 301;
+		map(_as1) := 210; map(_at1) := 331;
+		map(_as2) := 321; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := 500;
+		map(_as4) := 510; map(_at4) := -9999;
+		map(_as5) := 342; map(_at5) := 520;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "dio" {
+		map(_as0) := 200; map(_at0) := 321;
+		map(_as1) := 210; map(_at1) := 312;
+		map(_as2) := 220; map(_at2) := 321;
+		map(_as3) := 400; map(_at3) := 500;
+		map(_as4) := 410; map(_at4) := 511;
+		map(_as5) := 420; map(_at5) := 521;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Giorno Giovanna" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 240; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 440; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 640; map(_at8) := -9999;
+	}
+	if name = "johnny" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Makunouchi Ippo" {
+		map(_as0) := 450; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Panty Anarchy" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 240; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 440; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 640; map(_at8) := -9999;
+	}
+	if name = "Stocking Anarchy" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 240; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 440; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 640; map(_at8) := -9999;
+	}
+	if name = "sol" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 220; map(_at1) := -9999;
+		map(_as2) := 230; map(_at2) := -9999;
+		map(_as3) := 410; map(_at3) := -9999;
+		map(_as4) := 420; map(_at4) := -9999;
+		map(_as5) := 450; map(_at5) := -9999;
+		map(_as6) := 610; map(_at6) := -9999;
+		map(_as7) := 620; map(_at7) := -9999;
+		map(_as8) := 640; map(_at8) := -9999;
+	}
+	if name = "Taiga_K" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Kumagawa Misogi" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 230; map(_at2) := -9999;
+		map(_as3) := 405; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 430; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 630; map(_at8) := -9999;
+	}
+	if name = "Shana_K" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Rentaro_K" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Caped_Baldy" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 215; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 430; map(_at3) := -9999;
+		map(_as4) := 440; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Ryuko Matoi" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 440; map(_at4) := -9999;
+		map(_as5) := 450; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Satsuki Kiryuin" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 440; map(_at4) := -9999;
+		map(_as5) := 450; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Mitsuru Kirijo" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 411; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Weiss Schnee" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Yang Xiao Long" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Batman" {
+		map(_as0) := 210; map(_at0) := -9999;
+		map(_as1) := 230; map(_at1) := -9999;
+		map(_as2) := 107; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 440; map(_at4) := -9999;
+		map(_as5) := 225; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 650; map(_at8) := -9999;
+	}
+	if name = "Alucard" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 220; map(_at1) := -9999;
+		map(_as2) := 250; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 440; map(_at4) := -9999;
+		map(_as5) := 410; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 630; map(_at7) := -9999;
+		map(_as8) := 640; map(_at8) := -9999;
+	}
+	if name = "Lilith" {
+		map(_as0) := 205; map(_at0) := -9999;
+		map(_as1) := 215; map(_at1) := -9999;
+		map(_as2) := 225; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 405; map(_at4) := -9999;
+		map(_as5) := 410; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 605; map(_at7) := -9999;
+		map(_as8) := 610; map(_at8) := -9999;
+	}
+	if name = "Ryu" {
+		map(_as0) := 248; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := -9999; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := -9999; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Alex" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 218; map(_at1) := -9999;
+		map(_as2) := 300; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 628; map(_at8) := -9999;
+	}
+	if name = "Rose" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Akira Kazama" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Terry Bogard" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 218; map(_at1) := -9999;
+		map(_as2) := 428; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Iori Yagami" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 218; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Ash Crimson" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 248; map(_at1) := -9999;
+		map(_as2) := 258; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 440; map(_at4) := -9999;
+		map(_as5) := 450; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 640; map(_at7) := -9999;
+		map(_as8) := 650; map(_at8) := -9999;
+	}
+	if name = "Angel" {
+		map(_as0) := 210; map(_at0) := -9999;
+		map(_as1) := 248; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 440; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 648; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+	if name = "Kuroyukihime_K" {
+		map(_as0) := 200; map(_at0) := -9999;
+		map(_as1) := 210; map(_at1) := -9999;
+		map(_as2) := 220; map(_at2) := -9999;
+		map(_as3) := 400; map(_at3) := -9999;
+		map(_as4) := 410; map(_at4) := -9999;
+		map(_as5) := 420; map(_at5) := -9999;
+		map(_as6) := 600; map(_at6) := -9999;
+		map(_as7) := 610; map(_at7) := -9999;
+		map(_as8) := 620; map(_at8) := -9999;
+	}
+
+	# ---------------------------------------------------------- Rapid Cancel
+	map(_as_rc) := 0;
+	if alive && moveType = A && moveContact && hitPauseTime = 0 && power >= 1000 &&
+		stateNo = [200, 1999] && !(stateNo = [800, 899]) &&
+		inputTime(a) > 0 && inputTime(b) > 0 && inputTime(c) > 0 &&
+		inputTime(a) <= 6 && inputTime(b) <= 6 && inputTime(c) <= 6 {
+		map(_as_rc) := 1;
+		powerAdd{value: -1000}
+		palFX{time: 14; add: 140, 20, 20}
+		if stateType = A {
+			selfState{value: 50; ctrl: 1}
+		} else {
+			selfState{value: 0; ctrl: 1}
+		}
+	}
+
+	# ---------------------------------------------------------- chains
+	map(_as_cur) := -1;
+	if stateNo = map(_as0) || stateNo = map(_at0) {
+		map(_as_cur) := 0;
+	}
+	if stateNo = map(_as1) || stateNo = map(_at1) {
+		map(_as_cur) := 1;
+	}
+	if stateNo = map(_as2) || stateNo = map(_at2) {
+		map(_as_cur) := 2;
+	}
+	if stateNo = map(_as3) || stateNo = map(_at3) {
+		map(_as_cur) := 3;
+	}
+	if stateNo = map(_as4) || stateNo = map(_at4) {
+		map(_as_cur) := 4;
+	}
+	if stateNo = map(_as5) || stateNo = map(_at5) {
+		map(_as_cur) := 5;
+	}
+	if stateNo = map(_as6) || stateNo = map(_at6) {
+		map(_as_cur) := 6;
+	}
+	if stateNo = map(_as7) || stateNo = map(_at7) {
+		map(_as_cur) := 7;
+	}
+	if stateNo = map(_as8) || stateNo = map(_at8) {
+		map(_as_cur) := 8;
+	}
+	if moveType != A || map(_as_cur) < 0 {
+		map(_as_used) := 0;
+	}
+	map(_as_go) := -1;
+	if alive && !map(_as_rc) && moveType = A && map(_as_cur) >= 0 {
+		if map(_as_cur) = 0 {
+			map(_as_used) := map(_as_used) | 1;
+		}
+		if map(_as_cur) = 1 {
+			map(_as_used) := map(_as_used) | 2;
+		}
+		if map(_as_cur) = 2 {
+			map(_as_used) := map(_as_used) | 4;
+		}
+		if map(_as_cur) = 3 {
+			map(_as_used) := map(_as_used) | 8;
+		}
+		if map(_as_cur) = 4 {
+			map(_as_used) := map(_as_used) | 16;
+		}
+		if map(_as_cur) = 5 {
+			map(_as_used) := map(_as_used) | 32;
+		}
+		if map(_as_cur) = 6 {
+			map(_as_used) := map(_as_used) | 64;
+		}
+		if map(_as_cur) = 7 {
+			map(_as_used) := map(_as_used) | 128;
+		}
+		if map(_as_cur) = 8 {
+			map(_as_used) := map(_as_used) | 256;
+		}
+	}
+	if alive && !map(_as_rc) && moveType = A && moveContact && hitPauseTime = 0 && map(_as_cur) >= 0 && name != "Haruhi Suzumiya" {
+		if inputTime(c) > 0 && inputTime(c) <= 10 && inputTime(c) <= time {
+			if map(_as_go) < 0 && stateType = A && name != "johnny" && map(_as8) > 0 && map(_as_cur) != 8 &&
+				(map(_as_used) & 256) = 0 {
+				map(_as_go) := cond(floor(map(_at8) / 100) = floor(stateNo / 100), map(_at8), map(_as8));
+			}
+			if map(_as_go) < 0 && stateType != A && inputTime(D) > 0 && map(_as5) > 0 && map(_as_cur) != 5 &&
+				(map(_as_used) & 32) = 0 {
+				map(_as_go) := cond(floor(map(_at5) / 100) = floor(stateNo / 100), map(_at5), map(_as5));
+			}
+			if map(_as_go) < 0 && stateType != A && !(inputTime(D) > 0) && map(_as2) > 0 && map(_as_cur) != 2 &&
+				(map(_as_used) & 4) = 0 {
+				map(_as_go) := cond(floor(map(_at2) / 100) = floor(stateNo / 100), map(_at2), map(_as2));
+			}
+		}
+		if inputTime(b) > 0 && inputTime(b) <= 10 && inputTime(b) <= time {
+			if map(_as_go) < 0 && stateType = A && name != "johnny" && map(_as7) > 0 && map(_as_cur) != 7 &&
+				(map(_as_used) & 128) = 0 {
+				map(_as_go) := cond(floor(map(_at7) / 100) = floor(stateNo / 100), map(_at7), map(_as7));
+			}
+			if map(_as_go) < 0 && stateType != A && inputTime(D) > 0 && map(_as4) > 0 && map(_as_cur) != 4 &&
+				(map(_as_used) & 16) = 0 {
+				map(_as_go) := cond(floor(map(_at4) / 100) = floor(stateNo / 100), map(_at4), map(_as4));
+			}
+			if map(_as_go) < 0 && stateType != A && !(inputTime(D) > 0) && map(_as1) > 0 && map(_as_cur) != 1 &&
+				(map(_as_used) & 2) = 0 {
+				map(_as_go) := cond(floor(map(_at1) / 100) = floor(stateNo / 100), map(_at1), map(_as1));
+			}
+		}
+		if inputTime(a) > 0 && inputTime(a) <= 10 && inputTime(a) <= time {
+			if map(_as_go) < 0 && stateType = A && name != "johnny" && map(_as6) > 0 && map(_as_cur) != 6 &&
+				(map(_as_used) & 64) = 0 {
+				map(_as_go) := cond(floor(map(_at6) / 100) = floor(stateNo / 100), map(_at6), map(_as6));
+			}
+			if map(_as_go) < 0 && stateType != A && inputTime(D) > 0 && map(_as3) > 0 && map(_as_cur) != 3 &&
+				(map(_as_used) & 8) = 0 {
+				map(_as_go) := cond(floor(map(_at3) / 100) = floor(stateNo / 100), map(_at3), map(_as3));
+			}
+			if map(_as_go) < 0 && stateType != A && !(inputTime(D) > 0) && map(_as0) > 0 && map(_as_cur) != 0 &&
+				(map(_as_used) & 1) = 0 {
+				map(_as_go) := cond(floor(map(_at0) / 100) = floor(stateNo / 100), map(_at0), map(_as0));
+			}
+		}
+	}
+	if alive && !map(_as_rc) && moveType = A && moveContact && hitPauseTime = 0 && map(_as_cur) >= 0 && name = "Haruhi Suzumiya" {
+		if inputTime(z) > 0 && inputTime(z) <= 10 && inputTime(z) <= time {
+			if map(_as_go) < 0 && stateType = A && name != "johnny" && map(_as8) > 0 && map(_as_cur) != 8 &&
+				(map(_as_used) & 256) = 0 {
+				map(_as_go) := cond(floor(map(_at8) / 100) = floor(stateNo / 100), map(_at8), map(_as8));
+			}
+			if map(_as_go) < 0 && stateType != A && inputTime(D) > 0 && map(_as5) > 0 && map(_as_cur) != 5 &&
+				(map(_as_used) & 32) = 0 {
+				map(_as_go) := cond(floor(map(_at5) / 100) = floor(stateNo / 100), map(_at5), map(_as5));
+			}
+			if map(_as_go) < 0 && stateType != A && !(inputTime(D) > 0) && map(_as2) > 0 && map(_as_cur) != 2 &&
+				(map(_as_used) & 4) = 0 {
+				map(_as_go) := cond(floor(map(_at2) / 100) = floor(stateNo / 100), map(_at2), map(_as2));
+			}
+		}
+		if inputTime(y) > 0 && inputTime(y) <= 10 && inputTime(y) <= time {
+			if map(_as_go) < 0 && stateType = A && name != "johnny" && map(_as7) > 0 && map(_as_cur) != 7 &&
+				(map(_as_used) & 128) = 0 {
+				map(_as_go) := cond(floor(map(_at7) / 100) = floor(stateNo / 100), map(_at7), map(_as7));
+			}
+			if map(_as_go) < 0 && stateType != A && inputTime(D) > 0 && map(_as4) > 0 && map(_as_cur) != 4 &&
+				(map(_as_used) & 16) = 0 {
+				map(_as_go) := cond(floor(map(_at4) / 100) = floor(stateNo / 100), map(_at4), map(_as4));
+			}
+			if map(_as_go) < 0 && stateType != A && !(inputTime(D) > 0) && map(_as1) > 0 && map(_as_cur) != 1 &&
+				(map(_as_used) & 2) = 0 {
+				map(_as_go) := cond(floor(map(_at1) / 100) = floor(stateNo / 100), map(_at1), map(_as1));
+			}
+		}
+		if inputTime(x) > 0 && inputTime(x) <= 10 && inputTime(x) <= time {
+			if map(_as_go) < 0 && stateType = A && name != "johnny" && map(_as6) > 0 && map(_as_cur) != 6 &&
+				(map(_as_used) & 64) = 0 {
+				map(_as_go) := cond(floor(map(_at6) / 100) = floor(stateNo / 100), map(_at6), map(_as6));
+			}
+			if map(_as_go) < 0 && stateType != A && inputTime(D) > 0 && map(_as3) > 0 && map(_as_cur) != 3 &&
+				(map(_as_used) & 8) = 0 {
+				map(_as_go) := cond(floor(map(_at3) / 100) = floor(stateNo / 100), map(_at3), map(_as3));
+			}
+			if map(_as_go) < 0 && stateType != A && !(inputTime(D) > 0) && map(_as0) > 0 && map(_as_cur) != 0 &&
+				(map(_as_used) & 1) = 0 {
+				map(_as_go) := cond(floor(map(_at0) / 100) = floor(stateNo / 100), map(_at0), map(_as0));
+			}
+		}
+	}
+	if map(_as_go) > 0 {
+		changeState{value: map(_as_go)}
+	}
+
+	# ---------------------------------------------------------- launched: remember when (read by the attacker)
+	if moveType = H && getHitVar(hitcount) > map(_as_hits) && getHitVar(yvel) <= -5 {
+		map(_as_launchT) := gameTime;
+	}
+	map(_as_hits) := cond(moveType = H, getHitVar(hitcount), 0);
+
+	# ---------------------------------------------------------- launch jump cancel
+	if !numenemy {
+		map(_as_jc) := 0;
+	} else if enemyNear, moveType != H {
+		map(_as_jc) := 0;
+	} else if alive && !map(_as_rc) && !map(_as_jc) && moveType = A && moveHit && hitPauseTime = 0 &&
+		stateNo < 3000 && !(stateNo = [800, 899]) && inputTime(U) > 0 && inputTime(U) <= 12 &&
+		(enemyNear, map(_as_launchT)) > 0 && gameTime - (enemyNear, map(_as_launchT)) <= 45 {
+		map(_as_jc) := 1;
+		if stateType = A {
+			selfState{value: 50; ctrl: 1}
+			velSet{x: 2; y: -7}
+		} else {
+			selfState{value: 40}
+		}
+	}
+}

@@ -1807,6 +1807,20 @@ time = 1
 
 
 ; EX Bloody Stomp
+[State 1460, AR dive memory reset]
+type = MapSet
+trigger1 = !time
+map = "ar_divehit"
+value = 0
+
+[State 1460, AR dive memory]
+;Abstract Reordered: remember that the dive connected (stand users get back up before the landing)
+type = MapSet
+trigger1 = movehit
+map = "ar_divehit"
+value = 1
+ignorehitpause = 1
+
 [Statedef 1460]
 type = A
 movetype = A
@@ -2047,12 +2061,53 @@ value = s5, 4
 ignorehitpause = 1
 [State 1304, Hit]
 type = hitdef
+triggerall = map(ar_divehit) = 0
 trigger1 = animelem = 1
 attr = C, SA
 damage = ifelse(prevstateno=1463,35,ifelse(numtarget(1401),30,70)), 11
 animtype = Hard
 guardflag = M
 hitflag = FD
+priority = 4, Hit
+pausetime = 24, 24
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0*(var(34) := 8001)
+sparkxy = -10+ 0 * (var(35) := 0), var(36) := 0
+hitSound = -1 + 0 * (var(31) := ifelse(prevstateno=1460,6,11))
+guardsound = s2, 0
+ground.type = High
+ground.slidetime = 12
+ID = 1461
+ground.slidetime = 16
+ground.hittime = 16
+air.type = Low
+air.velocity = -7, 7
+down.velocity = 0, 0
+down.bounce = 0
+ground.cornerpush.veloff = 0
+guard.velocity = -10.52
+guard.cornerpush.veloff = 0;-12.74
+getpower = 0
+givePower = 0.5 * 36, 36
+envshake.time = 12
+envshake.freq = 120
+envshake.ampl = 6
+fall = 1
+fall.recover = 0
+forcestand = 1
+airguard.ctrltime = 16
+airguard.cornerpush.veloff = 0
+airguard.velocity = -8, -1.5
+
+[State 1304, Hit]
+type = hitdef
+triggerall = map(ar_divehit) = 1
+trigger1 = animelem = 1
+attr = C, SA
+damage = ifelse(prevstateno=1463,35,ifelse(numtarget(1401),30,70)), 11
+animtype = Hard
+guardflag = M
+hitflag = MAFD ;Abstract Reordered: the dive hit, so the landing connects even if they stood back up
 priority = 4, Hit
 pausetime = 24, 24
 sparkNo = -1 + 0 * (var(33) := 8013)
@@ -2161,8 +2216,8 @@ ampl = 6
 [State 1304, End]
 type = changestate
 trigger1 = !animtime
-value = ifelse((prevstateno=1460||(prevstateno=1463&&var(13)<3))&&movehit&&numtarget(1461),1462,0)
-ctrl = ifelse((prevstateno=1460||(prevstateno=1463&&var(13)<3))&&movehit&&numtarget(1461),0,1)
+value = ifelse((prevstateno=1460||(prevstateno=1463&&var(13)<3))&&movehit&&numtarget(1461),1462,ifelse(movehit,0,1458))
+ctrl = ifelse((prevstateno=1460||(prevstateno=1463&&var(13)<3))&&movehit&&numtarget(1461),0,movehit>0)
 
 [Statedef 1462]
 type = A

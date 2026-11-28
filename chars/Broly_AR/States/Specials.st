@@ -1411,6 +1411,20 @@ time = 1
 
 
 ; Bloody Stomp
+[State 1450, AR dive memory reset]
+type = MapSet
+trigger1 = !time
+map = "ar_divehit"
+value = 0
+
+[State 1450, AR dive memory]
+;Abstract Reordered: remember that the dive connected (stand users get back up before the landing)
+type = MapSet
+trigger1 = movehit
+map = "ar_divehit"
+value = 1
+ignorehitpause = 1
+
 [Statedef 1450]
 type = A
 movetype = A
@@ -1542,12 +1556,54 @@ value = s5, 4
 ignorehitpause = 1
 [State 1304, Hit]
 type = hitdef
+triggerall = map(ar_divehit) = 0
 trigger1 = animelem = 1
 attr = C, SA
 damage = ifelse(numtarget(1401),ifelse(var(10)=3,30,ifelse(var(10)=2,25,20)),ifelse(var(10)=3,85,ifelse(var(10)=2,70,55))), 11
 animtype = Hard
 guardflag = M
 hitflag = FD
+priority = 4, Hit
+pausetime = ifelse(var(20), 12, 24), ifelse(var(20), 12, 24)
+sparkNo = -1 + 0 * (var(33) := 8013)
+guard.sparkNo = -1 + 0*(var(34) := 8001)
+sparkxy = -10+ 0 * (var(35) := 0), var(36) := 0
+hitSound = -1 + 0 * (var(31) := 6)
+guardsound = s2, 0
+ground.type = High
+ground.slidetime = 12
+ID = 1402
+ground.slidetime = 16
+ground.hittime = 16
+air.type = Low
+;AR: the shockwave pops falling / grounded (OTG) opponents up so a super can follow
+air.velocity = -1.5, -6.5
+down.velocity = -1.5, -6.5
+down.bounce = 0
+ground.cornerpush.veloff = 0
+guard.velocity = -10.52
+guard.cornerpush.veloff = 0;-12.74
+getpower = ifelse(p2movetype = H, 72, 144) * !var(20), 36 * !var(20)
+givePower = 0.5 * 36, 36
+envshake.time = 12
+envshake.freq = 120
+envshake.ampl = 6
+fall = 1
+fall.recover = 0
+forcestand = 1
+airguard.ctrltime = 16
+airguard.cornerpush.veloff = 0
+airguard.velocity = -8, -1.5
+
+[State 1304, Hit]
+type = hitdef
+triggerall = map(ar_divehit) = 1
+trigger1 = animelem = 1
+attr = C, SA
+damage = ifelse(numtarget(1401),ifelse(var(10)=3,30,ifelse(var(10)=2,25,20)),ifelse(var(10)=3,85,ifelse(var(10)=2,70,55))), 11
+animtype = Hard
+guardflag = M
+hitflag = MAFD ;Abstract Reordered: the dive hit, so the landing connects even if they stood back up
 priority = 4, Hit
 pausetime = ifelse(var(20), 12, 24), ifelse(var(20), 12, 24)
 sparkNo = -1 + 0 * (var(33) := 8013)
@@ -1610,12 +1666,30 @@ ampl = 6
 [State 1304, End]
 type = changestate
 trigger1 = !animtime
-value = 0
-ctrl = 1
+value = ifelse(movehit, 0, 1458)
+ctrl = ifelse(movehit, 1, 0)
 
 
 ;======================< GIGANTIC SPIKE >=============================
 ; Gigantic Spike
+
+;---------------------------------------------------------------------------
+; Abstract Reordered: Bloody Stomp that whiffed or was blocked - stuck crouching, wide open
+[Statedef 1458]
+type = C
+movetype = I
+physics = C
+anim = 11
+velset = 0, 0
+ctrl = 0
+sprpriority = 1
+
+[State 1458, End]
+type = changestate
+trigger1 = time >= 30
+value = 11
+ctrl = 1
+
 [Statedef 1500]
 type = S
 physics = S

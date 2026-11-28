@@ -2185,6 +2185,7 @@ ignorehitpause = 1
 [State -1, AR burst]
 type = ChangeState
 value = ifelse(StateType = A, 7721, 7720)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !ishelper
 triggerall = !AIlevel
 triggerall = command = "ar_burst"
@@ -2199,6 +2200,7 @@ trigger2 = stateno != 5000 && stateno != 5010 && stateno != 5020 && stateno != 5
 [State -1, AR Parry]
 type = ChangeState
 value = 7740
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_parry"
 trigger1 = ctrl
@@ -2227,6 +2229,7 @@ value = 1
 [State -1, Omega Spirit Cannon / Omega Kamehameha]
 type = changestate
 value = 4400
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel && numpartner
 triggerall = ifelse(numpartner,(partner,alive)&&(partner,selfanimexist(4400))&&((partner,name="Bardock"&&partner,authorname="DJMouF & Mr.Ansatsuken")||((partner,name="Goku"||partner,name="Vegeta")&&partner,authorname="DJMouF")),0)
 triggerall = ifelse(numpartner,((partner,ctrl)||(partner,stateno=[1000,1999])||(partner,stateno=[0,731])||(partner,StateNo=[1251109,1251114])),0)
@@ -2247,6 +2250,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Omega Blaster]
 type = changestate
 value = 4100
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_lv3AB"
 triggerall = roundstate = 2 && power >= (3000-1000*(var(53)>0)) && var(20) <= 60
@@ -2265,6 +2269,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Gigantic Catastrophe]
 type = changestate
 value = 4300
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_lv3C" || 0
 triggerall = roundstate = 2 && power >= (3000-1000*(var(53)>0)) && var(20) <= 60
@@ -2283,6 +2288,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Gigantic Omegastorm]
 type = changestate
 value = 4200
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0
 triggerall = roundstate = 2 && power >= (3000-1000*(var(53)>0)) && var(20) <= 60
@@ -2301,6 +2307,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Blaster Meteor]
 type = changestate
 value = 4000
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0
 triggerall = roundstate = 2 && power >= (3000-1000*(var(53)>0)) && var(20) <= 60
@@ -2321,6 +2328,7 @@ trigger9 = helper(3821), var(3) && prevstateno != 4000
 [State -1, Gigantic Meteor]
 type = changestate
 value = 3900
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_s236BC"
 triggerall = roundstate = 2 && statetype = A && power >= (2000-1000*(var(53)>0)) && var(20) <= 60
@@ -2339,6 +2347,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Gigantic Buster]
 type = changestate
 value = 3800
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0
 triggerall = roundstate = 2 && power >= (2000-1000*(var(53)>0)) && var(20) <= 60
@@ -2357,6 +2366,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Gigantic Hammer]
 type = changestate
 value = 3700
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0
 triggerall = roundstate = 2 && power >= (2000-1000*(var(53)>0)) && var(20) <= 60
@@ -2375,6 +2385,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Eraser Shot Volley]
 type = changestate
 value = 3500
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_s236BC"
 triggerall = roundstate = 2 && statetype != A && power >= (2000-1000*(var(53)>0)) && var(20) <= 60
@@ -2393,6 +2404,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Planet Geyser]
 type = changestate
 value = 3600
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_s214BC"
 triggerall = roundstate = 2 && statetype != A && power >= (2000-1000*(var(53)>0)) && var(20) <= 60
@@ -2411,6 +2423,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Gigantic Press]
 type = changestate
 value = 3400
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_s236AC" && var(20) <= 60
 triggerall = roundstate = 2 && power >= (1000*(var(53)=0)) && var(20) <= 60
@@ -2429,6 +2442,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Full Power Energy Wave]
 type = changestate
 value = 3300
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_s236AB"
 triggerall = roundstate = 2 && statetype = A && power >= (1000*(var(53)=0)) && var(20) <= 60
@@ -2447,6 +2461,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Gigantic Roar]
 type = changestate
 value = 3100
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_s214AB"
 triggerall = roundstate = 2 && statetype != A && power >= (1000*(var(53)=0)) && var(20) <= 60
@@ -2465,6 +2480,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Burst Eraser]
 type = changestate
 value = 3200
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_s214AC"
 triggerall = roundstate = 2 && power >= (1000*(var(53)=0)) && var(20) <= 60
@@ -2483,6 +2499,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, Eraser Cannon]
 type = changestate
 value = 3000
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_s236AB"
 triggerall = roundstate = 2 && statetype != A && power >= (1000*(var(53)=0)) && var(20) <= 60
@@ -2501,6 +2518,7 @@ trigger8 = stateno = 52 && (prevstateno = [1000, 4999]) && (movecontact = [1, 24
 [State -1, EX Bloody Smash]
 type = changestate
 value = 1410
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0 && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 && statetype != A
@@ -2514,6 +2532,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, EX Gigantic Strike]
 type = changestate
 value = 1110
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_623H" && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 ;&& statetype != A
@@ -2527,6 +2546,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, EX Eraser Blow]
 type = changestate
 value = 1310
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0 && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 && statetype != A && !numhelper(1315) && !numhelper(1305)
@@ -2540,6 +2560,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, EX Bloody Stomp]
 type = changestate
 value = 1460
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 ;Abstract Reordered: air 22H = EX stomp (500 meter): three stomps, the last restands and stuns
 triggerall = command = "ar_22H" && power >= (1250*(var(53)=0))
@@ -2554,6 +2575,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, EX Gigantic Spike]
 type = changestate
 value = 1510
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_214H" && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 ;&& statetype != A
@@ -2567,6 +2589,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, EX Lariat Express]
 type = changestate
 value = 1210
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0 && power >= (1250*(var(53)=0))
 triggerall = roundstate = 2 && statetype != A
@@ -2580,6 +2603,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, EX Eraser Shot]
 type = changestate
 value = 1010
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_236H"
 triggerall = roundstate = 2 && statetype != A && power >= (1250*(var(53)=0)) && var(20) <= 60
@@ -2594,6 +2618,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, EX Aerial Eraser Shot]
 type = changestate
 value = 1060
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_236H"
 triggerall = roundstate = 2 && statetype = A && power >= (1250*(var(53)=0)) && var(20) <= 60
@@ -2608,6 +2633,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, Bloody Smash]
 type = changestate
 value = 1400
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0 || 0 || 0
 triggerall = roundstate = 2 && statetype != A
@@ -2621,6 +2647,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, Gigantic Strike]
 type = changestate
 value = 1100
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_623L" || command = "ar_623M" || 0
 triggerall = roundstate = 2 ;&& statetype != A
@@ -2634,6 +2661,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, Bloody Stomp]
 type = changestate
 value = 1450
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 ;air 22 + L/M/H (button = strength)
 triggerall = command = "ar_22L" || command = "ar_22M"
@@ -2648,6 +2676,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, Gigantic Spike]
 type = changestate
 value = 1500
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0 || command = "ar_214M" || command = "ar_214L"
 triggerall = roundstate = 2 ;&& statetype != A
@@ -2661,6 +2690,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, Lariat Express]
 type = changestate
 value = 1200
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0 || 0 || 0
 triggerall = roundstate = 2 && statetype != A
@@ -2674,6 +2704,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, Aerial Eraser Shot]
 type = changestate
 value = 1050
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_236L" || command = "ar_236M" || 0
 triggerall = roundstate = 2 && statetype = A
@@ -2689,6 +2720,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, Eraser Blow]
 type = changestate
 value = 1300
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0 || 0 || 0
 triggerall = roundstate = 2 && statetype != A
@@ -2704,6 +2736,7 @@ trigger5 = helper(stateno + 5), var(3)
 [State -1, Eraser Shot]
 type = changestate
 value = 1000
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = command = "ar_236L" || command = "ar_236M" || 0
 triggerall = roundstate = 2 && statetype != A
@@ -2730,6 +2763,7 @@ trigger3 = helper(stateno + 5), var(3)
 [State -1, Roll / Dodge]
 type = changestate
 value = ifelse(command = "holdfwd", 710, ifelse(command = "holdback", 715, 700))
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = !AIlevel
 triggerall = 0   ;Abstract Reordered: roll removed
 triggerall = roundstate = 2 && statetype != A
@@ -2763,6 +2797,7 @@ trigger1 = roundstate = 2 && !var(20) && power >= 750 && statetype != A
 [State -1, Run / Dash]
 type = changestate
 value = ifelse(command = "FF", 100, 105)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 trigger1 = !AIlevel
 trigger1 = command = "FF" || command = "BB"
 trigger1 = roundstate = 2 && (stateno != [100, 106]) && statetype = S && ctrl
@@ -3101,6 +3136,7 @@ time = 0
 [State -1, AI Team Lv3 Super]
 type = changestate
 value = 4400
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numpartner && numenemy && (var(22) = 0 || var(22) = 3 || var(22) = 20)
 triggerall = ifelse(numpartner,(partner,alive)&&(partner,selfanimexist(4400))&&((partner,name="Bardock"&&partner,authorname="DJMouF & Mr.Ansatsuken")||((partner,name="Goku"||partner,name="Vegeta")&&partner,authorname="DJMouF")),0)
 triggerall = ifelse(numpartner,((partner,ctrl)||(partner,stateno=[1000,1999])||(partner,stateno=[0,731])||(partner,StateNo=[1251109,1251114])),0)
@@ -3167,6 +3203,7 @@ trigger1 = enemynear, movetype = A && p2bodydist x < 160 && enemynear, hitdefatt
 [State -1, AI Roll / Dodge]
 type = changestate
 value = ifelse((backedgebodydist > 40 && random < 200), 715, ifelse(random < 600, 710, 700))
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 trigger1 = AIlevel && numenemy
 trigger1 = roundstate = 2 && statetype = S && ctrl && random < (200 * (AIlevel ** 2 / 64.0))
 trigger1 = enemynear, movetype = A && p2bodydist x < 80
@@ -3201,6 +3238,7 @@ trigger1 = roundstate = 2 && power >= 750 && !var(20) && life < 500 && random < 
 [State -1, AI Fall Recovery]
 type = changestate
 value = 5210
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 trigger1 = AIlevel && numenemy
 trigger1 = roundstate = 2 && alive
 trigger1 = stateno = 5050 && canrecover
@@ -3210,6 +3248,7 @@ trigger1 = random < (25 * (AIlevel ** 2 / 64.0))
 [State -1, AI Fall Recovery]
 type = changestate
 value = 5200
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 trigger1 = AIlevel && numenemy
 trigger1 = roundstate = 2 && alive
 trigger1 = stateno = 5050 && gethitvar(fall.recover)
@@ -3397,6 +3436,7 @@ trigger1 = ctrl && random < (25 * (AIlevel ** 2 / 64.0))
 [State -1, AI Eraser Blow]
 type = changestate
 value = ifelse(power>=(500*!var(53))&&power<powermax&&((numtarget&&var(53)>500)||(random<100&&var(53)!=[1,500])),1310,1300)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy
 triggerall = roundstate = 2 && statetype != A
 triggerall = !(enemynear, ctrl) && (enemynear, stateno != [120, 155])
@@ -3408,6 +3448,7 @@ trigger1 = (movehit = [1, 16]) && (p2bodydist x = [0, 90]) && random < (500 * (A
 [State -1, AI Bloody Smash]
 type = changestate
 value = ifelse(power>=(500*!var(53))&&power<powermax&&((numtarget&&var(53)>500)||(random<100&&var(53)!=[1,500])),1410,1400)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy
 triggerall = roundstate = 2 && statetype != A
 triggerall = (p2dist x = [40, 190]) ;&& p2statetype != L
@@ -3421,6 +3462,7 @@ trigger2 = (enemynear, numhelper(enemynear, stateno + 5)) || (enemynear, numhelp
 [State -1, AI Gigantic Strike / Gigantic Smash]
 type = changestate
 value = ifelse(power>=(500*!var(53))&&power<powermax&&((numtarget&&var(53)>500)||(random<100&&var(53)!=[1,500])),1110,1100)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy
 triggerall = roundstate = 2 ;&& statetype != A
 triggerall = !(enemynear, ctrl) && (enemynear, stateno != [120, 155])
@@ -3438,6 +3480,7 @@ trigger6 = (enemynear, stateno = 5120) && (enemynear, animtime = [ -6, -3]) && r
 [State -1, AI Gigantic Claw / Gigantic Spike]
 type = changestate
 value = ifelse(power>=(500*!var(53))&&power<powermax&&((numtarget&&var(53)>500)||(random<100&&var(53)!=[1,500])),1510,1500)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy
 triggerall = roundstate = 2 && ((statetype = A && enemynear, statetype = A)||(statetype != A && (enemynear, statetype != A || enemynear, movetype = H)))
 triggerall = (ctrl || StateNo = 52 || (StateNo = [100,101]))
@@ -3448,6 +3491,7 @@ trigger2 = (p2stateno = [120, 155]) && (p2bodydist x = [0, 40]) && (p2bodydist y
 [State -1, AI Lariat Express]
 type = ChangeState
 value = ifelse(power>=(500*!var(53))&&((numtarget&&movehit)||numhelper(1155))&&power<powermax&&((numtarget&&var(53)>500)||(random<125&&var(53)!=[1,500])),1210,1200)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy
 triggerall = roundstate = 2 && statetype != A
 triggerall = (p2stateno != [120, 155]) && p2statetype != L && !(enemynear, hitfall)
@@ -3462,6 +3506,7 @@ trigger3 = (enemynear, numhelper(enemynear, stateno + 5)) || (enemynear, numhelp
 [State -1, AI Eraser Shot]
 type = changestate
 value = ifelse(power>=(500*!var(53))&&power<powermax&&((numtarget&&var(53)>500)||(random<100&&var(53)!=[1,500])),1010,1000)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy
 triggerall = roundstate = 2 && statetype != A
 triggerall = ifelse(!var(20), !numhelper(1005), 1) ;&& !numhelper(3005) && !numhelper(3055)
@@ -3474,6 +3519,7 @@ trigger2 = (movehit = [1, 16]) && (p2bodydist x = [40, 80]) && random < (100 * (
 [State -1, AI Blaster Shot / Bloody Stomp]
 type = changestate
 value = ifelse((p2dist x = [-30,30]),ifelse(power>=(500*!var(53))&&power<powermax&&((numtarget&&var(53)>500)||(random<100&&var(53)!=[1,500])),1460,1450),ifelse(power>=(500*!var(53))&&power<powermax&&((numtarget&&var(53)>500)||random<100),1060,1050))
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy
 triggerall = roundstate = 2 && statetype = A ;&& var(9) != 2
 triggerall = !(enemynear, ctrl) && (enemynear, stateno != [120, 155])
@@ -3485,6 +3531,7 @@ trigger2 = (movehit = [1, 16]) && random < (333 * (AIlevel ** 2 / 64.0))
 [State -1, AI Gigantic Catastrophe]
 type = changestate
 value = 4300
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy
 triggerall = roundstate = 2 && statetype != A
 triggerall = power >= (3000-1000*(var(53)>0)) && !var(20)
@@ -3497,6 +3544,7 @@ trigger1 = ctrl && (p2bodydist x = [0, 60]) && (enemynear, statetype != A) && ra
 [State -1, AI Omega Blaster / Gigantic Omegastorm]
 type = changestate
 value = ifelse(statetype!=A&&((random<450&&(stateno!=3000))||stateno=3400),4200,4100)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy && (var(22) = 0 || var(22) = 3 || var(22) = 20)
 triggerall = roundstate = 2 && prevstateno != 4100 && anim != 3500 && anim != 3200 && anim != 3300 && anim != 1300
 triggerall = power >= (3000-1000*(var(53)>0)) && var(20) <= 60 && ifelse(anim=1301||anim=1303,animelemtime(2)>=8,1)
@@ -3514,6 +3562,7 @@ trigger4 = ctrl && enemynear, movetype = A && (p2bodydist x = [0, 70]) && random
 [State -1, AI Blaster Meteor]
 type = changestate
 value = 4000
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy && (var(22) = 0 || var(22) = 3 || var(22) = 20) && anim != 1300
 triggerall = roundstate = 2 && enemynear, stateno != 5120 && enemynear, stateno != [700,999]
 triggerall = power >= (3000-1000*(var(53)>0)) && stateno != 3200 && anim != 3300 && anim != 3500 && stateno != 4000 && prevstateno != 4000
@@ -3534,6 +3583,7 @@ trigger8 = stateno = 3706 && var(22)= 20 && (movehit = [1, 16]) && random < (900
 [State -1, AI Full Power Energy Wave / Gigantic Meteor]
 type = changestate
 value = ifelse(power>=(2000-1000*(var(53)>0))&&((!var(46)&&stateno=[3000,3499])||(stateno=[3500,3999])||((var(22)=2||var(22)=30)&&var(22)!=1&&(var(22)!=[31,33])&&var(22)!=[21,22])||(var(22)=0&&random<850)),3900,3300)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy && enemynear, stateno != 5120 && anim != 1300
 triggerall = roundstate = 2 && statetype = A && prevstateno != 3300 && prevstateno != 3900
 triggerall = !numhelper(3305) && !numhelper(3905) && anim != 3200 && var(22)!=3 && var(22) != 20
@@ -3552,6 +3602,7 @@ trigger4 = ((anim = 1102 && animelemtime(5)>=0 && vel y >6 && p2dist x >=80)||st
 [State -1, AI Gigantic Roar / Planet Geyser]
 type = changestate
 value = ifelse(power>=(2000-1000*(var(53)>0))&&((!var(46)&&stateno=[3000,3499])||(stateno=[3500,3999])||((var(22)=2||var(22)=30)&&var(22)!=1&&(var(22)!=[31,33])&&var(22)!=[21,22])||(var(22)=0&&random<600)),3600,3100)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy && var(22)!=3 && var(22) != 20 && ifelse(anim=1301||anim=1303,animelemtime(2)>=8,1)
 triggerall = roundstate = 2 && statetype != A && prevstateno != 3100 && prevstateno != 3600
 triggerall = anim != 3200 && stateno != 3100 && stateno != 3600 && anim != 3500 && anim != 1300
@@ -3568,6 +3619,7 @@ trigger3 = helper(stateno + 5), var(3) && random < (300 * (AIlevel ** 2 / 64.0))
 [State -1, AI Eraser Cannon / Eraser Shot Volley]
 type = changestate
 value = ifelse(power>=(2000-1000*(var(53)>0))&&((!var(46)&&stateno=[3000,3499])||(stateno=[3500,3999])||((var(22)=2||var(22)=30)&&var(22)!=1&&(var(22)!=[31,33])&&var(22)!=[21,22])||(var(22)=0&&random<600)),3500,3000)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy && var(22)!=3 && var(22) != 20 && ifelse(anim=1301||anim=1303,animelemtime(2)>=8,1)
 triggerall = roundstate = 2 && statetype != A && prevstateno != 3000 && prevstateno != 3500
 triggerall = !numhelper(3005) && !numhelper(3505) && anim != 3200 && anim != 1300
@@ -3584,6 +3636,7 @@ trigger3 = helper(stateno + 5), var(3) && random < (100 * (AIlevel ** 2 / 64.0))
 [State -1, AI Burst Eraser / Ggiantic Buster]
 type = changestate
 value = ifelse(power>=(2000-1000*(var(53)>0))&&p2statetype!=L&&p2dist y <=15&&((!var(46)&&stateno=[3000,3499])||(stateno=[3500,3999])||((var(22)=2||var(22)=30)&&var(22)!=1&&(var(22)!=[31,33])&&var(22)!=[21,22])||(var(22)=0&&random<600)),3800,3200)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy && var(22)!=3 && var(22) != 20 && enemynear, stateno != 5120 && ifelse(anim=1301||anim=1303,animelemtime(2)>=8,1)
 triggerall = roundstate = 2 && (prevstateno != 3200) && anim != 3300 && anim != 3500 && anim != 1300
 triggerall = power >= ifelse((stateno=[3500,3999]),2000,(1000*(var(53)=0))) && var(20) <= 60 && !numhelper(3205)
@@ -3599,6 +3652,7 @@ trigger3 = helper(stateno + 5), var(3) && random < (100 * (AIlevel ** 2 / 64.0))
 [State -1, AI Gigantic Press / Gigantic Hammer]
 type = changestate
 value = ifelse(power>=(2000-1000*(var(53)>0))&&((!var(46)&&stateno=[3000,3499])||(stateno=[3500,3999])||((var(22)=2||var(22)=30)&&var(22)!=1&&(var(22)!=[31,33])&&var(22)!=[21,22])||(var(22)=0&&random<600)),3700,3400)
+triggerall = !((stateno = 1451 || stateno = 1461) && !movehit) ;Abstract Reordered: punishable stomp
 triggerall = AIlevel && numenemy && var(22)!=3 && var(22) != 20 && ifelse(anim=1301||anim=1303,animelemtime(2)>=8,1)
 triggerall = roundstate = 2 && prevstateno != 3400 && anim != 3500 && anim != 1300
 triggerall = power >= ifelse((stateno=[3500,3999]),2000,(1000*(var(53)=0))) && var(20) <= 60 && anim != 3200 && anim != 3300 && stateno != 3400

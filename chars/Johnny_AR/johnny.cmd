@@ -1274,7 +1274,7 @@ type = ModifyExplod
 triggerall = !ishelper
 trigger1 = NumExplod(7791)
 ID = 7791
-scale = 0.5 * (ifelse((var(43) / 1000.0) < 0, 0, ifelse((var(43) / 1000.0) > 1, 1, (var(43) / 1000.0)))) + 0.00005, .5
+scale = 0.5 * (ifelse((var(51) / 100.0) < 0, 0, ifelse((var(51) / 100.0) > 1, 1, (var(51) / 100.0)))) + 0.00005, .5
 ignorehitpause = 1
 
 [State -1, AR meter HUD scale 7795]
@@ -1389,6 +1389,7 @@ trigger6 = (stateno = 1100 && time = [20,44])
 trigger7 = (stateno = 1837 && animelemtime(2)>0 && animelemtime(4)<0)
 trigger8 = (stateno = 100 && animelemtime(8)>0);前ステ
 trigger9 = ((anim=1810 && animelemtime(2)>7 || movecontact) && animelemtime(6)<0)
+trigger10 = stateno = 1100 && movecontact   ;Abstract Reordered: cancel out of the DP
 
 [State -1, 回転は穴になっても死なないぞ！]
 type = ChangeState
@@ -1409,6 +1410,7 @@ trigger6 = (stateno = 1100 && time = [20,44])
 trigger7 = (stateno = 1837 && animelemtime(2)>0 && animelemtime(4)<0)
 trigger8 = (stateno = 100 && animelemtime(8)>0);前ステ
 trigger9 = ((anim=1810 && animelemtime(2)>7 || movecontact) && animelemtime(6)<0)
+trigger10 = stateno = 1100 && movecontact   ;Abstract Reordered: cancel out of the DP
 
 [State -1, もう迷っちゃあいない]
 type = ChangeState
@@ -1434,6 +1436,7 @@ trigger11 = (stateno = 1585 && animelemtime(8)>0 && animelemtime(19)<0)
 trigger12 = (stateno = 1837 && animelemtime(2)>0 && animelemtime(4)<0)
 trigger13 = (stateno = 100 && animelemtime(8)>0);前ステ
 trigger14 = ((anim=1810 && animelemtime(2)>7 || movecontact) && animelemtime(6)<0)
+trigger15 = stateno = 1100 && movecontact   ;Abstract Reordered: cancel out of the DP
 
 [State -1, 君に渡せなかったこの一発の『鉄球』生贄]
 type = ChangeState
@@ -1448,6 +1451,7 @@ trigger1 = ctrl
 trigger2 = (stateno = 200 && time > 5) || (stateno = 210 && time > 7) || (stateno = 220 && time = [15,31])
 trigger3 = (stateno = 400 && time = [5,12+4]) || (stateno = 410 && time > 7) || (stateno = 420 && time > 20 && !(var(1)>0&&numhelper(422)&&helper(422),HitPauseTime>0))
 trigger4 = (stateno = 100 && animelemtime(8)>0);前ステ
+trigger5 = stateno = 1100 && movecontact   ;Abstract Reordered: cancel out of the DP
 
 ;==============================================================================
 ; 必殺技
@@ -1904,6 +1908,7 @@ trigger1 = ctrl
 trigger2 = (stateno = 200 && time > 5) || (stateno = 210 && time > 7) || (stateno = 220 && time = [15,31])
 trigger3 = (stateno = 400 && time = [5,12+4]) || (stateno = 410 && time > 7) || (stateno = 420 && time > 20 && !(var(1)>0&&numhelper(422)&&helper(422),HitPauseTime>0))
 trigger4 = (stateno = 100 && animelemtime(8)>0);前ステ
+trigger5 = stateno = 1100 && movehit && animelemtime(8) > 0   ;Abstract Reordered: cancel out of the DP
 
 [State -1, 僕の体が飛び上がった！]
 type = null;ChangeState
@@ -1959,7 +1964,7 @@ type = ChangeState
 value = 1900
 triggerall = !ishelper
 triggerall = var(59) <= 0
-triggerall = (command = "a") || (helper(99999),var(27))
+triggerall = (command = "ar_x") || (helper(99999),var(27)) ;Abstract Reordered: Herb Tea on X
 triggerall = var(50) >= 2;ACT2以降
 trigger1 = statetype != A
 trigger1 = ctrl
